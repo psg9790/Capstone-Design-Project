@@ -2,11 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Sirenix.OdinInspector;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager instance;
-    public InputActionMap map;
+    private PlayerInput m_PlayerInput;
+    private InputAction m_RightClick;
+    private InputAction m_LeftClick;
+
+    public InputAction RightClick
+    {
+        get { return m_RightClick; }
+        set { }
+    }
+    public InputAction LeftClick
+    {
+        get { return m_LeftClick; }
+        set { }
+    }
 
     private void Awake()
     {
@@ -19,5 +33,8 @@ public class InputManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        m_PlayerInput = GetComponent<PlayerInput>();
+        m_RightClick = m_PlayerInput.actions["RightClick"];
+        m_LeftClick = m_PlayerInput.actions["LeftClick"];
     }
 }
