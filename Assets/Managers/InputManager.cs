@@ -18,12 +18,10 @@ public class InputManager : MonoBehaviour
     public InputAction RightClick
     {
         get { return m_RightClick; }
-        set { }
     }
     public InputAction LeftClick
     {
         get { return m_LeftClick; }
-        set { }
     }
 
     private void Awake()

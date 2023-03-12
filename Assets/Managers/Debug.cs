@@ -1,3 +1,5 @@
+// 배포시에 Player-> other settings-> Script Compilation-> DEBUG_MODE 삭제
+// 모든 UnityEngine.Debug 관련 코드 컴파일 제외 처리 가능 (빠르다)
 
 using System;
 using UnityEngine;
