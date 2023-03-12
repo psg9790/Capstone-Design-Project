@@ -9,9 +9,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.instance.player == null)
+        if (GameManager.Instance.player == null)
         {
-            GameManager.instance.player = this;
+            GameManager.Instance.player = this;
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -24,11 +24,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (InputManager.instance.LeftClick.WasPerformedThisFrame())
+        if (InputManager.Instance.LeftClick.WasPerformedThisFrame())
         {
             weapon.Attack();
         }
-        if (InputManager.instance.RightClick.WasPerformedThisFrame())
+        if (InputManager.Instance.RightClick.WasPerformedThisFrame())
         {
             weapon.SubSkill();
         }

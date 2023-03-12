@@ -7,12 +7,11 @@ public class BareHand : IWeapon
     public Player player;
     public BareHand()
     {
-        player = GameManager.instance.player;
+        player = GameManager.Instance.player;
     }
     public void Attack()
     {
         Debug.Log("basic attack");
-        Debug.Log(player.gameObject.name);
     }
 
     public void Reload()

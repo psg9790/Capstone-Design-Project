@@ -1,11 +1,18 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    static GameManager instance;
     public Player player;
+
+    public static GameManager Instance
+    {
+        get { return instance; }
+    }
 
     private void Awake()
     {
@@ -19,4 +26,5 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }

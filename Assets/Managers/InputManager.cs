@@ -6,10 +6,14 @@ using Sirenix.OdinInspector;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager instance;
+    static InputManager instance;
     private PlayerInput m_PlayerInput;
     private InputAction m_RightClick;
     private InputAction m_LeftClick;
+    public static InputManager Instance
+    {
+        get { return instance; }
+    }
 
     public InputAction RightClick
     {
