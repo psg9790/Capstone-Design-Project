@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         }
         if (InputManager.Instance.RightClick.WasPerformedThisFrame())
         {
-            weapon.SubSkill();
+            Debug.Log("move");
         }
     }
 }
