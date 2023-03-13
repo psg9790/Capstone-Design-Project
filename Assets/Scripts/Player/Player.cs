@@ -5,26 +5,17 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    IWeapon weapon;
     Vector3 targetPos;
 
     private void Start()
     {
-        if (GameManager.Instance.player == null)
-        {
-            GameManager.Instance.player = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        weapon = new BareHand();
-
-        InputManager.Instance.AddPerform("RightClick", RightClick);
-        // InputManager.Instance.RemovePerform("RightClick", RightClick);
-
+        InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
+        InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
+    }
+    private void OnDestroy()
+    {
+        InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
+        InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
     }
 
     void Update()
@@ -36,5 +27,10 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Right Click");
         // 좌표 따고
+    }
+    void LeftClick(InputAction.CallbackContext context)
+    {
+        Debug.Log("Left Click");
+        Debug.Log(context.phase);
     }
 }

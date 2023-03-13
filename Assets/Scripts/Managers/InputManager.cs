@@ -29,12 +29,34 @@ public class InputManager : MonoBehaviour
         m_PlayerInput = GetComponent<PlayerInput>();
     }
 
-    public void AddPerform(string name, Action<InputAction.CallbackContext> func)
+    public void AddPerformed(InputType type, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[name].performed += func;
+        instance.m_PlayerInput.actions[type.ToString()].performed += action;
     }
-    public void RemovePerform(string name, Action<InputAction.CallbackContext> func)
+    public void RemovePerformed(InputType type, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[name].performed -= func;
+        instance.m_PlayerInput.actions[type.ToString()].performed -= action;
     }
+    public void AddCanceled(InputType type, Action<InputAction.CallbackContext> action)
+    {
+        instance.m_PlayerInput.actions[type.ToString()].canceled += action;
+    }
+    public void RemoveCanceled(InputType type, Action<InputAction.CallbackContext> action)
+    {
+        instance.m_PlayerInput.actions[type.ToString()].canceled -= action;
+    }
+    public void AddStarted(InputType type, Action<InputAction.CallbackContext> action)
+    {
+        instance.m_PlayerInput.actions[type.ToString()].started += action;
+    }
+    public void RemoveStarted(InputType type, Action<InputAction.CallbackContext> action)
+    {
+        instance.m_PlayerInput.actions[type.ToString()].started -= action;
+    }
+}
+
+public enum InputType
+{
+    RightClick,
+    LeftClick
 }

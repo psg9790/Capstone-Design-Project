@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     static GameManager instance;
     public Player player;
+    [SerializeField] GameObject playerPrefab;
 
     public static GameManager Instance
     {
@@ -25,6 +26,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    void CreatePlayer()
+    {
+        Transform spawn = FindSpawn();
+        GameObject go = Instantiate(playerPrefab, spawn.position, spawn.rotation);
+        player = go.GetComponent<Player>();
+    }
+    Transform FindSpawn()
+    {
+        GameObject spawn = GameObject.Find("SpawnPoint");
+        return spawn.transform;
     }
 
 }
