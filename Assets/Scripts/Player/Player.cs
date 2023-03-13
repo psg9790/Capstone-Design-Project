@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     IWeapon weapon;
+    Vector3 targetPos;
 
     private void Start()
     {
@@ -20,17 +21,20 @@ public class Player : MonoBehaviour
             return;
         }
         weapon = new BareHand();
+
+        InputManager.Instance.AddPerform("RightClick", RightClick);
+        // InputManager.Instance.RemovePerform("RightClick", RightClick);
+
     }
 
     void Update()
     {
-        if (InputManager.Instance.LeftClick.WasPerformedThisFrame())
-        {
-            weapon.Attack();
-        }
-        if (InputManager.Instance.RightClick.WasPerformedThisFrame())
-        {
-            Debug.Log("move");
-        }
+        // 이동
+    }
+
+    void RightClick(InputAction.CallbackContext context)
+    {
+        Debug.Log("Right Click");
+        // 좌표 따고
     }
 }

@@ -9,6 +9,7 @@ public class BareHand : IWeapon
     {
         player = GameManager.Instance.player;
     }
+
     public void Attack()
     {
         Debug.Log("basic attack");

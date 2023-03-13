@@ -3,25 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Sirenix.OdinInspector;
+using System;
 
 public class InputManager : MonoBehaviour
 {
     static InputManager instance;
     private PlayerInput m_PlayerInput;
-    private InputAction m_RightClick;
-    private InputAction m_LeftClick;
+
     public static InputManager Instance
     {
         get { return instance; }
-    }
-
-    public InputAction RightClick
-    {
-        get { return m_RightClick; }
-    }
-    public InputAction LeftClick
-    {
-        get { return m_LeftClick; }
     }
 
     private void Awake()
@@ -36,7 +27,14 @@ public class InputManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         m_PlayerInput = GetComponent<PlayerInput>();
-        m_RightClick = m_PlayerInput.actions["RightClick"];
-        m_LeftClick = m_PlayerInput.actions["LeftClick"];
+    }
+
+    public void AddPerform(string name, Action<InputAction.CallbackContext> func)
+    {
+        instance.m_PlayerInput.actions[name].performed += func;
+    }
+    public void RemovePerform(string name, Action<InputAction.CallbackContext> func)
+    {
+        instance.m_PlayerInput.actions[name].performed -= func;
     }
 }
