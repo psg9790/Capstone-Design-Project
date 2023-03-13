@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+            Debug.LogWarning("GameManager cannot be two : Deleted.");
         }
     }
     void CreatePlayer()

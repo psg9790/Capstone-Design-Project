@@ -9,13 +9,23 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
-        InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
+            InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
+        }
+        else
+        {
+            Debug.LogError("InputManager is Missing");
+        }
     }
     private void OnDestroy()
     {
-        InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
-        InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
+            InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
+        }
     }
 
     void Update()
@@ -31,6 +41,5 @@ public class Player : MonoBehaviour
     void LeftClick(InputAction.CallbackContext context)
     {
         Debug.Log("Left Click");
-        Debug.Log(context.phase);
     }
 }

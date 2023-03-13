@@ -20,13 +20,14 @@ public class InputManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            m_PlayerInput = GetComponent<PlayerInput>();
             DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
+            Debug.LogWarning("InputManager cannot be two : Deleted.");
         }
-        m_PlayerInput = GetComponent<PlayerInput>();
     }
 
     public void AddPerformed(InputType type, Action<InputAction.CallbackContext> action)
