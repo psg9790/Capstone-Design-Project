@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
         if (InputManager.Instance != null)
         {
             InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
+            InputManager.Instance.AddPerformed(InputType.LeftClick, LeftClick);
         }
         else
         {
@@ -24,7 +24,8 @@ public class Player : MonoBehaviour
         if (InputManager.Instance != null)
         {
             InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
+            InputManager.Instance.RemovePerformed(InputType.LeftClick, LeftClick);
+            Debug.Log("last player destroyed");
         }
     }
 

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
@@ -28,8 +27,15 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("GameManager cannot be two : Deleted.");
         }
     }
+
+    [Sirenix.OdinInspector.Button]
     void CreatePlayer()
     {
+        if (playerPrefab == null)
+        {
+            Debug.LogWarning("there is no player prefab");
+            return;
+        }
         Transform spawn = FindSpawn();
         GameObject go = Instantiate(playerPrefab, spawn.position, spawn.rotation);
         player = go.GetComponent<Player>();
