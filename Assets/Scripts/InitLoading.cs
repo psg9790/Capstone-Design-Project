@@ -21,5 +21,13 @@ public class InitLoading : MonoBehaviour
         if (loadingText.text.CompareTo(list[(int)elapsed]) != 0)
             loadingText.text = list[(int)elapsed];
 
+        if (GameManager.Instance != null &&
+        InputManager.Instance != null &&
+        PlayerController.Instance != null &&
+        SceneLoadManager.Instance != null)
+        {
+            SceneLoadManager.Instance.CallNextScene("MainTitle");
+        }
+
     }
 }

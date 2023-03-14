@@ -9,23 +9,23 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        if (InputManager.Instance != null)
-        {
-            InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
-        }
-        else
-        {
-            Debug.LogError("InputManager is Missing");
-        }
+        // if (InputManager.Instance != null)
+        // {
+        //     InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
+        //     InputManager.Instance.AddStarted(InputType.LeftClick, LeftClick);
+        // }
+        // else
+        // {
+        //     Debug.LogError("InputManager is Missing");
+        // }
     }
     private void OnDestroy()
     {
-        if (InputManager.Instance != null)
-        {
-            InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
-        }
+        // if (InputManager.Instance != null)
+        // {
+        //     InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
+        //     InputManager.Instance.RemoveStarted(InputType.LeftClick, LeftClick);
+        // }
     }
 
     void Update()
@@ -33,13 +33,13 @@ public class Player : MonoBehaviour
         // 이동
     }
 
-    void RightClick(InputAction.CallbackContext context)
-    {
-        Debug.Log("Right Click");
-        // 좌표 따고
-    }
-    void LeftClick(InputAction.CallbackContext context)
-    {
-        Debug.Log("Left Click");
-    }
+    // void RightClick(InputAction.CallbackContext context)
+    // {
+    //     Debug.Log("Right Click");
+    //     // 좌표 따고
+    // }
+    // void LeftClick(InputAction.CallbackContext context)
+    // {
+    //     Debug.Log("Left Click");
+    // }
 }
