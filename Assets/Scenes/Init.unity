@@ -364,6 +364,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0c4029b5-85be-4cf5-8c41-17d556b3154b
     m_ActionName: Player/LeftClick[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c2d9e670-300e-4fcb-80a2-bb3fde98eed3
+    m_ActionName: Player/MousePosition[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: Player
@@ -455,8 +459,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0cff1e12eb36e4ebb64469928485f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerPrefab: {fileID: 0}
+  playerPrefab: {fileID: 4217427337765780125, guid: 4b24115f4fb7aef4b827d6deed610c0e,
+    type: 3}
 --- !u!4 &995491656
 Transform:
   m_ObjectHideFlags: 0

@@ -7,12 +7,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
-    public Player player;
+    Player player;
     [SerializeField] GameObject playerPrefab;
 
     public static GameManager Instance
     {
         get { return instance; }
+    }
+    public Player GetPlayer
+    {
+        get { return player; }
     }
 
     private void Awake()
@@ -28,6 +32,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("GameManager cannot be two : Deleted.");
         }
     }
+    [Sirenix.OdinInspector.Button]
     void CreatePlayer()
     {
         Transform spawn = FindSpawn();
