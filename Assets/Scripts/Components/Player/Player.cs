@@ -11,6 +11,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        // 움직임
     }
 }

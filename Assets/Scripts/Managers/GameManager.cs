@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // important
+    // singleton
     static GameManager instance;
+    
+    // important
     public SceneLoadManager sceneLoadManager;
     public ISave save = new JsonSave();
     
@@ -45,11 +47,11 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("there is no player prefab");
             return;
         }
-        Transform spawn = FindSpawn();
+        Transform spawn = FindPlayerSpawn();
         GameObject go = Instantiate(playerPrefab, spawn.position, spawn.rotation);
         player = go.GetComponent<Player>();
     }
-    Transform FindSpawn()
+    Transform FindPlayerSpawn()
     {
         GameObject spawn = GameObject.Find("SpawnPoint");
         return spawn.transform;
