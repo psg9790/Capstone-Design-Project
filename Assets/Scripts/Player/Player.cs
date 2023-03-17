@@ -12,11 +12,10 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-<<<<<<< HEAD
         if (InputManager.Instance != null)
         {
-            InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.AddPerformed(InputType.LeftClick, LeftClick);
+            // InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
+            // InputManager.Instance.AddPerformed(InputType.LeftClick, LeftClick);
         }
         else
         {
@@ -27,16 +26,11 @@ public class Player : MonoBehaviour
     {
         if (InputManager.Instance != null)
         {
-            InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
-            InputManager.Instance.RemovePerformed(InputType.LeftClick, LeftClick);
+            // InputManager.Instance.RemovePerformed(InputType.RightClick, RightClick);
+            // InputManager.Instance.RemovePerformed(InputType.LeftClick, LeftClick);
             Debug.Log("last player destroyed");
         }
-=======
         agent = GetComponent<NavMeshAgent>();
-    }
-    private void OnDestroy()
-    {
->>>>>>> feature/NavMeshAgent
     }
 
     void Update()
