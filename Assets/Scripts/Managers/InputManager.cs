@@ -54,6 +54,10 @@ public class InputManager : MonoBehaviour
     {
         instance.m_PlayerInput.actions[type.ToString()].started -= action;
     }
+    public Vector2 GetMousePosition()
+    {
+        return instance.m_PlayerInput.actions["MousePosition"].ReadValue<Vector2>();
+    }
 }
 
 public enum InputType

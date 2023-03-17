@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    Vector3 targetPos;
+    public PlayerState state;
+    NavMeshAgent agent;
+    Vector3 movePos;
 
     private void Start()
     {
+<<<<<<< HEAD
         if (InputManager.Instance != null)
         {
             InputManager.Instance.AddPerformed(InputType.RightClick, RightClick);
@@ -27,20 +31,35 @@ public class Player : MonoBehaviour
             InputManager.Instance.RemovePerformed(InputType.LeftClick, LeftClick);
             Debug.Log("last player destroyed");
         }
+=======
+        agent = GetComponent<NavMeshAgent>();
+    }
+    private void OnDestroy()
+    {
+>>>>>>> feature/NavMeshAgent
     }
 
     void Update()
     {
         // 이동
+        if (state == PlayerState.Move)
+        {
+            Vector3 dist = movePos - transform.position;
+            if (dist.magnitude < 0.1f)
+            {
+                state = PlayerState.Idle;
+            }
+            agent.SetDestination(movePos);
+        }
     }
-
-    void RightClick(InputAction.CallbackContext context)
+    public void MovePlayer(Vector3 target)
     {
-        Debug.Log("Right Click");
-        // 좌표 따고
+        movePos = target;
+        state = PlayerState.Move;
     }
-    void LeftClick(InputAction.CallbackContext context)
-    {
-        Debug.Log("Left Click");
-    }
+}
+public enum PlayerState
+{
+    Idle,
+    Move
 }
