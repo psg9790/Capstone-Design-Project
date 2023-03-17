@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
             Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-            GameManager.Instance.GetPlayer.MovePlayer(hit.point);
+            // GameManager.Instance.GetPlayer.MovePlayer(hit.point);
         }
     }
 
