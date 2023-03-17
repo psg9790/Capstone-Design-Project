@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
     Player player;
     [SerializeField] GameObject playerPrefab;
+    public SceneLoadManager SceneLoadManager;
 
     public static GameManager Instance
     {
@@ -49,5 +50,4 @@ public class GameManager : MonoBehaviour
         GameObject spawn = GameObject.Find("SpawnPoint");
         return spawn.transform;
     }
-
 }
