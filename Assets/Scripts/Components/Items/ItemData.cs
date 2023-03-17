@@ -17,5 +17,6 @@ public enum ItemType
 {
     Weapon,
     Armor,
-    Artifact
+    Artifact,
+    Potion
 }

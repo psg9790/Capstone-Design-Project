@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // important
     static GameManager instance;
-    Player player;
+    public SceneLoadManager sceneLoadManager;
+    public ISave save = new JsonSave();
+    
+    // props
     [SerializeField] GameObject playerPrefab;
-    public SceneLoadManager SceneLoadManager;
-
+    Player player;
+    
     public static GameManager Instance
     {
         get { return instance; }

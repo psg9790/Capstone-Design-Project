@@ -11,7 +11,7 @@ public class SceneLoadManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SceneLoadManager = this;
+        GameManager.Instance.sceneLoadManager = this;
     }
 
     public void SwitchScene(string tgt)
