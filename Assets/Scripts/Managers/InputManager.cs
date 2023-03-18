@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
             Destroy(this.gameObject);
             Debug.LogWarning("InputManager cannot be two : Deleted.");
         }
+        // instance.m_PlayerInput.actions["RightClick"]
     }
 
     public void AddPerformed(InputType type, Action<InputAction.CallbackContext> action)
