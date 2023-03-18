@@ -6,10 +6,12 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
+    // event
     public UnityEvent playerMoveEvent;
-    private NavMeshAgent nav;
-
+    
     public PlayerBehavior behavior = PlayerBehavior.Idle;
+    
+    private NavMeshAgent nav;
     private Vector3 moveTarget;
     
     void Start()

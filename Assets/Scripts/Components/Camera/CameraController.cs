@@ -4,27 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using DG.Tweening;
+using Unity.Mathematics;
 
 public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
+    public Player player;
 
-    private void Start()
+    [Sirenix.OdinInspector.Button]
+    public void Attach(Player _player)
     {
-        
+        player = _player;
+        transform.position = player.transform.position + offset;
+        transform.rotation = Quaternion.LookRotation(player.transform.position
+                                                     - transform.position);
+        player.playerMoveEvent.AddListener(OnPlayerMove);
     }
 
-    // [Sirenix.OdinInspector.Button]
-    // void Attach()
-    // {
-    //     OnPlayerMove();
-    //     transform.rotation = Quaternion.LookRotation(GameManager.Instance.GetPlayer.transform.position - transform.position);
-    //     GameManager.Instance.GetPlayer.playerMoveEvent.AddListener(OnPlayerMove);
-    // }
-    //
-    // void OnPlayerMove()
-    // {
-    //     transform.DOMove(GameManager.Instance.GetPlayer.transform.position + offset, 0.5f);
-    // }
-    //
+    private Tweener move;
+    void OnPlayerMove()
+    {
+        move.Kill();
+        move = transform.DOMove(player.transform.position + offset, 0.3f);
+    }
 }
