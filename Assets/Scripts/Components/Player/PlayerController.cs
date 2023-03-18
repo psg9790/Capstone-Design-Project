@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public Player player;
-    public Camera camera;
+    private Camera cam;
     private bool rightClickHold = false;
     private void Start()
     {
@@ -19,15 +19,14 @@ public class PlayerController : MonoBehaviour
         }
 
         player = GetComponent<Player>();
-        camera = Camera.main;
+        cam = Camera.main;
     }
 
     private void Update()
     {
         if (rightClickHold)
         {
-            UnityEngine.Debug.Log("hoooooold");
-            Ray ray = camera.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
             {
