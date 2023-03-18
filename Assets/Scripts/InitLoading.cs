@@ -22,7 +22,6 @@ public class InitLoading : MonoBehaviour
             loadingText.text = list[(int)elapsed];
 
         if (GameManager.Instance != null &&
-            PlayerController.Instance != null &&
             InputManager.Instance != null)
         {
             GameManager.Instance.sceneLoadManager.SwitchScene("MainTitle");

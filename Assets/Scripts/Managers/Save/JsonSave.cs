@@ -5,7 +5,7 @@ public class JsonSave : ISave
 {
     public void SavePlayer()
     {
-        Player player = GameManager.Instance.GetPlayer;
+        // Player player = GameManager.Instance.GetPlayer;
         throw new System.NotImplementedException();
     }
 
