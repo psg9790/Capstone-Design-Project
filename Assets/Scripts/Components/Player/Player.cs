@@ -6,9 +6,6 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    // event for camera
-    // [HideInInspector] public UnityEvent playerMoveEvent;
-    
     // state
     [Sirenix.OdinInspector.ReadOnly] 
     public PlayerState state = PlayerState.Idle;
@@ -20,10 +17,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        nav.updateRotation = false;
     }
 
     void Update()
     {
+        NavRotation();
         // 움직이는 상태이면
         if (state == PlayerState.Move)
         {
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
             {
                 state = PlayerState.Idle;
             }
-            // playerMoveEvent.Invoke();
         }
     }
 
@@ -46,6 +44,22 @@ public class Player : MonoBehaviour
             nav.SetDestination(pos);
             moveTarget = pos;
         }
+    }
+
+    void NavRotation()
+    {
+        if (!nav.hasPath)
+            return;
+        
+        Vector2 forward = new Vector2(transform.position.z, transform.position.x);
+        Vector2 steeringTarget = new Vector2(nav.steeringTarget.z, nav.steeringTarget.x);
+    
+        //방향을 구한 뒤, 역함수로 각을 구한다.
+        Vector2 dir = steeringTarget - forward;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    
+        //방향 적용
+        transform.eulerAngles = Vector3.up * angle;
     }
 }
 

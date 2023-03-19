@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5118863008138154444}
   - component: {fileID: 5118863008138154445}
   m_Layer: 0
-  m_Name: SceneLoadManager
+  m_Name: SceneLoadInstance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3e37d81f4fe8044b443ae190423e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movableScenes: 
+  movableScenes: 00000000010000000200000003000000

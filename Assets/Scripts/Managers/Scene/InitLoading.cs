@@ -24,7 +24,8 @@ public class InitLoading : MonoBehaviour
         if (GameManager.Instance != null &&
             InputManager.Instance != null)
         {
-            GameManager.Instance.sceneLoadManager.SwitchScene("MainTitle");
+            FindObjectOfType<SceneLoadInstance>().SwitchScene(SceneName.MainTitle);
+            // GameManager.Instance.sceneLoadManager.SwitchScene(SceneName.MainTitle);
         }
     }
 }

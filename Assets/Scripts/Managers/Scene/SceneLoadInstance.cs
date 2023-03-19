@@ -8,19 +8,10 @@ using DG.Tweening;
 
 // UI에 드래그해서 적용하기 쉽게 씬마다 배치할 프래팹을 따로 만들었음
 // 배열에 이 씬에서 움직일 수 있는 씬을 미리 정해놓으면 그 씬들로 이동가능함
-public class SceneLoadManager : MonoBehaviour
+public class SceneLoadInstance : MonoBehaviour
 {
     [SerializeField] private SceneName[] movableScenes;
-
-    private void Start()
-    {
-        // 씬이 바뀌면 새로운 매니저로 GameManager에 등록
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.sceneLoadManager = this;
-        }
-    }
-
+    
     public void SwitchScene(string tgt)
     {
         foreach(SceneName name in movableScenes)

@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +10,6 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
     
     // important
-    [Sirenix.OdinInspector.ReadOnly] public SceneLoadManager sceneLoadManager;
     public ISave save = new JsonSave();
     
     public static GameManager Instance { get { return instance; } }
