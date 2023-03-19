@@ -37,5 +37,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Debug.LogWarning("GameManager cannot be two : Deleted.");
         }
+
+        Application.targetFrameRate = 60;
     }
 }

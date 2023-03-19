@@ -27,12 +27,27 @@ public abstract class Monster : MonoBehaviour
 
     public virtual void Idle()
     {
-        // 정지 모션
+        // 기본 정지 모션
     }
 
-    public virtual void Move()
+    public virtual void Patrol()
     {
-        // 이동 (patrol)
+        // 순찰 이동
+    }
+    
+    public virtual void FindPlayer()
+    {
+        // 기본: 정면 기준 원뿔 범위 탐색
+    }
+    
+    public virtual void ChasePlayer()
+    {
+        // 일정 거리까지는 플레이어 따라감
+    }
+
+    public virtual void R2B()
+    {
+        // 원래 있던 지점으로 복귀
     }
     
     public virtual void Attack()

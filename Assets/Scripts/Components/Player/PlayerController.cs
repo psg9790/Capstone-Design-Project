@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public Player player;
+    private Player player;
     private Camera cam;
     private bool rightClickHold = false;
     private void Start()

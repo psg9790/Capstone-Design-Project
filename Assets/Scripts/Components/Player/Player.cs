@@ -6,11 +6,14 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    // event
-    public UnityEvent playerMoveEvent;
+    // event for camera
+    [HideInInspector] public UnityEvent playerMoveEvent;
     
-    public PlayerBehavior behavior = PlayerBehavior.Idle;
+    // state
+    [Sirenix.OdinInspector.ReadOnly] 
+    public PlayerState state = PlayerState.Idle;
     
+    // move
     private NavMeshAgent nav;
     private Vector3 moveTarget;
     
@@ -22,12 +25,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         // 움직이는 상태이면
-        if (behavior.CompareTo(PlayerBehavior.Move) == 0)
+        if (state == PlayerState.Move)
         {
             Vector3 dist = moveTarget - transform.position;
             if (dist.magnitude <= 0.1f)
             {
-                behavior = PlayerBehavior.Idle;
+                state = PlayerState.Idle;
             }
             playerMoveEvent.Invoke();
         }
@@ -35,14 +38,18 @@ public class Player : MonoBehaviour
 
     public void Move(Vector3 pos)
     {
-        
-        behavior = PlayerBehavior.Move;
-        nav.SetDestination(pos);
-        moveTarget = pos;
+        if (state != PlayerState.Death && 
+            state != PlayerState.Cc && 
+            state != PlayerState.Attack)
+        {
+            state = PlayerState.Move;
+            nav.SetDestination(pos);
+            moveTarget = pos;
+        }
     }
 }
 
-public enum PlayerBehavior
+public enum PlayerState
 {
     Idle, 
     Move,
