@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     // event for camera
-    [HideInInspector] public UnityEvent playerMoveEvent;
+    // [HideInInspector] public UnityEvent playerMoveEvent;
     
     // state
     [Sirenix.OdinInspector.ReadOnly] 
@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
             {
                 state = PlayerState.Idle;
             }
-            playerMoveEvent.Invoke();
+            // playerMoveEvent.Invoke();
         }
     }
 

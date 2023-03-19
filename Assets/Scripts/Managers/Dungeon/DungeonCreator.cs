@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 플레이어 스폰, 몬스터 스폰, 오브젝트 스폰 등 총괄
 public class DungeonCreator : MonoBehaviour
 {
-    Transform spawnPoint;
+    private Transform spawnPoint;
     public GameObject playerPrefab;
     [Sirenix.OdinInspector.ReadOnly] public Player player;
 
@@ -18,6 +19,7 @@ public class DungeonCreator : MonoBehaviour
         }
         spawnPoint = GameObject.Find("SpawnPoint").transform;
         player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<Player>();
-        Camera.main.GetComponent<CameraController>().Attach(player);
+        if(Camera.main != null)
+            Camera.main.GetComponent<CameraController>().Attach(player);
     }
 }

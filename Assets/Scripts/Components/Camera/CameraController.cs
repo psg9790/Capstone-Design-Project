@@ -20,13 +20,23 @@ public class CameraController : MonoBehaviour
         transform.position = player.transform.position + offset;
         transform.rotation = Quaternion.LookRotation(player.transform.position
                                                      - transform.position);
-        player.playerMoveEvent.AddListener(OnPlayerMove);
+    }
+
+    private void Update()
+    {
+        if (player != null)
+        {
+            Vector3 diff = (player.transform.position + offset) - transform.position;
+            if (diff.magnitude > 0.1f)
+            {
+                OnPlayerMove();
+            }
+        }
     }
 
     private Tweener move;
     void OnPlayerMove()
     {
-        UnityEngine.Debug.Log("onplayermove");
         move = transform.DOMove(player.transform.position + offset, 0.3f);
         move.Play();
     }

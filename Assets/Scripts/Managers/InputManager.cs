@@ -10,10 +10,7 @@ public class InputManager : MonoBehaviour
     static InputManager instance;
     private PlayerInput m_PlayerInput;
 
-    public static InputManager Instance
-    {
-        get { return instance; }
-    }
+    public static InputManager Instance { get { return instance; } }
 
     private void Awake()
     {
@@ -28,32 +25,31 @@ public class InputManager : MonoBehaviour
             Destroy(this.gameObject);
             Debug.LogWarning("InputManager cannot be two : Deleted.");
         }
-        // instance.m_PlayerInput.actions["RightClick"]
     }
 
-    public void AddPerformed(InputType type, Action<InputAction.CallbackContext> action)
+    public void AddPerformed(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].performed += action;
+        instance.m_PlayerInput.actions[key.ToString()].performed += action;
     }
-    public void RemovePerformed(InputType type, Action<InputAction.CallbackContext> action)
+    public void RemovePerformed(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].performed -= action;
+        instance.m_PlayerInput.actions[key.ToString()].performed -= action;
     }
-    public void AddCanceled(InputType type, Action<InputAction.CallbackContext> action)
+    public void AddCanceled(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].canceled += action;
+        instance.m_PlayerInput.actions[key.ToString()].canceled += action;
     }
-    public void RemoveCanceled(InputType type, Action<InputAction.CallbackContext> action)
+    public void RemoveCanceled(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].canceled -= action;
+        instance.m_PlayerInput.actions[key.ToString()].canceled -= action;
     }
-    public void AddStarted(InputType type, Action<InputAction.CallbackContext> action)
+    public void AddStarted(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].started += action;
+        instance.m_PlayerInput.actions[key.ToString()].started += action;
     }
-    public void RemoveStarted(InputType type, Action<InputAction.CallbackContext> action)
+    public void RemoveStarted(InputKey key, Action<InputAction.CallbackContext> action)
     {
-        instance.m_PlayerInput.actions[type.ToString()].started -= action;
+        instance.m_PlayerInput.actions[key.ToString()].started -= action;
     }
     public Vector2 GetMousePosition()
     {
@@ -61,7 +57,7 @@ public class InputManager : MonoBehaviour
     }
 }
 
-public enum InputType
+public enum InputKey
 {
     RightClick,
     LeftClick

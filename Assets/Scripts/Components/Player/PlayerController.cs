@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
         if (InputManager.Instance != null)
         {
             // InputManager.Instance.AddPerformed(InputType.RightClick, OnMove);
-            InputManager.Instance.AddPerformed(InputType.RightClick, RighClickPerformed);
-            InputManager.Instance.AddCanceled(InputType.RightClick, RighClickCanceled);
+            InputManager.Instance.AddPerformed(InputKey.RightClick, RighClickPerformed);
+            InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
         }
 
         player = GetComponent<Player>();
