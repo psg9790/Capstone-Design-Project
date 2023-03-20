@@ -57,6 +57,11 @@ public class SceneLoadInstance : MonoBehaviour
     {
         settings.CancelChangesButton();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
 
 [Serializable]
