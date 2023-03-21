@@ -1,12 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
-public abstract class Monster : MonoBehaviour
-{ 
-    void Start()
+public class Monster : MonoBehaviour
+{
+    // behavior
+    [HideInInspector] public NavMeshAgent nav;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public MonsterStateMachine fsm;
+    [ReadOnly] public EMonsterState _state;
+    
+    // target
+    [HideInInspector] public Player player;
+    [HideInInspector] public Vector3 patrolPoint;
+    
+    // infos
+    [ShowInInspector] 
+    [ReadOnly]
+    private bool playerInSight = false;
+
+    
+    void Awake()
     {
-        OnStart();
+        OnAwake();
     }
 
     void Update()
@@ -14,54 +32,57 @@ public abstract class Monster : MonoBehaviour
         OnUpdate();
     }
 
-    public virtual void OnStart()
+    protected virtual void OnAwake()
     {
-
+        fsm = new MonsterStateMachine(this);
+        fsm.ChangeState(new MonsterState_Idle(this));
+        if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
+        {
+            nav = agent;
+        }
+        else
+        {
+            Debug.LogError("no nav in " + this.gameObject.name);
+        }
     }
 
-    public virtual void OnUpdate()
+    protected virtual void OnUpdate()
     {
-        // 상태 행동
-        // detect player
+        // 현재 state 행동 
+        fsm.Execute();
+        
+        // 시야에 플레이어가 있는지 갱신
+        // PlayerInSight();
+        
+        // 기본 행동
+        switch(_state)
+        {
+            case EMonsterState.Idle:
+                if(playerInSight)
+                    fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                break;
+            case EMonsterState.Patrol:
+                if(playerInSight)
+                    fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                break;
+            case EMonsterState.ChasePlayer:
+                if (!playerInSight)
+                    fsm.ChangeState(new MonsterState_Idle(this));
+                break;
+        }
     }
 
-    public virtual void Idle()
+    [Button]
+    protected virtual void PlayerInSight()
     {
-        // 기본 정지 모션
+        playerInSight = !playerInSight;
     }
+}
 
-    public virtual void Patrol()
-    {
-        // 순찰 이동
-    }
-    
-    public virtual void FindPlayer()
-    {
-        // 기본: 정면 기준 원뿔 범위 탐색
-    }
-    
-    public virtual void ChasePlayer()
-    {
-        // 일정 거리까지는 플레이어 따라감
-    }
-
-    public virtual void R2B()
-    {
-        // 원래 있던 지점으로 복귀
-    }
-    
-    public virtual void Attack()
-    {
-        // 기본 공격
-    }
-
-    public virtual void TakeDamage()
-    {
-        // 데미지 입음
-    }
-
-    public virtual void Death()
-    {
-        // 사망 (아이템 드랍)
-    }
+public enum EMonsterState
+{
+    Idle,
+    Patrol,
+    ChasePlayer,
+    R2B
 }
