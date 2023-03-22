@@ -11,7 +11,7 @@ public class MonsterState_Patrol : MonsterState
     {
         base.Enter();
         
-        monster._state = EMonsterState.Patrol;
+        monster.state = EMonsterState.Patrol;
         NavMeshPath path = new NavMeshPath();
         while (true)
         {

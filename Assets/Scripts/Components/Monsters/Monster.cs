@@ -12,7 +12,7 @@ public class Monster : MonoBehaviour
     
     // behavior
     [HideInInspector] public MonsterStateMachine fsm;
-    [ReadOnly] public EMonsterState _state;
+    [ReadOnly] public EMonsterState state;
     
     // target
     [HideInInspector] public MonsterSpawner spawner;
@@ -69,7 +69,7 @@ public class Monster : MonoBehaviour
         // 시야에 플레이어가 있는지 갱신
         
         // 기본 행동
-        switch(_state)
+        switch(state)
         {
             case EMonsterState.Idle:
                 idleElapsedTime += Time.deltaTime;

@@ -11,7 +11,7 @@ public class MonsterState_ChasePlayer : MonsterState
     public override void Enter()
     {
         base.Enter();
-        monster._state = EMonsterState.ChasePlayer;
+        monster.state = EMonsterState.ChasePlayer;
     }
 
     public override void Execute()

@@ -8,7 +8,7 @@ public class MonsterState_Idle : MonsterState
     public override void Enter()
     {
         base.Enter();
-        monster._state = EMonsterState.Idle;
+        monster.state = EMonsterState.Idle;
         monster.idleElapsedTime = 0f;
     }
 
