@@ -13,13 +13,14 @@ public class MonsterSpawner : MonoBehaviour
     public void Spawn()
     {
         Monster monster = Instantiate<Monster>(monsters[0]);
-        monster.transform.position = this.transform.position;
+        monster.transform.position = GetRandomPosInPatrolRadius();
         monster.spawner = this;
     }
 
     public Vector3 GetRandomPosInPatrolRadius()
     {
         Vector3 target = Vector3.zero;
+        target.y = this.transform.position.y;
         target.z += Random.Range(-patrolRadius, patrolRadius);
         target.x += Random.Range(-patrolRadius, patrolRadius);
         if (target.magnitude > patrolRadius)
@@ -27,6 +28,7 @@ public class MonsterSpawner : MonoBehaviour
             target = target.normalized;
             target *= 3;
         }
+        
         return this.transform.position + target;
     }
 }
