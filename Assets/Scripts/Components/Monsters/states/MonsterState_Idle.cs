@@ -9,12 +9,12 @@ public class MonsterState_Idle : MonsterState
     {
         base.Enter();
         monster._state = EMonsterState.Idle;
+        monster.idleElapsedTime = 0f;
     }
 
     public override void Execute()
     {
         base.Execute();
-        Debug.Log("idle");
     }
 
     public override void Exit()
