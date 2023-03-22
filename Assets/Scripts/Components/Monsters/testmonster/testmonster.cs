@@ -14,8 +14,8 @@ public class testmonster : Monster
         base.OnUpdate();
     }
 
-    protected override void PlayerInSight()
+    protected override void FieldOfView()
     {
-        base.PlayerInSight();
+        base.FieldOfView();
     }
 }

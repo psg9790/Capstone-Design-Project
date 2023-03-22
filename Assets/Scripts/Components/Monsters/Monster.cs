@@ -67,7 +67,6 @@ public class Monster : MonoBehaviour
         NavRotation();
         
         // 시야에 플레이어가 있는지 갱신
-        // PlayerInSight();
         
         // 기본 행동
         switch(_state)
@@ -107,8 +106,9 @@ public class Monster : MonoBehaviour
     }
 
     [Button]
-    protected virtual void PlayerInSight()
+    protected virtual void FieldOfView()
     {
+        // https://nicotina04.tistory.com/197
         playerInSight = !playerInSight;
     }
 }
