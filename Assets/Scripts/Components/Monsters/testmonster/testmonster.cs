@@ -14,8 +14,4 @@ public class testmonster : Monster
         base.OnUpdate();
     }
 
-    protected override void FieldOfView()
-    {
-        base.FieldOfView();
-    }
 }

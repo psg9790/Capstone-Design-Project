@@ -24,6 +24,9 @@ public class Monster : MonoBehaviour
     [ReadOnly] public float idleElapsedTime = 0f;
     [SerializeField] private float idleToPatrolTime = 4f;
     
+    // fov
+    
+    
     void Awake()
     {
         OnAwake();
@@ -105,12 +108,6 @@ public class Monster : MonoBehaviour
         transform.eulerAngles = Vector3.up * angle;
     }
 
-    [Button]
-    protected virtual void FieldOfView()
-    {
-        // https://nicotina04.tistory.com/197
-        playerInSight = !playerInSight;
-    }
 }
 
 public enum EMonsterState
