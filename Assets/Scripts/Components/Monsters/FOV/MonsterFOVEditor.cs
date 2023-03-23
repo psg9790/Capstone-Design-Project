@@ -7,6 +7,7 @@ using UnityEngine;
 [CustomEditor(typeof (MonsterFOV))]
 public class MonsterFOVEditor : Editor
 {
+    // https://nicotina04.tistory.com/197
     private void OnSceneGUI()
     {
         MonsterFOV fow = (MonsterFOV)target;
@@ -19,12 +20,8 @@ public class MonsterFOVEditor : Editor
         Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
 
         Handles.color = Color.red;
-        //
-        // foreach (Transform visible in fow.visibleTargets)
-        // {
-        //     Handles.DrawLine(fow.transform.position, visible.transform.position);
-        // }
-        if (fow.monster.player != null)
+        
+        if (fow.monster.playerInSight)
         {
             Handles.DrawLine(fow.transform.position, fow.monster.player.transform.position);
         }

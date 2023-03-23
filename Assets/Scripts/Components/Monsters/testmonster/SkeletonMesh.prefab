@@ -550,10 +550,17 @@ MonoBehaviour:
   patrolPoint: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   playerInSight: 0
-  idleElapsedTime: 0
-  idleToPatrolTime: 4
   attackRange: 1.75
   fov: {fileID: 0}
+  baseFovRadius: 0
+  baseFovAngle: 0
+  extendFovRadius_multi: 3
+  extendFovAngle: 360
+  extendFovTime: 4
+  idleElapsedTime: 0
+  idleToPatrolTime: 4
+  catchPatrolRaceCondition: 0
+  velocity: 0
 --- !u!114 &5187192431022494434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,7 +619,7 @@ NavMeshAgent:
   m_AngularSpeed: 999
   m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0

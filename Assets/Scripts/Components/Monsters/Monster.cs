@@ -9,31 +9,39 @@ public class Monster : MonoBehaviour
     // components
     [HideInInspector] public NavMeshAgent nav;
     [HideInInspector] public Animator animator;
-    
+
     // behavior
     [HideInInspector] public MonsterStateMachine fsm;
     [ReadOnly] public EMonsterState state;
-    
+
     // target
-    [HideInInspector] public MonsterSpawner spawner; 
+    [HideInInspector] public MonsterSpawner spawner;
     [HideInInspector] public Vector3 patrolPoint;
     [HideInInspector] public Player player;
     [ReadOnly] public bool playerInSight = false;
     [SerializeField] public float attackRange = 1.75f;
-    
+
     // fov
     [HideInInspector] public MonsterFOV fov;
     [HideInInspector] public float baseFovRadius;
     [HideInInspector] public float baseFovAngle;
     [BoxGroup("FOV")] public float extendFovRadius_multi = 2f;
-    [BoxGroup("FOV")] [Range(0,360)] public float extendFovAngle = 360f;
+    [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f;
     [BoxGroup("FOV")] public float extendFovTime = 4f;
-    
+
     // infos
-    [FoldoutGroup("Idle->Patrol info")][ReadOnly] public float idleElapsedTime = 0f;
-    [FoldoutGroup("Idle->Patrol info")][ReadOnly] public float idleToPatrolTime = 4f;
-    
-    
+    [FoldoutGroup("Idle->Patrol info")] [ReadOnly]
+    public float idleElapsedTime = 0f;
+
+    [FoldoutGroup("Idle->Patrol info")] [ReadOnly]
+    public float idleToPatrolTime = 4f;
+
+    [FoldoutGroup("Patrol Race Condition Control")] [ReadOnly]
+    public float catchPatrolRaceCondition = 0;
+
+    [FoldoutGroup("Patrol Race Condition Control")] [ReadOnly]
+    public float velocity;
+
     void Awake()
     {
         OnAwake();
@@ -76,7 +84,7 @@ public class Monster : MonoBehaviour
         {
             UnityEngine.Debug.LogError("no fov assigned in " + this.gameObject.name);
         }
-        
+
         fsm.ChangeState(new MonsterState_Idle(this));
     }
 
@@ -84,29 +92,41 @@ public class Monster : MonoBehaviour
     {
         // 현재 state 행동 
         fsm.Execute();
-        
+
         // nav용 rotation
         NavRotation();
-        
+
         // 시야에 플레이어가 있는지 갱신
         fov.FindVisiblePlayer();
-        
+
         // 기본 행동
-        switch(state)
+        switch (state)
         {
-            case EMonsterState.Idle:    // 대기 상태
+            case EMonsterState.Idle: // 대기 상태
                 idleElapsedTime += Time.deltaTime;
                 if (idleElapsedTime > idleToPatrolTime) // 일정 시간 대기하면 순찰
                     fsm.ChangeState(new MonsterState_Patrol(this));
-                if(playerInSight)   // 플레이어 발견시 추적
+                if (playerInSight) // 플레이어 발견시 추적
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
                 break;
-            
-            case EMonsterState.Patrol:  // 순찰 상태
-                if(playerInSight)   // 플레이어 발견시 추적
+
+            case EMonsterState.Patrol: // 순찰 상태
+                if (playerInSight) // 플레이어 발견시 추적
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                
+                velocity = nav.velocity.sqrMagnitude;
+                catchPatrolRaceCondition += Time.deltaTime;
+                if (catchPatrolRaceCondition > 3)
+                {
+                    Debug.Log("stop!!!");
+                    catchPatrolRaceCondition = 0;
+                    fsm.ChangeState(new MonsterState_Idle(this));
+                }
+                if (velocity > 2f)
+                    catchPatrolRaceCondition = 0;
+
                 break;
-            
+
             case EMonsterState.ChasePlayer: // 추적 상태
                 if (!nav.pathPending)
                 {
@@ -115,55 +135,56 @@ public class Monster : MonoBehaviour
                         // attack here
                     }
                 }
+
                 if (!playerInSight) // 플레이어 놓쳤을 시 대기
                     fsm.ChangeState(new MonsterState_Idle(this));
                 break;
-            
-            case EMonsterState.BaseAttack:  // 기본 공격 수행
+
+            case EMonsterState.BaseAttack: // 기본 공격 수행
                 break;
         }
     }
-    
+
     void NavRotation()
     {
         // https://srdeveloper.tistory.com/115
         if (!nav.hasPath)
             return;
-        
+
         Vector2 forward = new Vector2(transform.position.z, transform.position.x);
         Vector2 steeringTarget = new Vector2(nav.steeringTarget.z, nav.steeringTarget.x);
-    
+
         //방향을 구한 뒤, 역함수로 각을 구한다.
         Vector2 dir = steeringTarget - forward;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-    
+
         //방향 적용
         transform.eulerAngles = Vector3.up * angle;
     }
-    
-    private Coroutine extendSightCo;    // 하나의 시야증가만을 유지하기 위해 변수 하나로 통제
+
+    private Coroutine extendSightCo; // 하나의 시야증가만을 유지하기 위해 변수 하나로 통제
+
     private IEnumerator SightCo()
     {
         fov.viewRadius = baseFovRadius * extendFovRadius_multi; // 시야를 증가시킴
         fov.viewAngle = extendFovAngle;
-        
+
         yield return new WaitForSeconds(extendFovTime); // 설정한 초만큼 유지시키고
-        
+
         fov.viewRadius = baseFovRadius; // 다시 원래대로 되돌림
         fov.viewAngle = baseFovAngle;
     }
+
     public void ExtendSight()
     {
-        if(extendSightCo != null)
-            StopCoroutine(extendSightCo);   // 이미 시야증가를 돌린적이 있으면 취소시킴
-        extendSightCo = StartCoroutine(SightCo());  // 시야증가 코루틴 시작
+        if (extendSightCo != null)
+            StopCoroutine(extendSightCo); // 이미 시야증가를 돌린적이 있으면 취소시킴
+        extendSightCo = StartCoroutine(SightCo()); // 시야증가 코루틴 시작
     }
 
     public virtual void OnBaseAttack()
     {
-        
     }
-
 }
 
 public enum EMonsterState

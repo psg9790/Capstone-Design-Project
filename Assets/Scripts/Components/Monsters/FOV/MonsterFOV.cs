@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class MonsterFOV : MonoBehaviour
 {
+    // https://nicotina04.tistory.com/197
     public float viewRadius;
     [Range(0,360)] public float viewAngle;
 
     public LayerMask targetMask, obstacleMask;
-
-    // public Player visiblePlayer = null;
 
     [HideInInspector] public Monster monster;
 

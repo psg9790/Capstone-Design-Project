@@ -26,18 +26,23 @@ public class MonsterState_Patrol : MonsterState
                 break;
             }
         }
-        monster.animator.SetBool("Patrol", true);   // 순찰 애니메이션
+
+        monster.animator.SetBool("Patrol", true); // 순찰 애니메이션
     }
 
     public override void Execute()
     {
         base.Execute();
         // https://answers.unity.com/questions/324589/how-can-i-tell-when-a-navmesh-has-reached-its-dest.html
-        if (monster.nav.remainingDistance < monster.nav.stoppingDistance)
+
+        if (!monster.nav.pathPending)
         {
-            if (!monster.nav.hasPath || monster.nav.velocity.sqrMagnitude == 0f)
+            if (monster.nav.remainingDistance < monster.nav.stoppingDistance)
             {
-                monster.fsm.ChangeState(new MonsterState_Idle(monster));
+                if (!monster.nav.hasPath || monster.nav.velocity.sqrMagnitude == 0f)
+                {
+                    monster.fsm.ChangeState(new MonsterState_Idle(monster));
+                }
             }
         }
     }
