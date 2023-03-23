@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class MonsterState_ChasePlayer : MonsterState
 {
-    private float FOVRadius_base;
-    private float FOVAngle_base;
-    private float chaseFOVRadius_multi = 2f; 
-    private float chaseFOVAngle = 360f;
-    
     public MonsterState_ChasePlayer(Monster monster) : base(monster)
     {
     }
@@ -17,27 +12,21 @@ public class MonsterState_ChasePlayer : MonsterState
     {
         base.Enter();
         monster.state = EMonsterState.ChasePlayer;
-        monster.animator.SetBool("ChasePlayer", true);
-        FOVRadius_base = monster.fov.viewRadius;
-        FOVAngle_base = monster.fov.viewAngle;
-        monster.fov.viewRadius *= chaseFOVRadius_multi;
-        monster.fov.viewAngle = chaseFOVAngle;
+        monster.animator.SetBool("ChasePlayer", true);  // 
     }
 
     public override void Execute()
     {
         base.Execute();
-        if (monster.playerInSight)
-        {
+        monster.ExtendSight();  // 추적할 때 시야증가
+        if (monster.playerInSight)  // 추적할 플레이어가 존재하면 움직임
             monster.nav.SetDestination(monster.player.transform.position);
-        }
     }
 
     public override void Exit()
     {
         base.Exit();
         monster.animator.SetBool("ChasePlayer", false);
-        monster.fov.viewRadius = FOVRadius_base;
-        monster.fov.viewAngle = FOVAngle_base;
+        monster.nav.ResetPath();
     }
 }

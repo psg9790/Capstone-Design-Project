@@ -12,7 +12,7 @@ public class MonsterFOV : MonoBehaviour
 
     // public Player visiblePlayer = null;
 
-    public Monster monster;
+    [HideInInspector] public Monster monster;
 
     private void Start()
     {

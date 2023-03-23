@@ -10,11 +10,15 @@ public class MonsterState_Patrol : MonsterState
     public override void Enter()
     {
         base.Enter();
-        
         monster.state = EMonsterState.Patrol;
         NavMeshPath path = new NavMeshPath();
         while (true)
         {
+            /*
+             몬스터가 스폰포인트에서 랜덤 좌표를 가져오는데
+             그 좌표가 navigation을 사용하는데 적절하지 않은 좌표일 수 있어서 (Not Walkable)
+             적절한 좌표를 가져올 때까지 경로 탐색을 반복함
+             */
             monster.patrolPoint = monster.spawner.GetRandomPosInPatrolRadius();
             if (monster.nav.CalculatePath(monster.patrolPoint, path))
             {
@@ -22,8 +26,7 @@ public class MonsterState_Patrol : MonsterState
                 break;
             }
         }
-        
-        monster.animator.SetBool("Patrol", true);
+        monster.animator.SetBool("Patrol", true);   // 순찰 애니메이션
     }
 
     public override void Execute()
@@ -37,7 +40,6 @@ public class MonsterState_Patrol : MonsterState
                 monster.fsm.ChangeState(new MonsterState_Idle(monster));
             }
         }
-        // Debug.DrawRay(monster.patrolPoint, Vector3.up * 3, Color.blue);
     }
 
     public override void Exit()

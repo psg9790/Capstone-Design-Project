@@ -19,14 +19,19 @@ public class Monster : MonoBehaviour
     [HideInInspector] public Vector3 patrolPoint;
     [HideInInspector] public Player player;
     [ReadOnly] public bool playerInSight = false;
-    
-    // infos
-    [ReadOnly] public float idleElapsedTime = 0f;
-    [SerializeField] public float idleToPatrolTime = 4f;
     [SerializeField] public float attackRange = 1.75f;
     
     // fov
     [HideInInspector] public MonsterFOV fov;
+    [HideInInspector] public float baseFovRadius;
+    [HideInInspector] public float baseFovAngle;
+    [BoxGroup("FOV")] public float extendFovRadius_multi = 2f;
+    [BoxGroup("FOV")] [Range(0,360)] public float extendFovAngle = 360f;
+    [BoxGroup("FOV")] public float extendFovTime = 4f;
+    
+    // infos
+    [FoldoutGroup("Idle->Patrol info")][ReadOnly] public float idleElapsedTime = 0f;
+    [FoldoutGroup("Idle->Patrol info")][ReadOnly] public float idleToPatrolTime = 4f;
     
     
     void Awake()
@@ -64,6 +69,8 @@ public class Monster : MonoBehaviour
         if (TryGetComponent<MonsterFOV>(out MonsterFOV _fov))
         {
             fov = _fov;
+            baseFovRadius = fov.viewRadius;
+            baseFovAngle = fov.viewAngle;
         }
         else
         {
@@ -87,35 +94,39 @@ public class Monster : MonoBehaviour
         // 기본 행동
         switch(state)
         {
-            case EMonsterState.Idle:
+            case EMonsterState.Idle:    // 대기 상태
                 idleElapsedTime += Time.deltaTime;
-                if (idleElapsedTime > idleToPatrolTime)
+                if (idleElapsedTime > idleToPatrolTime) // 일정 시간 대기하면 순찰
                     fsm.ChangeState(new MonsterState_Patrol(this));
-                if(playerInSight)
+                if(playerInSight)   // 플레이어 발견시 추적
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
                 break;
-            case EMonsterState.Patrol:
-                if(playerInSight)
+            
+            case EMonsterState.Patrol:  // 순찰 상태
+                if(playerInSight)   // 플레이어 발견시 추적
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
                 break;
-            case EMonsterState.ChasePlayer:
-                if(!nav.pathPending)
+            
+            case EMonsterState.ChasePlayer: // 추적 상태
+                if (!nav.pathPending)
+                {
                     if (nav.remainingDistance < attackRange)
                     {
-                        // fsm.ChangeState(new MonsterState_Idle(this));
-                        nav.ResetPath();
+                        // attack here
                     }
-
-                if (!playerInSight)
-                {
-                    fsm.ChangeState(new MonsterState_Idle(this));
                 }
+                if (!playerInSight) // 플레이어 놓쳤을 시 대기
+                    fsm.ChangeState(new MonsterState_Idle(this));
+                break;
+            
+            case EMonsterState.BaseAttack:  // 기본 공격 수행
                 break;
         }
     }
     
     void NavRotation()
     {
+        // https://srdeveloper.tistory.com/115
         if (!nav.hasPath)
             return;
         
@@ -129,6 +140,29 @@ public class Monster : MonoBehaviour
         //방향 적용
         transform.eulerAngles = Vector3.up * angle;
     }
+    
+    private Coroutine extendSightCo;    // 하나의 시야증가만을 유지하기 위해 변수 하나로 통제
+    private IEnumerator SightCo()
+    {
+        fov.viewRadius = baseFovRadius * extendFovRadius_multi; // 시야를 증가시킴
+        fov.viewAngle = extendFovAngle;
+        
+        yield return new WaitForSeconds(extendFovTime); // 설정한 초만큼 유지시키고
+        
+        fov.viewRadius = baseFovRadius; // 다시 원래대로 되돌림
+        fov.viewAngle = baseFovAngle;
+    }
+    public void ExtendSight()
+    {
+        if(extendSightCo != null)
+            StopCoroutine(extendSightCo);   // 이미 시야증가를 돌린적이 있으면 취소시킴
+        extendSightCo = StartCoroutine(SightCo());  // 시야증가 코루틴 시작
+    }
+
+    public virtual void OnBaseAttack()
+    {
+        
+    }
 
 }
 
@@ -137,5 +171,5 @@ public enum EMonsterState
     Idle,
     Patrol,
     ChasePlayer,
-    R2B
+    BaseAttack
 }
