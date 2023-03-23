@@ -10,12 +10,13 @@ public class MonsterFOV : MonoBehaviour
 
     public LayerMask targetMask, obstacleMask;
 
-    public Player visiblePlayer = null;
+    // public Player visiblePlayer = null;
 
+    public Monster monster;
 
-    private void Update()
+    private void Start()
     {
-        FindVisiblePlayer();
+        monster = GetComponent<Monster>();
     }
 
     public void FindVisiblePlayer()
@@ -37,7 +38,8 @@ public class MonsterFOV : MonoBehaviour
 
                     if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
-                        visiblePlayer = _player;
+                        monster.player = _player;
+                        monster.playerInSight = true;
                         foundPlayer = true;
                     }
                 }
@@ -46,7 +48,8 @@ public class MonsterFOV : MonoBehaviour
 
         if (!foundPlayer)
         {
-            visiblePlayer = null;
+            monster.player = null;
+            monster.playerInSight = false;
         }
     }
 

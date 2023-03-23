@@ -15,16 +15,18 @@ public class Monster : MonoBehaviour
     [ReadOnly] public EMonsterState state;
     
     // target
-    [HideInInspector] public MonsterSpawner spawner;
-    [HideInInspector] public Player player;
+    [HideInInspector] public MonsterSpawner spawner; 
     [HideInInspector] public Vector3 patrolPoint;
+    [HideInInspector] public Player player;
+    [ReadOnly] public bool playerInSight = false;
     
     // infos
-    [ShowInInspector] [ReadOnly] private bool playerInSight = false;
     [ReadOnly] public float idleElapsedTime = 0f;
-    [SerializeField] private float idleToPatrolTime = 4f;
+    [SerializeField] public float idleToPatrolTime = 4f;
+    [SerializeField] public float attackRange = 1.75f;
     
     // fov
+    [HideInInspector] public MonsterFOV fov;
     
     
     void Awake()
@@ -40,7 +42,6 @@ public class Monster : MonoBehaviour
     protected virtual void OnAwake()
     {
         fsm = new MonsterStateMachine(this);
-        fsm.ChangeState(new MonsterState_Idle(this));
         if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
         {
             nav = agent;
@@ -59,6 +60,17 @@ public class Monster : MonoBehaviour
         {
             Debug.LogError("no animator assigned in " + this.gameObject.name);
         }
+
+        if (TryGetComponent<MonsterFOV>(out MonsterFOV _fov))
+        {
+            fov = _fov;
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("no fov assigned in " + this.gameObject.name);
+        }
+        
+        fsm.ChangeState(new MonsterState_Idle(this));
     }
 
     protected virtual void OnUpdate()
@@ -70,6 +82,7 @@ public class Monster : MonoBehaviour
         NavRotation();
         
         // 시야에 플레이어가 있는지 갱신
+        fov.FindVisiblePlayer();
         
         // 기본 행동
         switch(state)
@@ -86,8 +99,17 @@ public class Monster : MonoBehaviour
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
                 break;
             case EMonsterState.ChasePlayer:
+                if(!nav.pathPending)
+                    if (nav.remainingDistance < attackRange)
+                    {
+                        // fsm.ChangeState(new MonsterState_Idle(this));
+                        nav.ResetPath();
+                    }
+
                 if (!playerInSight)
+                {
                     fsm.ChangeState(new MonsterState_Idle(this));
+                }
                 break;
         }
     }

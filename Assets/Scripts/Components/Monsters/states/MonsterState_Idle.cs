@@ -10,6 +10,7 @@ public class MonsterState_Idle : MonsterState
         base.Enter();
         monster.state = EMonsterState.Idle;
         monster.idleElapsedTime = 0f;
+        monster.nav.ResetPath();
     }
 
     public override void Execute()

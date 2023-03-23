@@ -24,9 +24,9 @@ public class MonsterFOVEditor : Editor
         // {
         //     Handles.DrawLine(fow.transform.position, visible.transform.position);
         // }
-        if (fow.visiblePlayer != null)
+        if (fow.monster.player != null)
         {
-            Handles.DrawLine(fow.transform.position, fow.visiblePlayer.transform.position);
+            Handles.DrawLine(fow.transform.position, fow.monster.player.transform.position);
         }
     }
 }
