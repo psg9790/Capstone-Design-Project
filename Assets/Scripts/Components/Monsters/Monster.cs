@@ -122,7 +122,7 @@ public class Monster : MonoBehaviour
                     catchPatrolRaceCondition = 0;
                     fsm.ChangeState(new MonsterState_Idle(this));
                 }
-                if (velocity > 2f)
+                if (velocity > 3.5f)
                     catchPatrolRaceCondition = 0;
 
                 break;
