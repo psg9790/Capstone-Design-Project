@@ -802,6 +802,7 @@ MonoBehaviour:
   monsters:
   - {fileID: 4385279898836153889, guid: 6282b8ed67b40394f9d8fb493d76ba69, type: 3}
   patrolRadius: 4
+  spawnAmount: 1
 --- !u!4 &1499520086
 Transform:
   m_ObjectHideFlags: 0
@@ -810,7 +811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1499520084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.41, y: 0, z: 3.6}
+  m_LocalPosition: {x: -0.34, y: 0, z: 2.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,133 +1,377 @@
 fileFormatVersion: 2
 guid: 5d004f45041072445bc59fb665be24e4
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Body
-    100004: BottomEye_L
-    100006: BottomEye_R
-    100008: Chest
-    100010: EyeRoot
-    100012: Feet_L
-    100014: Feet_R
-    100016: FeetBall_L
-    100018: FeetBall_R
-    100020: FeetToe_L
-    100022: FeetToe_R
-    100024: Hand_L
-    100026: Hand_R
-    100028: Head
-    100030: Index01_L
-    100032: Index01_R
-    100034: Index02_L
-    100036: Index02_R
-    100038: Index03_L
-    100040: Index03_R
-    100042: Jaw
-    100044: LowerArm_L
-    100046: LowerArm_R
-    100048: LowerLeg_L
-    100050: LowerLeg_R
-    100052: Mid01_L
-    100054: Mid01_R
-    100056: Mid02_L
-    100058: Mid02_R
-    100060: Mid03_L
-    100062: Mid03_R
-    100064: Neck
-    100066: Pinky01_L
-    100068: Pinky01_R
-    100070: Pinky02_L
-    100072: Pinky02_R
-    100074: Pinky03_L
-    100076: Pinky03_R
-    100078: Shield
-    100080: Shield 1
-    100082: Skeleton
-    100084: Spine01
-    100086: Sword
-    100088: Thumb01_L
-    100090: Thumb01_R
-    100092: Thumb02_L
-    100094: Thumb02_R
-    100096: Thumb03_L
-    100098: Thumb03_R
-    100100: UpperArm_L
-    100102: UpperArm_R
-    100104: UpperEye_L
-    100106: UpperEye_R
-    100108: UpperLeg_L
-    100110: UpperLeg_R
-    100112: Weapon
-    400000: //RootNode
-    400002: Body
-    400004: BottomEye_L
-    400006: BottomEye_R
-    400008: Chest
-    400010: EyeRoot
-    400012: Feet_L
-    400014: Feet_R
-    400016: FeetBall_L
-    400018: FeetBall_R
-    400020: FeetToe_L
-    400022: FeetToe_R
-    400024: Hand_L
-    400026: Hand_R
-    400028: Head
-    400030: Index01_L
-    400032: Index01_R
-    400034: Index02_L
-    400036: Index02_R
-    400038: Index03_L
-    400040: Index03_R
-    400042: Jaw
-    400044: LowerArm_L
-    400046: LowerArm_R
-    400048: LowerLeg_L
-    400050: LowerLeg_R
-    400052: Mid01_L
-    400054: Mid01_R
-    400056: Mid02_L
-    400058: Mid02_R
-    400060: Mid03_L
-    400062: Mid03_R
-    400064: Neck
-    400066: Pinky01_L
-    400068: Pinky01_R
-    400070: Pinky02_L
-    400072: Pinky02_R
-    400074: Pinky03_L
-    400076: Pinky03_R
-    400078: Shield
-    400080: Shield 1
-    400082: Skeleton
-    400084: Spine01
-    400086: Sword
-    400088: Thumb01_L
-    400090: Thumb01_R
-    400092: Thumb02_L
-    400094: Thumb02_R
-    400096: Thumb03_L
-    400098: Thumb03_R
-    400100: UpperArm_L
-    400102: UpperArm_R
-    400104: UpperEye_L
-    400106: UpperEye_R
-    400108: UpperLeg_L
-    400110: UpperLeg_R
-    400112: Weapon
-    4300000: Skeleton
-    4300002: Shield
-    4300004: Sword
-    7400000: Attack01
-    9500000: //RootNode
-    13700000: Shield
-    13700002: Skeleton
-    13700004: Sword
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Body
+  - first:
+      1: 100004
+    second: BottomEye_L
+  - first:
+      1: 100006
+    second: BottomEye_R
+  - first:
+      1: 100008
+    second: Chest
+  - first:
+      1: 100010
+    second: EyeRoot
+  - first:
+      1: 100012
+    second: Feet_L
+  - first:
+      1: 100014
+    second: Feet_R
+  - first:
+      1: 100016
+    second: FeetBall_L
+  - first:
+      1: 100018
+    second: FeetBall_R
+  - first:
+      1: 100020
+    second: FeetToe_L
+  - first:
+      1: 100022
+    second: FeetToe_R
+  - first:
+      1: 100024
+    second: Hand_L
+  - first:
+      1: 100026
+    second: Hand_R
+  - first:
+      1: 100028
+    second: Head
+  - first:
+      1: 100030
+    second: Index01_L
+  - first:
+      1: 100032
+    second: Index01_R
+  - first:
+      1: 100034
+    second: Index02_L
+  - first:
+      1: 100036
+    second: Index02_R
+  - first:
+      1: 100038
+    second: Index03_L
+  - first:
+      1: 100040
+    second: Index03_R
+  - first:
+      1: 100042
+    second: Jaw
+  - first:
+      1: 100044
+    second: LowerArm_L
+  - first:
+      1: 100046
+    second: LowerArm_R
+  - first:
+      1: 100048
+    second: LowerLeg_L
+  - first:
+      1: 100050
+    second: LowerLeg_R
+  - first:
+      1: 100052
+    second: Mid01_L
+  - first:
+      1: 100054
+    second: Mid01_R
+  - first:
+      1: 100056
+    second: Mid02_L
+  - first:
+      1: 100058
+    second: Mid02_R
+  - first:
+      1: 100060
+    second: Mid03_L
+  - first:
+      1: 100062
+    second: Mid03_R
+  - first:
+      1: 100064
+    second: Neck
+  - first:
+      1: 100066
+    second: Pinky01_L
+  - first:
+      1: 100068
+    second: Pinky01_R
+  - first:
+      1: 100070
+    second: Pinky02_L
+  - first:
+      1: 100072
+    second: Pinky02_R
+  - first:
+      1: 100074
+    second: Pinky03_L
+  - first:
+      1: 100076
+    second: Pinky03_R
+  - first:
+      1: 100078
+    second: Shield
+  - first:
+      1: 100080
+    second: Shield 1
+  - first:
+      1: 100082
+    second: Skeleton
+  - first:
+      1: 100084
+    second: Spine01
+  - first:
+      1: 100086
+    second: Sword
+  - first:
+      1: 100088
+    second: Thumb01_L
+  - first:
+      1: 100090
+    second: Thumb01_R
+  - first:
+      1: 100092
+    second: Thumb02_L
+  - first:
+      1: 100094
+    second: Thumb02_R
+  - first:
+      1: 100096
+    second: Thumb03_L
+  - first:
+      1: 100098
+    second: Thumb03_R
+  - first:
+      1: 100100
+    second: UpperArm_L
+  - first:
+      1: 100102
+    second: UpperArm_R
+  - first:
+      1: 100104
+    second: UpperEye_L
+  - first:
+      1: 100106
+    second: UpperEye_R
+  - first:
+      1: 100108
+    second: UpperLeg_L
+  - first:
+      1: 100110
+    second: UpperLeg_R
+  - first:
+      1: 100112
+    second: Weapon
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Body
+  - first:
+      4: 400004
+    second: BottomEye_L
+  - first:
+      4: 400006
+    second: BottomEye_R
+  - first:
+      4: 400008
+    second: Chest
+  - first:
+      4: 400010
+    second: EyeRoot
+  - first:
+      4: 400012
+    second: Feet_L
+  - first:
+      4: 400014
+    second: Feet_R
+  - first:
+      4: 400016
+    second: FeetBall_L
+  - first:
+      4: 400018
+    second: FeetBall_R
+  - first:
+      4: 400020
+    second: FeetToe_L
+  - first:
+      4: 400022
+    second: FeetToe_R
+  - first:
+      4: 400024
+    second: Hand_L
+  - first:
+      4: 400026
+    second: Hand_R
+  - first:
+      4: 400028
+    second: Head
+  - first:
+      4: 400030
+    second: Index01_L
+  - first:
+      4: 400032
+    second: Index01_R
+  - first:
+      4: 400034
+    second: Index02_L
+  - first:
+      4: 400036
+    second: Index02_R
+  - first:
+      4: 400038
+    second: Index03_L
+  - first:
+      4: 400040
+    second: Index03_R
+  - first:
+      4: 400042
+    second: Jaw
+  - first:
+      4: 400044
+    second: LowerArm_L
+  - first:
+      4: 400046
+    second: LowerArm_R
+  - first:
+      4: 400048
+    second: LowerLeg_L
+  - first:
+      4: 400050
+    second: LowerLeg_R
+  - first:
+      4: 400052
+    second: Mid01_L
+  - first:
+      4: 400054
+    second: Mid01_R
+  - first:
+      4: 400056
+    second: Mid02_L
+  - first:
+      4: 400058
+    second: Mid02_R
+  - first:
+      4: 400060
+    second: Mid03_L
+  - first:
+      4: 400062
+    second: Mid03_R
+  - first:
+      4: 400064
+    second: Neck
+  - first:
+      4: 400066
+    second: Pinky01_L
+  - first:
+      4: 400068
+    second: Pinky01_R
+  - first:
+      4: 400070
+    second: Pinky02_L
+  - first:
+      4: 400072
+    second: Pinky02_R
+  - first:
+      4: 400074
+    second: Pinky03_L
+  - first:
+      4: 400076
+    second: Pinky03_R
+  - first:
+      4: 400078
+    second: Shield
+  - first:
+      4: 400080
+    second: Shield 1
+  - first:
+      4: 400082
+    second: Skeleton
+  - first:
+      4: 400084
+    second: Spine01
+  - first:
+      4: 400086
+    second: Sword
+  - first:
+      4: 400088
+    second: Thumb01_L
+  - first:
+      4: 400090
+    second: Thumb01_R
+  - first:
+      4: 400092
+    second: Thumb02_L
+  - first:
+      4: 400094
+    second: Thumb02_R
+  - first:
+      4: 400096
+    second: Thumb03_L
+  - first:
+      4: 400098
+    second: Thumb03_R
+  - first:
+      4: 400100
+    second: UpperArm_L
+  - first:
+      4: 400102
+    second: UpperArm_R
+  - first:
+      4: 400104
+    second: UpperEye_L
+  - first:
+      4: 400106
+    second: UpperEye_R
+  - first:
+      4: 400108
+    second: UpperLeg_L
+  - first:
+      4: 400110
+    second: UpperLeg_R
+  - first:
+      4: 400112
+    second: Weapon
+  - first:
+      43: 4300000
+    second: Skeleton
+  - first:
+      43: 4300002
+    second: Shield
+  - first:
+      43: 4300004
+    second: Sword
+  - first:
+      74: 7400000
+    second: Attack01
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Shield
+  - first:
+      137: 13700002
+    second: Skeleton
+  - first:
+      137: 13700004
+    second: Sword
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -136,6 +380,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -156,6 +401,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack01
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -176,7 +422,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: EndAttack
+        data: 
+        objectReferenceParameter: {fileID: 4385279898836250783, guid: 6282b8ed67b40394f9d8fb493d76ba69,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -302,25 +556,34 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -329,10 +592,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Body
       humanName: Hips
@@ -971,14 +1234,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 1
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 981abb089aed35b47ba9c72dde91f1f5,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
