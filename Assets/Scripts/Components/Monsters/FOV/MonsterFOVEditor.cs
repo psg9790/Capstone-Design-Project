@@ -11,6 +11,9 @@ public class MonsterFOVEditor : Editor
     private void OnSceneGUI()
     {
         MonsterFOV fow = (MonsterFOV)target;
+        if (fow.monster == null)
+            return;
+        
         Handles.color = fow.monster.playerInSight ? Color.red : Color.white;
 
         Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.viewRadius);

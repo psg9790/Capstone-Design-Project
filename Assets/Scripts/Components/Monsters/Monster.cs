@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour
     [HideInInspector] public Vector3 patrolPoint;
     [HideInInspector] public Player player;
     [ReadOnly] public bool playerInSight = false;
-    
+
     // battle
     [SerializeField] public float attackRange = 1.75f;
     [ReadOnly] public bool whileAttack = false;
@@ -59,7 +59,6 @@ public class Monster : MonoBehaviour
 
     protected virtual void OnAwake()
     {
-        fsm = new MonsterStateMachine(this);
         if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
         {
             nav = agent;
@@ -90,6 +89,7 @@ public class Monster : MonoBehaviour
             UnityEngine.Debug.LogError("no fov assigned in " + this.gameObject.name);
         }
 
+        fsm = new MonsterStateMachine(this);
         fsm.ChangeState(new MonsterState_Idle(this));
     }
 
@@ -121,7 +121,7 @@ public class Monster : MonoBehaviour
                             dist += Vector3.Distance(path.corners[i - 1], path.corners[i]);
                         }
                     }
-                    
+
                     if (dist > attackRange)
                     {
                         fsm.ChangeState(new MonsterState_ChasePlayer(this));
@@ -132,18 +132,16 @@ public class Monster : MonoBehaviour
                         fsm.ChangeState(new MonsterState_BaseAttack(this));
                     }
                 }
-                
+
                 idleElapsedTime += Time.deltaTime;
                 if (idleElapsedTime > idleToPatrolTime) // 일정 시간 대기하면 순찰
                     fsm.ChangeState(new MonsterState_Patrol(this));
-                // if (playerInSight) // 플레이어 발견시 추적
-                //     fsm.ChangeState(new MonsterState_ChasePlayer(this));
                 break;
 
             case EMonsterState.Patrol: // 순찰 상태
                 if (playerInSight) // 플레이어 발견시 추적
                     fsm.ChangeState(new MonsterState_ChasePlayer(this));
-                
+
                 catchPatrolRaceCondition += Time.deltaTime;
                 if (catchPatrolRaceCondition > 3)
                 {
@@ -151,6 +149,7 @@ public class Monster : MonoBehaviour
                     catchPatrolRaceCondition = 0;
                     fsm.ChangeState(new MonsterState_Idle(this));
                 }
+
                 if (nav.velocity.sqrMagnitude > 3.5f)
                     catchPatrolRaceCondition = 0;
 
@@ -170,7 +169,7 @@ public class Monster : MonoBehaviour
                     fsm.ChangeState(new MonsterState_Idle(this));
                 break;
 
-            
+
             case EMonsterState.BaseAttack: // 기본 공격 수행
                 if (!whileAttack)
                     fsm.ChangeState(new MonsterState_Idle(this));
@@ -199,20 +198,22 @@ public class Monster : MonoBehaviour
     /// 시야 증가 코루틴
     /// </summary>
     private Coroutine extendSightCo; // 하나의 시야증가만을 유지하기 위해 변수 하나로 통제
+
     private IEnumerator SightCo()
     {
         fov.viewRadius = BASE_FOV_RADIUS * extendFovRadius_multi; // 시야를 증가시킴
         fov.viewAngle = extendFovAngle;
         extendedSight = true;
-        animator.SetBool("IdleBattle" , true);  // 전투 상태를 나타냄
+        animator.SetBool("IdleBattle", true); // 전투 상태를 나타냄
 
         yield return new WaitForSeconds(extendFovTime); // 설정한 초만큼 유지시키고
 
         fov.viewRadius = BASE_FOV_RADIUS; // 다시 원래대로 되돌림
         fov.viewAngle = BASE_FOV_ANGLE;
         extendedSight = false;
-        animator.SetBool("IdleBattle", false);  // 전투 상태를 해제함
+        animator.SetBool("IdleBattle", false); // 전투 상태를 해제함
     }
+
     public void ExtendSight()
     {
         if (extendSightCo != null)
@@ -220,14 +221,11 @@ public class Monster : MonoBehaviour
         extendSightCo = StartCoroutine(SightCo()); // 시야증가 코루틴 시작
     }
 
-    /// <summary>
-    /// 시야 증가 코루틴 끝
-    /// </summary>
-
     public void EndAttack()
     {
         whileAttack = false;
     }
+
     public virtual void OnBaseAttack()
     {
     }
