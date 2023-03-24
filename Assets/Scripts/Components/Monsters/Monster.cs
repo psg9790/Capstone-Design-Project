@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour
         switch (state)
         {
             case EMonsterState.Idle: // 대기 상태
-                if (playerInSight && !whileAttack)
+                if (playerInSight)
                 {
                     // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
                     NavMeshPath path = new NavMeshPath();
