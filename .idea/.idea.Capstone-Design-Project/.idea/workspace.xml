@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="" />
+    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Capstone-Design-Project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Capstone-Design-Project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/InputSystem/PlayerInput.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem/PlayerInput.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/InGameMain.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/InGameMain.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Player/Player.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,11 +24,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/Users/User/Desktop/Capstone-Design-Project/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/User/Desktop/Capstone-Design-Project/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/User/Desktop/Capstone-Design-Project/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/User/Desktop/Capstone-Design-Project/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/User/Desktop/Capstone-Design-Project/Assets/Scripts/Player/Player.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Components/Camera/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.5.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -36,6 +42,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.C#&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -98,6 +105,11 @@
       <workItem from="1678880990790" duration="573000" />
       <workItem from="1679408078661" duration="163000" />
       <workItem from="1679408896686" duration="1241000" />
+      <workItem from="1679411121118" duration="969000" />
+      <workItem from="1679825093403" duration="22000" />
+      <workItem from="1679825406708" duration="4000" />
+      <workItem from="1679825693112" duration="4000" />
+      <workItem from="1679828628352" duration="23072000" />
     </task>
     <task id="LOCAL-00001" summary="jhp">
       <created>1678881039248</created>
@@ -113,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679408953293</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="jhp1">
+      <created>1679411245600</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679411245600</updated>
+    </task>
+    <task id="LOCAL-00004" summary="jhp- LateUpdate">
+      <created>1679411435109</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679411435109</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,6 +175,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="jhp" />
     <MESSAGE value="jhp1" />
-    <option name="LAST_COMMIT_MESSAGE" value="jhp1" />
+    <MESSAGE value="jhp- LateUpdate" />
+    <option name="LAST_COMMIT_MESSAGE" value="jhp- LateUpdate" />
   </component>
 </project>

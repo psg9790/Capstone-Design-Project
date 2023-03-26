@@ -60,5 +60,6 @@ public class InputManager : MonoBehaviour
 public enum InputKey
 {
     RightClick,
-    LeftClick
+    LeftClick,
+    SpaceClick,
 }
