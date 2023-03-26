@@ -22,9 +22,10 @@ public class Monster : MonoBehaviour
     [ReadOnly] public bool playerInSight = false;
 
     // battle
-    [SerializeField] public float attackRange = 1.75f;
-    [ReadOnly] public bool whileAttack = false;
-
+    [BoxGroup("Battle")][SerializeField] public float attackRange = 1.75f;
+    [BoxGroup("Battle")][ReadOnly] public bool whileAttack = false;
+    [BoxGroup("Battle")] public Collider attack01_collider;
+    
     // fov
     [HideInInspector] public MonsterFOV fov;
     [HideInInspector] public float BASE_FOV_RADIUS;
@@ -226,8 +227,14 @@ public class Monster : MonoBehaviour
         whileAttack = false;
     }
 
-    public virtual void OnBaseAttack()
+    public virtual void EnableAttack01_col()
     {
+        attack01_collider.enabled = true;
+        attack01_collider.GetComponent<MonsterSkillHitBox>().ClearHash();   // 해시 초기화
+    }
+    public virtual void DisableAttack01_col()
+    {
+        attack01_collider.enabled = false;
     }
 }
 
