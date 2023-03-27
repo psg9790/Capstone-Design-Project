@@ -1,0 +1,5 @@
+Prefabs in this folder (Rooms and Tiles) were "Unpacked", which means they no longer have connections to any contained prefabs.
+This was done to save time. Before that, Unity had to update all of these prefabs every time even a little change is made to any
+contained prefab (like intensity of a torchlight, for example).
+
+If you want this functionality back, the original rooms and tiles with nested prefabs are still available in a Unity Scene in this folder.
