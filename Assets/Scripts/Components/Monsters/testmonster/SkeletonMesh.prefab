@@ -641,10 +641,10 @@ MonoBehaviour:
   viewAngle: 90
   targetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4416
   monster: {fileID: 0}
 --- !u!95 &4385279898828849987
 Animator:
