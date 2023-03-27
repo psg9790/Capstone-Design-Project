@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Init.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Init.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Monsters/FOV/MonsterFOV.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Monsters/FOV/MonsterFOV.cs" afterDir="false" />
+    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="pull merge">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input/InputManager.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input/InputManager.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +21,9 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/PSG/Desktop/Capstone-Design-Project/Assets/Scenes/InGameMain.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/PSG/Desktop/Capstone-Design-Project/Assets/Scenes/InGameMain.unity" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/PSG/Desktop/Capstone-Design-Project/Assets/Scenes/InGameMain.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Components/Camera/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.5.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -104,7 +110,7 @@
       <workItem from="1679825406708" duration="4000" />
       <workItem from="1679825693112" duration="4000" />
       <workItem from="1679828628352" duration="23830000" />
-      <workItem from="1679896896530" duration="357000" />
+      <workItem from="1679896896530" duration="877000" />
     </task>
     <task id="LOCAL-00001" summary="jhp">
       <created>1678881039248</created>
@@ -141,7 +147,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679870853542</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="merge conflict solved">
+      <created>1679897503159</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679897503159</updated>
+    </task>
+    <task id="LOCAL-00007" summary="conflict solved">
+      <created>1679897570032</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1679897570032</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +199,9 @@
     <MESSAGE value="jhp1" />
     <MESSAGE value="jhp- LateUpdate" />
     <MESSAGE value="jhp-dash" />
-    <option name="LAST_COMMIT_MESSAGE" value="jhp-dash" />
+    <MESSAGE value="merge conflict solved" />
+    <MESSAGE value="conflict solved" />
+    <MESSAGE value="pull merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="pull merge" />
   </component>
 </project>
