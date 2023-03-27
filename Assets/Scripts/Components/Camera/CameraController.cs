@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
                                                      - transform.position);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (player != null)
         {

@@ -10,10 +10,18 @@ public class Player : MonoBehaviour
     [Sirenix.OdinInspector.ReadOnly] 
     public PlayerState state = PlayerState.Idle;
     
+    public int DashCount { get { return dashCount; } }
+
+    [SerializeField] protected int dashCount;
     // move
     private NavMeshAgent nav;
     private Vector3 moveTarget;
-    
+    private bool isDodge = false;
+
+    public void OnUpdateStat(int dashCount)
+    {
+        this.dashCount = dashCount;
+    }
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
@@ -30,22 +38,49 @@ public class Player : MonoBehaviour
             if (dist.magnitude <= 0.1f)
             {
                 state = PlayerState.Idle;
+                Animator anim = GetComponent<Animator>();
+                anim.SetFloat("speed", 0);
             }
         }
+        
     }
 
     public void Move(Vector3 pos)
     {
         if (state != PlayerState.Death && 
             state != PlayerState.Cc && 
-            state != PlayerState.Attack)
+            state != PlayerState.Attack &&
+            state != PlayerState.Dash)
         {
             state = PlayerState.Move;
             nav.SetDestination(pos);
             moveTarget = pos;
+
+            Animator anim = GetComponent<Animator>();
+            anim.SetFloat("speed", 1.1f);
         }
     }
 
+    public void Dodge()
+    {
+        if (state != PlayerState.Death && 
+            state != PlayerState.Cc && 
+            state != PlayerState.Attack)
+        {
+            Animator anim = GetComponent<Animator>();
+            anim.SetTrigger("doDodge");
+            isDodge = true;
+            state = PlayerState.Dash;
+            
+        }
+        
+    }
+
+    public void Dodgeout()
+    {
+        isDodge = false;
+        state = PlayerState.Idle;
+    }
     void NavRotation()
     {
         if (!nav.hasPath)
@@ -68,6 +103,7 @@ public enum PlayerState
     Idle, 
     Move,
     Dash,
+    NDash,
     Attack,
     Interact,
     Cc,
