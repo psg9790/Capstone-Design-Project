@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CamerMove : MonoBehaviour
 {
+    Renderer ObstacleRenderer;
     Transform PlayerTransform;
     Vector3 Offset;
     void Start()
@@ -18,4 +19,5 @@ public class CamerMove : MonoBehaviour
         transform.position= PlayerTransform.position+Offset;
     }
 
+    
 }
