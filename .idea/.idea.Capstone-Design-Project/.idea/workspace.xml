@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="pull merge">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input/InputManager.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/Input/InputManager.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InputManager.cs.meta" afterDir="false" />
+    <list default="true" id="525bd9e2-9362-4975-a02f-fcc41fa29ba4" name="Changes" comment="input renamed">
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Components/Monsters/FOV/MonsterFOV.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Components/Monsters/FOV/MonsterFOV.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +106,7 @@
       <workItem from="1679825406708" duration="4000" />
       <workItem from="1679825693112" duration="4000" />
       <workItem from="1679828628352" duration="23830000" />
-      <workItem from="1679896896530" duration="877000" />
+      <workItem from="1679896896530" duration="1182000" />
     </task>
     <task id="LOCAL-00001" summary="jhp">
       <created>1678881039248</created>
@@ -161,7 +157,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679897570032</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="conflict sol">
+      <created>1679898020242</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1679898020242</updated>
+    </task>
+    <task id="LOCAL-00009" summary="input renamed">
+      <created>1679898055379</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1679898055379</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +212,8 @@
     <MESSAGE value="merge conflict solved" />
     <MESSAGE value="conflict solved" />
     <MESSAGE value="pull merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="pull merge" />
+    <MESSAGE value="conflict sol" />
+    <MESSAGE value="input renamed" />
+    <option name="LAST_COMMIT_MESSAGE" value="input renamed" />
   </component>
 </project>

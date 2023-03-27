@@ -24,7 +24,6 @@ public class MonsterFOV : MonoBehaviour
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position,
             viewRadius, targetMask);
 
-        UnityEngine.Debug.Log(targetsInViewRadius.Length);
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             if (targetsInViewRadius[i].TryGetComponent<Player>(out Player _player))
