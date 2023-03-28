@@ -19,10 +19,10 @@ public class MonsterState_Patrol : MonsterState
              그 좌표가 navigation을 사용하는데 적절하지 않은 좌표일 수 있어서 (Not Walkable)
              적절한 좌표를 가져올 때까지 경로 탐색을 반복함
              */
-            monster.patrolPoint = monster.spawner.GetRandomPosInPatrolRadius();
-            if (monster.nav.CalculatePath(monster.patrolPoint, path))
+            Vector3 patrolPoint = monster.spawner.GetRandomPosInPatrolRadius();
+            if (monster.nav.CalculatePath(patrolPoint, path))
             {
-                monster.nav.SetDestination(monster.patrolPoint);
+                monster.nav.SetDestination(patrolPoint);
                 break;
             }
         }
