@@ -15,12 +15,13 @@ public class NPC_INPUT_MANAGER : MonoBehaviour
 
     void GenerateData()
     {
-        //id = 1000 : Talia
-        talkData.Add(1, new string[]{"안녕","이 곳에 처음 왔구나?"});
-        //id = 100 : 탈리아가 갇혀있는 Prision
-        talkData.Add(2,new string[]{"쇠로 만들어진 감옥이다.","열쇠없이는 열 수 없는 것 같다."});
-        //id = 200 : 다음 스테이지로 넘어갈 수 있는 문 
-        talkData.Add(3,new string[]{"평범한 문이다. \n들어갈 수 있을 것 같다"});
+        //id = 1 : SIMSANG
+        talkData.Add(1, new string[]{"오 심상치 않은데?"});
+        talkData.Add(2,new string[]{"중요한 건 꺾이지 않은 마음"});
+        talkData.Add(3,new string[]{"딸깍... 딸깍... 캐리.... 기모리~"});
+        talkData.Add(4,new string[]{"넣을게~"});
+        talkData.Add(5,new string[]{"딸깍... 딸깍... 캐리.... 기모리~"});
+
     }
 
     public string GetTalk(int id, int talkIndex) //Object의 id , string배열의 index
