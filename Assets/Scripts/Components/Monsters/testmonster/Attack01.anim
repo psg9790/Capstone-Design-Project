@@ -34740,7 +34740,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.13333334
-    functionName: EnableAttack01_col
+    functionName: BaseAttackCollider_ON
     data: 
     objectReferenceParameter: {fileID: 4385279898836250783, guid: 6282b8ed67b40394f9d8fb493d76ba69,
       type: 3}
@@ -34748,7 +34748,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.43333334
-    functionName: DisableAttack01_col
+    functionName: BaseAttackCollider_OFF
     data: 
     objectReferenceParameter: {fileID: 4385279898836250783, guid: 6282b8ed67b40394f9d8fb493d76ba69,
       type: 3}

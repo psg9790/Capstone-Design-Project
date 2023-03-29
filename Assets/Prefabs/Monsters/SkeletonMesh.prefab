@@ -564,6 +564,7 @@ GameObject:
   - component: {fileID: 4385279898836282559}
   - component: {fileID: 4385279898836153889}
   - component: {fileID: 5187192431022494434}
+  - component: {fileID: -3432420756110250477}
   - component: {fileID: 4385279898828849987}
   - component: {fileID: 4385279898836153894}
   - component: {fileID: 7326401511748158406}
@@ -607,15 +608,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nav: {fileID: 0}
   animator: {fileID: 0}
+  fov: {fileID: 0}
+  skills: {fileID: 0}
   state: 0
   spawner: {fileID: 0}
-  patrolPoint: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   playerInSight: 0
   attackRange: 1.75
   whileAttack: 0
   attack01_collider: {fileID: 2089673014}
-  fov: {fileID: 0}
   BASE_FOV_RADIUS: 0
   BASE_FOV_ANGLE: 0
   extendFovRadius_multi: 2
@@ -646,6 +647,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4416
   monster: {fileID: 0}
+--- !u!114 &-3432420756110250477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385279898836250783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c54d7fb4a6edb41894457951763705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseAttack_col: {fileID: 2089673014}
+  skill01_col: {fileID: 0}
 --- !u!95 &4385279898828849987
 Animator:
   serializedVersion: 5

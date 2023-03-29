@@ -14,20 +14,20 @@ public class Monster : MonoBehaviour
     [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
     [HideInInspector] public Animator animator; // 컴포넌트 미리 추가 필요
     [HideInInspector] public MonsterFOV fov; // 컴포넌트 미리 추가 필요
-
+    [HideInInspector] public MonsterSkillArchive skills;
+    
     // behavior
     [HideInInspector] public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시에 이전 상태의 Exit(), 새로운 상태의 Enter()를 실행시켜줌
     [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 나타내줄 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
     // spawner & player
-    [HideInInspector] public MonsterSpawner spawner; // 내가 태어난 스포너의 정보. 이걸 가지고 있어야 스포너 주변 좌표를 가져올 수 있다.
+    [HideInInspector] public MonsterSpawner spawner; // 몬스터가 태어난 스포너의 정보. 이걸 가지고 있어야 스포너 주변 좌표를 가져올 수 있다.
     [HideInInspector] public Player player; // 플레이어를 찾았을 시 플레이어 정보를 넣어줄 변수
     [ReadOnly] public bool playerInSight = false; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
 
     // battle
     [BoxGroup("Battle")] [SerializeField] public float attackRange = 1.75f; // 이 몬스터의 공격 사정거리
     [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격 중에 다른 행동을 막기 위한 플래그
-    [BoxGroup("Battle")] public Collider attack01_collider; // 기본공격(Attack01)시 활성화할 공격판정 collider
 
     // fov
     [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장하기 위한 변수. 시야 확장 후 복귀에 사용
@@ -69,7 +69,7 @@ public class Monster : MonoBehaviour
         }
         else
         {
-            Debug.LogError("no navmeshagent assigned in " + this.gameObject.name);
+            Debug.LogError(this.gameObject.name + " 몬스터에 \"NavMeshAgent\" 컴포넌트가 없습니다.");
         }
 
         if (TryGetComponent<Animator>(out Animator anim))
@@ -78,7 +78,7 @@ public class Monster : MonoBehaviour
         }
         else
         {
-            Debug.LogError("no animator assigned in " + this.gameObject.name);
+            Debug.LogError(this.gameObject.name + " 몬스터에 \"Animator\" 컴포넌트가 없습니다.");
         }
 
         if (TryGetComponent<MonsterFOV>(out MonsterFOV _fov))
@@ -89,7 +89,16 @@ public class Monster : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogError("no fov assigned in " + this.gameObject.name);
+            UnityEngine.Debug.LogError(this.gameObject.name + " 몬스터에 \"MonsterFOV\" 컴포넌트가 없습니다.");
+        }
+
+        if (TryGetComponent<MonsterSkillArchive>(out MonsterSkillArchive archive))
+        {
+            skills = archive;
+        }
+        else
+        {
+            Debug.LogError(this.gameObject.name+" 몬스터에 \"MonsterSkillArchive\" 컴포넌트가 없습니다.");
         }
 
         fsm = new MonsterStateMachine(this);
@@ -98,7 +107,7 @@ public class Monster : MonoBehaviour
 
     protected virtual void OnUpdate()
     {
-        // 현재 state 행동 
+        // 현재 state행동 update
         fsm.Execute();
 
         // nav용 rotation
@@ -226,17 +235,6 @@ public class Monster : MonoBehaviour
     public void EndAttack() // 공격 애니메이션의 끝에 호출, "공격중" 플래그를 끄기 위함
     {
         whileAttack = false;
-    }
-
-    public virtual void EnableAttack01_col() // 기본공격 애니메이션 중간에 이벤트로 호출해서 공격판정 콜라이더를 켜기 위함
-    {
-        attack01_collider.enabled = true;
-        attack01_collider.GetComponent<MonsterSkillHitBox>().ClearHash(); // 해시 초기화
-    }
-
-    public virtual void DisableAttack01_col() // 기본공격 애니메이션 종반에 이벤트로 호출해서 공격판정 콜라이더를 끄기 위함
-    {
-        attack01_collider.enabled = false;
     }
 }
 
