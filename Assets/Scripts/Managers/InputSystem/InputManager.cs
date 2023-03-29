@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
 {
     static InputManager instance;
     private PlayerInput m_PlayerInput;
-
     public static InputManager Instance { get { return instance; } }
 
     private void Awake()
