@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] protected int dashCount;
     // move
-    private NavMeshAgent nav;
+    public NavMeshAgent nav;
     private Vector3 moveTarget;
     private bool isDodge = false;
 
@@ -50,7 +51,8 @@ public class Player : MonoBehaviour
         if (state != PlayerState.Death && 
             state != PlayerState.Cc && 
             state != PlayerState.Attack &&
-            state != PlayerState.Dash)
+            state != PlayerState.Dash &&
+            !EventSystem.current.IsPointerOverGameObject ())
         {
             state = PlayerState.Move;
             nav.SetDestination(pos);
