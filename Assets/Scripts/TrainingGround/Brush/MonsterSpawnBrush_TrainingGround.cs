@@ -28,6 +28,14 @@ public class MonsterSpawnBrush_TrainingGround : Brush_TrainingGround
     public override void Execute()
     {
         base.Execute();
+        Ray ray = Camera.main.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+        {
+            Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+            Monster monster = UnityEngine.Object.Instantiate<Monster>(prefab);
+            monster.Spawn(hit.point, 4f);
+        }
     }
 
     public override void Exit()

@@ -52,6 +52,13 @@ public class Monster : MonoBehaviour
     // [FoldoutGroup("Patrol Race Condition Control")] [ReadOnly]
     // public float velocity;
 
+    public void Spawn(Vector3 pos, float range)
+    {
+        this.transform.position = pos;
+        spawnPoint = pos;
+        patrolRadius = range;
+    }
+    
     void Awake()
     {
         OnAwake();

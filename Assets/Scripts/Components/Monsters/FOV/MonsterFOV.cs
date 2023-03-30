@@ -13,7 +13,7 @@ public class MonsterFOV : MonoBehaviour
 
     [HideInInspector] public Monster monster;
 
-    private void Start()
+    private void Awake()
     {
         monster = GetComponent<Monster>();
     }

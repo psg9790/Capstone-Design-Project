@@ -24,10 +24,11 @@ public class MonsterSpawner : MonoBehaviour
         {
             Monster monster = Instantiate<Monster>(
                 monsterList[Random.Range(0, monsterList.Count - 1)]);
-            monster.transform.position = this.transform.position;
-            // monster.spawner = this;
-            monster.spawnPoint = this.transform.position;
-            monster.patrolRadius = this.patrolRadius;
+            // monster.transform.position = this.transform.position;
+            // // monster.spawner = this;
+            // monster.spawnPoint = this.transform.position;
+            // monster.patrolRadius = this.patrolRadius;
+            monster.Spawn(transform.position, patrolRadius);
         }
     }
 
