@@ -17,30 +17,32 @@ public class MonsterSpawner : MonoBehaviour
     {
         if (monsterList.Count == 0)
         {
-            Debug.LogWarning("스포너에 몬스터 지정이 안되어있습니다.");   
+            Debug.LogWarning("스포너에 스폰할 몬스터를 지정해주세요.");   
             return;
         }
         for (int i = 0; i < spawnAmount; i++)
         {
             Monster monster = Instantiate<Monster>(
                 monsterList[Random.Range(0, monsterList.Count - 1)]);
-            monster.transform.position = GetRandomPosInPatrolRadius();
-            monster.spawner = this;
+            monster.transform.position = this.transform.position;
+            // monster.spawner = this;
+            monster.spawnPoint = this.transform.position;
+            monster.patrolRadius = this.patrolRadius;
         }
     }
 
-    public Vector3 GetRandomPosInPatrolRadius()
-    {
-        Vector3 target = Vector3.zero;
-        target.y = this.transform.position.y;
-        target.z += Random.Range(-patrolRadius, patrolRadius);
-        target.x += Random.Range(-patrolRadius, patrolRadius);
-        if (target.magnitude > patrolRadius)
-        {
-            target = target.normalized;
-            target *= 3;
-        }
-
-        return this.transform.position + target;
-    }
+    // public Vector3 GetRandomPosInPatrolRadius()
+    // {
+    //     Vector3 target = Vector3.zero;
+    //     target.y = this.transform.position.y;
+    //     target.z += Random.Range(-patrolRadius, patrolRadius);
+    //     target.x += Random.Range(-patrolRadius, patrolRadius);
+    //     if (target.magnitude > patrolRadius)
+    //     {
+    //         target = target.normalized;
+    //         target *= 3;
+    //     }
+    //
+    //     return this.transform.position + target;
+    // }
 }

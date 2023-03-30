@@ -21,10 +21,12 @@ public class Monster : MonoBehaviour
     [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 나타내줄 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
     // spawner & player
-    [HideInInspector] public MonsterSpawner spawner; // 몬스터가 태어난 스포너의 정보. 이걸 가지고 있어야 스포너 주변 좌표를 가져올 수 있다.
+    // [HideInInspector] public MonsterSpawner spawner; // 몬스터가 태어난 스포너의 정보. 이걸 가지고 있어야 스포너 주변 좌표를 가져올 수 있다.
     [HideInInspector] public Player player; // 플레이어를 찾았을 시 플레이어 정보를 넣어줄 변수
     [ReadOnly] public bool playerInSight = false; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
-
+    [HideInInspector] public Vector3 spawnPoint;
+    [HideInInspector] public float patrolRadius;
+    
     // battle
     [BoxGroup("Battle")] [SerializeField] public float attackRange = 1.75f; // 이 몬스터의 공격 사정거리
     [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격 중에 다른 행동을 막기 위한 플래그
@@ -235,6 +237,21 @@ public class Monster : MonoBehaviour
     public void EndAttack() // 공격 애니메이션의 끝에 호출, "공격중" 플래그를 끄기 위함
     {
         whileAttack = false;
+    }
+    
+    public Vector3 GetRandomPosInPatrolRadius()
+    {
+        Vector3 target = spawnPoint;
+        // target.y = this.transform.position.y;
+        target.z += Random.Range(-patrolRadius, patrolRadius);
+        target.x += Random.Range(-patrolRadius, patrolRadius);
+        if (target.magnitude > patrolRadius)
+        {
+            target = target.normalized;
+            target *= 3;
+        }
+
+        return this.transform.position + target;
     }
 }
 
