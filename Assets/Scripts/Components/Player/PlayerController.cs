@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine dashCoolTimeCoroutine;
     private int currentDashCount;
     
-    [Header("dash")] 
+    [Header("dash")]
     [SerializeField]
     public float dashDistance = 10f; // 대쉬 거리
     [SerializeField]
