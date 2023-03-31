@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
+    [Button]
+    public void Attack()
+    {
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("attack");
+    }
     // state
     [Sirenix.OdinInspector.ReadOnly] 
     public PlayerState state = PlayerState.Idle;
@@ -45,6 +52,24 @@ public class Player : MonoBehaviour
         
     }
 
+    public void attack()
+    {
+        if (state != PlayerState.Death && 
+            state != PlayerState.Cc && 
+            state != PlayerState.Attack &&
+            state != PlayerState.Dash)
+        {
+            state = PlayerState.Attack;
+            Animator anim = GetComponent<Animator>();
+            anim.SetTrigger("attack");
+            Invoke("attackend",1.0f);
+        }
+    }
+
+    public void attackend()
+    {
+        state = PlayerState.Idle;
+    }
     public void Move(Vector3 pos)
     {
         if (state != PlayerState.Death && 

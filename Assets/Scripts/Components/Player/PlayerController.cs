@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Player player;
     private Camera cam;
     private bool rightClickHold = false;
+    private bool leftClick = false;
     private bool SpaceClick = false;
     //이동
     private const float RAY_DISTANCE = 2f;
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         if (InputManager.Instance != null)
         {
             // InputManager.Instance.AddPerformed(InputType.RightClick, OnMove);
+            InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerformed);
             InputManager.Instance.AddPerformed(InputKey.RightClick, RighClickPerformed);
             InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                 player.Move(hit.point);
             }
-        } 
+        }
         else if (isDashing)
         {
             // 일정 시간이 지난 후에 NavMeshAgent 활성화
@@ -97,7 +99,6 @@ public class PlayerController : MonoBehaviour
                 isDashing = false;
                 navMeshAgent.enabled = true;
                 player.state = PlayerState.Idle;
-                
             }
             else
             {
@@ -106,10 +107,14 @@ public class PlayerController : MonoBehaviour
                 transform.position += dashVelocity * Time.deltaTime;
             }
         }
-
-
     }
 
+    void LeftClickPerformed(InputAction.CallbackContext context)
+    {
+        if (rightClickHold)
+            rightClickHold = false;
+        player.attack();
+    }
     void RighClickPerformed(InputAction.CallbackContext context)
     {
         rightClickHold = true;
