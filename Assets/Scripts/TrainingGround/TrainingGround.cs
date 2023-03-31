@@ -14,7 +14,7 @@ public class TrainingGround : MonoBehaviour
     public Player player;
     public CameraController cam;
     public float camSensitive = 0.25f;
-    
+
     [AssetList(AutoPopulate = true, Path = "/Prefabs/Monsters/")]
     public List<Monster> monsters;
 
@@ -31,6 +31,7 @@ public class TrainingGround : MonoBehaviour
         {
             monsterSpawn_Dropdown.options.Add(new TMP_Dropdown.OptionData(monsters[i].gameObject.name));
         }
+
         for (int i = 0; i < monsters.Count; i++)
         {
             dic.Add(monsters[i].name, monsters[i]);
@@ -39,7 +40,7 @@ public class TrainingGround : MonoBehaviour
         InputManager.Instance.AddPerformed(InputKey.RightClick, CancleBrush);
         InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerform);
         InputManager.Instance.AddPerformed(InputKey.F, CamAttach_OnOff);
-        
+
         ChangeBrush(new IdleBrush_TrainingGround(this));
         player = FindObjectOfType<Player>();
         cam = Camera.main.GetComponent<CameraController>();
@@ -62,14 +63,33 @@ public class TrainingGround : MonoBehaviour
 
     public void LeftClickPerform(InputAction.CallbackContext context)
     {
-        brush.Execute();
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            brush.Execute();
+        }
     }
 
     // Dropdown에서 item의 PointerClick이벤트에 추가해서 같은거 선택해도 인식하게 (onValueChanged 우회)
-    public void MonsterSpawnDropdownClick(BaseEventData baseEventData)  
+    public void MonsterSpawn_DropdownClick(BaseEventData baseEventData)
     {
         // Debug.Log(monsterSpawn_Dropdown.options[monsterSpawn_Dropdown.value].text); 
-        ChangeBrush(new MonsterSpawnBrush_TrainingGround(this, dic[monsterSpawn_Dropdown.options[monsterSpawn_Dropdown.value].text]));
+        ChangeBrush(new MonsterSpawnBrush_TrainingGround(this,
+            dic[monsterSpawn_Dropdown.options[monsterSpawn_Dropdown.value].text]));
+    }
+
+    public void MonsterRemove_ButtonClick()
+    {
+        ChangeBrush(new MonsterRemoveBrush_TrainingGround(this));
+    }
+
+    public void MonsterRemoveAll_ButtonClick()
+    {
+        Monster[] removes = FindObjectsByType<Monster>(FindObjectsSortMode.None);
+        for (int i = 0; i < removes.Length; i++)
+        {
+            removes[i].Die();
+        }
+        ChangeBrush(new IdleBrush_TrainingGround(this));
     }
 
     // brush 바꾸는 메서드
@@ -79,6 +99,7 @@ public class TrainingGround : MonoBehaviour
         {
             brush.Exit();
         }
+
         brush = next;
         brush.Enter();
     }
@@ -111,5 +132,6 @@ public class TrainingGround : MonoBehaviour
 public enum BrushType
 {
     Idle,
-    MonsterSpawn
+    MonsterSpawn,
+    MonsterRemove
 }

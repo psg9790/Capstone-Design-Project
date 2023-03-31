@@ -261,6 +261,11 @@ public class Monster : MonoBehaviour
 
         return spawnPoint + target;
     }
+
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
 }
 
 public enum EMonsterState // 몬스터의 현재 상태를 나타내기 위한 열거형
