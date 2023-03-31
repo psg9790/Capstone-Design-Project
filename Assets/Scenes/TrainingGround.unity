@@ -411,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   offset: {x: 0, y: 15, z: -10}
+  attached: 0
 --- !u!1 &506465611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,10 +1470,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c46c742e995cb2942b86647fabf355ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camPlayerLock: 1
   player: {fileID: 0}
+  cam: {fileID: 0}
+  camSensitive: 0.25
   monsters:
   - {fileID: 4385279898836153889, guid: 6282b8ed67b40394f9d8fb493d76ba69, type: 3}
+  camLockDescription: {fileID: 1791857412}
   monsterSpawn_Dropdown: {fileID: 1706021846}
   tooltip: {fileID: 1739530068}
   brushType: 0
@@ -2169,7 +2172,7 @@ GameObject:
   - component: {fileID: 1791857413}
   - component: {fileID: 1791857412}
   m_Layer: 5
-  m_Name: Description
+  m_Name: camLockDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2215,7 +2218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD50C\uB808\uC774\uC5B4 \uC2DC\uC810 \uACE0\uC815/\uD574\uC81C: F"
+  m_text: "\uD50C\uB808\uC774\uC5B4 \uC2DC\uC810 \uD574\uC81C: F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d806781d1435b54e9fc55e42982204c, type: 2}
   m_sharedMaterial: {fileID: -1347074939725496284, guid: 3d806781d1435b54e9fc55e42982204c,
@@ -2243,10 +2246,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.45
+  m_fontSize: 50
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -2259,7 +2262,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

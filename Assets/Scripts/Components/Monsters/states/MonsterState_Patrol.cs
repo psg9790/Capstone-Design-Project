@@ -11,22 +11,27 @@ public class MonsterState_Patrol : MonsterState
     {
         base.Enter();
         monster.state = EMonsterState.Patrol;
-        NavMeshPath path = new NavMeshPath();
-        while (true)
-        {
-            /*
-             몬스터가 스폰포인트에서 랜덤 좌표를 가져오는데
-             그 좌표가 navigation을 사용하는데 적절하지 않은 좌표일 수 있어서 (Not Walkable)
-             적절한 좌표를 가져올 때까지 경로 탐색을 반복함
-             */
-            Vector3 patrolPoint = monster.GetRandomPosInPatrolRadius();
-            if (monster.nav.CalculatePath(patrolPoint, path))
-            {
-                monster.nav.SetDestination(patrolPoint);
-                break;
-            }
-        }
+        
+        // NavMeshPath path = new NavMeshPath();
+        // while (true)
+        // {
+        //     /*
+        //      몬스터가 스폰포인트에서 랜덤 좌표를 가져오는데
+        //      그 좌표가 navigation을 사용하는데 적절하지 않은 좌표일 수 있어서 (Not Walkable)
+        //      적절한 좌표를 가져올 때까지 지점 탐색을 반복함
+        //      */
+        //     Vector3 patrolPoint = monster.GetRandomPosInPatrolRadius();
+        //     if (monster.nav.CalculatePath(patrolPoint, path))
+        //     {
+        //         monster.nav.SetDestination(patrolPoint);
+        //         break;
+        //     }
+        // }
 
+        Vector3 pos = monster.GetRandomPosInPatrolRadius();
+        monster.nav.SetDestination(pos);
+        // Debug.DrawRay(monster.transform.position + Vector3.up * 0.5f, pos - monster.transform.position, Color.red, 5f);
+        
         monster.animator.SetBool("Patrol", true); // 순찰 애니메이션
     }
 

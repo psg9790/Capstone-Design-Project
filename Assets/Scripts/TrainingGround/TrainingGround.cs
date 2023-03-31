@@ -10,12 +10,15 @@ using UnityEngine.InputSystem;
 
 public class TrainingGround : MonoBehaviour
 {
-    [ReadOnly] public bool camPlayerLock = true;
+    // [ReadOnly] public bool camPlayerLock = true;
     public Player player;
+    public CameraController cam;
+    public float camSensitive = 0.25f;
     
     [AssetList(AutoPopulate = true, Path = "/Prefabs/Monsters/")]
     public List<Monster> monsters;
 
+    [Required] public TMP_Text camLockDescription;
     [Required] public TMP_Dropdown monsterSpawn_Dropdown;
     [Required] public MouseTooltip_TrainingGround tooltip;
     private Brush_TrainingGround brush;
@@ -35,9 +38,26 @@ public class TrainingGround : MonoBehaviour
 
         InputManager.Instance.AddPerformed(InputKey.RightClick, CancleBrush);
         InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerform);
+        InputManager.Instance.AddPerformed(InputKey.F, CamAttach_OnOff);
         
         ChangeBrush(new IdleBrush_TrainingGround(this));
         player = FindObjectOfType<Player>();
+        cam = Camera.main.GetComponent<CameraController>();
+    }
+
+    private void LateUpdate()
+    {
+        if (!cam.attached)
+        {
+            Vector2 delta = InputManager.Instance.GetWASD();
+            if (delta.sqrMagnitude > 0)
+            {
+                Vector3 origin = cam.transform.position;
+                origin.z += delta.y * camSensitive;
+                origin.x += delta.x * camSensitive;
+                cam.transform.position = origin;
+            }
+        }
     }
 
     public void LeftClickPerform(InputAction.CallbackContext context)
@@ -70,6 +90,20 @@ public class TrainingGround : MonoBehaviour
             ChangeBrush(new IdleBrush_TrainingGround(this));
             // 플레이어 이동을 막을 방법?
             // player.nav.ResetPath();
+        }
+    }
+
+    public void CamAttach_OnOff(InputAction.CallbackContext context)
+    {
+        if (cam.attached)
+        {
+            cam.Detach();
+            camLockDescription.text = "플레이어 시점: F (캠이동: Keyboard arrows)";
+        }
+        else
+        {
+            cam.AfterAttach();
+            camLockDescription.text = "플레이어 시점 해제: F";
         }
     }
 }

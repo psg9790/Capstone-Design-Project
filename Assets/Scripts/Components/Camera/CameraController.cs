@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 {
     [Sirenix.OdinInspector.ReadOnly] public Player player; // 이 카메라가 쫓아다닐 플레이어 정보
     public Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
-    private bool attached = false;
+    public bool attached = false;
 
     public void Attach(Player _player) // 이 카메라에 플레이어 정보를 넣어주고 추적을 시작
     {
@@ -21,6 +21,19 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(player.transform.position
                                                      - transform.position);
         attached = true;
+    }
+
+    public void AfterAttach()
+    {
+        transform.position = player.transform.position + offset;
+        transform.rotation = Quaternion.LookRotation(player.transform.position
+                                                     - transform.position);
+        attached = true;
+    }
+
+    public void Detach()
+    {
+        attached = false;
     }
 
     private void LateUpdate()
