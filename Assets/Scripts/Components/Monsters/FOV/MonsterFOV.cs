@@ -31,15 +31,17 @@ public class MonsterFOV : MonoBehaviour
                 Transform target = targetsInViewRadius[i].transform;
                 Vector3 dirToTarget = (target.transform.position - transform.position).normalized;
 
-                if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+                if (Vector3.Angle(transform.forward, dirToTarget) <= viewAngle / 2)
                 {
                     float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
+                    monster.playerDist = dstToTarget;
 
                     if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                     {
                         monster.player = _player;
                         monster.playerInSight = true;
                         foundPlayer = true;
+                        monster.ExtendSight();
                     }
                 }
             }
@@ -49,6 +51,7 @@ public class MonsterFOV : MonoBehaviour
         {
             monster.player = null;
             monster.playerInSight = false;
+            monster.playerDist = -1f;
         }
     }
 

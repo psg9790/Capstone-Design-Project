@@ -613,10 +613,9 @@ MonoBehaviour:
   skills: {fileID: 0}
   state: 0
   player: {fileID: 0}
-  playerInSight: 0
   spawnPoint: {x: 0, y: 0, z: 0}
   patrolRadius: 0
-  attackRange: 1.75
+  attackRange: 2.2
   whileAttack: 0
   BASE_FOV_RADIUS: 0
   BASE_FOV_ANGLE: 0
@@ -624,6 +623,8 @@ MonoBehaviour:
   extendFovAngle: 360
   extendFovTime: 4
   extendedSight: 0
+  playerInSight: 0
+  playerDist: -1
   idleElapsedTime: 0
   idleToPatrolTime: 4
   catchPatrolRaceCondition: 0
@@ -979,7 +980,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9c6af12e577a3645b752ff97dc61180, type: 2}
+  - {fileID: 2100000, guid: 7f336122ad7984948853076941abf85e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1148,7 +1149,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9c6af12e577a3645b752ff97dc61180, type: 2}
+  - {fileID: 2100000, guid: 7f336122ad7984948853076941abf85e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1317,7 +1318,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9c6af12e577a3645b752ff97dc61180, type: 2}
+  - {fileID: 2100000, guid: 7f336122ad7984948853076941abf85e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
