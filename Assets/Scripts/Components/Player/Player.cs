@@ -7,12 +7,7 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
-    [Button]
-    public void Attack()
-    {
-        Animator anim = GetComponent<Animator>();
-        anim.SetTrigger("attack");
-    }
+    
     // state
     [Sirenix.OdinInspector.ReadOnly] 
     public PlayerState state = PlayerState.Idle;
@@ -24,6 +19,11 @@ public class Player : MonoBehaviour
     private NavMeshAgent nav;
     private Vector3 moveTarget;
     private bool isDodge = false;
+
+    private bool isAttackReady = true;
+    private float attackDelay;
+
+    private Weapon equipWeapon;
 
     public void OnUpdateStat(int dashCount)
     {
@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         NavRotation();
+        // attackDelay += Time.deltaTime;
         // 움직이는 상태이면
         if (state == PlayerState.Move)
         {
@@ -54,15 +55,22 @@ public class Player : MonoBehaviour
 
     public void attack()
     {
+        // isAttackReady = equipWeapon.rate < attackDelay;
         if (state != PlayerState.Death && 
             state != PlayerState.Cc && 
             state != PlayerState.Attack &&
-            state != PlayerState.Dash)
+            state != PlayerState.Dash
+            )
         {
+            // equipWeapon.use();
             state = PlayerState.Attack;
+            nav.ResetPath();
             Animator anim = GetComponent<Animator>();
+            anim.SetFloat("speed", 0);
             anim.SetTrigger("attack");
-            Invoke("attackend",1.0f);
+            Invoke("attackend",0.5f);
+
+            attackDelay = 0;
         }
     }
 

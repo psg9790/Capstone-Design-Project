@@ -111,8 +111,13 @@ public class PlayerController : MonoBehaviour
 
     void LeftClickPerformed(InputAction.CallbackContext context)
     {
-        if (rightClickHold)
-            rightClickHold = false;
+        Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+        {
+            Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+            LookAt(hit.point - transform.position);
+        }
         player.attack();
     }
     void RighClickPerformed(InputAction.CallbackContext context)
@@ -158,13 +163,7 @@ public class PlayerController : MonoBehaviour
         
         Animator anim = GetComponent<Animator>();
         
-        Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-        {
-            Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-            LookAt(hit.point);
-        }
+        
         anim.SetFloat("speed",0f);
         anim.SetTrigger("doDodge");
         Rigidbody rg = GetComponent<Rigidbody>();
@@ -211,6 +210,13 @@ public class PlayerController : MonoBehaviour
         if (isAvailableDash)
         {
             player.state = PlayerState.Dash;
+            Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+            {
+                Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+                LookAt(hit.point - transform.position);
+            }
             currentDashCount++;
             if (dashCoroutine != null && dashCoolTimeCoroutine != null)
             {
@@ -219,10 +225,8 @@ public class PlayerController : MonoBehaviour
             }
 
             dashCoroutine = StartCoroutine(DashCoroutine());
-
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            
+            
             
             if (Physics.Raycast(ray, out hit))
             {
