@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 // 일단 저장로직 인터페이스, 씬 이동할때 갈아끼울 씬로드매니저
 public class GameManager : MonoBehaviour
 {
+    
     // singleton
     static GameManager instance;
     
@@ -14,11 +16,17 @@ public class GameManager : MonoBehaviour
     
     public static GameManager Instance { get { return instance; } }
 
+    public GameObject menuSet;
+    [Header("# Player Info")] 
+    public int Hp;
+    public int MaxHp=100;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            this.Hp = 100;
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -29,4 +37,24 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = 60;
     }
+
+    void Update()
+    {
+        //Sub Menu
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (menuSet.activeSelf)
+            {
+                Time.timeScale = 1;
+                menuSet.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                menuSet.SetActive(true); 
+            }
+        }
+    }
+
+
 }
