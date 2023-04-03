@@ -9,7 +9,6 @@ public class InputManager : MonoBehaviour
 {
     static InputManager instance;
     private PlayerInput m_PlayerInput;
-
     public static InputManager Instance { get { return instance; } }
 
     private void Awake()
@@ -55,6 +54,11 @@ public class InputManager : MonoBehaviour
     {
         return instance.m_PlayerInput.actions["MousePosition"].ReadValue<Vector2>();
     }
+
+    public Vector2 GetWASD()
+    {
+        return instance.m_PlayerInput.actions["UDLR"].ReadValue<Vector2>();
+    }
 }
 
 public enum InputKey
@@ -62,4 +66,5 @@ public enum InputKey
     RightClick,
     LeftClick,
     SpaceClick,
+    F
 }
