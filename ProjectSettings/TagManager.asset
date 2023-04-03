@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - NPC
+  - Talk_Panel
   layers:
   - Default
   - TransparentFX
@@ -18,11 +20,7 @@ TagManager:
   - Monster
   - Player
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
+  - map
   - 
   - 
   - 
