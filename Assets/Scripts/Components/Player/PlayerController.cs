@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Player player;
     private Camera cam;
     private bool rightClickHold = false;
+    private bool leftClick = false;
     private bool SpaceClick = false;
     //이동
     private const float RAY_DISTANCE = 2f;
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine dashCoolTimeCoroutine;
     private int currentDashCount;
     
-    [Header("dash")] 
+    [Header("dash")]
     [SerializeField]
     public float dashDistance = 10f; // 대쉬 거리
     [SerializeField]
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
         if (InputManager.Instance != null)
         {
             // InputManager.Instance.AddPerformed(InputType.RightClick, OnMove);
+            InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerformed);
             InputManager.Instance.AddPerformed(InputKey.RightClick, RighClickPerformed);
             InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                 player.Move(hit.point);
             }
-        } 
+        }
         else if (isDashing)
         {
             // 일정 시간이 지난 후에 NavMeshAgent 활성화
@@ -96,6 +98,7 @@ public class PlayerController : MonoBehaviour
             {
                 isDashing = false;
                 navMeshAgent.enabled = true;
+                player.state = PlayerState.Idle;
             }
             else
             {
@@ -104,13 +107,19 @@ public class PlayerController : MonoBehaviour
                 transform.position += dashVelocity * Time.deltaTime;
             }
         }
-
-
     }
 
-    
-
-
+    void LeftClickPerformed(InputAction.CallbackContext context)
+    {
+        Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+        {
+            Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+            LookAt(hit.point - transform.position);
+        }
+        player.attack();
+    }
     void RighClickPerformed(InputAction.CallbackContext context)
     {
         rightClickHold = true;
@@ -154,13 +163,7 @@ public class PlayerController : MonoBehaviour
         
         Animator anim = GetComponent<Animator>();
         
-        Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-        {
-            Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-            LookAt(hit.point);
-        }
+        
         anim.SetFloat("speed",0f);
         anim.SetTrigger("doDodge");
         Rigidbody rg = GetComponent<Rigidbody>();
@@ -173,9 +176,9 @@ public class PlayerController : MonoBehaviour
 
         yield return DASH_RE_INPUT_TIME;
         rg.velocity = Vector3.zero;
-        anim.SetFloat("speed",1f);
+        // anim.SetFloat("speed",1f);
         yield return DASH_TETANY_TIME;
-        player.state = PlayerState.Move;
+        player.state = PlayerState.Idle;
 
         dashCoolTimeCoroutine = StartCoroutine(DashCoolTimeCoroutine());
     }
@@ -200,118 +203,66 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    //IEnumerator Roll()
-    //{
-    //    isRolling = true;
-    //    _navMeshAgent.enabled = false;
-    //    Animator anim = GetComponent<Animator>();
-    //    anim.SetFloat("speed",0f);
-    //    anim.SetTrigger("doDodge");
-    //    Vector3 rollDirection = getRollDirection();
-    //    float rollTime = 0.0f;
-    //    
-    //    while (rollTime < rollDuration)
-    //    {
-    //        transform.Translate(rollDirection * rollSpeed * Time.deltaTime, Space.World);
-    //        rollTime += Time.deltaTime;
-    //
-    //        if (CheckForObstacles())
-    //        {
-    //            break;
-    //        }
-    //
-    //        yield return null;
-    //    }
-    //    
-    //    _navMeshAgent.enabled = true;
-    //    isRolling = false;
-    //    SpaceClick = false;
-    //}
-
-    //private Vector3 getRollDirection()
-    //{
-    //    Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-    //    {
-    //        Vector3 rollDirection = hit.point - transform.position;
-    //        rollDirection.y = 0f;
-    //        rollDirection = rollDirection.normalized;
-    //        return rollDirection;
-    //    }
-    //
-    //    return Vector3.forward;
-    //}
-
-    //bool CheckForObstacles()
-    //{
-    //    RaycastHit hit;
-    //    if (Physics.Raycast(transform.position, transform.forward, out hit, 1f))
-    //    {
-    //        if (hit.collider.CompareTag("wall"))
-    //        {
-    //            return true;
-    //        }
-    //    }
-        
-    //    return false;
-    //}
     void SpaceClickPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Space");
         
         bool isAvailableDash = player.state != PlayerState.Dash && currentDashCount < player.DashCount;
         if (isAvailableDash)
         {
             player.state = PlayerState.Dash;
+            Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+            {
+                Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+                LookAt(hit.point - transform.position);
+            }
             currentDashCount++;
             if (dashCoroutine != null && dashCoolTimeCoroutine != null)
             {
                 StopCoroutine(dashCoroutine);
                 StopCoroutine(dashCoolTimeCoroutine);
             }
-        
+
             dashCoroutine = StartCoroutine(DashCoroutine());
-        }
-        
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            Vector3 clickPosition = hit.point;
-
-            // 현재 위치와 대쉬할 방향 벡터 계산
-            Vector3 currentPosition = transform.position;
-            Vector3 dashVector = clickPosition - currentPosition;
-            dashVector.y = 0f;
-            float dashDistance = dashVector.magnitude;
-
-            // 대쉬 거리 이내인지 확인
-            if (dashDistance <= this.dashDistance)
+            
+            
+            
+            if (Physics.Raycast(ray, out hit))
             {
+                Vector3 clickPosition = hit.point;
+
+                // 현재 위치와 대쉬할 방향 벡터 계산
+                Vector3 currentPosition = transform.position;
+                Vector3 dashVector = clickPosition - currentPosition;
+                dashVector.y = 0f;
+                float _dashDistance = dashVector.magnitude;
+                
                 // 대쉬할 방향 벡터 저장
                 dashDirection = dashVector.normalized;
-
+                
                 // NavMeshAgent 비활성화
                 navMeshAgent.enabled = false;
-
+                
                 // 대쉬 시작
                 isDashing = true;
                 dashStartTime = Time.time;
+                
+                // // 대쉬 거리 이내인지 확인
+                // if (_dashDistance <= this.dashDistance)
+                // {
+                //     // 대쉬할 방향 벡터 저장
+                //     dashDirection = dashVector.normalized;
+                //
+                //     // NavMeshAgent 비활성화
+                //     navMeshAgent.enabled = false;
+                //
+                //     // 대쉬 시작
+                //     isDashing = true;
+                //     dashStartTime = Time.time;
+                // }
             }
         }
     }
-    
-
-    // public void OnMove(InputAction.CallbackContext context)
-    // {
-    //     Ray ray = camera.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-    //     RaycastHit hit;
-    //     if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-    //     {
-    //         Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-    //         player.Move(hit.point);
-    //     }
-    // }
 
 }

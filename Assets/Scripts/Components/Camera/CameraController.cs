@@ -10,34 +10,49 @@ using Unity.Mathematics;
 
 public class CameraController : MonoBehaviour
 {
-    public Vector3 offset;
-    [Sirenix.OdinInspector.ReadOnly] public Player player;
+    [Sirenix.OdinInspector.ReadOnly] public Player player; // 이 카메라가 쫓아다닐 플레이어 정보
+    public Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
+    public bool attached = false;
 
-    [Sirenix.OdinInspector.Button]
-    public void Attach(Player _player)
+    public void Attach(Player _player) // 이 카메라에 플레이어 정보를 넣어주고 추적을 시작
     {
         player = _player;
         transform.position = player.transform.position + offset;
         transform.rotation = Quaternion.LookRotation(player.transform.position
                                                      - transform.position);
+        attached = true;
+    }
+
+    public void AfterAttach()
+    {
+        transform.position = player.transform.position + offset;
+        transform.rotation = Quaternion.LookRotation(player.transform.position
+                                                     - transform.position);
+        attached = true;
+    }
+
+    public void Detach()
+    {
+        attached = false;
     }
 
     private void LateUpdate()
     {
-        if (player != null)
+        if (attached)
         {
-            Vector3 diff = (player.transform.position + offset) - transform.position;
-            if (diff.magnitude > 0.1f)
+            Vector3 diff = (player.transform.position + offset) - transform.position; // (있어야 하는 자리 - 현재 자리) 벡터
+            if (diff.magnitude > 0.1f) // 그 크기가 일정이상 커지면
             {
-                OnPlayerMove();
+                OnPlayerMove(); // 카메라 움직이기
             }
         }
     }
 
-    private Tweener move;
+    private Tweener move; // Tweener 하나로 움직임 관리
+
     void OnPlayerMove()
     {
-        move = transform.DOMove(player.transform.position + offset, 0.3f);
-        move.Play();
+        move = transform.DOMove(player.transform.position + offset, 0.3f); // 부드럽게 움직여주는 DoMove
+        move.Play(); // 이전걸 덮어씌우고 새로 실행
     }
 }

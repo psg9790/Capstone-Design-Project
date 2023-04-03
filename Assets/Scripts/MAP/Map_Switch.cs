@@ -17,9 +17,16 @@ public class Map_Switch : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.name == "Player")
+        if (col.tag == "Player")
         {
             portalUI.SetActive(true);
+        }
+    }
+    private void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            portalUI.SetActive(false);
         }
     }
 }

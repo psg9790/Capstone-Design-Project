@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
+    
     // state
     [Sirenix.OdinInspector.ReadOnly] 
     public PlayerState state = PlayerState.Idle;
@@ -14,9 +17,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] protected int dashCount;
     // move
-    private NavMeshAgent nav;
+    public NavMeshAgent nav;
     private Vector3 moveTarget;
     private bool isDodge = false;
+
+    private bool isAttackReady = true;
+    private float attackDelay;
+
+    private Weapon equipWeapon;
 
     public void OnUpdateStat(int dashCount)
     {
@@ -31,6 +39,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         NavRotation();
+        // attackDelay += Time.deltaTime;
         // 움직이는 상태이면
         if (state == PlayerState.Move)
         {
@@ -45,12 +54,38 @@ public class Player : MonoBehaviour
         
     }
 
+    public void attack()
+    {
+        // isAttackReady = equipWeapon.rate < attackDelay;
+        if (state != PlayerState.Death && 
+            state != PlayerState.Cc && 
+            state != PlayerState.Attack &&
+            state != PlayerState.Dash
+            )
+        {
+            // equipWeapon.use();
+            state = PlayerState.Attack;
+            nav.ResetPath();
+            Animator anim = GetComponent<Animator>();
+            anim.SetFloat("speed", 0);
+            anim.SetTrigger("attack");
+            Invoke("attackend",0.5f);
+
+            attackDelay = 0;
+        }
+    }
+
+    public void attackend()
+    {
+        state = PlayerState.Idle;
+    }
     public void Move(Vector3 pos)
     {
         if (state != PlayerState.Death && 
             state != PlayerState.Cc && 
             state != PlayerState.Attack &&
-            state != PlayerState.Dash)
+            state != PlayerState.Dash &&
+            !EventSystem.current.IsPointerOverGameObject ())
         {
             state = PlayerState.Move;
             nav.SetDestination(pos);
