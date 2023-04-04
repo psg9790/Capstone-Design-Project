@@ -1989,6 +1989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   dashCount: 1
+  nav: {fileID: 0}
 --- !u!114 &2792035439307907503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2006,7 +2007,7 @@ MonoBehaviour:
   dashReInputTime: 0.2
   dashTetanytime: 0.1
   dashCoolTime: 0.5
-  dashDistance: 5
+  dashDistance: 10
   dashDuration: 0.5
   dashCooldown: 1
 --- !u!1 &2374176484343549623
