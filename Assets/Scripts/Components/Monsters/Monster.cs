@@ -10,45 +10,43 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
+    // 체력, 스탯 관련
+    // [BoxGroup("Heart")] public Heart heart;
+    
     // components
     [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
     [HideInInspector] public Animator animator; // 컴포넌트 미리 추가 필요
-    [HideInInspector] public MonsterFOV fov; // 컴포넌트 미리 추가 필요
-    [HideInInspector] public MonsterSkillArchive skills;
+    [HideInInspector] public MonsterFOV fov; // 시야, 컴포넌트 미리 추가 필요
+    [HideInInspector] public MonsterSkillArchive skills; // 스킬 판정 collider를 넣어둘 컴포넌트 (미완)
 
     // behavior
-    [HideInInspector] public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시에 이전 상태의 Exit(), 새로운 상태의 Enter()를 실행시켜줌
-    [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 나타내줄 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
+    [HideInInspector] public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
+    [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
     // spawner & player
-    // [HideInInspector] public MonsterSpawner spawner; // 몬스터가 태어난 스포너의 정보. 이걸 가지고 있어야 스포너 주변 좌표를 가져올 수 있다.
-    [HideInInspector] public Player player; // 플레이어를 찾았을 시 플레이어 정보를 넣어줄 변수
-    [BoxGroup("Spawn")] [ReadOnly] public Vector3 spawnPoint;
-    [BoxGroup("Spawn")] [ReadOnly] public float patrolRadius;
+    [HideInInspector] public Player player; // 플레이어가 시야에 있을 시 플레이어 정보를 넣어줄 변수
+    [BoxGroup("Spawn")] [ReadOnly] public Vector3 spawnPoint; // 몬스터가 스폰된 위치
+    [BoxGroup("Spawn")] [ReadOnly] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
 
     // battle
-    [BoxGroup("Battle")] [SerializeField] public float attackRange = 1.75f; // 이 몬스터의 공격 사정거리
-    [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격 중에 다른 행동을 막기 위한 플래그
+    [BoxGroup("Battle")] public float attackRange = 1.75f; // 몬스터의 공격 사정거리
+    [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격할 때 키고, 끝나면 끌 플래그
 
     // fov
-    [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장하기 위한 변수. 시야 확장 후 복귀에 사용
-    [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각을 저장하기 위한 변수. 시야 확장 후 복귀에 사용
-    [BoxGroup("FOV")] public float extendFovRadius_multi = 2f; // 몬스터의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
-    [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f; // 몬스터의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다.
-    [BoxGroup("FOV")] public float extendFovTime = 4f; // 확장된 시야 범위에서 기본 시야 범위로 돌아갈 시간
-    [BoxGroup("FOV")] [ReadOnly] public bool extendedSight = false;
+    [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장
+    [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각을 저장
+    [BoxGroup("FOV")] public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
+    [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
+    [BoxGroup("FOV")] public float extendFovTime = 4f; // 흥분 상태에서 기본상태로 전환될 시간
+    [BoxGroup("FOV")] [ReadOnly] public bool extendedSight = false; // 흥분 상태
     [BoxGroup("FOV")] [ReadOnly] public bool playerInSight = false; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
-    [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f;
+    [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 거리를 갱신해줌
 
     // infos
-    // [FoldoutGroup("Idle->Patrol info")] [ReadOnly]
-    [HideInInspector] public float idleElapsedTime = 0f;
-
-    // [FoldoutGroup("Idle->Patrol info")] [ReadOnly]
-    [HideInInspector] public float idleToPatrolTime = 4f;
-
-    // [FoldoutGroup("Patrol Race Condition Control")] [ReadOnly]
+    // [HideInInspector] public float idleElapsedTime = 0f;
+    // [HideInInspector] public float idleToPatrolTime = 4f;
     [HideInInspector] public float catchPatrolRaceCondition = 0;
+
 
     public void Spawn(Vector3 pos, float range)
     {
@@ -130,7 +128,6 @@ public class Monster : MonoBehaviour
                 if (playerInSight) // 플레이어가 시야에 들어오면
                 {
                     // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
-                    // float dist = (player.transform.position - transform.position).magnitude;
                     if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
                     {
                         fsm.ChangeState(new MonsterState_ChasePlayer(this));
@@ -141,10 +138,6 @@ public class Monster : MonoBehaviour
                         fsm.ChangeState(new MonsterState_BaseAttack(this));
                     }
                 }
-
-                idleElapsedTime += Time.deltaTime;
-                if (idleElapsedTime > idleToPatrolTime) // 정해진 시간을 대기하면
-                    fsm.ChangeState(new MonsterState_Patrol(this));
                 break;
 
             case EMonsterState.Patrol: // 순찰 상태

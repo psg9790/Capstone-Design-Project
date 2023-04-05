@@ -858,7 +858,6 @@ GameObject:
   - component: {fileID: 5055860412709811894}
   - component: {fileID: -2054495633451273615}
   - component: {fileID: 6351156862225519098}
-  - component: {fileID: 6220650331725325582}
   - component: {fileID: 5149306198729191866}
   - component: {fileID: -2845275210056221873}
   - component: {fileID: -434476004945045167}
@@ -918,8 +917,6 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
-  idleElapsedTime: 0
-  idleToPatrolTime: 4
   catchPatrolRaceCondition: 0
   startRunawayDistance: 7
   basicMagic: {fileID: 8235734421317644384, guid: a10d12acb07d8af4f83b7e68605ea5c6,
@@ -945,21 +942,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4160
   monster: {fileID: 0}
---- !u!114 &6220650331725325582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5053411054411096966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13c54d7fb4a6edb41894457951763705, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseAttack_col: {fileID: 0}
-  skill01_col: {fileID: 0}
-  skill02_col: {fileID: 0}
 --- !u!95 &5149306198729191866
 Animator:
   serializedVersion: 5
