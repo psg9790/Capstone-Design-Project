@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     
     // state
     [Sirenix.OdinInspector.ReadOnly] 
-    public PlayerState state = PlayerState.Idle;
+    public State state = State.Idle;
     
     public int DashCount { get { return dashCount; } }
 
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private bool isAttackReady = true;
     private float attackDelay;
 
-    private Weapon equipWeapon;
+    private _Weapon equipWeapon;
 
     public void OnUpdateStat(int dashCount)
     {
@@ -38,38 +38,44 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        attackDelay += Time.deltaTime;
         NavRotation();
         // attackDelay += Time.deltaTime;
         // 움직이는 상태이면
-        if (state == PlayerState.Move)
+        if (state == State.Move)
         {
             Vector3 dist = moveTarget - transform.position;
             if (dist.magnitude <= 0.1f)
             {
-                state = PlayerState.Idle;
+                state = State.Idle;
                 Animator anim = GetComponent<Animator>();
                 anim.SetFloat("speed", 0);
             }
         }
-        
+        else if (state == State.Attack)
+        {
+            if (attackDelay > 0.5f)
+            {
+                state = State.Idle;
+            }
+        }
     }
 
     public void attack()
     {
         // isAttackReady = equipWeapon.rate < attackDelay;
-        if (state != PlayerState.Death && 
-            state != PlayerState.Cc && 
-            state != PlayerState.Attack &&
-            state != PlayerState.Dash
+        if (state != State.Death && 
+            state != State.Cc &&
+            state != State.Dash
             )
         {
             // equipWeapon.use();
-            state = PlayerState.Attack;
+            state = State.Attack;
             nav.ResetPath();
             Animator anim = GetComponent<Animator>();
             anim.SetFloat("speed", 0);
-            anim.SetTrigger("attack");
-            Invoke("attackend",0.5f);
+            // anim.SetTrigger("attack");
+            anim.SetTrigger("Bow_attack");
 
             attackDelay = 0;
         }
@@ -77,17 +83,17 @@ public class Player : MonoBehaviour
 
     public void attackend()
     {
-        state = PlayerState.Idle;
+        state = State.Idle;
     }
     public void Move(Vector3 pos)
     {
-        if (state != PlayerState.Death && 
-            state != PlayerState.Cc && 
-            state != PlayerState.Attack &&
-            state != PlayerState.Dash &&
+        if (state != State.Death && 
+            state != State.Cc && 
+            state != State.Attack &&
+            state != State.Dash &&
             !EventSystem.current.IsPointerOverGameObject ())
         {
-            state = PlayerState.Move;
+            state = State.Move;
             nav.SetDestination(pos);
             moveTarget = pos;
 
@@ -98,14 +104,14 @@ public class Player : MonoBehaviour
 
     public void Dodge()
     {
-        if (state != PlayerState.Death && 
-            state != PlayerState.Cc && 
-            state != PlayerState.Attack)
+        if (state != State.Death && 
+            state != State.Cc && 
+            state != State.Attack)
         {
             Animator anim = GetComponent<Animator>();
             anim.SetTrigger("doDodge");
             isDodge = true;
-            state = PlayerState.Dash;
+            state = State.Dash;
             
         }
         
@@ -114,7 +120,7 @@ public class Player : MonoBehaviour
     public void Dodgeout()
     {
         isDodge = false;
-        state = PlayerState.Idle;
+        state = State.Idle;
     }
     void NavRotation()
     {
@@ -133,7 +139,7 @@ public class Player : MonoBehaviour
     }
 }
 
-public enum PlayerState
+public enum State
 {
     Idle, 
     Move,

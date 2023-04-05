@@ -57,6 +57,9 @@ public class PlayerController : MonoBehaviour
     private float dashStartTime;
     private Vector3 dashDirection;
 
+    // player가 가지고 있는 상태, 현재 상태
+    private PlayerState[] states;
+    private PlayerState currentState;
     
     private void Start()
     {
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 isDashing = false;
                 navMeshAgent.enabled = true;
-                player.state = PlayerState.Idle;
+                player.state = State.Idle;
             }
             else
             {
@@ -129,30 +132,12 @@ public class PlayerController : MonoBehaviour
     {
         rightClickHold = false;
     }
-
-    //public bool IsOnslope()
-    //{
-    //    Ray ray = new Ray(transform.position, Vector3.down);
-    //    if (Physics.Raycast(ray, out slopeHit, RAY_DISTANCE, groundLayer))
-    //    {
-    //        var angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-    //        return angle != 0f && angle < maxSlopeAngle;
-    //    }
-    //}
-    //protected Vector3 GetDirection(float currentMoveSpeed)
-    //{
-    //    isOnslope = IsOnslope();
-    //    isGrounded = IsGrounded();
-    //    Vector3 calculatedDirection = calculateNextFrameGroundAngle()
-    //}
-
+    
     protected void LookAt(Vector3 direction)
     {
-        
         if (direction != Vector3.zero)
         {
             Quaternion targetAngle = Quaternion.LookRotation(direction);
-            Rigidbody rg = GetComponent<Rigidbody>();
             transform.rotation = targetAngle;
         }
     }
@@ -171,14 +156,14 @@ public class PlayerController : MonoBehaviour
 
         yield return DASH_FORWARD_ROOL_TIME;
         player.state = (player.DashCount > 1 && currentDashCount < player.DashCount)
-            ? PlayerState.NDash
-            : PlayerState.Dash;
+            ? State.NDash
+            : State.Dash;
 
         yield return DASH_RE_INPUT_TIME;
         rg.velocity = Vector3.zero;
         // anim.SetFloat("speed",1f);
         yield return DASH_TETANY_TIME;
-        player.state = PlayerState.Idle;
+        player.state = State.Idle;
 
         dashCoolTimeCoroutine = StartCoroutine(DashCoolTimeCoroutine());
     }
@@ -206,10 +191,10 @@ public class PlayerController : MonoBehaviour
     void SpaceClickPerformed(InputAction.CallbackContext context)
     {
         
-        bool isAvailableDash = player.state != PlayerState.Dash && currentDashCount < player.DashCount;
+        bool isAvailableDash = player.state != State.Dash && currentDashCount < player.DashCount;
         if (isAvailableDash)
         {
-            player.state = PlayerState.Dash;
+            player.state = State.Dash;
             Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))

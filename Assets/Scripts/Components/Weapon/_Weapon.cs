@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class _Weapon : MonoBehaviour
 {
     public enum Type
     {
