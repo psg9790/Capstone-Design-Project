@@ -46,9 +46,9 @@ public class RangedMonster : Monster
                     }
                 }
 
-                idleElapsedTime += Time.deltaTime;
-                if (idleElapsedTime > idleToPatrolTime) // 정해진 시간을 대기하면
-                    fsm.ChangeState(new MonsterState_Patrol(this));
+                // idleElapsedTime += Time.deltaTime;
+                // if (idleElapsedTime > idleToPatrolTime) // 정해진 시간을 대기하면
+                    // fsm.ChangeState(new MonsterState_Patrol(this));
                 break;
 
             case EMonsterState.Patrol: // 순찰 상태

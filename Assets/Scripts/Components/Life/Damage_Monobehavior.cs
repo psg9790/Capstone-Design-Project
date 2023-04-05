@@ -14,4 +14,9 @@ public class Damage_Monobehavior : MonoBehaviour
     {
         Damage = new Damage(dmg, ccType);
     }
+
+    public void CreateDamage()
+    {
+        
+    }
 }

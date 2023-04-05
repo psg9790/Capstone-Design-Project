@@ -1,11 +1,16 @@
+// Player나 Monster에 별도 컴포넌트로 부착
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
+[System.Serializable]
 public class Heart : MonoBehaviour
 {
+    [FoldoutGroup("Events")] public UnityEvent OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
+    
     [FoldoutGroup("Attributes")]
     [InfoBox("이 변수들을 플레이 중 직접 수정하면 다른 오브젝트 작동 시 (장비 장착/해제 등) 오류가 발생할 수도 있습니다.")]
     [SerializeField] private float max_hp;
@@ -24,7 +29,6 @@ public class Heart : MonoBehaviour
     public float ATK_SPEED => atk_speed;
     public float SKILL_COOLDOWN => skill_cooldown;
 
-    [HideInInspector] public UnityEvent deathevent;    // 이벤트 등록 필요
     
     public void Increase_MAX_HP(float amount)
     {
@@ -36,6 +40,12 @@ public class Heart : MonoBehaviour
 
     public void Restore_CUR_HP(float amount)
     {
+    }
+
+    [FoldoutGroup("Functions")] [Button]
+    public void RestoreAll_CUR_HP()
+    {
+        cur_hp = max_hp;
     }
 
     public void Increase_DEF(float amount)
@@ -70,21 +80,26 @@ public class Heart : MonoBehaviour
     {
     }
 
-    public Damage GenerateDamage(Player player)
+    public Damage Generate_Damage(Player player)
     {
         return null;
     }
 
-    public Damage GenerateDamage(Monster monster)
+    public Damage Generate_Damage(Monster monster)
     {
         return null;
     }
 
-    public void TakeDamage_Impulse(Damage _damage)
+    [FoldoutGroup("Functions")] [Button]
+    public void Take_Damage(Damage _damage)
     {
+        // 내부 처리
+        cur_hp -= _damage.damage;
     }
 
-    public void TakeDamage_DamageOverTime(Damage _damage, float _tik, float _time)
+    [FoldoutGroup("Functions")] [Button]
+    public void Take_Damage_DOT(Damage _damage, float _tik, float _time)
     {
+        // 초 처리 
     }
 }

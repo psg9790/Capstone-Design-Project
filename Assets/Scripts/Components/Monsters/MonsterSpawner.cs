@@ -23,7 +23,7 @@ public class MonsterSpawner : MonoBehaviour
         for (int i = 0; i < spawnAmount; i++)
         {
             Monster monster = Instantiate<Monster>(
-                monsterList[Random.Range(0, monsterList.Count - 1)]);
+                monsterList[Random.Range(0, monsterList.Count)]);
             // monster.transform.position = this.transform.position;
             // // monster.spawner = this;
             // monster.spawnPoint = this.transform.position;

@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class MonsterSkillArchive : MonoBehaviour
 {
-    public Collider baseAttack_col;
-    public Collider skill01_col;
-    public Collider skill02_col;
+    public HitBox attack01;
+    public HitBox skill01;
+    public HitBox skill02;
 
     public void BaseAttackCollider_ON()
     {
-        baseAttack_col.enabled = true;
-        baseAttack_col.GetComponent<MonsterSkillHitBox>().ClearHash(); // 해시 초기화
+        attack01.COLLIDER_ON(new Damage(10, CC_type.None));
+        // attack01.enabled = true;
+        // attack01.GetComponent<HitBox>().ClearHash(); // 해시 초기화
     }
 
     public void BaseAttackCollider_OFF()
     {
-        baseAttack_col.enabled = false;
+        attack01.COLLIDER_OFF();
+        // attack01.enabled = false;
     }
+    
 
     public void Skill01Collider_ON()
     {
