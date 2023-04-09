@@ -11,22 +11,24 @@ public class GameManager : MonoBehaviour
     // singleton
     static GameManager instance;
     
+    
     // important
     public ISave save = new JsonSave();
     
     public static GameManager Instance { get { return instance; } }
 
     public GameObject menuSet;
+    public GameObject invenSet;
+    /*
     [Header("# Player Info")] 
     public int Hp;
     public int MaxHp=100;
-
+    */
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            this.Hp = 100;
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //Sub Menu
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
         {
             if (menuSet.activeSelf)
             {
