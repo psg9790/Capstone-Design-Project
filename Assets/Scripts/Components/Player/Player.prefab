@@ -1935,7 +1935,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 40
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 999
   m_StoppingDistance: 0.1
@@ -1990,7 +1990,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   dashCount: 1
-  nav: {fileID: 0}
+  dashPower: 10
+  dashTetanyTime: 0.5
+  dashCooltime: 1
 --- !u!114 &2792035439307907503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2003,6 +2005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f233ef704dbba334fbc9c4e553e0b1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   dashPower: 10
   dashForwardRollTime: 0.2
   dashReInputTime: 0.2
@@ -2011,6 +2014,7 @@ MonoBehaviour:
   dashDistance: 10
   dashDuration: 0.5
   dashCooldown: 1
+  isDashing: 0
 --- !u!1 &2374176484343549623
 GameObject:
   m_ObjectHideFlags: 0
@@ -6351,7 +6355,7 @@ PrefabInstance:
     - target: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5504523452849746296, guid: 2f98bfa5afe8c47e7bb47024441b4995,
         type: 3}
@@ -6415,7 +6419,7 @@ PrefabInstance:
     - target: {fileID: 7455772959638985431, guid: ac37bc6e529a1cc4aac9391e10fa78af,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7796833411805397101, guid: ac37bc6e529a1cc4aac9391e10fa78af,
         type: 3}

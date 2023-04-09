@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -5,148 +6,76 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using CharacterController;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance {get {return instance;}}
+    public StateMachine stateMachine { get; private set; }
+    public Rigidbody rigidbody { get; private set; }
+    public Animator animator { get; private set; }
+    public CapsuleCollider capsuleCollider { get; private set; }
     
-    // state
-    [Sirenix.OdinInspector.ReadOnly] 
-    public State state = State.Idle;
+    public NavMeshAgent nav { get; private set; }
+    private static Player instance;
     
-    public int DashCount { get { return dashCount; } }
+    // Dash
+    [Header("dash")]
+    [SerializeField]
+    public float dashPower = 10f; // 대쉬 거리
+    [SerializeField]
+    public float dashTetanyTime = 0.5f; // 대쉬 시간
+    [SerializeField]
+    public float dashCooltime = 1f; // 대쉬 쿨다운
 
-    [SerializeField] protected int dashCount;
-    // move
-    public NavMeshAgent nav;
-    private Vector3 moveTarget;
-    private bool isDodge = false;
-
-    private bool isAttackReady = true;
-    private float attackDelay;
-
+    
+    
     private _Weapon equipWeapon;
-
-    public void OnUpdateStat(int dashCount)
+    
+    private void Awake()
     {
-        this.dashCount = dashCount;
+        if (instance == null)
+        {
+            instance = this;
+            rigidbody = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
+            nav = GetComponent<NavMeshAgent>();
+            DontDestroyOnLoad(gameObject);
+            return;
+        }
+        DestroyImmediate(gameObject);
     }
+
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
+        InitStateMachine();
         nav.updateRotation = false;
     }
 
     void Update()
     {
-        attackDelay += Time.deltaTime;
-        NavRotation();
-        // attackDelay += Time.deltaTime;
-        // 움직이는 상태이면
-        if (state == State.Move)
-        {
-            Vector3 dist = moveTarget - transform.position;
-            if (dist.magnitude <= 0.1f)
-            {
-                state = State.Idle;
-                Animator anim = GetComponent<Animator>();
-                anim.SetFloat("speed", 0);
-            }
-        }
-        else if (state == State.Attack)
-        {
-            if (attackDelay > 0.5f)
-            {
-                state = State.Idle;
-            }
-        }
-    }
-
-    public void attack()
-    {
-        // isAttackReady = equipWeapon.rate < attackDelay;
-        if (state != State.Death && 
-            state != State.Cc &&
-            state != State.Dash
-            )
-        {
-            // equipWeapon.use();
-            state = State.Attack;
-            nav.ResetPath();
-            Animator anim = GetComponent<Animator>();
-            anim.SetFloat("speed", 0);
-            // anim.SetTrigger("attack");
-            anim.SetTrigger("Bow_attack");
-
-            attackDelay = 0;
-        }
-    }
-
-    public void attackend()
-    {
-        state = State.Idle;
-    }
-    public void Move(Vector3 pos)
-    {
-        if (state != State.Death && 
-            state != State.Cc && 
-            state != State.Attack &&
-            state != State.Dash &&
-            !EventSystem.current.IsPointerOverGameObject ())
-        {
-            state = State.Move;
-            nav.SetDestination(pos);
-            moveTarget = pos;
-
-            Animator anim = GetComponent<Animator>();
-            anim.SetFloat("speed", 1.1f);
-        }
-    }
-
-    public void Dodge()
-    {
-        if (state != State.Death && 
-            state != State.Cc && 
-            state != State.Attack)
-        {
-            Animator anim = GetComponent<Animator>();
-            anim.SetTrigger("doDodge");
-            isDodge = true;
-            state = State.Dash;
-            
-        }
+        stateMachine?.UpdateState();
         
     }
 
-    public void Dodgeout()
+    private void FixedUpdate()
     {
-        isDodge = false;
-        state = State.Idle;
+        stateMachine?.FixedUpdateState();
     }
-    void NavRotation()
+
+    private void InitStateMachine() // 새로운 상태 추하갈 때 stateMachine.AddState(StateName.새로운상태, new 새로운상태State(controller)); 추가
     {
-        if (!nav.hasPath)
-            return;
         
-        Vector2 forward = new Vector2(transform.position.z, transform.position.x);
-        Vector2 steeringTarget = new Vector2(nav.steeringTarget.z, nav.steeringTarget.x);
-    
-        //방향을 구한 뒤, 역함수로 각을 구한다.
-        Vector2 dir = steeringTarget - forward;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-    
-        //방향 적용
-        transform.eulerAngles = Vector3.up * angle;
+        PlayerController controller = GetComponent<PlayerController>();        
+        stateMachine = new StateMachine(StateName.Idle, new IdleState(controller));
+        stateMachine.AddState(StateName.move, new MoveState(controller));
+        stateMachine.AddState(StateName.dash, new DashState(controller));
+        stateMachine.AddState(StateName.attack, new AttackState(controller));
     }
+    
+    
+
+
 }
 
-public enum State
-{
-    Idle, 
-    Move,
-    Dash,
-    NDash,
-    Attack,
-    Interact,
-    Cc,
-    Death
-}
