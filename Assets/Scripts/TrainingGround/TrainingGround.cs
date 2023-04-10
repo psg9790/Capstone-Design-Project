@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -38,12 +39,23 @@ public class TrainingGround : MonoBehaviour
         }
 
         InputManager.Instance.AddPerformed(InputKey.RightClick, CancleBrush);
-        InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerform);
+        // InputManager.Instance.AddPerformed(InputKey.LeftClick, LeftClickPerform);
         InputManager.Instance.AddPerformed(InputKey.F, CamAttach_OnOff);
 
         ChangeBrush(new IdleBrush_TrainingGround(this));
         player = FindObjectOfType<Player>();
         cam = Camera.main.GetComponent<CameraController>();
+    }
+
+    private void Update()
+    {
+        if (InputManager.Instance.GetAction(InputKey.LeftClick).WasPerformedThisFrame())
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                brush.Execute();
+            }
+        }
     }
 
     private void LateUpdate()
@@ -61,13 +73,13 @@ public class TrainingGround : MonoBehaviour
         }
     }
 
-    public void LeftClickPerform(InputAction.CallbackContext context)
-    {
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            brush.Execute();
-        }
-    }
+    // public void LeftClickPerform(InputAction.CallbackContext context)
+    // {
+    //     if (!EventSystem.current.IsPointerOverGameObject())
+    //     {
+    //         brush.Execute();
+    //     }
+    // }
 
     // Dropdown에서 item의 PointerClick이벤트에 추가해서 같은거 선택해도 인식하게 (onValueChanged 우회)
     public void MonsterSpawn_DropdownClick(BaseEventData baseEventData)
