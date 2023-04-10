@@ -6,13 +6,9 @@ namespace Monsters
 {
     public class MonsterState_BaseAttack : MonsterState
     {
-        public MonsterState_BaseAttack(Monster monster) : base(monster)
+       public override void Enter(Monster monster)
         {
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
+            base.Enter(monster);
             monster.state = EMonsterState.BaseAttack;
             monster.animator.SetTrigger("Attack01");
             monster.whileAttack = true;
@@ -23,14 +19,14 @@ namespace Monsters
             }
         }
 
-        public override void Execute()
+        public override void Execute(Monster monster)
         {
-            base.Execute();
+            base.Execute(monster);
         }
 
-        public override void Exit()
+        public override void Exit(Monster monster)
         {
-            base.Exit();
+            base.Exit(monster);
         }
     }
 }

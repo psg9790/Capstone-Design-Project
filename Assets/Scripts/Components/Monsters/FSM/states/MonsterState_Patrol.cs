@@ -5,13 +5,9 @@ namespace Monsters
 {
     public class MonsterState_Patrol : MonsterState
     {
-        public MonsterState_Patrol(Monster monster) : base(monster)
+        public override void Enter(Monster monster)
         {
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
+            base.Enter(monster);
             monster.state = EMonsterState.Patrol;
 
             // NavMeshPath path = new NavMeshPath();
@@ -37,9 +33,9 @@ namespace Monsters
             monster.animator.SetBool("Patrol", true); // 순찰 애니메이션
         }
 
-        public override void Execute()
+        public override void Execute(Monster monster)
         {
-            base.Execute();
+            base.Execute(monster);
             // https://answers.unity.com/questions/324589/how-can-i-tell-when-a-navmesh-has-reached-its-dest.html
 
             if (!monster.nav.pathPending)
@@ -48,15 +44,16 @@ namespace Monsters
                 {
                     if (!monster.nav.hasPath || monster.nav.velocity.sqrMagnitude == 0f)
                     {
-                        monster.fsm.ChangeState(new MonsterState_Idle(monster));
+                        monster.fsm.ChangeState(EMonsterState.Idle);
+                        return;
                     }
                 }
             }
         }
 
-        public override void Exit()
+        public override void Exit(Monster monster)
         {
-            base.Exit();
+            base.Exit(monster);
             monster.animator.SetBool("Patrol", false);
             monster.nav.ResetPath();
         }

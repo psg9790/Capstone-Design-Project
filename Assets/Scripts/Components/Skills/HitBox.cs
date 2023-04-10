@@ -7,7 +7,7 @@ using UnityEngine;
 public class HitBox : MonoBehaviour
 {
     public LayerMask targetMask;
-    public Collider collider;
+    public Collider col;
 
     private HashSet<string> hitHash = new HashSet<string>();
     [ShowInInspector] private Damage damage;
@@ -15,13 +15,13 @@ public class HitBox : MonoBehaviour
     public void COLLIDER_ON(Damage _damage)
     {
         damage = _damage;
-        collider.enabled = true;
+        col.enabled = true;
         ClearHash();
     }
 
     public void COLLIDER_OFF()
     {
-        collider.enabled = false;
+        col.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -61,7 +61,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
-  collider: {fileID: 2089673014}
+  col: {fileID: 2089673014}
 --- !u!1 &4385279898836250753
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3577c0507d97144429476f145c2d93a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
+  heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
   fov: {fileID: 0}
@@ -649,6 +651,8 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
+  idleElapsedTime: 0
+  idleEndTime: 4
   catchPatrolRaceCondition: 0
 --- !u!114 &5187192431022494434
 MonoBehaviour:

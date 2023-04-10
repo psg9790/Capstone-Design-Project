@@ -922,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eced1f929afb5f844b60b7c664569663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 1
   heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
@@ -941,6 +942,8 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
+  idleElapsedTime: 0
+  idleEndTime: 4
   catchPatrolRaceCondition: 0
   startRunawayDistance: 7
   basicMagic: {fileID: 8235734421317644384, guid: a10d12acb07d8af4f83b7e68605ea5c6,

@@ -36,16 +36,16 @@ namespace Monsters
                         // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
                         if (playerDist < startRunawayDistance)
                         {
-                            fsm.ChangeState(new MonsterState_Runaway(this));
+                            fsm.ChangeState(EMonsterState.Runaway);
                         }
                         else if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
                         {
-                            fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                            fsm.ChangeState(EMonsterState.ChasePlayer);
                         }
                         else // 타깃이 공격 사정거리 안이면
                         {
                             // 공격 쿨타임 추가?
-                            fsm.ChangeState(new MonsterState_BaseAttack(this));
+                            fsm.ChangeState(EMonsterState.BaseAttack);
                         }
                     }
 
@@ -59,15 +59,15 @@ namespace Monsters
                     {
                         if (playerDist < startRunawayDistance)
                         {
-                            fsm.ChangeState(new MonsterState_Runaway(this));
+                            fsm.ChangeState(EMonsterState.Runaway);
                         }
                         else if (playerDist > attackRange)
                         {
-                            fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                            fsm.ChangeState(EMonsterState.ChasePlayer);
                         }
                         else
                         {
-                            fsm.ChangeState(new MonsterState_BaseAttack(this));
+                            fsm.ChangeState(EMonsterState.BaseAttack);
                         }
                     }
 
@@ -76,7 +76,7 @@ namespace Monsters
                     {
                         Debug.Log("stop!!!");
                         catchPatrolRaceCondition = 0;
-                        fsm.ChangeState(new MonsterState_Idle(this));
+                        fsm.ChangeState(EMonsterState.Idle);
                     }
 
                     if (nav.velocity.sqrMagnitude > 3.5f) // 일정 속도 이상으로 움직이고 있으면 0으로 초기화
@@ -89,16 +89,16 @@ namespace Monsters
                     {
                         if (playerDist < startRunawayDistance)
                         {
-                            fsm.ChangeState(new MonsterState_Runaway(this));
+                            fsm.ChangeState(EMonsterState.Runaway);
                         }
                         else if (playerDist < attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
                         {
-                            fsm.ChangeState(new MonsterState_BaseAttack(this));
+                            fsm.ChangeState(EMonsterState.BaseAttack);
                         }
                     }
                     else // 플레이어를 시야에서 놓쳤을 시
                     {
-                        fsm.ChangeState(new MonsterState_Idle(this));
+                        fsm.ChangeState(EMonsterState.Idle);
                     }
 
                     break;
@@ -106,7 +106,7 @@ namespace Monsters
 
                 case EMonsterState.BaseAttack: // 기본 공격 수행 중
                     if (!whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
-                        fsm.ChangeState(new MonsterState_Idle(this));
+                        fsm.ChangeState(EMonsterState.Idle);
                     break;
 
                 case EMonsterState.Runaway:
@@ -114,12 +114,12 @@ namespace Monsters
                     {
                         if (playerDist > startRunawayDistance)
                         {
-                            fsm.ChangeState(new MonsterState_Idle(this));
+                            fsm.ChangeState(EMonsterState.Idle);
                         }
                     }
                     else
                     {
-                        fsm.ChangeState(new MonsterState_Idle(this));
+                        fsm.ChangeState(EMonsterState.Idle);
                     }
 
                     break;

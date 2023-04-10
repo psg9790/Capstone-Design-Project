@@ -13,8 +13,8 @@ namespace Monsters
 
     public class Monster : MonoBehaviour
     {
+        public EMonsterType monsterType;
         // 체력, 스탯 관련
-        // [BoxGroup("Heart")] public Heart heart;
         public Heart heart;
 
         // components
@@ -54,8 +54,8 @@ namespace Monsters
         [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 거리를 갱신해줌
 
         // infos
-        // [HideInInspector] public float idleElapsedTime = 0f;
-        // [HideInInspector] public float idleToPatrolTime = 4f;
+        [HideInInspector] public float idleElapsedTime = 0f;
+        [HideInInspector] public float idleEndTime = 4f;
         [HideInInspector] public float catchPatrolRaceCondition = 0;
 
 
@@ -127,7 +127,7 @@ namespace Monsters
             }
 
             fsm = new MonsterStateMachine(this);
-            fsm.ChangeState(new MonsterState_Idle(this));
+            fsm.ChangeState(EMonsterState.Idle);
         }
 
         protected virtual void OnUpdate()
@@ -181,12 +181,12 @@ namespace Monsters
                 // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
                 if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
                 {
-                    fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                    fsm.ChangeState(EMonsterState.ChasePlayer);
                 }
                 else // 타깃이 공격 사정거리 안이면
                 {
                     // 공격 쿨타임 추가?
-                    fsm.ChangeState(new MonsterState_BaseAttack(this));
+                    fsm.ChangeState(EMonsterState.BaseAttack);
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace Monsters
         {
             if (playerInSight) // 플레이어 발견시
             {
-                fsm.ChangeState(new MonsterState_ChasePlayer(this));
+                fsm.ChangeState(EMonsterState.ChasePlayer);
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace Monsters
             {
                 Debug.Log("stop!!!");
                 catchPatrolRaceCondition = 0;
-                fsm.ChangeState(new MonsterState_Idle(this));
+                fsm.ChangeState(EMonsterState.Idle);
                 return;
             }
 
@@ -219,19 +219,19 @@ namespace Monsters
             {
                 if (playerDist < attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
                 {
-                    fsm.ChangeState(new MonsterState_BaseAttack(this));
+                    fsm.ChangeState(EMonsterState.BaseAttack);
                 }
             }
             else // 플레이어를 시야에서 놓쳤을 시
             {
-                fsm.ChangeState(new MonsterState_Idle(this));
+                fsm.ChangeState(EMonsterState.Idle);
             }
         }
 
         protected virtual void BaseAttack_Conditions()
         {
             if (!whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
-                fsm.ChangeState(new MonsterState_Idle(this));
+                fsm.ChangeState(EMonsterState.Idle);
         }
 
         protected virtual void Runaway_Conditions()
@@ -331,5 +331,11 @@ namespace Monsters
         Runaway,
         Dead,
         Stiff
+    }
+
+    public enum EMonsterType
+    {
+        General_Melee,
+        General_Ranged
     }
 }

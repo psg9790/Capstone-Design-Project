@@ -10,22 +10,22 @@
             this.monster = monster;
         }
 
-        public void ChangeState(MonsterState nextstate)
+        public void ChangeState(EMonsterState state)
         {
             if (!ReferenceEquals(curstate, null))
             {
-                curstate.Exit(); // 현재 상태가 존재하면 상태를 종료하는 메서드를 호출해줌
+                curstate.Exit(monster); // 현재 상태가 존재하면 상태를 종료하는 메서드를 호출해줌
             }
 
-            curstate = nextstate; // 상태를 갈이끼워줌
-            curstate.Enter(); // 새로운 상태로 진입하는 함수를 호출해줌
+            curstate = MonsterStateList.Instance.FindState(state); // 상태를 갈이끼워줌
+            curstate.Enter(monster); // 새로운 상태로 진입하는 함수를 호출해줌
         }
 
         public void Execute()
         {
             if (!ReferenceEquals(curstate, null))
             {
-                curstate.Execute(); // 현재 상태의 Update
+                curstate.Execute(monster); // 현재 상태의 Update
             }
         }
     }

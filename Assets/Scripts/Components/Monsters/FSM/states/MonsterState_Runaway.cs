@@ -6,20 +6,16 @@ namespace Monsters
 {
     public class MonsterState_Runaway : MonsterState
     {
-        public MonsterState_Runaway(Monster monster) : base(monster)
+        public override void Enter(Monster monster)
         {
-        }
-
-        public override void Enter()
-        {
-            base.Enter();
+            base.Enter(monster);
             monster.state = EMonsterState.Runaway;
             monster.animator.SetBool("Run", true); // 
         }
 
-        public override void Execute()
+        public override void Execute(Monster monster)
         {
-            base.Execute();
+            base.Execute(monster);
             if (monster.playerInSight)
             {
                 monster.nav.SetDestination(monster.transform.position +
@@ -27,9 +23,9 @@ namespace Monsters
             }
         }
 
-        public override void Exit()
+        public override void Exit(Monster monster)
         {
-            base.Exit();
+            base.Exit(monster);
             monster.animator.SetBool("Run", false); // 
             monster.nav.ResetPath();
         }

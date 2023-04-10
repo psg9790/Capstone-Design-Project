@@ -1878,6 +1878,7 @@ GameObject:
   - component: {fileID: 8194928547755052662}
   - component: {fileID: 5035449868743994188}
   - component: {fileID: 2792035439307907503}
+  - component: {fileID: -7604511634031041459}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -1988,8 +1989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32412147f4ec40489ffb3939e0c377d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
-  dashCount: 1
   dashPower: 10
   dashTetanyTime: 0.5
   dashCooltime: 1
@@ -2006,15 +2005,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
-  dashPower: 10
-  dashForwardRollTime: 0.2
-  dashReInputTime: 0.2
-  dashTetanytime: 0.1
-  dashCoolTime: 0.5
   dashDistance: 10
   dashDuration: 0.5
   dashCooldown: 1
   isDashing: 0
+--- !u!114 &-7604511634031041459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2349591283584898313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7a600ae4299744fbe8b6bf81f61bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  max_hp: 100
+  cur_hp: 100
+  atk: 10
+  def: 1
+  movement_speed: 1
+  atk_speed: 1
+  skill_cooldown: 0
 --- !u!1 &2374176484343549623
 GameObject:
   m_ObjectHideFlags: 0

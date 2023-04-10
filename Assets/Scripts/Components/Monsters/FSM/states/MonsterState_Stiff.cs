@@ -6,23 +6,19 @@ namespace Monsters
 {
     public class MonsterState_Stiff : MonsterState
     {
-        public MonsterState_Stiff(Monster monster) : base(monster)
+        public override void Enter(Monster monster)
         {
+            base.Enter(monster);
         }
 
-        public override void Enter()
+        public override void Execute(Monster monster)
         {
-            base.Enter();
+            base.Execute(monster);
         }
 
-        public override void Execute()
+        public override void Exit(Monster monster)
         {
-            base.Execute();
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
+            base.Exit(monster);
         }
     }
 }
