@@ -4,30 +4,33 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
-[CustomEditor(typeof(MonsterFOV))]
-public class MonsterFOVEditor : Editor
+namespace Monsters
 {
-    // https://nicotina04.tistory.com/197
-    private void OnSceneGUI()
+#if UNITY_EDITOR
+    [CustomEditor(typeof(MonsterFOV))]
+    public class MonsterFOVEditor : Editor
     {
-        MonsterFOV fow = (MonsterFOV)target;
-        if (fow.monster == null)
-            return;
-        
-        Handles.color = fow.monster.playerInSight ? Color.red : Color.white;
-
-        Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.viewRadius);
-
-        Vector3 viewAngleA = fow.DirFromAngle(-fow.viewAngle / 2, false);
-        Vector3 viewAngleB = fow.DirFromAngle(fow.viewAngle / 2, false);
-        Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleA * fow.viewRadius);
-        Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
-        
-        if (fow.monster.playerInSight)
+        // https://nicotina04.tistory.com/197
+        private void OnSceneGUI()
         {
-            Handles.DrawLine(fow.transform.position, fow.monster.player.transform.position);
+            MonsterFOV fow = (MonsterFOV)target;
+            if (fow.monster == null)
+                return;
+
+            Handles.color = fow.monster.playerInSight ? Color.red : Color.white;
+
+            Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.viewRadius);
+
+            Vector3 viewAngleA = fow.DirFromAngle(-fow.viewAngle / 2, false);
+            Vector3 viewAngleB = fow.DirFromAngle(fow.viewAngle / 2, false);
+            Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleA * fow.viewRadius);
+            Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
+
+            if (fow.monster.playerInSight)
+            {
+                Handles.DrawLine(fow.transform.position, fow.monster.player.transform.position);
+            }
         }
     }
-}
 #endif
+}

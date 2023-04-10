@@ -1,111 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using CharacterController;
 
 public class Player : MonoBehaviour
 {
-    // state
-    [Sirenix.OdinInspector.ReadOnly] 
-    public PlayerState state = PlayerState.Idle;
+    public static Player Instance {get {return instance;}}
+    public StateMachine stateMachine { get; private set; }
+    public Rigidbody rigidbody { get; private set; }
+    public Animator animator { get; private set; }
+    public CapsuleCollider capsuleCollider { get; private set; }
     
-    public int DashCount { get { return dashCount; } }
+    public NavMeshAgent nav { get; private set; }
+    private static Player instance;
+    
+    // Dash
+    [Header("dash")]
+    [SerializeField]
+    public float dashPower = 10f; // 대쉬 거리
+    [SerializeField]
+    public float dashTetanyTime = 0.5f; // 대쉬 시간
+    [SerializeField]
+    public float dashCooltime = 1f; // 대쉬 쿨다운
 
-    [SerializeField] protected int dashCount;
-    // move
-    private NavMeshAgent nav;
-    private Vector3 moveTarget;
-    private bool isDodge = false;
-
-    public void OnUpdateStat(int dashCount)
+    
+    
+    private _Weapon equipWeapon;
+    
+    private void Awake()
     {
-        this.dashCount = dashCount;
+        if (instance == null)
+        {
+            instance = this;
+            rigidbody = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
+            capsuleCollider = GetComponent<CapsuleCollider>();
+            nav = GetComponent<NavMeshAgent>();
+            DontDestroyOnLoad(gameObject);
+            return;
+        }
+        DestroyImmediate(gameObject);
     }
+
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
+        InitStateMachine();
         nav.updateRotation = false;
     }
 
     void Update()
     {
-        NavRotation();
-        // 움직이는 상태이면
-        if (state == PlayerState.Move)
-        {
-            Vector3 dist = moveTarget - transform.position;
-            if (dist.magnitude <= 0.1f)
-            {
-                state = PlayerState.Idle;
-                Animator anim = GetComponent<Animator>();
-                anim.SetFloat("speed", 0);
-            }
-        }
+        stateMachine?.UpdateState();
         
     }
 
-    public void Move(Vector3 pos)
+    private void FixedUpdate()
     {
-        if (state != PlayerState.Death && 
-            state != PlayerState.Cc && 
-            state != PlayerState.Attack &&
-            state != PlayerState.Dash)
-        {
-            state = PlayerState.Move;
-            nav.SetDestination(pos);
-            moveTarget = pos;
-
-            Animator anim = GetComponent<Animator>();
-            anim.SetFloat("speed", 1.1f);
-        }
+        stateMachine?.FixedUpdateState();
     }
 
-    public void Dodge()
+    private void InitStateMachine() // 새로운 상태 추하갈 때 stateMachine.AddState(StateName.새로운상태, new 새로운상태State(controller)); 추가
     {
-        if (state != PlayerState.Death && 
-            state != PlayerState.Cc && 
-            state != PlayerState.Attack)
-        {
-            Animator anim = GetComponent<Animator>();
-            anim.SetTrigger("doDodge");
-            isDodge = true;
-            state = PlayerState.Dash;
-            
-        }
         
+        PlayerController controller = GetComponent<PlayerController>();        
+        stateMachine = new StateMachine(StateName.Idle, new IdleState(controller));
+        stateMachine.AddState(StateName.move, new MoveState(controller));
+        stateMachine.AddState(StateName.dash, new DashState(controller));
+        stateMachine.AddState(StateName.attack, new AttackState(controller));
     }
-
-    public void Dodgeout()
-    {
-        isDodge = false;
-        state = PlayerState.Idle;
-    }
-    void NavRotation()
-    {
-        if (!nav.hasPath)
-            return;
-        
-        Vector2 forward = new Vector2(transform.position.z, transform.position.x);
-        Vector2 steeringTarget = new Vector2(nav.steeringTarget.z, nav.steeringTarget.x);
     
-        //방향을 구한 뒤, 역함수로 각을 구한다.
-        Vector2 dir = steeringTarget - forward;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
     
-        //방향 적용
-        transform.eulerAngles = Vector3.up * angle;
-    }
+
+
 }
 
-public enum PlayerState
-{
-    Idle, 
-    Move,
-    Dash,
-    NDash,
-    Attack,
-    Interact,
-    Cc,
-    Death
-}

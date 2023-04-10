@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 147, y: -12, z: 87}
   m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6389776829245260352}
   - {fileID: 9081902670009830587}
@@ -53,9 +54,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &4707325946734960921
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6389776829245260352}
   - component: {fileID: 3090409700958170707}
+  - component: {fileID: 2344540382443252072}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -107,6 +113,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.615, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 428218}
   m_RootOrder: 0
@@ -119,8 +126,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4707325946734960921}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 2
+  m_Shape: 0
   m_Color: {r: 1, g: 0.87058824, b: 0.73333335, a: 1}
   m_Intensity: 1
   m_Range: 2
@@ -169,8 +177,29 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2344540382443252072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707325946734960921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &3026180485707511751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,10 +207,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 428218}
     m_Modifications:
-    - target: {fileID: 6338325277534264524, guid: af9b294539a3daf4bbbd8852a4fd2632,
+    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
-      propertyPath: m_Name
-      value: Torch_Fire_FX_01
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.640377
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.640377
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.640377
       objectReference: {fileID: 0}
     - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
@@ -200,6 +244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.7071068
       objectReference: {fileID: 0}
@@ -212,16 +261,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
@@ -238,20 +277,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+    - target: {fileID: 6338325277534264524, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.640377
+      propertyPath: m_Name
+      value: Torch_Fire_FX_01
       objectReference: {fileID: 0}
-    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
+    - target: {fileID: 6338325277554032106, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.640377
-      objectReference: {fileID: 0}
-    - target: {fileID: 6338325277534010236, guid: af9b294539a3daf4bbbd8852a4fd2632,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.640377
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af9b294539a3daf4bbbd8852a4fd2632, type: 3}

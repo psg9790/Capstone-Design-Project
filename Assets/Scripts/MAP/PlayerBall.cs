@@ -17,10 +17,7 @@ public class PlayerBall : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
     }
     void Update() {
-        if(Input.GetButtonDown("Jump")&& isJump != true){
-            isJump=true;
-            rigid.AddForce(new Vector3(0,jumpnum,0),ForceMode.Impulse);
-        }
+       
     }
     void FixedUpdate() {
         float h = Input.GetAxisRaw("Horizontal");
@@ -29,10 +26,5 @@ public class PlayerBall : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.name =="Floor") {
-            isJump=false;
-        }
-    }
-    
+
 }
