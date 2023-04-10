@@ -33,7 +33,7 @@ public class HitBox : MonoBehaviour
         {
             if (!hitHash.Contains(other.transform.root.name)) // 최상위부모 이름,,, 히트한 타겟이 해싱되어 있으면 다시 타격 x 
             {
-                Debug.Log(transform.root.name + " attacks " + other.transform.root.name);
+                // Debug.Log(transform.root.name + " attacks " + other.transform.root.name);
                 hitHash.Add(other.transform.root.name); // 히트한 타겟 해싱
                 if (other.transform.root.TryGetComponent<Heart>(out Heart _heart))
                 {
@@ -45,6 +45,11 @@ public class HitBox : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetDamage(Damage _damage)
+    {
+        damage = _damage;
     }
 
     [Button]

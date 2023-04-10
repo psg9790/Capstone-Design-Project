@@ -95,11 +95,25 @@ public class Heart : MonoBehaviour
     {
         // 내부 처리
         cur_hp -= _damage.damage;
+        
+        Debug.Log("\""+gameObject.name + "\" took " + _damage.damage + " damage! : " + cur_hp + "/" + max_hp);
+
+        if (cur_hp <= 0)
+        {
+            Debug.Log("dead");
+            OnDeath.Invoke();
+        }
     }
 
     [FoldoutGroup("Functions")] [Button]
     public void Take_Damage_DOT(Damage _damage, float _tik, float _time)
     {
         // 초 처리 
+        
+        if (cur_hp <= 0)
+        {
+            Debug.Log("dead");
+            OnDeath.Invoke();
+        }
     }
 }

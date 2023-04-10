@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
 {
     // 체력, 스탯 관련
     // [BoxGroup("Heart")] public Heart heart;
+    public Heart heart;
     
     // components
     [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
@@ -67,6 +68,15 @@ public class Monster : MonoBehaviour
 
     protected virtual void OnAwake()
     {
+        if (TryGetComponent<Heart>(out Heart _heart))
+        {
+            heart = _heart;
+        }
+        else
+        {
+            Debug.LogError(this.gameObject.name+" 몬스터에 \"Heart\" 컴포넌트가 없습니다.");
+        }
+        
         if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
         {
             nav = agent;
@@ -125,59 +135,104 @@ public class Monster : MonoBehaviour
         switch (state)
         {
             case EMonsterState.Idle: // 대기 상태
-                if (playerInSight) // 플레이어가 시야에 들어오면
-                {
-                    // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
-                    if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
-                    {
-                        fsm.ChangeState(new MonsterState_ChasePlayer(this));
-                    }
-                    else // 타깃이 공격 사정거리 안이면
-                    {
-                        // 공격 쿨타임 추가?
-                        fsm.ChangeState(new MonsterState_BaseAttack(this));
-                    }
-                }
+                Idle_Coditions();
                 break;
 
             case EMonsterState.Patrol: // 순찰 상태
-                if (playerInSight) // 플레이어 발견시
-                    fsm.ChangeState(new MonsterState_ChasePlayer(this));
-
-                catchPatrolRaceCondition += Time.deltaTime; // 정상 속도로 움직일 시 계속 0으로 초기화됨.
-                if (catchPatrolRaceCondition > 1.1f) // 너무 오래 일정속도 이하로 있으면
-                {
-                    Debug.Log("stop!!!");
-                    catchPatrolRaceCondition = 0;
-                    fsm.ChangeState(new MonsterState_Idle(this));
-                }
-
-                if (nav.velocity.sqrMagnitude > 3.5f) // 일정 속도 이상으로 움직이고 있으면 0으로 초기화
-                    catchPatrolRaceCondition = 0;
-
+                Patrol_Conditions();
                 break;
 
             case EMonsterState.ChasePlayer: // 추적 상태
-                if (playerInSight) // 네비게이션이 경로 탐색을 완료했고
-                {
-                    if (playerDist < attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
-                    {
-                        fsm.ChangeState(new MonsterState_BaseAttack(this));
-                    }
-                }
-                else // 플레이어를 시야에서 놓쳤을 시
-                {
-                    fsm.ChangeState(new MonsterState_Idle(this));
-                } 
+                ChasePlayer_Conditions();
                 break;
-
-
+            
             case EMonsterState.BaseAttack: // 기본 공격 수행 중
-                if (!whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
-                    fsm.ChangeState(new MonsterState_Idle(this));
+                BaseAttack_Conditions();
+                break;
+            
+            case EMonsterState.Runaway:
+                Runaway_Conditions();
+                break;
+            
+            case EMonsterState.Dead:
+                Dead_Conditions();
                 break;
         }
     }
+
+    protected virtual void Idle_Coditions()
+    {
+        if (playerInSight) // 플레이어가 시야에 들어오면
+        {
+            // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
+            if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
+            {
+                fsm.ChangeState(new MonsterState_ChasePlayer(this));
+            }
+            else // 타깃이 공격 사정거리 안이면
+            {
+                // 공격 쿨타임 추가?
+                fsm.ChangeState(new MonsterState_BaseAttack(this));
+            }
+        }
+    }
+
+    protected virtual void Patrol_Conditions()
+    {
+        if (playerInSight) // 플레이어 발견시
+        {
+            fsm.ChangeState(new MonsterState_ChasePlayer(this));
+            return;
+        }
+
+        if (catchPatrolRaceCondition > 1.1f) // 너무 오래 일정속도 이하로 있으면
+        {
+            Debug.Log("stop!!!");
+            catchPatrolRaceCondition = 0;
+            fsm.ChangeState(new MonsterState_Idle(this));
+            return;
+        }
+
+        if (nav.velocity.sqrMagnitude > 3.5f) // 일정 속도 이상으로 움직이고 있으면 0으로 초기화
+            catchPatrolRaceCondition = 0;
+        else
+            catchPatrolRaceCondition += Time.deltaTime; // 정상 속도로 움직일 시 계속 0으로 초기화됨.
+    }
+
+    protected virtual void ChasePlayer_Conditions()
+    {
+        if (playerInSight) // 네비게이션이 경로 탐색을 완료했고
+        {
+            if (playerDist < attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
+            {
+                fsm.ChangeState(new MonsterState_BaseAttack(this));
+            }
+        }
+        else // 플레이어를 시야에서 놓쳤을 시
+        {
+            fsm.ChangeState(new MonsterState_Idle(this));
+        }
+    }
+
+    protected virtual void BaseAttack_Conditions()
+    {
+        if (!whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
+            fsm.ChangeState(new MonsterState_Idle(this));
+    }
+
+    protected virtual void Runaway_Conditions()
+    {
+        
+    }
+
+    protected virtual void Dead_Conditions()
+    {
+        
+    }
+    
+    /// <summary>
+    /// ///////////////////////////////////////////////////////////
+    /// </summary>
 
     protected void NavRotation()
     {
@@ -254,5 +309,6 @@ public enum EMonsterState // 몬스터의 현재 상태를 나타내기 위한 �
     Patrol,
     ChasePlayer,
     BaseAttack,
-    Runaway
+    Runaway,
+    Dead
 }

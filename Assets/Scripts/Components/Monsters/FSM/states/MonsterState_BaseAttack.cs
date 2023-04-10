@@ -14,16 +14,16 @@ public class MonsterState_BaseAttack : MonsterState
         monster.state = EMonsterState.BaseAttack;
         monster.animator.SetTrigger("Attack01");
         monster.whileAttack = true;
-    }
-
-    public override void Execute()
-    {
-        base.Execute();
         if (monster.playerInSight)
         {
             monster.transform.rotation = Quaternion.LookRotation(
                 (monster.player.transform.position - monster.transform.position).normalized, Vector3.up);
         }
+    }
+
+    public override void Execute()
+    {
+        base.Execute();
     }
 
     public override void Exit()
