@@ -24,7 +24,7 @@ public class MonsterRemoveBrush_TrainingGround : Brush_TrainingGround
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Monster")))
         {
-            Monster monster = hit.transform.root.GetComponent<Monster>();
+            Monsters.Monster monster = hit.transform.root.GetComponent<Monsters.Monster>();
             monster.Die();
         }
     }

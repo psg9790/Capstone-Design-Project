@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class testmonster : Monster
+namespace Monsters
 {
-    protected override void OnAwake()
-    {
-        base.OnAwake();
-    }
 
-    protected override void OnUpdate()
+    public class testmonster : Monster
     {
-        base.OnUpdate();
-    }
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+        }
 
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+        }
+
+    }
 }

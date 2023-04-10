@@ -85,7 +85,7 @@ public class Heart : MonoBehaviour
         return null;
     }
 
-    public Damage Generate_Damage(Monster monster)
+    public Damage Generate_Damage(Monsters.Monster monster)
     {
         return null;
     }

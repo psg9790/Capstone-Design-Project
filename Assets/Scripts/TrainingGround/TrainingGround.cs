@@ -16,14 +16,14 @@ public class TrainingGround : MonoBehaviour
     public float camSensitive = 0.25f;
 
     [AssetList(AutoPopulate = true, Path = "/Prefabs/Monsters/")]
-    public List<Monster> monsters;
+    public List<Monsters.Monster> monsters;
 
     [Required] public TMP_Text camLockDescription;
     [Required] public TMP_Dropdown monsterSpawn_Dropdown;
     [Required] public MouseTooltip_TrainingGround tooltip;
     private Brush_TrainingGround brush;
     public BrushType brushType;
-    Dictionary<string, Monster> dic = new Dictionary<string, Monster>();
+    Dictionary<string, Monsters.Monster> dic = new Dictionary<string, Monsters.Monster>();
 
     private void Start()
     {
@@ -84,7 +84,7 @@ public class TrainingGround : MonoBehaviour
 
     public void MonsterRemoveAll_ButtonClick()
     {
-        Monster[] removes = FindObjectsByType<Monster>(FindObjectsSortMode.None);
+        Monsters.Monster[] removes = FindObjectsByType<Monsters.Monster>(FindObjectsSortMode.None);
         for (int i = 0; i < removes.Length; i++)
         {
             removes[i].Die();
