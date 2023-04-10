@@ -49,6 +49,25 @@ namespace Monsters
                     }
                 }
             }
+            
+            if (monster.playerInSight) // 플레이어 발견시
+            {
+                monster.fsm.ChangeState(EMonsterState.ChasePlayer);
+                return;
+            }
+
+            if (monster.catchPatrolRaceCondition > 1.1f) // 너무 오래 일정속도 이하로 있으면
+            {
+                Debug.Log("stop!!!");
+                monster.catchPatrolRaceCondition = 0;
+                monster.fsm.ChangeState(EMonsterState.Idle);
+                return;
+            }
+
+            if (monster.nav.velocity.sqrMagnitude > 3.5f) // 일정 속도 이상으로 움직이고 있으면 0으로 초기화
+                monster.catchPatrolRaceCondition = 0;
+            else
+                monster.catchPatrolRaceCondition += Time.deltaTime; // 정상 속도로 움직일 시 계속 0으로 초기화됨.
         }
 
         public override void Exit(Monster monster)

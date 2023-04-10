@@ -22,6 +22,8 @@ namespace Monsters
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
+            if (!monster.whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
+                monster.fsm.ChangeState(EMonsterState.Idle);
         }
 
         public override void Exit(Monster monster)

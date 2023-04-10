@@ -564,7 +564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4385279898836282559}
   - component: {fileID: -4347736654082316588}
-  - component: {fileID: 4385279898836153889}
+  - component: {fileID: 7203248400083557803}
   - component: {fileID: 5187192431022494434}
   - component: {fileID: -3432420756110250477}
   - component: {fileID: 4385279898828849987}
@@ -619,7 +619,7 @@ MonoBehaviour:
   movement_speed: 1
   atk_speed: 1
   skill_cooldown: 0
---- !u!114 &4385279898836153889
+--- !u!114 &7203248400083557803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -628,7 +628,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4385279898836250783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3577c0507d97144429476f145c2d93a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e1bcb3fcaa91564f8e6549cd648d2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 0

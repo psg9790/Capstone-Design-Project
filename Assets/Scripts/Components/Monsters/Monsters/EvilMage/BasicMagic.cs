@@ -22,7 +22,7 @@ namespace Monsters
         private void Update()
         {
             elapsedTime += Time.deltaTime;
-            transform.position += transform.forward * 0.25f;
+            transform.position += transform.forward * Time.deltaTime * 10f;
             if (elapsedTime > durationTime)
             {
                 Terminate();

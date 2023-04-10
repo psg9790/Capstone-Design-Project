@@ -1705,7 +1705,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
-  collider: {fileID: 1293449327}
+  col: {fileID: 0}
 --- !u!1 &1320384204
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,8 +2091,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   camSensitive: 0.25
   monsters:
-  - {fileID: 4385279898836153889, guid: 6282b8ed67b40394f9d8fb493d76ba69, type: 3}
   - {fileID: -2054495633451273615, guid: 2e8aa81dcde998044a696bbfca35757e, type: 3}
+  - {fileID: 7203248400083557803, guid: 6282b8ed67b40394f9d8fb493d76ba69, type: 3}
   camLockDescription: {fileID: 1791857412}
   monsterSpawn_Dropdown: {fileID: 1706021846}
   tooltip: {fileID: 1739530068}

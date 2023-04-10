@@ -16,8 +16,20 @@ namespace Monsters
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
-            if (monster.playerInSight) // 추적할 플레이어가 존재하면 움직임
+            
+            if (monster.playerInSight)
+            {
                 monster.nav.SetDestination(monster.player.transform.position);
+
+                if (monster.playerDist < monster.attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
+                {
+                    monster.fsm.ChangeState(EMonsterState.BaseAttack);
+                }
+            }
+            else // 플레이어를 시야에서 놓쳤을 시
+            {
+                monster.fsm.ChangeState(EMonsterState.Idle);
+            }
         }
 
         public override void Exit(Monster monster)
