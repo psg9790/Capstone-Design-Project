@@ -60,7 +60,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2048
+  collider: {fileID: 2089673014}
 --- !u!1 &4385279898836250753
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,6 +563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4385279898836282559}
+  - component: {fileID: -4347736654082316588}
   - component: {fileID: 4385279898836153889}
   - component: {fileID: 5187192431022494434}
   - component: {fileID: -3432420756110250477}
@@ -595,6 +597,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4347736654082316588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4385279898836250783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7a600ae4299744fbe8b6bf81f61bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  max_hp: 100
+  cur_hp: 100
+  atk: 5
+  def: 1
+  movement_speed: 1
+  atk_speed: 1
+  skill_cooldown: 0
 --- !u!114 &4385279898836153889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,8 +649,6 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
-  idleElapsedTime: 0
-  idleToPatrolTime: 4
   catchPatrolRaceCondition: 0
 --- !u!114 &5187192431022494434
 MonoBehaviour:
@@ -661,9 +683,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c54d7fb4a6edb41894457951763705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAttack_col: {fileID: 2089673014}
-  skill01_col: {fileID: 0}
-  skill02_col: {fileID: 0}
+  monster: {fileID: 0}
+  heart: {fileID: 0}
+  attack01: {fileID: 2089673015}
+  skill01: {fileID: 0}
+  skill02: {fileID: 0}
 --- !u!95 &4385279898828849987
 Animator:
   serializedVersion: 5

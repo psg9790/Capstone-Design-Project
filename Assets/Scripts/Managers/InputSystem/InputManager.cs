@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
     {
         instance.m_PlayerInput.actions[key.ToString()].started -= action;
     }
+    
     public Vector2 GetMousePosition()
     {
         return instance.m_PlayerInput.actions["MousePosition"].ReadValue<Vector2>();
@@ -58,6 +59,11 @@ public class InputManager : MonoBehaviour
     public Vector2 GetWASD()
     {
         return instance.m_PlayerInput.actions["UDLR"].ReadValue<Vector2>();
+    }
+
+    public InputAction GetAction(InputKey _key)
+    {
+        return instance.m_PlayerInput.actions[_key.ToString()];
     }
 }
 

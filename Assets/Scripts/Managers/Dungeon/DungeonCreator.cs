@@ -10,7 +10,7 @@ public class DungeonCreator : MonoBehaviour
     private GameObject spawnPoint; // 플레이어가 스폰될 포인트. 씬에 "SpawnPoint" 오브젝트가 있어야함
     public GameObject playerPrefab; // 소환할 플레이어. 소환할 플레이어 프리팹을 인스펙터에서 넣어줄 것
     [HideInInspector] public Player player; // 소환한 플레이어 정보 
-    public MonsterSpawner[] spawners;
+    public Monsters.MonsterSpawner[] spawners;
 
     private void Awake()
     {
@@ -46,6 +46,6 @@ public class DungeonCreator : MonoBehaviour
             }
         }
 
-        spawners = FindObjectsOfType<MonsterSpawner>();
+        spawners = FindObjectsOfType<Monsters.MonsterSpawner>();
     }
 }

@@ -90,4 +90,9 @@ public static class Debug
         if (!condition) throw new Exception();
 #endif
     }
+
+    public static void Break()
+    {
+        throw new NotImplementedException();
+    }
 }
