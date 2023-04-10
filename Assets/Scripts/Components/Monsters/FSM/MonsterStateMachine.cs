@@ -1,29 +1,32 @@
-﻿public class MonsterStateMachine
+﻿namespace Monsters
 {
-    private Monster monster; // 이 머신을 이용할 몬스터
-    private MonsterState curstate; // 이 머신을 사용할 몬스터의 현재 상태
-
-    public MonsterStateMachine(Monster monster)
+    public class MonsterStateMachine
     {
-        this.monster = monster;
-    }
+        private Monster monster; // 이 머신을 이용할 몬스터
+        private MonsterState curstate; // 이 머신을 사용할 몬스터의 현재 상태
 
-    public void ChangeState(MonsterState nextstate)
-    {
-        if (!ReferenceEquals(curstate, null))
+        public MonsterStateMachine(Monster monster)
         {
-            curstate.Exit(); // 현재 상태가 존재하면 상태를 종료하는 메서드를 호출해줌
+            this.monster = monster;
         }
 
-        curstate = nextstate; // 상태를 갈이끼워줌
-        curstate.Enter(); // 새로운 상태로 진입하는 함수를 호출해줌
-    }
-
-    public void Execute()
-    {
-        if (!ReferenceEquals(curstate, null))
+        public void ChangeState(MonsterState nextstate)
         {
-            curstate.Execute(); // 현재 상태의 Update
+            if (!ReferenceEquals(curstate, null))
+            {
+                curstate.Exit(); // 현재 상태가 존재하면 상태를 종료하는 메서드를 호출해줌
+            }
+
+            curstate = nextstate; // 상태를 갈이끼워줌
+            curstate.Enter(); // 새로운 상태로 진입하는 함수를 호출해줌
+        }
+
+        public void Execute()
+        {
+            if (!ReferenceEquals(curstate, null))
+            {
+                curstate.Execute(); // 현재 상태의 Update
+            }
         }
     }
 }

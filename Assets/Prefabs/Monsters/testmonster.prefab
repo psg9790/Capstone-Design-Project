@@ -614,7 +614,7 @@ MonoBehaviour:
       m_Calls: []
   max_hp: 100
   cur_hp: 100
-  atk: 10
+  atk: 5
   def: 1
   movement_speed: 1
   atk_speed: 1
@@ -683,6 +683,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c54d7fb4a6edb41894457951763705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  heart: {fileID: 0}
   attack01: {fileID: 2089673015}
   skill01: {fileID: 0}
   skill02: {fileID: 0}

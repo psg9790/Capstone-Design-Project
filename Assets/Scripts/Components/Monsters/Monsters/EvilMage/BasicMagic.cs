@@ -4,37 +4,42 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BasicMagic : MonoBehaviour
+namespace Monsters
 {
-    private float elapsedTime;
-    private float durationTime;
-    
-    public void Init(Vector3 _startPos,Vector3 _dir, float _duration)
-    {
-        durationTime = _duration;
-        transform.position = _startPos;
-        transform.rotation = Quaternion.LookRotation(_dir, Vector3.up);
-    }
-    private void Update()
-    {
-        elapsedTime += Time.deltaTime;
-        transform.position += transform.forward * 0.25f;
-        if (elapsedTime > durationTime)
-        {
-            Terminate();
-        }
-    }
 
-    private void OnTriggerEnter(Collider other)
+    public class BasicMagic : MonoBehaviour
     {
-        if (other.gameObject.layer.CompareTo(LayerMask.NameToLayer("Player")) == 0)
-        {
-            Terminate();
-        }
-    }
+        private float elapsedTime;
+        private float durationTime;
 
-    public void Terminate()
-    {
-        Destroy(this.gameObject);
+        public void Init(Vector3 _startPos, Vector3 _dir, float _duration)
+        {
+            durationTime = _duration;
+            transform.position = _startPos;
+            transform.rotation = Quaternion.LookRotation(_dir, Vector3.up);
+        }
+
+        private void Update()
+        {
+            elapsedTime += Time.deltaTime;
+            transform.position += transform.forward * 0.25f;
+            if (elapsedTime > durationTime)
+            {
+                Terminate();
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.layer.CompareTo(LayerMask.NameToLayer("Player")) == 0)
+            {
+                Terminate();
+            }
+        }
+
+        public void Terminate()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -856,6 +856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5055860412709811894}
+  - component: {fileID: -3642395891237066697}
   - component: {fileID: -2054495633451273615}
   - component: {fileID: 6351156862225519098}
   - component: {fileID: 5149306198729191866}
@@ -887,6 +888,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3642395891237066697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053411054411096966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7a600ae4299744fbe8b6bf81f61bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  max_hp: 100
+  cur_hp: 100
+  atk: 7
+  def: 1
+  movement_speed: 1
+  atk_speed: 1
+  skill_cooldown: 0
 --- !u!114 &-2054495633451273615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eced1f929afb5f844b60b7c664569663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
   fov: {fileID: 0}
