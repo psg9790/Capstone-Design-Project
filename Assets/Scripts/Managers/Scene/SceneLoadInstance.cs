@@ -14,7 +14,7 @@ public class SceneLoadInstance : MonoBehaviour
     [SerializeField] private SceneName[] movableScenes;
     private SettingsInstance settings;
     [SerializeField] private GameObject settingsPrefab;
-    
+
     public void SwitchScene(string tgt)
     {
         foreach(SceneName name in movableScenes)
