@@ -1,12 +1,14 @@
 // 몬스터 최상위 클래스
 // 앞으로 구현할 세부 몬스터들은 이 클래스를 상속받아서 구현하게 될 것
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Monsters
 {
@@ -66,6 +68,11 @@ namespace Monsters
             OnAwake();
         }
 
+        private void Start()
+        {
+            OnStart();
+        }
+
         void Update()
         {
             OnUpdate();
@@ -73,6 +80,12 @@ namespace Monsters
 
         protected virtual void OnAwake()
         {
+            if (MonsterStateList.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
+            {
+                GameObject newgo = new GameObject("MonsterStateList");
+                newgo.AddComponent<MonsterStateList>();
+            }
+            
             if (TryGetComponent<Heart>(out Heart _heart))
             {
                 heart = _heart;
@@ -109,7 +122,7 @@ namespace Monsters
             }
             else
             {
-                UnityEngine.Debug.LogError(this.gameObject.name + " 몬스터에 \"MonsterFOV\" 컴포넌트가 없습니다.");
+                Debug.LogError(this.gameObject.name + " 몬스터에 \"MonsterFOV\" 컴포넌트가 없습니다.");
             }
 
             if (TryGetComponent<MonsterSkillArchive>(out MonsterSkillArchive archive))
@@ -120,7 +133,10 @@ namespace Monsters
             {
                 Debug.LogWarning(this.gameObject.name + " 몬스터에 \"MonsterSkillArchive\" 컴포넌트가 없습니다.");
             }
+        }
 
+        protected virtual void OnStart()
+        {
             fsm = new MonsterStateMachine(this);
             fsm.ChangeState(EMonsterState.Idle);
         }
@@ -208,6 +224,7 @@ namespace Monsters
         public void Die()
         {
             Destroy(this.gameObject);
+            // 아이템 생성
         }
     }
 

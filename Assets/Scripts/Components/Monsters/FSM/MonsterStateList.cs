@@ -23,17 +23,14 @@ namespace Monsters
             {
                 Destroy(this);
             }
-        }
-
-        private void Start()
-        {
+            
             list.Add((int)EMonsterState.Idle, new MonsterState_Idle());
             list.Add((int)EMonsterState.Patrol, new MonsterState_Patrol());
             list.Add((int)EMonsterState.Runaway, new MonsterState_Runaway());
             list.Add((int)EMonsterState.BaseAttack, new MonsterState_BaseAttack());
             list.Add((int)EMonsterState.ChasePlayer, new MonsterState_ChasePlayer());
         }
-
+        
         public MonsterState FindState(EMonsterState _state)
         {
             return list[(int)_state];
