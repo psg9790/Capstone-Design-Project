@@ -29,6 +29,9 @@ namespace Monsters
             
             if (monster.playerInSight) // 플레이어가 시야에 들어오면
             {
+                if (CheckForRunaway(monster))
+                    return;
+                
                 // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
                 if (monster.playerDist > monster.attackRange) // 타깃이 공격 사정거리보다 멀면
                 {
@@ -47,6 +50,19 @@ namespace Monsters
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
+        }
+
+        public bool CheckForRunaway(Monster monster)
+        {
+            if (monster.monsterType == EMonsterType.General_Ranged)
+            {
+                if (monster.playerDist < monster.runawayDistance)
+                {
+                    monster.fsm.ChangeState(EMonsterState.Runaway);
+                    return true;
+                }   
+            }
+            return false;
         }
     }
 }

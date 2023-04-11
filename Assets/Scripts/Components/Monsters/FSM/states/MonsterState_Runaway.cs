@@ -18,9 +18,20 @@ namespace Monsters
             base.Execute(monster);
             if (monster.playerInSight)
             {
+                if (monster.playerDist > monster.runawayDistance)
+                {
+                    monster.fsm.ChangeState(EMonsterState.Idle);
+                    return;
+                }
                 monster.nav.SetDestination(monster.transform.position +
                                            (monster.transform.position - monster.player.transform.position).normalized);
             }
+            else
+            {
+                monster.fsm.ChangeState(EMonsterState.Idle);
+                return;
+            }
+            // 탈출 만들어
         }
 
         public override void Exit(Monster monster)

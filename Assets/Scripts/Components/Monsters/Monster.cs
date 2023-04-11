@@ -14,6 +14,7 @@ namespace Monsters
     public class Monster : MonoBehaviour
     {
         public EMonsterType monsterType;
+        
         // 체력, 스탯 관련
         public Heart heart;
 
@@ -24,35 +25,29 @@ namespace Monsters
         [HideInInspector] public MonsterSkillArchive skills; // 스킬 판정 collider를 넣어둘 컴포넌트 (미완)
 
         // behavior
-        [HideInInspector]
-        public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
-
+        [HideInInspector] public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
         [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
         // spawner & player
         [HideInInspector] public Player player; // 플레이어가 시야에 있을 시 플레이어 정보를 넣어줄 변수
-        [BoxGroup("Spawn")] [ReadOnly] public Vector3 spawnPoint; // 몬스터가 스폰된 위치
-        [BoxGroup("Spawn")] [ReadOnly] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
+        [HideInInspector] public Vector3 spawnPoint; // 몬스터가 스폰된 위치
+        [HideInInspector] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
 
         // battle
-        [BoxGroup("Battle")] public float attackRange = 1.75f; // 몬스터의 공격 사정거리
+        [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
         [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격할 때 키고, 끝나면 끌 플래그
 
         // fov
         [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장
         [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각을 저장
-
-        [BoxGroup("FOV")]
-        public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
-
-        [BoxGroup("FOV")] [Range(0, 360)]
-        public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
-
+        [BoxGroup("FOV")] public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
+        [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
         [BoxGroup("FOV")] public float extendFovTime = 4f; // 흥분 상태에서 기본상태로 전환될 시간
         [BoxGroup("FOV")] [ReadOnly] public bool extendedSight = false; // 흥분 상태
         [BoxGroup("FOV")] [ReadOnly] public bool playerInSight = false; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
         [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 거리를 갱신해줌
-
+        [BoxGroup("FOV")] public float runawayDistance = 7f;
+        
         // infos
         [HideInInspector] public float idleElapsedTime = 0f;
         [HideInInspector] public float idleEndTime = 4f;
@@ -140,114 +135,8 @@ namespace Monsters
 
             // 시야에 플레이어가 있는지 갱신
             fov.FindVisiblePlayer();
-
-            // 기본 행동
-            // switch (state)
-            // {
-            //     case EMonsterState.Idle: // 대기 상태
-            //         Idle_Coditions();
-            //         break;
-            //
-            //     case EMonsterState.Patrol: // 순찰 상태
-            //         Patrol_Conditions();
-            //         break;
-            //
-            //     case EMonsterState.ChasePlayer: // 추적 상태
-            //         ChasePlayer_Conditions();
-            //         break;
-            //
-            //     case EMonsterState.BaseAttack: // 기본 공격 수행 중
-            //         BaseAttack_Conditions();
-            //         break;
-            //
-            //     case EMonsterState.Runaway:
-            //         Runaway_Conditions();
-            //         break;
-            //
-            //     case EMonsterState.Dead:
-            //         Dead_Conditions();
-            //         break;
-            //
-            //     case EMonsterState.Stiff:
-            //         Stiff_Conditions();
-            //         break;
-            // }
         }
 
-        protected virtual void Idle_Coditions()
-        {
-            // if (playerInSight) // 플레이어가 시야에 들어오면
-            // {
-            //     // https://forum.unity.com/threads/getting-the-distance-in-nav-mesh.315846/
-            //     if (playerDist > attackRange) // 타깃이 공격 사정거리보다 멀면
-            //     {
-            //         fsm.ChangeState(EMonsterState.ChasePlayer);
-            //     }
-            //     else // 타깃이 공격 사정거리 안이면
-            //     {
-            //         // 공격 쿨타임 추가?
-            //         fsm.ChangeState(EMonsterState.BaseAttack);
-            //     }
-            // }
-        }
-
-        protected virtual void Patrol_Conditions()
-        {
-            // if (playerInSight) // 플레이어 발견시
-            // {
-            //     fsm.ChangeState(EMonsterState.ChasePlayer);
-            //     return;
-            // }
-            //
-            // if (catchPatrolRaceCondition > 1.1f) // 너무 오래 일정속도 이하로 있으면
-            // {
-            //     Debug.Log("stop!!!");
-            //     catchPatrolRaceCondition = 0;
-            //     fsm.ChangeState(EMonsterState.Idle);
-            //     return;
-            // }
-            //
-            // if (nav.velocity.sqrMagnitude > 3.5f) // 일정 속도 이상으로 움직이고 있으면 0으로 초기화
-            //     catchPatrolRaceCondition = 0;
-            // else
-            //     catchPatrolRaceCondition += Time.deltaTime; // 정상 속도로 움직일 시 계속 0으로 초기화됨.
-        }
-
-        protected virtual void ChasePlayer_Conditions()
-        {
-            // if (playerInSight) // 네비게이션이 경로 탐색을 완료했고
-            // {
-            //     if (playerDist < attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
-            //     {
-            //         fsm.ChangeState(EMonsterState.BaseAttack);
-            //     }
-            // }
-            // else // 플레이어를 시야에서 놓쳤을 시
-            // {
-            //     fsm.ChangeState(EMonsterState.Idle);
-            // }
-        }
-
-        protected virtual void BaseAttack_Conditions()
-        {
-            // if (!whileAttack) // "공격중" 플래그가 꺼지면 (애니메이션 마지막에 이벤트로 끔)
-            //     fsm.ChangeState(EMonsterState.Idle);
-        }
-
-        protected virtual void Runaway_Conditions()
-        {
-
-        }
-
-        protected virtual void Dead_Conditions()
-        {
-
-        }
-
-        protected virtual void Stiff_Conditions()
-        {
-
-        }
 
         /// <summary>
         /// ///////////////////////////////////////////////////////////
