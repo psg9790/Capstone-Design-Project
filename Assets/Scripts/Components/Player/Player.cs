@@ -15,9 +15,15 @@ public class Player : MonoBehaviour
     public Rigidbody rigidbody { get; private set; }
     public Animator animator { get; private set; }
     public CapsuleCollider capsuleCollider { get; private set; }
+    public WeaponManager weaponManager { get; private set; }
     
     public NavMeshAgent nav { get; private set; }
     private static Player instance;
+
+    [SerializeField]
+    private Transform rightHand;
+    
+    
     
     // Dash
     [Header("dash")]
@@ -30,13 +36,15 @@ public class Player : MonoBehaviour
 
     
     
-    private _Weapon equipWeapon;
+    
     
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            weaponManager = new WeaponManager(rightHand);
+            weaponManager.unRegisterWeapon = (weapon) => { Destroy(weapon); };
             rigidbody = GetComponent<Rigidbody>();
             animator = GetComponent<Animator>();
             capsuleCollider = GetComponent<CapsuleCollider>();
