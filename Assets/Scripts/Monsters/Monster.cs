@@ -1,14 +1,12 @@
 // 몬스터 최상위 클래스
 // 앞으로 구현할 세부 몬스터들은 이 클래스를 상속받아서 구현하게 될 것
 
-using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Monsters.FOV;
-using Monsters.Skill;
 using Monsters.FSM;
 
 namespace Monsters
@@ -24,10 +22,9 @@ namespace Monsters
         [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
         [HideInInspector] public Animator animator; // 컴포넌트 미리 추가 필요
         [HideInInspector] public MonsterFOV fov; // 시야, 컴포넌트 미리 추가 필요
-        [HideInInspector] public MonsterSkillArchive skills; // 스킬 판정 collider를 넣어둘 컴포넌트 (미완)
 
         // behavior
-        [HideInInspector] public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
+        public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
         [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
         // spawner & player
@@ -37,7 +34,7 @@ namespace Monsters
 
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
-        [BoxGroup("Battle")] [ReadOnly] public bool whileAttack = false; // 공격할 때 키고, 끝나면 끌 플래그
+        [BoxGroup("Battle")] [ReadOnly] public bool whileAttack; // 공격할 때 키고, 끝나면 끌 플래그
 
         // fov
         [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장
@@ -45,15 +42,15 @@ namespace Monsters
         [BoxGroup("FOV")] public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
         [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
         [BoxGroup("FOV")] public float extendFovTime = 4f; // 흥분 상태에서 기본상태로 전환될 시간
-        [BoxGroup("FOV")] [ReadOnly] public bool extendedSight = false; // 흥분 상태
-        [BoxGroup("FOV")] [ReadOnly] public bool playerInSight = false; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
+        [BoxGroup("FOV")] [ReadOnly] public bool extendedSight; // 흥분 상태
+        [BoxGroup("FOV")] [ReadOnly] public bool playerInSight; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
         [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 거리를 갱신해줌
         [BoxGroup("FOV")] public float runawayDistance = 7f;
         
         // infos
-        [HideInInspector] public float idleElapsedTime = 0f;
+        [HideInInspector] public float idleElapsedTime;
         [HideInInspector] public float idleEndTime = 4f;
-        [HideInInspector] public float catchPatrolRaceCondition = 0;
+        [HideInInspector] public float catchPatrolRaceCondition;
 
 
         public void Spawn(Vector3 pos, float range) // 스폰시 스폰 위치와 탐색 반경 설정
@@ -125,14 +122,6 @@ namespace Monsters
                 Debug.LogError(this.gameObject.name + " 몬스터에 \"MonsterFOV\" 컴포넌트가 없습니다.");
             }
 
-            if (TryGetComponent<MonsterSkillArchive>(out MonsterSkillArchive archive))
-            {
-                skills = archive;
-            }
-            else
-            {
-                Debug.LogWarning(this.gameObject.name + " 몬스터에 \"MonsterSkillArchive\" 컴포넌트가 없습니다.");
-            }
         }
 
         protected virtual void OnStart()
