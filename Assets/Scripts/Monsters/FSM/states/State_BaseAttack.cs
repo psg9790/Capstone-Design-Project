@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Monsters
+namespace Monsters.FSM
 {
-    public class MonsterState_BaseAttack : MonsterState
+    public class State_BaseAttack : State
     {
        public override void Enter(Monster monster)
         {

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class MonsterSpawnBrush_TrainingGround : Brush_TrainingGround
+namespace TrainingGrounds
+{
+    
+public class MonsterSpawnBrush : Brush
 {
     private Monsters.Monster prefab;
-    public MonsterSpawnBrush_TrainingGround(TrainingGround _trainingGround) : base(_trainingGround)
+    public MonsterSpawnBrush(TrainingGround _trainingGround) : base(_trainingGround)
     {
     }
 
-    public MonsterSpawnBrush_TrainingGround(TrainingGround _trainingGround, Monsters.Monster prefab) : base(_trainingGround)
+    public MonsterSpawnBrush(TrainingGround _trainingGround, Monsters.Monster prefab) : base(_trainingGround)
     {
         this.prefab = prefab;
         trainingGround.brushType = BrushType.MonsterSpawn;
@@ -42,4 +45,5 @@ public class MonsterSpawnBrush_TrainingGround : Brush_TrainingGround
     {
         base.Exit();
     }
+}
 }

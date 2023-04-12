@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Monsters
+namespace Monsters.FOV
 {
     public class MonsterFOV : MonoBehaviour
     {

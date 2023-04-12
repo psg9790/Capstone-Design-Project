@@ -3,22 +3,22 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
+using Monsters.FOV;
+using Monsters.Skill;
+using Monsters.FSM;
 
 namespace Monsters
 {
-
     public class Monster : MonoBehaviour
     {
         public EMonsterType monsterType;
         
         // 체력, 스탯 관련
-        public Heart heart;
+        [HideInInspector] public Heart heart;
 
         // components
         [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
@@ -27,7 +27,7 @@ namespace Monsters
         [HideInInspector] public MonsterSkillArchive skills; // 스킬 판정 collider를 넣어둘 컴포넌트 (미완)
 
         // behavior
-        [HideInInspector] public MonsterStateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
+        [HideInInspector] public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
         [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
         // spawner & player
@@ -56,7 +56,7 @@ namespace Monsters
         [HideInInspector] public float catchPatrolRaceCondition = 0;
 
 
-        public void Spawn(Vector3 pos, float range)
+        public void Spawn(Vector3 pos, float range) // 스폰시 스폰 위치와 탐색 반경 설정
         {
             this.transform.position = pos;
             spawnPoint = pos;
@@ -80,10 +80,10 @@ namespace Monsters
 
         protected virtual void OnAwake()
         {
-            if (MonsterStateList.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
+            if (StateLists.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
             {
-                GameObject newgo = new GameObject("MonsterStateList");
-                newgo.AddComponent<MonsterStateList>();
+                GameObject newgo = new GameObject("Monster_StateLists");
+                newgo.AddComponent<StateLists>();
             }
             
             if (TryGetComponent<Heart>(out Heart _heart))
@@ -137,7 +137,7 @@ namespace Monsters
 
         protected virtual void OnStart()
         {
-            fsm = new MonsterStateMachine(this);
+            fsm = new StateMachine(this);
             fsm.ChangeState(EMonsterState.Idle);
         }
 

@@ -1,6 +1,6 @@
-namespace Monsters
+namespace Monsters.FSM
 {
-    public class MonsterState
+    public class State
     {
         public virtual void Enter(Monster monster) // 몬스터가 이 상태로 진입할 때 실행할 것
         {

@@ -1,9 +1,9 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Monsters
+namespace Monsters.FSM
 {
-    public class MonsterState_Idle : MonsterState
+    public class State_Idle : State
     {
         public override void Enter(Monster monster)
         {

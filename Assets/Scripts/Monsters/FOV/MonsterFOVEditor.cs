@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Monsters
+namespace Monsters.FOV
 {
 #if UNITY_EDITOR
     [CustomEditor(typeof(MonsterFOV))]

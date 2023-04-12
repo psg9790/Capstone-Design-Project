@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Monsters
+namespace Monsters.FSM
 {
-    public class MonsterState_Patrol : MonsterState
+    public class State_Patrol : State
     {
         public override void Enter(Monster monster)
         {

@@ -612,6 +612,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  level: 0
   max_hp: 100
   cur_hp: 100
   atk: 5
@@ -651,6 +652,7 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
+  runawayDistance: 7
   idleElapsedTime: 0
   idleEndTime: 4
   catchPatrolRaceCondition: 0
