@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: -4347736654082316588}
   - component: {fileID: 7203248400083557803}
   - component: {fileID: 5187192431022494434}
-  - component: {fileID: -3432420756110250477}
+  - component: {fileID: 6668412292860959232}
   - component: {fileID: 4385279898828849987}
   - component: {fileID: 4385279898836153894}
   - component: {fileID: 7326401511748158406}
@@ -612,6 +612,22 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  OnStiff:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7203248400083557803}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: ForceCC_Stiff
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  level: 0
   max_hp: 100
   cur_hp: 100
   atk: 5
@@ -632,17 +648,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 0
+  bodyCollider: {fileID: 5542766099461286689}
   heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
   fov: {fileID: 0}
-  skills: {fileID: 0}
+  skillset: {fileID: 0}
   state: 0
   player: {fileID: 0}
   spawnPoint: {x: 0, y: 0, z: 0}
   patrolRadius: 0
   attackRange: 2.2
   whileAttack: 0
+  stiffElapsed: 0
+  stiffPower: 0
+  stiffDir: {x: 0, y: 0, z: 0}
   BASE_FOV_RADIUS: 0
   BASE_FOV_ANGLE: 0
   extendFovRadius_multi: 2
@@ -651,6 +671,7 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
+  runawayDistance: 7
   idleElapsedTime: 0
   idleEndTime: 4
   catchPatrolRaceCondition: 0
@@ -666,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed2fc1f67d99240a5dc368f1c89e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
+  viewRadius: 7
   viewAngle: 90
   targetMask:
     serializedVersion: 2
@@ -675,7 +696,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4416
   monster: {fileID: 0}
---- !u!114 &-3432420756110250477
+--- !u!114 &6668412292860959232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -684,14 +705,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4385279898836250783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13c54d7fb4a6edb41894457951763705, type: 3}
+  m_Script: {fileID: 11500000, guid: 778ca472aa1c17743afc44a43a1c03ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monster: {fileID: 0}
-  heart: {fileID: 0}
-  attack01: {fileID: 2089673015}
-  skill01: {fileID: 0}
-  skill02: {fileID: 0}
+  baseHitBox: {fileID: 2089673015}
 --- !u!95 &4385279898828849987
 Animator:
   serializedVersion: 5
