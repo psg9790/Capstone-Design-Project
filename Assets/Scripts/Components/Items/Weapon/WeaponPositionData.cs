@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon Positon Data", menuName = "Scriptable Object/Weapon Positon Data", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Weapon Position Data", menuName = "Scriptable Object/Weapon Position Data", order = int.MaxValue)]
 public class WeaponPositionData : ScriptableObject
 {
     public Vector3 localPosition;
