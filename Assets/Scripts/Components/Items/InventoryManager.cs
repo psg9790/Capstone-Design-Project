@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
 
     private static InventoryManager inctance;
 
-    public GameObject Sword_t;
+    public GameObject Sword;
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour
 
     void Init()
     {
-        GameObject weapon = Instantiate(Sword_t);
+        GameObject weapon = Instantiate(Sword);
         Player.Instance.weaponManager.RegisterWeapon(weapon);
         Player.Instance.weaponManager.SetWeapon(weapon);
     }
