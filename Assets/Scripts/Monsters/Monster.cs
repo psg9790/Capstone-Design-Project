@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 using Monsters.FOV;
 using Monsters.FSM;
+using Monsters.Skill;
 
 namespace Monsters
 {
@@ -22,6 +23,7 @@ namespace Monsters
         [HideInInspector] public NavMeshAgent nav; // 컴포넌트 미리 추가 필요
         [HideInInspector] public Animator animator; // 컴포넌트 미리 추가 필요
         [HideInInspector] public MonsterFOV fov; // 시야, 컴포넌트 미리 추가 필요
+        [HideInInspector] public SkillSet skillset;
 
         // behavior
         public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
@@ -79,13 +81,13 @@ namespace Monsters
         {
             if (StateLists.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
             {
-                GameObject newgo = new GameObject("Monster_StateLists");
-                newgo.AddComponent<StateLists>();
+                GameObject stateGameObject = new GameObject("Monster_StateLists");
+                stateGameObject.AddComponent<StateLists>();
             }
             
-            if (TryGetComponent<Heart>(out Heart _heart))
+            if (TryGetComponent<Heart>(out Heart hrt))
             {
-                heart = _heart;
+                heart = hrt;
             }
             else
             {
@@ -111,9 +113,9 @@ namespace Monsters
                 Debug.LogError(this.gameObject.name + " 몬스터에 \"Animator\" 컴포넌트가 없습니다.");
             }
 
-            if (TryGetComponent<MonsterFOV>(out MonsterFOV _fov))
+            if (TryGetComponent<MonsterFOV>(out MonsterFOV mf))
             {
-                fov = _fov;
+                fov = mf;
                 BASE_FOV_RADIUS = fov.viewRadius;
                 BASE_FOV_ANGLE = fov.viewAngle;
             }
@@ -122,6 +124,14 @@ namespace Monsters
                 Debug.LogError(this.gameObject.name + " 몬스터에 \"MonsterFOV\" 컴포넌트가 없습니다.");
             }
 
+            if (TryGetComponent<SkillSet>(out SkillSet ss))
+            {
+                skillset = ss;
+            }
+            else
+            {
+                Debug.LogError(this.gameObject.name + " 몬스터에 \"SkillSet\" 계열 컴포넌트가 없습니다.");
+            }
         }
 
         protected virtual void OnStart()

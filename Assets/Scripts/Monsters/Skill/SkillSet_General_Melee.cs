@@ -8,12 +8,12 @@ namespace Monsters.Skill
     {
         public HitBox baseHitBox;
 
-        void BaseHitOn()
+        void BaseHitOn() // 기본 검 공격 collider enabled = true;
         {
             baseHitBox.COLLIDER_ON(new Damage(heart.ATK, CC_type.None));
         }
 
-        void BaseHitOff()
+        void BaseHitOff() // collider enabled = false;
         {
             baseHitBox.COLLIDER_OFF();
         }
