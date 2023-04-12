@@ -33,7 +33,7 @@ namespace Monsters
                 // // monster.spawner = this;
                 // monster.spawnPoint = this.transform.position;
                 // monster.patrolRadius = this.patrolRadius;
-                monster.Spawn(transform.position, patrolRadius);
+                monster.Init(transform.position, patrolRadius);
             }
         }
 

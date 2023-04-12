@@ -37,7 +37,7 @@ public class MonsterSpawnBrush : Brush
         {
             Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
             Monsters.Monster monster = UnityEngine.Object.Instantiate<Monsters.Monster>(prefab);
-            monster.Spawn(hit.point, 4f);
+            monster.Init(hit.point, 4f);
         }
     }
 

@@ -37,7 +37,9 @@ public class HitBox : MonoBehaviour
                 hitHash.Add(other.transform.root.name); // 히트한 타겟 해싱
                 if (other.transform.root.TryGetComponent<Heart>(out Heart _heart))
                 {
-                    _heart.Take_Damage(damage);
+                    Vector3 dir = other.transform.position - transform.position;
+                    dir.y = 0;
+                    _heart.Take_Damage(damage, dir.normalized);
                 }
                 else
                 {

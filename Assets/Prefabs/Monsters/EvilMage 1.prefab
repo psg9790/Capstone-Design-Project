@@ -857,14 +857,15 @@ GameObject:
   m_Component:
   - component: {fileID: 5055860412709811894}
   - component: {fileID: -3642395891237066697}
-  - component: {fileID: -2054495633451273615}
+  - component: {fileID: -3935659475945755176}
   - component: {fileID: 6351156862225519098}
+  - component: {fileID: 344832096665134228}
   - component: {fileID: 5149306198729191866}
   - component: {fileID: -2845275210056221873}
   - component: {fileID: -434476004945045167}
   - component: {fileID: 1203370042252182482}
   m_Layer: 10
-  m_Name: EvilMage
+  m_Name: EvilMage 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -903,6 +904,10 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  OnStiff:
+    m_PersistentCalls:
+      m_Calls: []
+  level: 0
   max_hp: 100
   cur_hp: 100
   atk: 7
@@ -910,7 +915,7 @@ MonoBehaviour:
   movement_speed: 1
   atk_speed: 1
   skill_cooldown: 0
---- !u!114 &-2054495633451273615
+--- !u!114 &-3935659475945755176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -919,21 +924,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5053411054411096966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eced1f929afb5f844b60b7c664569663, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e1bcb3fcaa91564f8e6549cd648d2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 1
+  bodyCollider: {fileID: 1203370042252182482}
   heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
   fov: {fileID: 0}
-  skills: {fileID: 0}
+  skillset: {fileID: 0}
   state: 0
   player: {fileID: 0}
   spawnPoint: {x: 0, y: 0, z: 0}
   patrolRadius: 0
   attackRange: 14
   whileAttack: 0
+  stiffElapsed: 0
+  stiffPower: 0
+  stiffDir: {x: 0, y: 0, z: 0}
   BASE_FOV_RADIUS: 0
   BASE_FOV_ANGLE: 0
   extendFovRadius_multi: 2
@@ -942,12 +951,10 @@ MonoBehaviour:
   extendedSight: 0
   playerInSight: 0
   playerDist: -1
+  runawayDistance: 7
   idleElapsedTime: 0
   idleEndTime: 4
   catchPatrolRaceCondition: 0
-  startRunawayDistance: 7
-  basicMagic: {fileID: 8235734421317644384, guid: a10d12acb07d8af4f83b7e68605ea5c6,
-    type: 3}
 --- !u!114 &6351156862225519098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed2fc1f67d99240a5dc368f1c89e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 8
+  viewRadius: 9
   viewAngle: 90
   targetMask:
     serializedVersion: 2
@@ -969,6 +976,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4160
   monster: {fileID: 0}
+--- !u!114 &344832096665134228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053411054411096966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2e164136a159a245b7c71d1ce8bbbc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicMagic: {fileID: 8235734421317644384, guid: a10d12acb07d8af4f83b7e68605ea5c6,
+    type: 3}
 --- !u!95 &5149306198729191866
 Animator:
   serializedVersion: 5

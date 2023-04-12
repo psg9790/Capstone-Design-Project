@@ -20,7 +20,7 @@ namespace Monsters.FSM
             {
                 if (monster.playerDist > monster.runawayDistance)
                 {
-                    monster.fsm.ChangeState(EMonsterState.Idle);
+                    monster.fsm.ChangeState(EMonsterState.Idle); // 상태 탈출
                     return;
                 }
                 monster.nav.SetDestination(monster.transform.position +
@@ -28,10 +28,9 @@ namespace Monsters.FSM
             }
             else
             {
-                monster.fsm.ChangeState(EMonsterState.Idle);
+                monster.fsm.ChangeState(EMonsterState.Idle); // 상태 탈출
                 return;
             }
-            // 탈출 만들어
         }
 
         public override void Exit(Monster monster)

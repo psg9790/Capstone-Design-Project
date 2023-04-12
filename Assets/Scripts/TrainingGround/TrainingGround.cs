@@ -99,7 +99,7 @@ namespace TrainingGrounds
             Monsters.Monster[] removes = FindObjectsByType<Monsters.Monster>(FindObjectsSortMode.None);
             for (int i = 0; i < removes.Length; i++)
             {
-                removes[i].Die();
+                removes[i].Eliminate();
             }
 
             ChangeBrush(new IdleBrush(this));

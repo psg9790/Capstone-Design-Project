@@ -10,7 +10,7 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             monster.state = EMonsterState.BaseAttack;
-            monster.animator.SetTrigger("Attack01");
+            monster.animator.SetTrigger("Skill00");
             monster.whileAttack = true;
             if (monster.playerInSight)
             {

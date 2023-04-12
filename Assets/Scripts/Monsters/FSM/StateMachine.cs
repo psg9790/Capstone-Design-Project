@@ -21,6 +21,19 @@
             curstate.Enter(monster); // 새로운 상태로 진입하는 함수를 호출해줌
         }
 
+        public bool CheckCurState(EMonsterState state)
+        {
+            if (!ReferenceEquals(curstate, null))
+            {
+                if (StateLists.Instance.FindState(state) == curstate)
+                {
+                    // UnityEngine.Debug.Log("same state: " + state.ToString());
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void Execute()
         {
             if (!ReferenceEquals(curstate, null))

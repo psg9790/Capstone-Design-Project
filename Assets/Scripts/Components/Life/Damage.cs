@@ -22,5 +22,6 @@ public enum CC_type
 {
     None,
     Stun,
-    Knockback
+    Knockback,
+    Stiff
 }

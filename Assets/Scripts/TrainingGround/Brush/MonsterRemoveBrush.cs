@@ -27,7 +27,7 @@ namespace TrainingGrounds
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Monster")))
             {
                 Monsters.Monster monster = hit.transform.root.GetComponent<Monsters.Monster>();
-                monster.Die();
+                monster.Eliminate();
             }
         }
 

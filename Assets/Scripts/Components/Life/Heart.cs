@@ -10,6 +10,8 @@ using UnityEngine.Events;
 public class Heart : MonoBehaviour
 {
     [FoldoutGroup("Events")] public UnityEvent OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
+    // cc기를 이벤트로 처리해서 상태 전이
+    [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnStiff; // <duration, direction>
     
     [FoldoutGroup("Attributes")]
     [InfoBox("이 변수들을 플레이 중 직접 수정하면 다른 오브젝트 작동 시 (장비 장착/해제 등) 오류가 발생할 수도 있습니다.")]
@@ -32,14 +34,6 @@ public class Heart : MonoBehaviour
     public float SKILL_COOLDOWN => skill_cooldown;
 
     
-    public void Increase_MAX_HP(float amount)
-    {
-    }
-
-    public void Decrease_MAX_HP(float amount)
-    {
-    }
-
     public void Restore_CUR_HP(float amount)
     {
     }
@@ -48,38 +42,6 @@ public class Heart : MonoBehaviour
     public void RestoreAll_CUR_HP()
     {
         cur_hp = max_hp;
-    }
-
-    public void Increase_DEF(float amount)
-    {
-    }
-
-    public void Decrease_DEF(float amount)
-    {
-    }
-
-    public void Increase_ATK_SPEED(float amount)
-    {
-    }
-
-    public void Decrease_ATK_SPEED(float amount)
-    {
-    }
-
-    public void Increase_MOVEMENT_SPEED(float amount)
-    {
-    }
-
-    public void Decrease_MOVEMENT_SPEED(float amount)
-    {
-    }
-
-    public void Increase_SKILL_COOLDOWN(float amount)
-    {
-    }
-
-    public void Decrease_SKILL_COOLDOWN(float amount)
-    {
     }
 
     public Damage Generate_Damage(Player player)
@@ -93,13 +55,17 @@ public class Heart : MonoBehaviour
     }
 
     [FoldoutGroup("Functions")] [Button]
-    public void Take_Damage(Damage _damage)
+    public void Take_Damage(Damage dmg, Vector3 dir)
     {
         // 내부 처리
-        cur_hp -= _damage.damage;
-        
-        Debug.Log("\""+gameObject.name + "\" took " + _damage.damage + " damage! : " + cur_hp + "/" + max_hp);
+        cur_hp -= dmg.damage;
+        Debug.Log("\""+gameObject.name + "\" took " + dmg.damage + " damage! : " + cur_hp + "/" + max_hp);
 
+        if (dmg.ccType == CC_type.Stiff)
+        {
+            OnStiff.Invoke(dmg.ccPower, -dir);
+        }
+        
         if (cur_hp <= 0)
         {
             Debug.Log("dead");

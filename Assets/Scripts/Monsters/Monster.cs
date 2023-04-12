@@ -15,6 +15,7 @@ namespace Monsters
     public class Monster : MonoBehaviour
     {
         public EMonsterType monsterType;
+        public Collider bodyCollider;
         
         // 체력, 스탯 관련
         [HideInInspector] public Heart heart;
@@ -37,6 +38,10 @@ namespace Monsters
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
         [BoxGroup("Battle")] [ReadOnly] public bool whileAttack; // 공격할 때 키고, 끝나면 끌 플래그
+        [BoxGroup("Battle")] [ReadOnly] public float stiffElapsed;
+        [BoxGroup("Battle")] [ReadOnly] public float stiffPower;
+        [BoxGroup("Battle")] [ReadOnly] public Vector3 stiffDir;
+
 
         // fov
         [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장
@@ -55,7 +60,7 @@ namespace Monsters
         [HideInInspector] public float catchPatrolRaceCondition;
 
 
-        public void Spawn(Vector3 pos, float range) // 스폰시 스폰 위치와 탐색 반경 설정
+        public void Init(Vector3 pos, float range) // 스폰시 스폰 위치와 탐색 반경 설정
         {
             this.transform.position = pos;
             spawnPoint = pos;
@@ -77,7 +82,7 @@ namespace Monsters
             OnUpdate();
         }
 
-        protected virtual void OnAwake()
+        protected virtual void OnAwake() // 컴포넌트 초기화 담당
         {
             if (StateLists.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
             {
@@ -206,6 +211,25 @@ namespace Monsters
             whileAttack = false;
         }
 
+        public void ForceCC_Stiff(float power, Vector3 dir)
+        {
+            if (!fsm.CheckCurState(EMonsterState.Stiff))
+            {
+                stiffPower = power;
+                stiffDir = dir;
+                fsm.ChangeState(EMonsterState.Stiff);
+            }
+            else
+            {
+                if (stiffPower - stiffElapsed < power)  // 잔여경직시간 < 새 경직시간
+                {
+                    stiffPower = power;
+                    stiffDir = dir;
+                    fsm.ChangeState(EMonsterState.Stiff);
+                }
+            }
+        }
+
         public Vector3 GetRandomPosInPatrolRadius()
         {
             Vector3 target = Vector3.zero;
@@ -220,10 +244,14 @@ namespace Monsters
             return spawnPoint + target;
         }
 
-        public void Die()
+        public void OnDeath()
+        {
+            fsm.ChangeState(EMonsterState.Dead);
+        }
+
+        public void Eliminate()
         {
             Destroy(this.gameObject);
-            // 아이템 생성
         }
     }
 
