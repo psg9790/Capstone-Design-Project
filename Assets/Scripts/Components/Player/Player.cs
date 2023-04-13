@@ -49,10 +49,15 @@ public class Player : MonoBehaviour
             animator = GetComponent<Animator>();
             capsuleCollider = GetComponent<CapsuleCollider>();
             nav = GetComponent<NavMeshAgent>();
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
             return;
         }
         DestroyImmediate(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
     }
 
     void Start()

@@ -141,6 +141,10 @@ namespace CharacterController
         public override void OnUpdateState()
         {
             NavRotation();
+            if (InputManager.Instance.GetAction(InputKey.RightClick).IsPressed())
+            {
+                OnEnterState();
+            }
             moveTarget = moveto;
             UnityEngine.Debug.Log("MoveState");
             Vector3 dist = moveTarget - Player.Instance.transform.position;
