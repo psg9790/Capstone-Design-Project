@@ -611,13 +611,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7203248400083557803}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnDeath_Event
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnStiff:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7203248400083557803}
         m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
-        m_MethodName: ForceCC_Stiff
+        m_MethodName: ForceCC_Stiff_Event
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -660,9 +672,11 @@ MonoBehaviour:
   patrolRadius: 0
   attackRange: 2.2
   whileAttack: 0
+  gotAttackDir: {x: 0, y: 0, z: 0}
   stiffElapsed: 0
-  stiffPower: 0
-  stiffDir: {x: 0, y: 0, z: 0}
+  stiffTime: 0
+  afterDeadTime: 1.25
+  afterDeadElapsed: 0
   BASE_FOV_RADIUS: 0
   BASE_FOV_ANGLE: 0
   extendFovRadius_multi: 2

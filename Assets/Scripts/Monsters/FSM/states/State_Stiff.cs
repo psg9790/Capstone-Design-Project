@@ -10,7 +10,7 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             monster.stiffElapsed = 0;
-            monster.transform.rotation = Quaternion.LookRotation(monster.stiffDir);
+            monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.animator.SetTrigger("Stiff");
             UnityEngine.Debug.Log("stiff");
         }
@@ -19,7 +19,7 @@ namespace Monsters.FSM
         {
             base.Execute(monster);
             monster.stiffElapsed += Time.deltaTime;
-            if (monster.stiffElapsed > monster.stiffPower)
+            if (monster.stiffElapsed > monster.stiffTime)
             {
                 monster.fsm.ChangeState(EMonsterState.Idle);
                 return;

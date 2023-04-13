@@ -30,7 +30,7 @@ namespace Monsters.FSM
             list.Add((int)EMonsterState.BaseAttack, new State_BaseAttack());
             list.Add((int)EMonsterState.ChasePlayer, new State_ChasePlayer());
             list.Add((int)EMonsterState.Stiff, new State_Stiff());
-            list.Add((int)EMonsterState.Dead, new State_Dead());
+            list.Add((int)EMonsterState.Die, new State_Die());
 
         }
         

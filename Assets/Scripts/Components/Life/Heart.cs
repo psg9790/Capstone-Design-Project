@@ -9,7 +9,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Heart : MonoBehaviour
 {
-    [FoldoutGroup("Events")] public UnityEvent OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
+    [FoldoutGroup("Events")] public UnityEvent<Vector3> OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
     // cc기를 이벤트로 처리해서 상태 전이
     [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnStiff; // <duration, direction>
     
@@ -69,19 +69,19 @@ public class Heart : MonoBehaviour
         if (cur_hp <= 0)
         {
             Debug.Log("dead");
-            OnDeath.Invoke();
+            OnDeath.Invoke(-dir);
         }
     }
 
     [FoldoutGroup("Functions")] [Button]
-    public void Take_Damage_DOT(Damage _damage, float _tik, float _time)
+    public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
     {
         // 초 처리 
         
         if (cur_hp <= 0)
         {
             Debug.Log("dead");
-            OnDeath.Invoke();
+            OnDeath.Invoke(-dir);
         }
     }
 }
