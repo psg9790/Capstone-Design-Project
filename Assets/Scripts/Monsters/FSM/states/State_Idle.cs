@@ -41,7 +41,7 @@ namespace Monsters.FSM
                 else // 타깃이 공격 사정거리 안이면
                 {
                     // 공격 쿨타임 추가?
-                    monster.fsm.ChangeState(EMonsterState.BaseAttack);
+                    monster.fsm.ChangeState(EMonsterState.Engage);
                     return;
                 }
             }

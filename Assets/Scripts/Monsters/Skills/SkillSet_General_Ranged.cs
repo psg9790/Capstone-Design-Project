@@ -11,7 +11,7 @@ namespace Monsters.Skill
         private void GenerateBaseMagic()
         {
             BasicMagic magic = Instantiate(basicMagic).GetComponent<BasicMagic>();
-            magic.GetComponent<HitBox>().SetDamage(new Damage(heart.ATK, CC_type.None));
+            magic.GetComponent<HitBox>().SetDamage(new Damage(monster.heart.ATK, CC_type.None));
             magic.Init(this.transform.position + transform.forward * 0.25f + Vector3.up,
                 transform.forward, 2.5f);
         }
@@ -19,6 +19,11 @@ namespace Monsters.Skill
         public override void Terminate()
         {
             basicMagic.GetComponent<HitBox>().COLLIDER_OFF();
+        }
+
+        public override void DoPossibleEngage()
+        {
+            
         }
     }
 }

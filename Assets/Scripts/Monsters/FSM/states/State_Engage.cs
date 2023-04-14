@@ -4,33 +4,31 @@ using UnityEngine;
 
 namespace Monsters.FSM
 {
-    public class State_Stiff : State
+    public class State_Engage : State
     {
         public override void Enter(Monster monster)
         {
             base.Enter(monster);
-            monster.state = EMonsterState.Stiff;
-            monster.stiffElapsed = 0;
-            // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
-            monster.animator.SetTrigger("Stiff");
-            UnityEngine.Debug.Log("stiff");
+            // 가능한 공격 check -> whileAttack = true
+            monster.state = EMonsterState.Engage;
+            monster.engage = true;
+            monster.DoPossibleEngage();
         }
 
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
-            monster.stiffElapsed += Time.deltaTime;
-            if (monster.stiffElapsed > monster.stiffTime)
+            // if whileAttack = false, change state to idle
+            if (!monster.engage)
             {
                 monster.fsm.ChangeState(EMonsterState.Idle);
-                return;
             }
         }
 
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
-            UnityEngine.Debug.Log("stiff end. elapsed: " + monster.stiffElapsed);
+            monster.skillset.Terminate();
         }
     }
 }

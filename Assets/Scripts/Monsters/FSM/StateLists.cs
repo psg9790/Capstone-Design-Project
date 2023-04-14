@@ -31,7 +31,7 @@ namespace Monsters.FSM
             list.Add((int)EMonsterState.ChasePlayer, new State_ChasePlayer());
             list.Add((int)EMonsterState.Stiff, new State_Stiff());
             list.Add((int)EMonsterState.Die, new State_Die());
-
+            list.Add((int)EMonsterState.Engage, new State_Engage());
         }
         
         public State FindState(EMonsterState _state)

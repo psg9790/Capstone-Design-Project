@@ -9,6 +9,7 @@ namespace Monsters.FSM
         public override void Enter(Monster monster)
         {
             base.Enter(monster);
+            monster.state = EMonsterState.Die;
             // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.bodyCollider.enabled = false;
             monster.animator.SetTrigger("Die");

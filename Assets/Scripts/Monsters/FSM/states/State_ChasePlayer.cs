@@ -23,7 +23,7 @@ namespace Monsters.FSM
 
                 if (monster.playerDist < monster.attackRange) // 플레이어가 공격 사정거리 안에 들어왔을 때
                 {
-                    monster.fsm.ChangeState(EMonsterState.BaseAttack);
+                    monster.fsm.ChangeState(EMonsterState.Engage);
                 }
             }
             else // 플레이어를 시야에서 놓쳤을 시

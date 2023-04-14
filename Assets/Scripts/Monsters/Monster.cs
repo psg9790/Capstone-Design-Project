@@ -39,6 +39,7 @@ namespace Monsters
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
         [BoxGroup("Battle")] [ReadOnly] public bool whileAttack; // 공격할 때 키고, 끝나면 끌 플래그
+        [BoxGroup("Battle")] [ReadOnly] public bool engage; // 공격할 때 키고, 끝나면 끌 플래그
         [BoxGroup("Battle")] [HideInInspector] public Vector3 gotAttackDir;
         [BoxGroup("Battle")] [ReadOnly] public float stiffElapsed;
         [BoxGroup("Battle")] [HideInInspector] public float stiffTime;
@@ -167,7 +168,10 @@ namespace Monsters
             fov.FindVisiblePlayer();
         }
 
-
+        public void DoPossibleEngage()
+        {
+            skillset.DoPossibleEngage();
+        }
         /// <summary>
         /// ///////////////////////////////////////////////////////////
         /// </summary>
@@ -297,7 +301,8 @@ namespace Monsters
         BaseAttack,
         Runaway,
         Die,
-        Stiff
+        Stiff,
+        Engage
     }
 
     public enum EMonsterType
