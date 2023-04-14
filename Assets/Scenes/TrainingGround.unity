@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1844,7 +1844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21d46be596fafe4a987cd6941733971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 2349591283584898313, guid: 5856c4d929b7245479258cd9c12670c2,
+  playerPrefab: {fileID: 5337324291364039534, guid: 07a2ea6d9a3dbad43936ec15f197b206,
     type: 3}
   player: {fileID: 0}
   spawners: []
@@ -2868,7 +2868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a7066ea445d5749b7a4326079c083a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sword: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995, type: 3}
+  Sword: {fileID: 7439031772959950745, guid: 977ab9a46eb68f64aa10d2a52ab3a709, type: 3}
 --- !u!4 &1825219692
 Transform:
   m_ObjectHideFlags: 0
@@ -3111,7 +3111,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2070660007
 GameObject:
