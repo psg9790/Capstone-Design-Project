@@ -609,12 +609,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7a600ae4299744fbe8b6bf81f61bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDeath:
+  OnHit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7203248400083557803}
         m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
-        m_MethodName: OnDeath_Event
+        m_MethodName: OnHit_Event
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -630,6 +630,21 @@ MonoBehaviour:
       - m_Target: {fileID: 7203248400083557803}
         m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
         m_MethodName: ForceCC_Stiff_Event
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7203248400083557803}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnDeath_Event
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -661,6 +676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterType: 0
   bodyCollider: {fileID: 5542766099461286689}
+  smesh: {fileID: 4385279898824686977}
   heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
@@ -1208,7 +1224,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7f336122ad7984948853076941abf85e, type: 2}
+  - {fileID: 2100000, guid: d2b2d71d21502e44ea814f8e3e708ef7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

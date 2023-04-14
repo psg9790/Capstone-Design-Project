@@ -15,8 +15,9 @@ namespace Monsters
     public class Monster : MonoBehaviour
     {
         public EMonsterType monsterType;
-        public Collider bodyCollider;
-        
+        [Required] public Collider bodyCollider;
+        [Required] public SkinnedMeshRenderer smesh;
+
         // 체력, 스탯 관련
         [HideInInspector] public Heart heart;
 
@@ -47,14 +48,19 @@ namespace Monsters
         // fov
         [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장
         [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각을 저장
-        [BoxGroup("FOV")] public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
-        [BoxGroup("FOV")] [Range(0, 360)] public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
+
+        [BoxGroup("FOV")]
+        public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위를 결정할 변수. 기본 시야 범위에 곱해진다. 인스펙터에서 수정할 것.
+
+        [BoxGroup("FOV")] [Range(0, 360)]
+        public float extendFovAngle = 360f; // 흥분상태의 확장 시야각을 결정할 변수. 이 각으로 덮어씌워진다. 인스펙터에서 수정.
+
         [BoxGroup("FOV")] public float extendFovTime = 4f; // 흥분 상태에서 기본상태로 전환될 시간
         [BoxGroup("FOV")] [ReadOnly] public bool extendedSight; // 흥분 상태
         [BoxGroup("FOV")] [ReadOnly] public bool playerInSight; // 플레이어 정보 저장에 있어서 null체크를 줄이기 위해 bool값으로 따로 관리
         [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 거리를 갱신해줌
         [BoxGroup("FOV")] public float runawayDistance = 7f;
-        
+
         // infos
         [HideInInspector] public float idleElapsedTime;
         [HideInInspector] public float idleEndTime = 4f;
@@ -90,7 +96,7 @@ namespace Monsters
                 GameObject stateGameObject = new GameObject("Monster_StateLists");
                 stateGameObject.AddComponent<StateLists>();
             }
-            
+
             if (TryGetComponent<Heart>(out Heart hrt))
             {
                 heart = hrt;
@@ -138,6 +144,9 @@ namespace Monsters
             {
                 Debug.LogError(this.gameObject.name + " 몬스터에 \"SkillSet\" 계열 컴포넌트가 없습니다.");
             }
+
+            mpb = new MaterialPropertyBlock();
+            mpb.SetColor(Shader.PropertyToID("_Color"), Color.red);
         }
 
         protected virtual void OnStart()
@@ -162,7 +171,6 @@ namespace Monsters
         /// <summary>
         /// ///////////////////////////////////////////////////////////
         /// </summary>
-
         protected void NavRotation()
         {
             // https://srdeveloper.tistory.com/115
@@ -212,20 +220,18 @@ namespace Monsters
             whileAttack = false;
         }
 
-        public void ForceCC_Stiff_Event(float power, Vector3 dir)
+        public void ForceCC_Stiff_Event(float power)
         {
             if (!fsm.CheckCurState(EMonsterState.Stiff))
             {
-                stiffTime= power;
-                gotAttackDir = dir;
+                stiffTime = power;
                 fsm.ChangeState(EMonsterState.Stiff);
             }
             else
             {
-                if (stiffTime - stiffElapsed < power)  // 잔여경직시간 < 새 경직시간
+                if (stiffTime - stiffElapsed < power) // 잔여경직시간 < 새 경직시간
                 {
                     stiffTime = power;
-                    gotAttackDir = dir;
                     fsm.ChangeState(EMonsterState.Stiff);
                 }
             }
@@ -245,9 +251,35 @@ namespace Monsters
             return spawnPoint + target;
         }
 
-        public void OnDeath_Event(Vector3 dir)
+        MaterialPropertyBlock mpb;
+        private Coroutine hitColorCo;
+
+        private IEnumerator hitColoring(float duration)
         {
-            gotAttackDir = dir;
+            // https://cacodemon.tistory.com/entry/material-%EA%B3%BC-sharedMaterial-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Material-Property-Block
+            smesh.SetPropertyBlock(mpb);
+            yield return new WaitForSeconds(duration);
+            smesh.SetPropertyBlock(null);
+        }
+
+        public void OnHit_Event(float duration)
+        {
+            if (smesh == null)
+            {
+                Debug.Log("Monster 스크립트에 skinned mesh renderer를 등록해주세요.");
+                return;
+            }
+
+            if (hitColorCo != null)
+            {
+                StopCoroutine(hitColorCo);
+            }
+
+            hitColorCo = StartCoroutine(hitColoring(duration));
+        }
+
+        public void OnDeath_Event()
+        {
             fsm.ChangeState(EMonsterState.Die);
         }
 

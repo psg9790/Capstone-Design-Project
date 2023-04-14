@@ -10,7 +10,7 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             monster.stiffElapsed = 0;
-            monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
+            // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.animator.SetTrigger("Stiff");
             UnityEngine.Debug.Log("stiff");
         }
