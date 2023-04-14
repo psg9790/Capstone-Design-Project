@@ -38,11 +38,13 @@ namespace Monsters
 
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
-        [BoxGroup("Battle")] [ReadOnly] public bool whileAttack; // 공격할 때 키고, 끝나면 끌 플래그
-        [BoxGroup("Battle")] [ReadOnly] public bool engage; // 공격할 때 키고, 끝나면 끌 플래그
-        [BoxGroup("Battle")] [HideInInspector] public Vector3 gotAttackDir;
-        [BoxGroup("Battle")] [ReadOnly] public float stiffElapsed;
-        [BoxGroup("Battle")] [HideInInspector] public float stiffTime;
+        [BoxGroup("Battle")] [ReadOnly] public bool whileEngage; // 공격할 때 키고, 끝나면 끌 플래그
+
+        [BoxGroup("Battle")] [ReadOnly] public bool whileStiff;
+
+        // [BoxGroup("Battle")] [HideInInspector] public Vector3 gotAttackDir;
+        // [BoxGroup("Battle")] [ReadOnly] public float stiffElapsed;
+        // [BoxGroup("Battle")] [HideInInspector] public float stiffTime;
         [BoxGroup("Battle")] [HideInInspector] public float afterDeadTime = 1.25f;
         [BoxGroup("Battle")] [ReadOnly] public float afterDeadElapsed = 0f;
 
@@ -172,6 +174,7 @@ namespace Monsters
         {
             skillset.DoPossibleEngage();
         }
+
         /// <summary>
         /// ///////////////////////////////////////////////////////////
         /// </summary>
@@ -219,26 +222,21 @@ namespace Monsters
             extendSightCo = StartCoroutine(SightCo()); // 시야증가 새로 시작
         }
 
-        public void EndAttack() // 공격 애니메이션의 끝에 호출, "공격중" 플래그를 끄기 위함
+        public void ForceCC_Stiff_Event()
         {
-            whileAttack = false;
-        }
-
-        public void ForceCC_Stiff_Event(float power)
-        {
-            if (!fsm.CheckCurState(EMonsterState.Stiff))
-            {
-                stiffTime = power;
-                fsm.ChangeState(EMonsterState.Stiff);
-            }
-            else
-            {
-                if (stiffTime - stiffElapsed < power) // 잔여경직시간 < 새 경직시간
-                {
-                    stiffTime = power;
-                    fsm.ChangeState(EMonsterState.Stiff);
-                }
-            }
+            // if (!fsm.CheckCurState(EMonsterState.Stiff))
+            // {
+            //     // stiffTime = power;
+            //     fsm.ChangeState(EMonsterState.Stiff);
+            // }
+            // else
+            // {
+            // if (stiffTime - stiffElapsed < power) // 잔여경직시간 < 새 경직시간
+            // {
+            //     stiffTime = power;
+            fsm.ChangeState(EMonsterState.Stiff);
+            // }
+            // }
         }
 
         public Vector3 GetRandomPosInPatrolRadius()
@@ -266,7 +264,7 @@ namespace Monsters
             smesh.SetPropertyBlock(null);
         }
 
-        public void OnHit_Event(float duration)
+        public void OnHit_Event(float duration, Vector3 dir)
         {
             if (smesh == null)
             {
@@ -279,12 +277,19 @@ namespace Monsters
                 StopCoroutine(hitColorCo);
             }
 
+            fsm.ChangeState(EMonsterState.Idle);
+            transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
         public void OnDeath_Event()
         {
             fsm.ChangeState(EMonsterState.Die);
+        }
+
+        void EndStiff()
+        {
+            whileStiff = false;
         }
 
         public void Eliminate()
@@ -298,7 +303,6 @@ namespace Monsters
         Idle,
         Patrol,
         ChasePlayer,
-        BaseAttack,
         Runaway,
         Die,
         Stiff,

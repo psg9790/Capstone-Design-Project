@@ -10,27 +10,35 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             monster.state = EMonsterState.Stiff;
-            monster.stiffElapsed = 0;
+            // monster.stiffElapsed = 0;
             // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.animator.SetTrigger("Stiff");
-            UnityEngine.Debug.Log("stiff");
+            monster.whileStiff = true;
+            // Debug.Log("stiff enter");
         }
 
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
-            monster.stiffElapsed += Time.deltaTime;
-            if (monster.stiffElapsed > monster.stiffTime)
+            if (!monster.whileStiff)
             {
                 monster.fsm.ChangeState(EMonsterState.Idle);
                 return;
             }
+            // monster.stiffElapsed += Time.deltaTime;
+            // if (monster.stiffElapsed > monster.stiffTime)
+            // {
+            //     monster.fsm.ChangeState(EMonsterState.Idle);
+            //     return;
+            // }
         }
 
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
-            UnityEngine.Debug.Log("stiff end. elapsed: " + monster.stiffElapsed);
+            monster.whileStiff = false;
+            // Debug.Log("stiff exit");
+            // UnityEngine.Debug.Log("stiff end. elapsed: " + monster.stiffElapsed);
         }
     }
 }

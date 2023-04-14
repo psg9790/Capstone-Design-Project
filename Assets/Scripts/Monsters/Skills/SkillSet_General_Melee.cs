@@ -32,7 +32,7 @@ namespace Monsters.Skill
 
         void EndEngage()
         {
-            monster.engage = false;
+            monster.whileEngage = false;
         }
         
         public override void Terminate()
@@ -46,8 +46,8 @@ namespace Monsters.Skill
             {
                 skill01_coolDown = SKILL01;
                 // 애니메이션 재생
-                Debug.Log("skill01");
-                monster.engage = false;
+                // Debug.Log("skill01");
+                monster.whileEngage = false;
                 return;
             }
 

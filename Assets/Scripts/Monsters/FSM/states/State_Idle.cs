@@ -8,6 +8,7 @@ namespace Monsters.FSM
         public override void Enter(Monster monster)
         {
             base.Enter(monster);
+            // Debug.Log("idle enter");
             monster.state = EMonsterState.Idle;
 
             monster.idleElapsedTime = 0;
@@ -50,6 +51,7 @@ namespace Monsters.FSM
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
+            // Debug.Log("idle exit");
         }
 
         public bool CheckForRunaway(Monster monster)

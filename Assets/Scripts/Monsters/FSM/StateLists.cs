@@ -27,7 +27,6 @@ namespace Monsters.FSM
             list.Add((int)EMonsterState.Idle, new State_Idle());
             list.Add((int)EMonsterState.Patrol, new State_Patrol());
             list.Add((int)EMonsterState.Runaway, new State_Runaway());
-            list.Add((int)EMonsterState.BaseAttack, new State_BaseAttack());
             list.Add((int)EMonsterState.ChasePlayer, new State_ChasePlayer());
             list.Add((int)EMonsterState.Stiff, new State_Stiff());
             list.Add((int)EMonsterState.Die, new State_Die());

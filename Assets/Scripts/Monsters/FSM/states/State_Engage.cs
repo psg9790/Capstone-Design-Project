@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
 namespace Monsters.FSM
@@ -11,15 +12,17 @@ namespace Monsters.FSM
             base.Enter(monster);
             // 가능한 공격 check -> whileAttack = true
             monster.state = EMonsterState.Engage;
-            monster.engage = true;
+            monster.whileEngage = true;
             monster.DoPossibleEngage();
+            monster.transform.rotation =
+                Quaternion.LookRotation(monster.player.transform.position - monster.transform.position, Vector3.up);
         }
 
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
             // if whileAttack = false, change state to idle
-            if (!monster.engage)
+            if (!monster.whileEngage)
             {
                 monster.fsm.ChangeState(EMonsterState.Idle);
             }
@@ -29,6 +32,8 @@ namespace Monsters.FSM
         {
             base.Exit(monster);
             monster.skillset.Terminate();
+            monster.whileEngage = false;
+            // Debug.Log("engage interrupt");
         }
     }
 }
