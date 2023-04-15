@@ -34,10 +34,10 @@ namespace Monsters.Skill
         {
             monster.whileEngage = false;
         }
-        
+
         public override void Terminate()
         {
-            baseHitBox.COLLIDER_OFF();
+            BaseHitOff();
         }
 
         public override void DoPossibleEngage()
