@@ -153,7 +153,7 @@ namespace Monsters
             }
 
             mpb = new MaterialPropertyBlock();
-            mpb.SetColor(Shader.PropertyToID("_Color"), Color.red);
+            mpb.SetColor(Shader.PropertyToID("_BaseColor"), Color.red);
         }
 
         protected virtual void OnStart()

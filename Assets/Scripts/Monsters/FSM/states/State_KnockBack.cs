@@ -11,28 +11,18 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             monster.state = EMonsterState.KnockBack;
-            Debug.Log("knockback " + monster.knockback_power + monster.knockback_dir);
             monster.nav.enabled = false;
             monster.rigid.isKinematic = false;
             monster.rigid.AddForce(monster.knockback_dir * monster.knockback_power, ForceMode.Impulse);
             monster.whileKnockback = true;
             monster.animator.SetTrigger("Knockback");
-
-            // DOVirtual.DelayedCall(Time.deltaTime, () => AddForce(monster));
         }
 
-        // private bool forced;
-        // private void AddForce(Monster monster)
-        // {
-        //     monster.rigid.AddForce(monster.knockback_dir * monster.knockback_power, ForceMode.Impulse);
-        //     forced = true;
-        // }
 
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
-            // 애니메이션으로 플래그 수정할것
-            if (!monster.whileKnockback)
+            if (!monster.whileKnockback) // 애니메이션으로 플래그
             {
                 monster.fsm.ChangeState(EMonsterState.Idle);
             }
