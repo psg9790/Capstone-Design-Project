@@ -27,7 +27,8 @@ namespace Monsters
         [HideInInspector] public Animator animator; // 컴포넌트 미리 추가 필요
         [HideInInspector] public MonsterFOV fov; // 시야, 컴포넌트 미리 추가 필요
         [HideInInspector] public SkillSet skillset; // 몬스터별 스킬 구현 사용
-
+        [HideInInspector] public Rigidbody rigid; // 넉백용
+        
         // behavior
         public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌
         [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
@@ -41,6 +42,7 @@ namespace Monsters
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
         [BoxGroup("Battle")] [ReadOnly] public bool whileEngage; // 공격 중플래그
         [BoxGroup("Battle")] [ReadOnly] public bool whileStiff; // 경직 중 플래그
+        [BoxGroup("Battle")] [ReadOnly] public bool whileKnockback; // 경직 중 플래그
         [BoxGroup("Battle")] [HideInInspector] public float afterDeadTime = 1.25f;
         [BoxGroup("Battle")] [ReadOnly] public float afterDeadElapsed = 0f;
 
@@ -141,6 +143,15 @@ namespace Monsters
                 Debug.LogError(this.gameObject.name + " 몬스터에 \"SkillSet\" 계열 컴포넌트가 없습니다.");
             }
 
+            if (TryGetComponent<Rigidbody>(out Rigidbody _rigid))
+            {
+                rigid = _rigid;
+            }
+            else
+            {
+                Debug.LogError(this.gameObject.name + " 몬스터에 \"Rigidbody\" 컴포넌트가 없습니다.");
+            }
+
             mpb = new MaterialPropertyBlock();
             mpb.SetColor(Shader.PropertyToID("_Color"), Color.red);
         }
@@ -215,22 +226,6 @@ namespace Monsters
             extendSightCo = StartCoroutine(SightCo()); // 시야증가 새로 시작
         }
 
-        public void ForceCC_Stiff_Event()
-        {
-            // if (!fsm.CheckCurState(EMonsterState.Stiff))
-            // {
-            //     // stiffTime = power;
-            //     fsm.ChangeState(EMonsterState.Stiff);
-            // }
-            // else
-            // {
-            // if (stiffTime - stiffElapsed < power) // 잔여경직시간 < 새 경직시간
-            // {
-            //     stiffTime = power;
-            fsm.ChangeState(EMonsterState.Stiff);
-            // }
-            // }
-        }
 
         public Vector3 GetRandomPosInPatrolRadius()
         {
@@ -284,6 +279,20 @@ namespace Monsters
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
+        public void OnStiff_Event()
+        {
+            fsm.ChangeState(EMonsterState.Stiff);
+        }
+
+        [HideInInspector] public float knockback_power;
+        [HideInInspector] public Vector3 knockback_dir;
+        public void OnKnockback_Event(float power, Vector3 dir)
+        {
+            knockback_power = power;
+            knockback_dir = dir;
+            fsm.ChangeState(EMonsterState.KnockBack);
+        }
+
         public void OnDeath_Event()
         {
             fsm.ChangeState(EMonsterState.Die);
@@ -294,21 +303,15 @@ namespace Monsters
             whileStiff = false;
         }
 
+        void EndKnockback()
+        {
+            whileKnockback = false;
+        }
+
         public void Eliminate()
         {
             Destroy(this.gameObject);
         }
-    }
-
-    public enum EMonsterState // 몬스터의 현재 상태를 나타내기 위한 열거형
-    {
-        Idle,
-        Patrol,
-        ChasePlayer,
-        Runaway,
-        Die,
-        Stiff,
-        Engage
     }
 
     public enum EMonsterType

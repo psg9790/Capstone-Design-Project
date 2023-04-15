@@ -31,6 +31,7 @@ namespace Monsters.FSM
             list.Add((int)EMonsterState.Stiff, new State_Stiff());
             list.Add((int)EMonsterState.Die, new State_Die());
             list.Add((int)EMonsterState.Engage, new State_Engage());
+            list.Add((int)EMonsterState.KnockBack, new State_KnockBack());
         }
         
         public State FindState(EMonsterState _state)
@@ -42,5 +43,17 @@ namespace Monsters.FSM
         {
             instance = null;
         }
+    }
+    
+    public enum EMonsterState // 몬스터의 현재 상태를 나타내기 위한 열거형
+    {
+        Idle,
+        Patrol,
+        ChasePlayer,
+        Runaway,
+        Die,
+        Stiff,
+        KnockBack,
+        Engage
     }
 }
