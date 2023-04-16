@@ -3,6 +3,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -70,6 +71,10 @@ namespace Monsters
             this.transform.position = pos;
             spawnPoint = pos;
             patrolRadius = range;
+            StringBuilder sb = new StringBuilder(MonsterNumbering.Instance.AssignNumber().ToString());
+            sb.Append(" ");
+            sb.Append(gameObject.name);
+            gameObject.name = sb.ToString();
         }
 
         void Awake()
@@ -91,8 +96,9 @@ namespace Monsters
         {
             if (StateLists.Instance == null) // monster에서 사용할 state list가 존재하지 않으면 생성
             {
-                GameObject stateGameObject = new GameObject("Monster_StateLists");
+                GameObject stateGameObject = new GameObject("Monster_Control");
                 stateGameObject.AddComponent<StateLists>();
+                stateGameObject.AddComponent<MonsterNumbering>();
             }
 
             if (TryGetComponent<Heart>(out Heart hrt))
