@@ -3253,6 +3253,9 @@ MonoBehaviour:
   immune: 0
   cc_stiff_immune: 0
   cc_knockback_immune: 0
+  isMonster: 0
+  hpbar: {fileID: 0}
+  hpbar_pos: {fileID: 0}
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0

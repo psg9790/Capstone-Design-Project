@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HPbar_pooling : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class HPbar_pooling : MonoBehaviour
     [SerializeField] private HPbar_custom prefab;
     [ShowInInspector] private Stack<HPbar_custom> closed = new Stack<HPbar_custom>();
     public GameObject parent;
+    private Canvas _canvas;
+    private CanvasScaler _canvasScaler;
 
     private void Awake()
     {
@@ -25,6 +28,15 @@ public class HPbar_pooling : MonoBehaviour
         prefab = (Resources.Load("Hpbar/Hpbar") as GameObject).GetComponent<HPbar_custom>();
         parent = new GameObject("hpbars");
         parent.transform.SetParent(this.transform);
+        _canvas = parent.AddComponent<Canvas>();
+        _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        _canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1;
+        _canvasScaler = parent.AddComponent<CanvasScaler>();
+        _canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        // resolution change event 필요.
+        _canvasScaler.referenceResolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+        _canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        _canvasScaler.matchWidthOrHeight = 0.5f;
     }
 
     private void OnDestroy()
