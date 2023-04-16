@@ -3230,10 +3230,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7a600ae4299744fbe8b6bf81f61bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDeath:
+  OnHit:
     m_PersistentCalls:
       m_Calls: []
   OnStiff:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnKnockBack:
     m_PersistentCalls:
       m_Calls: []
   level: 0
@@ -3244,6 +3250,9 @@ MonoBehaviour:
   movement_speed: 0
   atk_speed: 0
   skill_cooldown: 0
+  immune: 0
+  cc_stiff_immune: 0
+  cc_knockback_immune: 0
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0

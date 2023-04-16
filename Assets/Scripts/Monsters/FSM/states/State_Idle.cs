@@ -8,6 +8,7 @@ namespace Monsters.FSM
         public override void Enter(Monster monster)
         {
             base.Enter(monster);
+            // Debug.Log("idle enter");
             monster.state = EMonsterState.Idle;
 
             monster.idleElapsedTime = 0;
@@ -41,7 +42,7 @@ namespace Monsters.FSM
                 else // 타깃이 공격 사정거리 안이면
                 {
                     // 공격 쿨타임 추가?
-                    monster.fsm.ChangeState(EMonsterState.BaseAttack);
+                    monster.fsm.ChangeState(EMonsterState.Engage);
                     return;
                 }
             }
@@ -50,6 +51,7 @@ namespace Monsters.FSM
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
+            // Debug.Log("idle exit");
         }
 
         public bool CheckForRunaway(Monster monster)
