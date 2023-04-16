@@ -99,6 +99,7 @@ namespace Monsters
                 GameObject stateGameObject = new GameObject("Monster_Control");
                 stateGameObject.AddComponent<StateLists>();
                 stateGameObject.AddComponent<MonsterNumbering>();
+                stateGameObject.AddComponent<HPbar_pooling>();
             }
 
             if (TryGetComponent<Heart>(out Heart hrt))

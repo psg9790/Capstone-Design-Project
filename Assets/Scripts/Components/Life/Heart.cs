@@ -42,9 +42,17 @@ public class Heart : MonoBehaviour
     public float ATK_SPEED => atk_speed;
     public float SKILL_COOLDOWN => skill_cooldown;
 
+    public bool isMonster = true;
+    public HPbar_custom hpbar;
+    [Required] public Transform hpbar_pos;
     
     public void Restore_CUR_HP(float amount)
     {
+        cur_hp += amount;
+        if (cur_hp > max_hp)
+        {
+            cur_hp = max_hp;
+        }
     }
 
     [FoldoutGroup("Functions")] [Button]
@@ -83,10 +91,20 @@ public class Heart : MonoBehaviour
         {
             OnKnockBack.Invoke(dmg.ccPower, dir);
         }
+
+        if (isMonster)
+        {
+            if (hpbar == null)
+            {
+                // Debug.Log("null");
+                hpbar = HPbar_pooling.Instance.Get_HPbar(this);
+            }
+        }
         
         if (cur_hp <= 0)
         {
             // Debug.Log("dead");
+            cur_hp = 0;
             OnDeath.Invoke();
         }
     }
