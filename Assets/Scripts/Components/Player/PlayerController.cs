@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing)
         {
-            Debug.LogError("공격");
             player.stateMachine.ChangeState(StateName.attack);
             // rightClickHold = true;
             // player.stateMachine.OnEnterState();
@@ -78,7 +77,6 @@ public class PlayerController : MonoBehaviour
         // 이동하면 안되는 조건문 추가
         if (!isDashing)
         {
-            Debug.Log("우클릭");
             player.stateMachine.ChangeState(StateName.move);
             // rightClickHold = true;
             // player.stateMachine.OnEnterState();
