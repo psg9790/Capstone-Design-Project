@@ -12,7 +12,6 @@ public class MenuBtn : MonoBehaviour
     void Start()
     {
         this.btn = this.GetComponent<Button>();
-        Debug.Log("start");
         this.btn.onClick.AddListener(() =>
         {
             Time.timeScale = 0;
