@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         // 이동하면 안되는 조건문 추가
         if (!isDashing)
         {
-            Debug.LogError("우클릭");
+            Debug.Log("우클릭");
             player.stateMachine.ChangeState(StateName.move);
             // rightClickHold = true;
             // player.stateMachine.OnEnterState();
