@@ -13,7 +13,7 @@ namespace Monsters.FSM
             Vector3 pos = monster.GetRandomPosInPatrolRadius();
             monster.nav.SetDestination(pos);
             
-            monster.animator.SetBool("Patrol", true); // 순찰 애니메이션
+            monster.animator.SetBool("Walk", true); // 순찰 애니메이션
         }
 
         public override void Execute(Monster monster)
@@ -23,7 +23,7 @@ namespace Monsters.FSM
 
             if (!monster.nav.pathPending)
             {
-                if (monster.nav.remainingDistance < monster.nav.stoppingDistance)
+                if (monster.nav.remainingDistance < 0.1f)
                 {
                     if (!monster.nav.hasPath || monster.nav.velocity.sqrMagnitude == 0f)
                     {
@@ -42,15 +42,15 @@ namespace Monsters.FSM
 
             if (monster.nav.velocity.sqrMagnitude > 3.5f) // 정상적으로 움직이고 있으면 0으로 초기화
             {
-                monster.catchPatrolRaceCondition = 0;
+                monster.patrolRaceElapsedTime = 0;
             }
             else
             {
-                monster.catchPatrolRaceCondition += Time.deltaTime;
-                if (monster.catchPatrolRaceCondition > 1.1f) // 많은 유닛이 경로가 서로 겹쳐서 계속 부비는걸 방지
+                monster.patrolRaceElapsedTime += Time.deltaTime;
+                if (monster.patrolRaceElapsedTime > 1.1f) // 많은 유닛이 경로가 서로 겹쳐서 계속 부비는걸 방지
                 {
                     Debug.Log("stop!!!");
-                    monster.catchPatrolRaceCondition = 0;
+                    monster.patrolRaceElapsedTime = 0;
                     monster.fsm.ChangeState(EMonsterState.Idle);
                     return;
                 }
@@ -60,7 +60,7 @@ namespace Monsters.FSM
         public override void Exit(Monster monster)
         {
             base.Exit(monster);
-            monster.animator.SetBool("Patrol", false);
+            monster.animator.SetBool("Walk", false);
             monster.nav.ResetPath();
         }
     }
