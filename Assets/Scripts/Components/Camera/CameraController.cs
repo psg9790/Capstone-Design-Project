@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     public Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
     public bool attached = false;
 
+    [Button]
     public void Attach(Player _player) // 이 카메라에 플레이어 정보를 넣어주고 추적을 시작
     {
         player = _player;
