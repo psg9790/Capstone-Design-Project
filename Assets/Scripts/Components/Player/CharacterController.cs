@@ -96,12 +96,12 @@ namespace CharacterController
         }
         public override void OnEnterState()
         {
-            UnityEngine.Debug.Log("Idle enter");
+            // UnityEngine.Debug.Log("Idle enter");
         }
 
         public override void OnUpdateState()
         {
-            UnityEngine.Debug.Log("Idle");
+            // UnityEngine.Debug.Log("Idle");
         }
 
         public override void OnFixedUpdateState()
@@ -141,6 +141,10 @@ namespace CharacterController
         public override void OnUpdateState()
         {
             NavRotation();
+            if (InputManager.Instance.GetAction(InputKey.RightClick).IsPressed())
+            {
+                OnEnterState();
+            }
             moveTarget = moveto;
             UnityEngine.Debug.Log("MoveState");
             Vector3 dist = moveTarget - Player.Instance.transform.position;
@@ -197,6 +201,7 @@ namespace CharacterController
                 LookAt(hit.point - Controller.transform.position);
             }
             attack();
+            Player.Instance.weaponManager.Weapon?.Attack(this);
         }
         public void attack()
         {
