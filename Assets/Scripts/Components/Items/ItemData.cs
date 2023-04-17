@@ -11,6 +11,8 @@ public class ItemData : ScriptableObject
     public double hp;
     public double def;
     public double speed;
+    public string itemName;
+    public Sprite itemImage;
 }
 
 public enum ItemType
