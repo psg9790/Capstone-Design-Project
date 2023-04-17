@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform rightHand;
     
-    
+    public Transform effectGenerator;
     
     // Dash
     [Header("dash")]

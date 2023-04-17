@@ -201,6 +201,7 @@ namespace CharacterController
                 LookAt(hit.point - Controller.transform.position);
             }
             attack();
+            Player.Instance.weaponManager.Weapon?.Attack(this);
         }
         public void attack()
         {
