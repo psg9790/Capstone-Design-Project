@@ -35,32 +35,32 @@ namespace Monsters
         [ReadOnly] public EMonsterState state; // 몬스터의 현재 상태를 표시할 열거형 변수, 현재 상태가 무엇인지 검사하는데 쓰임
 
         // spawner & player
-        [HideInInspector] public Player player; // 플레이어가 시야에 있을 시 플레이어 정보를 넣어줄 변수
         [HideInInspector] public Vector3 spawnPoint; // 몬스터가 스폰된 위치
         [HideInInspector] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
 
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
-        [BoxGroup("Battle")] [ReadOnly] public bool whileEngage; // 공격 중플래그
+        [BoxGroup("Battle")] [ReadOnly] public bool whileEngage; // 공격 중 플래그
         [BoxGroup("Battle")] [ReadOnly] public bool whileStiff; // 경직 중 플래그
         [BoxGroup("Battle")] [ReadOnly] public bool whileKnockback; // 경직 중 플래그
         [BoxGroup("Battle")] [HideInInspector] public float afterDeadTime = 1.25f;
         [BoxGroup("Battle")] [ReadOnly] public float afterDeadElapsed = 0f;
 
         // fov
-        [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위를 저장 -> 복구에 사용
-        [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각을 저장 -> 복구에 사용
+        [HideInInspector] public float BASE_FOV_RADIUS; // 몬스터의 기본 시야 범위 -> 시야 확장 후 복구에 사용
+        [HideInInspector] public float BASE_FOV_ANGLE; // 몬스터의 기본 시야각 -> 시야 확장 후 복구에 사용
         [BoxGroup("FOV")]
-        public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위. 기본시야에 곱해진다. 인스펙터에서 수정할 것.
+        public float extendFovRadius_multi = 2f; // 흥분상태의 확장 시야 범위. 기본시야에 곱해짐. 인스펙터에서 수정.
         [BoxGroup("FOV")] [Range(0, 360)]
         public float extendFovAngle = 360f; // 흥분상태의 확장 시야각. 이 값으로 덮어씌워짐. 인스펙터에서 수정.
         [BoxGroup("FOV")] public float extendFovTime = 4f; // 흥분 상태에서 기본상태로 전환될 시간
         [BoxGroup("FOV")] [ReadOnly] public bool extendedSight; // 흥분 중 플래그
+        [HideInInspector] public Player player; // 플레이어가 시야에 있을 시 플레이어 정보를 넣어줄 변수
         [BoxGroup("FOV")] [ReadOnly] public bool playerInSight; // 플레이어 탐색에 있어서 null체크를 줄이기 위해 플래그로 관리
         [BoxGroup("FOV")] [ReadOnly] public float playerDist = -1f; // 플레이어가 시야에 있으면 그 거리 갱신
         [BoxGroup("FOV")] public float runawayDistance = 7f; // (원거리)몬스터가 플레이어로부터 도망가기 시작할 거리
 
-        // infos
+        // infos, 여기에 저장한 이유는 하나의 state 스크립트를 돌려쓰려면 정보가 몬스터에 저장되어 있었어야 했음
         [HideInInspector] public float idleElapsedTime; // idle 경과시간
         [HideInInspector] public float idleEndTime = 4f; // idle 목표시간
         [HideInInspector] public float patrolRaceElapsedTime; // 경쟁상태 경과 시간
@@ -99,7 +99,6 @@ namespace Monsters
                 GameObject stateGameObject = new GameObject("Monster_Control");
                 stateGameObject.AddComponent<StateLists>();
                 stateGameObject.AddComponent<MonsterNumbering>();
-                stateGameObject.AddComponent<HPbar_pooling>();
             }
 
             if (TryGetComponent<Heart>(out Heart hrt))

@@ -3276,6 +3276,9 @@ MonoBehaviour:
   OnKnockBack:
     m_PersistentCalls:
       m_Calls: []
+  OnKnockBack:
+    m_PersistentCalls:
+      m_Calls: []
   level: 0
   max_hp: 0
   cur_hp: 0
@@ -3287,7 +3290,7 @@ MonoBehaviour:
   immune: 0
   cc_stiff_immune: 0
   cc_knockback_immune: 0
-  isMonster: 1
+  useMonsterHpBar: 0
   hpbar: {fileID: 0}
   hpbar_pos: {fileID: 0}
 --- !u!114 &-6663221231953539861
