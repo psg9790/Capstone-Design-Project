@@ -3272,6 +3272,9 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  OnKnockBack:
+    m_PersistentCalls:
+      m_Calls: []
   level: 0
   max_hp: 0
   cur_hp: 0
@@ -3280,6 +3283,12 @@ MonoBehaviour:
   movement_speed: 0
   atk_speed: 0
   skill_cooldown: 0
+  immune: 0
+  cc_stiff_immune: 0
+  cc_knockback_immune: 0
+  useMonsterHpBar: 0
+  hpbar: {fileID: 0}
+  hpbar_pos: {fileID: 0}
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0
