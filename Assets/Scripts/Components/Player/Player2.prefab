@@ -3110,6 +3110,7 @@ GameObject:
   - component: {fileID: 2411560938377292722}
   - component: {fileID: 2671801443289682286}
   - component: {fileID: 5661129087745828413}
+  - component: {fileID: -6663221231953539861}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Untagged
@@ -3272,6 +3273,9 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  OnKnockBack:
+    m_PersistentCalls:
+      m_Calls: []
   level: 0
   max_hp: 0
   cur_hp: 0
@@ -3280,6 +3284,33 @@ MonoBehaviour:
   movement_speed: 0
   atk_speed: 0
   skill_cooldown: 0
+  immune: 0
+  cc_stiff_immune: 0
+  cc_knockback_immune: 0
+  isMonster: 1
+  hpbar: {fileID: 0}
+  hpbar_pos: {fileID: 0}
+--- !u!114 &-6663221231953539861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337324291364039534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c604df5c561d45b39e6f3e276c5f810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPositionData: {fileID: 0}
+  weaponAnimator: {fileID: 0}
+  _name: 
+  attackDamamge: 0
+  attackSpeed: 0
+  attackRange: 0
+  attack: {fileID: 1130446560849736, guid: c4d564b5d4682ad46b8621f0fa6f40d9, type: 3}
+  effect: {fileID: 0}
+  mouselook: {x: 0, y: 0, z: 0}
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0

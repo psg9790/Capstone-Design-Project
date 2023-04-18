@@ -186,6 +186,7 @@ namespace CharacterController
     }
     public class AttackState : BaseState
     {
+        
         public AttackState(PlayerController controller) : base(controller)
         {
             
