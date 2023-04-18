@@ -9,11 +9,11 @@ using UnityEngine.UI;
 
 public class HPbar_custom : MonoBehaviour
 {
+    private Camera cam;
     public static HPbar_pool pool;
     [ShowInInspector] public static float GAGE_SPEED = 80f;
     
     private RectTransform rect;
-    private Camera cam;
     
     [SerializeField] private Slider red;
     [SerializeField] private Slider yellow;
@@ -51,7 +51,7 @@ public class HPbar_custom : MonoBehaviour
     {
         if (RED_VALUE < heart.CUR_HP)
         {
-            RED_VALUE += Time.deltaTime * GAGE_SPEED * 2f;
+            RED_VALUE += Time.deltaTime * GAGE_SPEED * 3f;
         }
         if (RED_VALUE > heart.CUR_HP)
         {

@@ -60,9 +60,9 @@ public class Heart : MonoBehaviour
     public float ATK_SPEED => atk_speed;
     public float SKILL_COOLDOWN => skill_cooldown;
 
-    public bool useMonsterHpBar = true;
-    public HPbar_custom hpbar;
-    [Required] public Transform hpbar_pos;
+    public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
+    [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
+    [ShowIf("useMonsterHpBar")][Required] public Transform hpbar_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
 
     private void Awake()
     {
@@ -77,7 +77,7 @@ public class Heart : MonoBehaviour
     {
         if (useMonsterHpBar)
         {
-            if (hpbar != null)
+            if (hpbar != null) // 링크되어 있는 hpbar 오브젝트도 함께 삭제
             {
                 Destroy(hpbar.gameObject);
             }
@@ -118,13 +118,13 @@ public class Heart : MonoBehaviour
         cur_hp -= dmg.damage;
         OnHit.Invoke(0.5f, -dir);
 
-        if (!cc_stiff_immune &&
+        if (!cc_stiff_immune && // 경직 저항있으면 무시
             dmg.ccType == CC_type.Stiff)
         {
             OnStiff.Invoke();
         }
 
-        if (!cc_knockback_immune &&
+        if (!cc_knockback_immune && // 넉백 저항있으면 무시
             dmg.ccType == CC_type.Knockback)
         {
             OnKnockBack.Invoke(dmg.ccPower, dir);
@@ -132,7 +132,6 @@ public class Heart : MonoBehaviour
 
         if (cur_hp <= 0)
         {
-            // Debug.Log("dead");
             cur_hp = 0;
             OnDeath.Invoke();
         }
