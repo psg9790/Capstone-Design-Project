@@ -96,7 +96,7 @@ namespace CharacterController
         }
         public override void OnEnterState()
         {
-            // UnityEngine.Debug.Log("Idle enter");
+            UnityEngine.Debug.Log("Idle enter");
         }
 
         public override void OnUpdateState()
@@ -196,13 +196,15 @@ namespace CharacterController
             UnityEngine.Debug.Log("Attack enter");
             Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
+            Vector3 looking = default;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
             {
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
+                looking = hit.point - Controller.transform.position;
                 LookAt(hit.point - Controller.transform.position);
             }
             attack();
-            Player.Instance.weaponManager.Weapon?.Attack(this);
+            Player.Instance.weaponManager.Weapon?.Attack(this, looking);
         }
         public void attack()
         {
@@ -215,6 +217,8 @@ namespace CharacterController
             // anim.SetTrigger("Bow_attack");
 
         }
+
+        
         public override void OnUpdateState()
         {
             
@@ -225,9 +229,11 @@ namespace CharacterController
             
         }
 
+        
         public override void OnExitState()
         {
             Player.Instance.animator.ResetTrigger("attack");
+            
         }
         protected void LookAt(Vector3 direction)
         {

@@ -124,7 +124,17 @@ public class PlayerController : MonoBehaviour
 
         isDashCollTime = false;
     }
-    
+    public void EndAttack()
+    {
+        if (InputManager.Instance.GetAction(InputKey.RightClick).IsPressed())
+        {
+            Player.Instance.stateMachine.ChangeState(StateName.move);
+        }
+        else
+        {
+            Player.Instance.stateMachine.ChangeState(StateName.Idle);
+        }
+    }
     
 
 }

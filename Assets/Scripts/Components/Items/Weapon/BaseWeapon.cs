@@ -34,7 +34,9 @@ public abstract class BaseWeapon : MonoBehaviour
         this.attackRange = attackRange;
     }
 
-    public abstract void Attack(BaseState state);
+    public abstract void Attack(BaseState state,Vector3 looking);
     public abstract void Skill(BaseState state);
+    public abstract void StartAttack();
+    public abstract void EndAttack();
 
 }

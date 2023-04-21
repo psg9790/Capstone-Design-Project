@@ -89,7 +89,14 @@ public class Player : MonoBehaviour
     }
     
     
-
+    public void OnStartAttack()
+    {
+        weaponManager.Weapon?.StartAttack();
+    }
+    public void OnEndAttack()
+    {
+        weaponManager.Weapon?.EndAttack();
+    }
 
 }
 
