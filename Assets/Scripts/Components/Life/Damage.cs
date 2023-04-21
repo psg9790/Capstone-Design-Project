@@ -10,6 +10,7 @@ public class Damage
     // cc 정보
     public CC_type ccType;
     public float ccPower;
+    public bool isCritical;
 
     public Damage(float damage, CC_type ccType)
     {

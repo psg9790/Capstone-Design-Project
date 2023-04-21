@@ -10,9 +10,8 @@ using UnityEngine.UI;
 public class HPbar_custom : MonoBehaviour
 {
     private Camera cam;
-    public static HPbar_pool pool;
     [ShowInInspector] public static float GAGE_SPEED = 80f;
-    
+
     private RectTransform rect;
     
     [SerializeField] private Slider red;
@@ -24,14 +23,11 @@ public class HPbar_custom : MonoBehaviour
 
     private void Awake()
     {
-        if (pool == null)
-        {
-            GameObject cvs = new GameObject("Hpbar_canvas");
-            pool = cvs.AddComponent<HPbar_pool>();
-        }
+        
+
         cam = Camera.main;
         rect = GetComponent<RectTransform>();
-        pool.Add(this);
+        HPbarManager.Instance.Add(this);
     }
 
     private void Update()
@@ -44,7 +40,7 @@ public class HPbar_custom : MonoBehaviour
 
     private void Positioning()
     {
-        rect.transform.position = cam.WorldToScreenPoint(heart.hpbar_pos.position);
+        rect.transform.position = cam.WorldToScreenPoint(heart.upper_pos.position);
     }
 
     private void Red_Activity()

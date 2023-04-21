@@ -425,8 +425,9 @@ MonoBehaviour:
   immune: 0
   cc_stiff_immune: 0
   cc_knockback_immune: 0
-  isMonster: 1
-  hpbar_pos: {fileID: 1646481376034078110}
+  useMonsterHpBar: 1
+  hpbar: {fileID: 0}
+  upper_pos: {fileID: 1646481376034078110}
 --- !u!114 &489164932030698348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,7 +457,6 @@ MonoBehaviour:
   skillset: {fileID: 0}
   rigid: {fileID: 0}
   state: 0
-  player: {fileID: 0}
   spawnPoint: {x: 0, y: 0, z: 0}
   patrolRadius: 0
   attackRange: 2.25
@@ -471,6 +471,7 @@ MonoBehaviour:
   extendFovAngle: 360
   extendFovTime: 4
   extendedSight: 0
+  player: {fileID: 0}
   playerInSight: 0
   playerDist: -1
   runawayDistance: 7
@@ -1959,7 +1960,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646481376034078110}
   m_Layer: 10
-  m_Name: hpbar_pos
+  m_Name: upper_pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

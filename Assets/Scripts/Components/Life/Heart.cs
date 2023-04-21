@@ -62,11 +62,21 @@ public class Heart : MonoBehaviour
 
     public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
     [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
-    [ShowIf("useMonsterHpBar")][Required] public Transform hpbar_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
+    [Required] public Transform upper_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
 
     private void Awake()
     {
-        if (useMonsterHpBar)
+        if (HPbarManager.Instance == null)
+        {
+            GameObject cvs = new GameObject("HpbarManager + canvas");
+            cvs.AddComponent<HPbarManager>().Init();
+        }
+        if (DamageFontManager.Instance == null) // 데미지 폰트 띄우는 매니저 생성
+        {
+            GameObject dmg = new GameObject("DamageFontManager + canvas");
+            dmg.AddComponent<DamageFontManager>();
+        }
+        if (useMonsterHpBar) // 일반 몬스터인 경우 hpbar UI 생성, 생성과 함께 pool이 존재하지 않으면 생성해서 소속됨
         {
             hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
             hpbar.Activate(this);
@@ -117,6 +127,7 @@ public class Heart : MonoBehaviour
         // 내부 처리
         cur_hp -= dmg.damage;
         OnHit.Invoke(0.5f, -dir);
+        DamageFontManager.Instance.GenerateDamageFont(upper_pos.position, dmg);
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
             dmg.ccType == CC_type.Stiff)

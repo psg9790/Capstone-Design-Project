@@ -5,14 +5,21 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPbar_pool : MonoBehaviour
+public class HPbarManager : MonoBehaviour
 {
+    // pool 사용할 필요 없나? 어차피 모든 몬스터 위에 떠있긴 함 (주기적으로 생성될 필요가 없음)
+    private static HPbarManager instance;
+    public static HPbarManager Instance => instance;
+    
     private RectTransform rect;
     private Canvas canvas;
     private CanvasScaler scaler;
 
-    void Awake()
+
+    public void Init()
     {
+        instance = this;
+        
         rect = this.AddComponent<RectTransform>();
         canvas = this.AddComponent<Canvas>();
         scaler = this.AddComponent<CanvasScaler>();
@@ -27,7 +34,7 @@ public class HPbar_pool : MonoBehaviour
 
     private void OnDestroy()
     {
-        HPbar_custom.pool = null;
+        instance = null;
     }
 
     public void Add(HPbar_custom bar)
