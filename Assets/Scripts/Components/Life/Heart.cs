@@ -7,6 +7,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class Heart : MonoBehaviour
@@ -43,6 +44,12 @@ public class Heart : MonoBehaviour
     private float skill_cooldown;
 
     [FoldoutGroup("Attributes")] [SerializeField]
+    private float criticalRate;
+
+    [FoldoutGroup("Attributes")] [SerializeField]
+    private float criticalDamage = 2f;
+    
+    [FoldoutGroup("Attributes")] [SerializeField]
     private bool immune;
 
     [FoldoutGroup("Attributes")] [SerializeField]
@@ -51,6 +58,7 @@ public class Heart : MonoBehaviour
     [FoldoutGroup("Attributes")] [SerializeField]
     private bool cc_knockback_immune;
 
+    
     public int LEVEL => level;
     public float MAX_HP => max_hp;
     public float CUR_HP => cur_hp;
@@ -59,6 +67,8 @@ public class Heart : MonoBehaviour
     public float MOVEMENT_SPEED => movement_speed;
     public float ATK_SPEED => atk_speed;
     public float SKILL_COOLDOWN => skill_cooldown;
+    public float CRITICAL_RATE => criticalRate;
+    public float CRITICAL_DAMAGE => criticalDamage;
 
     public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
     [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
@@ -110,16 +120,21 @@ public class Heart : MonoBehaviour
         cur_hp = max_hp;
     }
 
-    public Damage Generate_Damage(Player player)
+    public Damage Generate_Damage(float dmgRate, CC_type cc, float power)
     {
-        return null;
-    }
+        float rand = Random.Range(0f, 100f);
+        bool isCrit = (rand < CRITICAL_RATE) ? true : false;
+        float calDamage = (ATK * dmgRate) * (isCrit ? CRITICAL_DAMAGE : 1);
+        Damage dmg = new Damage(calDamage, isCrit);
+        if (cc != CC_type.None)
+        {
+            dmg.ccType = cc;
+            dmg.ccPower = power;
+        }
 
-    public Damage Generate_Damage(Monsters.Monster monster)
-    {
-        return null;
+        return dmg;
     }
-
+    
     [FoldoutGroup("Functions")]
     [Button]
     public void Take_Damage(Damage dmg, Vector3 dir)
