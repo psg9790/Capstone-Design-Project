@@ -11,7 +11,7 @@ namespace Monsters.Skill
         private void GenerateBaseMagic()
         {
             BasicMagic magic = Instantiate(basicMagic).GetComponent<BasicMagic>();
-            magic.GetComponent<HitBox>().SetDamage(new Damage(monster.heart.ATK, false));
+            // magic.GetComponent<HitBox>().SetDamage(new Damage(monster.heart.ATK, false));
             magic.Init(this.transform.position + transform.forward * 0.25f + Vector3.up,
                 transform.forward, 2.5f);
         }
