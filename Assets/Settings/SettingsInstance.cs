@@ -60,7 +60,7 @@ public class SettingsInstance : MonoBehaviour
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
             option.text=item.width + "x" + item.height ;
             resolutionDropdown.options.Add(option);
-            
+
             if(item.width == Screen.width && item.height == Screen.height)
                 resolutionDropdown.value=optionNum;
             
