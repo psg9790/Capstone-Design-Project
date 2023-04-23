@@ -73,6 +73,7 @@ public class Heart : MonoBehaviour
     public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
     [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
     [Required] public Transform upper_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
+    public bool useDamageFont = true;
 
     private void Awake()
     {
@@ -142,7 +143,10 @@ public class Heart : MonoBehaviour
         // 내부 처리
         cur_hp -= dmg.damage;
         OnHit.Invoke(0.5f, -dir);
-        DamageFontManager.Instance.GenerateDamageFont(upper_pos.position, dmg);
+        if (useDamageFont)
+        {
+            DamageFontManager.Instance.GenerateDamageFont(upper_pos.position, dmg);
+        }
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
             dmg.ccType == CC_type.Stiff)

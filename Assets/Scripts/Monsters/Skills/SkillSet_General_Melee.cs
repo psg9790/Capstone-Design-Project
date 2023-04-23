@@ -22,16 +22,16 @@ namespace Monsters.Skill
 
         void BaseHitOn() // 기본 검 공격 collider enabled = true;
         {
-            baseSkillEffect.SetDamage(heart.Generate_Damage(1, CC_type.None, 0));
+            // baseSkillEffect.SetDamage(heart.Generate_Damage(1, CC_type.None, 0));
             baseSkillEffect.Particle_Play();
             // baseHitBox.COLLIDER_ON(heart.Generate_Damage(1, CC_type.None, 0));
         }
 
-        void BaseHitOff() // collider enabled = false;
-        {
-            baseSkillEffect.Particle_Stop();
-            // baseHitBox.COLLIDER_OFF();
-        }
+        // void BaseHitOff() // collider enabled = false;
+        // {
+        //     baseSkillEffect.Particle_Stop();
+        //     // baseHitBox.COLLIDER_OFF();
+        // }
 
         void EndEngage()
         {
@@ -40,7 +40,9 @@ namespace Monsters.Skill
 
         public override void Terminate()
         {
-            BaseHitOff();
+            // BaseHitOff();
+            baseSkillEffect.Particle_Stop();
+            EndEngage();
         }
 
         public override void DoPossibleEngage()

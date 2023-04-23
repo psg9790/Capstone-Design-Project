@@ -46,13 +46,14 @@ public class DamageFontManager : MonoBehaviour
         cam = null;
     }
 
-    public void GenerateDamageFont(Vector3 target, Damage dmg) // 머리위에 데미지 폰트 띄움
+    public void GenerateDamageFont(Vector3 target, Damage dmg) // 타겟 머리위에 데미지 폰트 띄움
     {
         DamageFont dmgFont;
         if (closed.Count > 0)
         {
             dmgFont = closed.Pop();
             dmgFont.gameObject.SetActive(true);
+            dmgFont.transform.SetAsLastSibling();
         }
         else
         {
@@ -60,8 +61,7 @@ public class DamageFontManager : MonoBehaviour
             dmgFont.transform.SetParent(this.transform);
         }
 
-        // dmgFont.GetComponent<RectTransform>().transform.position =
-        //     cam.WorldToScreenPoint(target.transform.position);
+
         dmgFont.Activate(dmg, target);
     }
 
