@@ -6,28 +6,45 @@ using UnityEngine;
 
 public class HitBox : MonoBehaviour
 {
-    public LayerMask targetMask;
+    public LayerMask targetMask; // 타겟레이어. 이 레이어로 설정한 오브젝트만 충돌 판정한다
     // public Collider col;
-    public ParticleSystem particle;
+    [Required] public ParticleSystem particle; // 발동할 파티클 시스템을 인스펙터에서 끌어놓을 것
 
-    private HashSet<string> hitHash = new HashSet<string>();
-    [ShowInInspector] private Damage damage;
+    private HashSet<string> hitHash = new HashSet<string>(); // 중복 타격을 막기 위한 hash, transform.root의 이름(string)을 사용
+    [ShowInInspector] private Damage damage; // 충돌 시 상대 오브젝트에 전달한 damage
 
 
-    public void Particle_Play()
+    public void Particle_Play() // 파티클 재생
     {
-        ClearHash();
+        ClearHash(); // 해시 초기화
         particle.Play();
     }
 
-    public void Particle_Stop()
+    public void Particle_Stop() // 파티클 정지. 시간 0으로 돌아감
     {
         particle.Stop();
     }
 
-    private void OnParticleCollision(GameObject other)
+    // 파티클 시스템의 Collision 모듈에서 "Send Collision Message"옵션을 키고, "Type"을 Plane이 아니라 World로 설정할 것
+    private void OnParticleCollision(GameObject other) 
     {
-        UnityEngine.Debug.Log(other.gameObject.transform.root.name);
+        if ((1 << other.layer) == targetMask)
+        {
+            if (!hitHash.Contains(other.transform.root.name)) // 최상위부모 이름을 해싱, 히트한 타겟이 해싱되어 있으면 다시 타격 x 
+            {
+                hitHash.Add(other.transform.root.name); // 히트한 타겟 해싱
+                if (other.transform.root.TryGetComponent<Heart>(out Heart _heart))
+                {
+                    Vector3 dir = other.transform.position - transform.position;
+                    dir.y = 0;
+                    _heart.Take_Damage(damage, dir.normalized);
+                }
+                else
+                {
+                    Debug.Log(other.transform.root.name + ": 심장이 없음");
+                }
+            }
+        }
     }
 
     public void SetDamage(Damage _damage)

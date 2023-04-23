@@ -3315,12 +3315,15 @@ MonoBehaviour:
   movement_speed: 0
   atk_speed: 0
   skill_cooldown: 0
+  criticalRate: 0
+  criticalDamage: 2
   immune: 0
   cc_stiff_immune: 0
   cc_knockback_immune: 0
   useMonsterHpBar: 0
   hpbar: {fileID: 0}
   upper_pos: {fileID: 3646912246967088869}
+  useDamageFont: 1
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0

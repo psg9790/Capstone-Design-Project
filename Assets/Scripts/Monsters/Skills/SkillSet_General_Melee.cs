@@ -41,6 +41,7 @@ namespace Monsters.Skill
         public override void Terminate()
         {
             BaseHitOff();
+            EndEngage();
         }
 
         public override void DoPossibleEngage()
