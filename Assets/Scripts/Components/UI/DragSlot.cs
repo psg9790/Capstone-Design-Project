@@ -8,16 +8,14 @@ public class DragSlot : MonoBehaviour
 {
     static public DragSlot instance;
 
-    public ItemSlotUI dragSlot;
+    public ItemSlot dragSlot;
+    //public Weapon weaponSlot;
 
     [SerializeField] private Image itemImage;
     // Start is called before the first frame update
     private void Start()
     {
-        if (instance != null)
-            Destroy(this);
-        else
-            instance = this;
+       instance = this;
     }
 
     public void DragSetImage(Image _itemImage)
