@@ -29,7 +29,8 @@ public class NPC_Trigger : MonoBehaviour
     private Vector3 targetPosition;
     //원래위치
     public Vector3 pos;
-
+    public Animator anim;
+    
     private void Start()
     {
         pos = transform.eulerAngles;
@@ -43,7 +44,11 @@ public class NPC_Trigger : MonoBehaviour
         //F키를 통해 상호작용 시작.
         if (Input.GetKeyDown(KeyCode.F) && isEnable)
         {
-            
+            //캐릭터를 바라봄
+            transform.LookAt(targetPosition);
+            //모션 변경
+            anim.SetTrigger("dismissing");
+            //대화창 시작
             talkIndex = 0;
             isAction = true;
             NPC_Text.SetActive(true);
@@ -67,9 +72,8 @@ public class NPC_Trigger : MonoBehaviour
     if (col.CompareTag("Player") )
     {
         isEnable = true;
-        //NPC가 캐릭터를 바라봄
+        //NPC가 캐릭터를 바라볼 위치 값 받음
         targetPosition = new Vector3(col.transform.position.x, transform.position.y, col.transform.position.z);
-        transform.LookAt(targetPosition);
     }
 
     
@@ -101,6 +105,7 @@ public class NPC_Trigger : MonoBehaviour
                 NPC_TELL.text=line;
                 
             }
+            
             else
             {
                 isAction = false;
