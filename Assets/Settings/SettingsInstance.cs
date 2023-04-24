@@ -19,13 +19,18 @@ public class SettingsInstance : MonoBehaviour
     public Toggle fullscreen;                       // 전체화면을 위한 토글
     int resolutionNum;                            // 드롭다운 목록에 있는 선택된 해상도를 나타내는 변수
     int[,] resollist = new int[4,2]{{1280,720},{1600,900},{1920,1080},{2560,1440}};       // 해상도 
-
+    private float BgmValue=0.5f;
+    private float SFXValue = 0.5f;
+    public Slider BgmSlider;                         // bgm 슬라이더 
+    public Slider SfxSlider;
+        
     public Toggle v_sync;                           // 수직동기화를 위한 토글
     QualitySettings qualitySetting;
     int sync_toggle;                               // 토글의 변한 정보를 담는 변수
 
     void Start()
     {
+        
         InitUI();
     }
 
@@ -55,7 +60,7 @@ public class SettingsInstance : MonoBehaviour
             TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
             option.text=item.width + "x" + item.height ;
             resolutionDropdown.options.Add(option);
-            
+
             if(item.width == Screen.width && item.height == Screen.height)
                 resolutionDropdown.value=optionNum;
             
@@ -65,6 +70,10 @@ public class SettingsInstance : MonoBehaviour
         resolutionDropdown.RefreshShownValue();                                         // 드롭다운 메뉴 초기화 
         fullscreen.isOn=Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow)? true:false;
         v_sync.isOn=(QualitySettings.vSyncCount ==1) ? true:false;
+
+        BgmSlider.value = BgmValue;
+        SfxSlider.value = SFXValue;
+        
     }
 
     public void DropboxOptionChange(int x)                                              // 해상도 선택에 따른 변수 값 변경 함수
@@ -96,6 +105,8 @@ public class SettingsInstance : MonoBehaviour
     {
         Screen.SetResolution(resolutions[resolutionNum].width,resolutions[resolutionNum].height,screenMode);
         QualitySettings.vSyncCount=sync_toggle;
+        BgmValue = BgmSlider.value;
+        SFXValue = SfxSlider.value;
     }
 
     public void CancelChangesButton()

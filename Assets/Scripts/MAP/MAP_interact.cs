@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class MAP_interact : MonoBehaviour
 {
     public GameObject Map_Select;
     public GameObject Map_Growth;
     public GameObject Map_Record;
+
+    public string Growth_Dun;
+
+    public string Record_Dun;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,5 +51,15 @@ public class MAP_interact : MonoBehaviour
     public void Off_Select()
     {
         Map_Select.SetActive(false);
+    }
+
+    public void Move_Growth_Dun()
+    {
+        SceneManager.LoadScene(Growth_Dun);
+    }
+
+    public void Move_Record_Dun()
+    {
+        SceneManager.LoadScene(Record_Dun);
     }
 }
