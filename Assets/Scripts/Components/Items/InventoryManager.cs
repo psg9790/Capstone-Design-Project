@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -30,8 +31,19 @@ public class InventoryManager : MonoBehaviour
 
     void Init()
     {
+        weaponIn();
+    }
+    [Button]
+    void weaponIn()
+    {
         GameObject weapon = Instantiate(Sword);
-        Player.Instance.weaponManager.RegisterWeapon(weapon);
+        
         Player.Instance.weaponManager.SetWeapon(weapon);
+    }
+    [Button]
+    void weaponOut()
+    {
+        Player.Instance.weaponManager.UnRegisterWeapon();
+        
     }
 }
