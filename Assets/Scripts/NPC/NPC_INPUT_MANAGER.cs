@@ -25,6 +25,7 @@ public class NPC_INPUT_MANAGER : MonoBehaviour
         talkData.Add(6, new string[] { "창고입니다.","창고","창고"});
         talkData.Add(7, new string[] { "상점입니다.","구매", "판매" });
         talkData.Add(8, new string[]{"ab", "aa"});
+        
     }
 
     public string GetTalk(int id, int talkIndex) //Object의 id , string배열의 index
