@@ -70,6 +70,7 @@ public class Player : MonoBehaviour
     {
         stateMachine?.UpdateState();
         
+        
     }
 
     private void FixedUpdate()
