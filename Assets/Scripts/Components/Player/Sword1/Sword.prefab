@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPositionData: {fileID: 11400000, guid: 615664fa13bfc88439f8472d4e008d45, type: 2}
   weaponAnimator: {fileID: 9100000, guid: d9bc75987f1c8d94eab9b98553a9d430, type: 2}
-  _name: 
+  _name: Sword1
   attackDamamge: 0
   attackSpeed: 0
   attackRange: 0
@@ -152,4 +152,4 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
-  col: {fileID: 5504523452849746296}
+  duration: 0
