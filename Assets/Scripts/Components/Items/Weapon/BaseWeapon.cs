@@ -28,10 +28,15 @@ public abstract class BaseWeapon : MonoBehaviour
 
     public void SetWeaponData(string name, float attackDamamge, float attackSpeed, float attackRange)
     {
-        this._name = name;
-        this.attackDamamge = attackDamamge;
-        this.attackSpeed = attackSpeed;
-        this.attackRange = attackRange;
+        // weapon = new Item();
+        // string sss = weapon.itemData.name;
+        // weapon.itemOption.atk = attackDamamge;
+        // weapon.itemOption.atk_speed = attackSpeed;
+        
+        // this._name = name;
+        // this.attackDamamge = attackDamamge;
+        // this.attackSpeed = attackSpeed;
+        // this.attackRange = attackRange;
     }
 
     public abstract void Attack(BaseState state,Vector3 looking);

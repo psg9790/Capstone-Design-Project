@@ -10,7 +10,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     private LayerMask targetMask; // init
     public float startTime; // 인스펙터에서 수정
     public float duration; // 인스펙터에서 수정
-    [ReadOnly] private Damage damage; // 인스펙터에서 수정
+    [ShowInInspector] private Damage damage; // 인스펙터에서 수정
 
     [BoxGroup("Skill")] [SerializeField] private float triggerDmgRatio = 1f; // 스킬 계수
     [BoxGroup("Skill")] [SerializeField] private CC_type ccType;
@@ -28,7 +28,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     public void Activate()
     {
         // Debug.Log("on");
-        hitHash.Clear();
+        ClearHash();
         elapsed = 0;
         damage = heart.Generate_Damage(triggerDmgRatio, ccType, ccPower);
         gameObject.SetActive(true);
@@ -71,6 +71,20 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                 }
             }
         }
+    }
+
+    [Button]
+    public void ClearHash()
+    {
+        hitHash.Clear();
+    }
+
+    [Button]
+    public void DebugActivate()
+    {
+        elapsed = 0;
+        duration = 999999999;
+        gameObject.SetActive(true);
     }
     
     public int CompareTo(HitBoxTrigger other)

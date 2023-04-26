@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class WeaponManager : MonoBehaviour
    private GameObject equipweapon;
    public RuntimeAnimatorController BaseAnimator;
 
+   public Item item;
+   
    public WeaponManager(Transform hand)
    {
       handPostion = hand;
@@ -56,8 +59,20 @@ public class WeaponManager : MonoBehaviour
       Weapon = weapon.GetComponent<BaseWeapon>();
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
-      
-
-      
    }
+   
+   // [Button]
+   // public void DEBUG_SETWEAPON()
+   // {
+   //    if (Weapon != null)
+   //    {
+   //       UnRegisterWeapon();
+   //    }
+   //
+   //    RegisterWeapon(testData.weapon_gameObject);
+   //    weaponObject = testData.weapon_gameObject;
+   //    Weapon = testData.weapon_gameObject.GetComponent<BaseWeapon>();
+   //    weaponObject.SetActive(true);
+   //    Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
+   // }
 }

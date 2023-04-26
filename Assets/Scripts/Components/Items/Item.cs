@@ -1,27 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class ItemBase : MonoBehaviour
+public struct ItemOption
 {
-    public ItemType type;
-    [SerializeField] private int _id;
-    [SerializeField] private string _name;
-    [Multiline] 
-    [SerializeField] private string _toolip;
-    [SerializeField] private Sprite _iconSprite;
-    [SerializeField] private GameObject _dropItemPrefab;
-
+    public float atk;
+    public float atk_speed;
+    public float atk_cooldown;
+    public int tripod_skillNum;
+    public int tripod_tripodNum;
     
-    
-    
+    public float def;
+    public float hp;
+    public float movement_speed;
 }
 
-
-
-public enum ItemType
+public class Item
 {
-    Weapon,
-    Artifact,
-    Potion
+    public ItemData itemData;
+    public ulong id;
+    public ItemOption itemOption;
+
+
+    public Item(){}
+    public Item(ItemData itemData)
+    {
+        this.itemData = itemData;
+    }
 }

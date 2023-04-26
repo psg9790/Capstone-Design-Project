@@ -19,7 +19,7 @@ public class ItemSlotUI : MonoBehaviour
         set {
             _item = value;
             if (_item != null) {
-                image.sprite = item.itemImage;
+                image.sprite = item.itemData.iconSprite;
                 image.color = new Color(1, 1, 1 );
                 this.gameObject.SetActive(true);
             } 

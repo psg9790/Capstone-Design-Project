@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2943,6 +2943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sword: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995, type: 3}
+  testData: {fileID: 11400000, guid: 13045d23e2a26a449b7cfe327ceff7fd, type: 2}
 --- !u!4 &1825219692
 Transform:
   m_ObjectHideFlags: 0
@@ -3134,8 +3135,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1976303499}
-  - component: {fileID: 1976303498}
   - component: {fileID: 1976303497}
+  - component: {fileID: 1976303500}
+  - component: {fileID: 1976303501}
   m_Layer: 0
   m_Name: Stiff
   m_TagString: Untagged
@@ -3156,22 +3158,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1976303498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1976303496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630e1199c8bc6a64bafbb7deb9e31931, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  particle: {fileID: 0}
 --- !u!4 &1976303499
 Transform:
   m_ObjectHideFlags: 0
@@ -3187,6 +3173,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976303500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976303496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fe9f5f8c12ca746bb5a1ef0b3064e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTime: 0
+  duration: 0
+  triggerDmgRatio: 1
+  ccType: 0
+  ccPower: 0
+--- !u!114 &1976303501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976303496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630e1199c8bc6a64bafbb7deb9e31931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  duration: 0
 --- !u!224 &2065418249 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3989039043780395187, guid: d0560755c8f7ddb4ab520511f0f025b5,
