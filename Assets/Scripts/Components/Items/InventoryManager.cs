@@ -31,7 +31,7 @@ public class InventoryManager : MonoBehaviour
 
     void Init()
     {
-        weaponIn();
+        // weaponIn();
     }
     [Button]
     void weaponIn()
