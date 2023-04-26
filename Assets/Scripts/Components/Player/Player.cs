@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     {
         if (instance == null)
         {
+            UnityEngine.Debug.Log("Player Awake");
             instance = this;
             weaponManager = new WeaponManager(rightHand);
             weaponManager.unRegisterWeapon = (weapon) => { Destroy(weapon); };

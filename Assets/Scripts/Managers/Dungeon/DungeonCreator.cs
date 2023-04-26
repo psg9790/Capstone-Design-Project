@@ -14,24 +14,6 @@ public class DungeonCreator : MonoBehaviour
 
     private void Awake()
     {
-        // spawnPoint = GameObject.Find("SpawnPoint");
-        // if (spawnPoint == null)
-        // {
-        //     Debug.LogError("플레이어 스폰 지점이 없습니다... \"SpawnPoint\"오브젝트를 플레이어 생성을 원하는 곳에 배치해주세요.");
-        // }
-        // if (playerPrefab == null)
-        // {
-        //     Debug.LogError("소환할 플레이어 프리팹을 지정해주세요...");
-        // }
-        // else
-        // {
-        //     player = Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation)
-        //         .GetComponent<Player>();
-        // }
-    }
-
-    private void Start()
-    {
         spawnPoint = GameObject.Find("SpawnPoint");
         if (spawnPoint == null)
         {
@@ -46,6 +28,11 @@ public class DungeonCreator : MonoBehaviour
             player = Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation)
                 .GetComponent<Player>();
         }
+    }
+
+    private void Start()
+    {
+        
 
         if (Camera.main != null)
         {
