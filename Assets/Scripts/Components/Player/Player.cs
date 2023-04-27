@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     
     public Transform effectGenerator;
     
+    public RuntimeAnimatorController BaseAnimator;
+    
     // Dash
     [Header("dash")]
     [SerializeField]
@@ -69,7 +71,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine?.UpdateState();
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            weaponManager.Weapon?.Skill();
+        }
         
     }
 

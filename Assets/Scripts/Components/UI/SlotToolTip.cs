@@ -21,14 +21,14 @@ public class SlotToolTip : MonoBehaviour
         instance = this;
     }
 
-    public void ShowToolTip(Item item, Vector3 _pos )     //item  나중에 정호가 만든걸로 바꿔야됨.
+    public void ShowToolTip(Item item, Vector3 _pos)     //item  나중에 정호가 만든걸로 바꿔야됨.
     {
         go_Base.SetActive(true);
         _pos += new Vector3(go_Base.GetComponent<RectTransform>().rect.width * 0.5f,
             -go_Base.GetComponent<RectTransform>().rect.height * 0.5f, 0f);
         go_Base.transform.position = _pos;
 
-        txt_Itemname.text = item.itemName;
+        txt_Itemname.text = item.itemData.name;
         //txt_Itemdesc.text = item.itemDesc;
     }
 

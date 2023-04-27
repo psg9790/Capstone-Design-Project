@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,10 @@ public class WeaponManager : MonoBehaviour
    private Transform handPostion;
    private GameObject weaponObject;
    private GameObject equipweapon;
+   public RuntimeAnimatorController BaseAnimator;
 
+   public Item item;
+   
    public WeaponManager(Transform hand)
    {
       handPostion = hand;
@@ -26,6 +30,7 @@ public class WeaponManager : MonoBehaviour
       weapon.transform.localPosition = weaponInfo.HandleData.localPosition;
       weapon.transform.localEulerAngles = weaponInfo.HandleData.localRotation;
       weapon.transform.localScale = weaponInfo.HandleData.localScale;
+      
       equipweapon = weapon;
       weapon.SetActive(false);
       
@@ -37,12 +42,14 @@ public class WeaponManager : MonoBehaviour
       {
          Destroy(weaponObject);
       }
+
+      Player.Instance.animator.runtimeAnimatorController = Player.Instance.BaseAnimator;
    }
 
    public void SetWeapon(GameObject weapon)
    {
       
-      if (Weapon != null)
+      if (weaponObject != null)
       {
          UnRegisterWeapon();
       }
@@ -52,8 +59,20 @@ public class WeaponManager : MonoBehaviour
       Weapon = weapon.GetComponent<BaseWeapon>();
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
-      
-
-      
    }
+   
+   // [Button]
+   // public void DEBUG_SETWEAPON()
+   // {
+   //    if (Weapon != null)
+   //    {
+   //       UnRegisterWeapon();
+   //    }
+   //
+   //    RegisterWeapon(testData.weapon_gameObject);
+   //    weaponObject = testData.weapon_gameObject;
+   //    Weapon = testData.weapon_gameObject.GetComponent<BaseWeapon>();
+   //    weaponObject.SetActive(true);
+   //    Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
+   // }
 }

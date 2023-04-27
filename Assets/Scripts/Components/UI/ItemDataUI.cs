@@ -12,7 +12,7 @@ public class ItemDataUI : MonoBehaviour
     public SpriteRenderer itemImage;
 
     void Start() {
-        itemImage.sprite = item.itemImage;
+        itemImage.sprite = item.itemData.iconSprite;
     }
     public Item ClickItem() {
         return this.item;
