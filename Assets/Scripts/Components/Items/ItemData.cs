@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public Sprite iconSprite;
-    public string name;
+    public string itemName;
     [Multiline] public string tooltip;
     [EnumToggleButtons] public ItemType itemType;
     

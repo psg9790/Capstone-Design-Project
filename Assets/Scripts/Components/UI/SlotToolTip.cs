@@ -28,7 +28,7 @@ public class SlotToolTip : MonoBehaviour
             -go_Base.GetComponent<RectTransform>().rect.height * 0.5f, 0f);
         go_Base.transform.position = _pos;
 
-        txt_Itemname.text = item.itemData.name;
+        txt_Itemname.text = item.itemData.itemName;
         //txt_Itemdesc.text = item.itemDesc;
     }
 

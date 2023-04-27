@@ -85,11 +85,12 @@ public class Heart : MonoBehaviour
         if (DamageFontManager.Instance == null) // 데미지 폰트 띄우는 매니저 생성
         {
             GameObject dmg = new GameObject("DamageFontManager + canvas");
-            dmg.AddComponent<DamageFontManager>();
+            dmg.AddComponent<DamageFontManager>().Init();
         }
         if (useMonsterHpBar) // 일반 몬스터인 경우 hpbar UI 생성, 생성과 함께 pool이 존재하지 않으면 생성해서 소속됨
         {
-            hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
+            // hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
+            hpbar = Instantiate(HPbarManager.Instance.hpbar).GetComponent<HPbar_custom>();
             hpbar.Activate(this);
         }
     }

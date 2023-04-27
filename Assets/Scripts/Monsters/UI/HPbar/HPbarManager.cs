@@ -15,6 +15,8 @@ public class HPbarManager : MonoBehaviour
     private Canvas canvas;
     private CanvasScaler scaler;
 
+    public GameObject hpbar;
+
 
     public void Init()
     {
@@ -30,6 +32,8 @@ public class HPbarManager : MonoBehaviour
             Screen.currentResolution.height);
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
         scaler.matchWidthOrHeight = 0.5f;
+        
+        hpbar = Resources.Load("UI/hpbar").GameObject();
     }
 
     private void OnDestroy()

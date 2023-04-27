@@ -24,7 +24,7 @@ public class HitBox : MonoBehaviour
 
     IEnumerator ParticlePlayIE()
     {
-        while (parent_particle.time < parent_particle.duration) // 시간이 설정한 시간만큼 play되도록 유도
+        while (parent_particle.time < parent_particle.main.duration) // 시간이 설정한 시간만큼 play되도록 유도
         {
             yield return null;
             while (!pq.Empty() && (pq.Top().startTime >= parent_particle.time))
