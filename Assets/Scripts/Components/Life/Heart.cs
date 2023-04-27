@@ -23,40 +23,40 @@ public class Heart : MonoBehaviour
     private int level; // 레벨이 속값으로 존재해야 될 것 같은게 이 값에 따라 드랍하는 아이템의 수치를 정해줘야 할듯
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float max_hp;
+    private float max_hp; // 최대 체력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float cur_hp;
+    private float cur_hp; // 현재 체력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float atk;
+    private float atk; // 현재 공격력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float def;
+    private float def; // 현재 방어력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float movement_speed;
+    private float movement_speed = 1;
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float atk_speed;
+    private float atk_speed = 1;
 
     [FoldoutGroup("Attributes")] [SerializeField]
     private float skill_cooldown;
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float criticalRate;
+    private float criticalRate; // 0 ~ 100
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float criticalDamage = 2f;
+    private float criticalDamage = 2f; // *1, *1.1, *1.5...
     
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool immune;
+    private bool immune; // 데미지, cc 모두 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_stiff_immune;
+    private bool cc_stiff_immune; // 경직 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_knockback_immune;
+    private bool cc_knockback_immune; // 넉백 면역
 
     
     public int LEVEL => level;

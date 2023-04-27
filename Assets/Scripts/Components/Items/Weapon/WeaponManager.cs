@@ -5,8 +5,9 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager
 {
    public BaseWeapon Weapon { get; private set; }
    public Action<GameObject> unRegisterWeapon { get; set; }
@@ -40,7 +41,7 @@ public class WeaponManager : MonoBehaviour
    {
       if (weaponObject != null)
       {
-         Destroy(weaponObject);
+         Object.Destroy(weaponObject);
       }
 
       Player.Instance.animator.runtimeAnimatorController = Player.Instance.BaseAnimator;

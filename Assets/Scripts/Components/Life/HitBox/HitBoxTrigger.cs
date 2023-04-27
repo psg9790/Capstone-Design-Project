@@ -10,27 +10,27 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     private LayerMask targetMask; // init
     public float startTime; // 인스펙터에서 수정
     public float duration; // 인스펙터에서 수정
-    [ShowInInspector] private Damage damage; // 인스펙터에서 수정
+    [ShowInInspector][ReadOnly] private Damage damage; // 인스펙터에서 수정
 
-    [BoxGroup("Skill")] [SerializeField] private float triggerDmgRatio = 1f; // 스킬 계수
+    [BoxGroup("Skill")] [SerializeField] private float damageRatio = 1f; // 스킬 계수, 0.0 ~ 1.0
     [BoxGroup("Skill")] [SerializeField] private CC_type ccType;
-    [BoxGroup("Skill")] [SerializeField] private float ccPower;
+    [BoxGroup("Skill")] [SerializeField] private float ccPower; // 1 ~
 
     private float elapsed = 0;
     private HashSet<string> hitHash = new HashSet<string>();
-    
+    private ParticleSystem particle;
+
     public void Init(Heart heart, LayerMask targetMask)
     {
         this.heart = heart;
         this.targetMask = targetMask;
     }
-    
+
     public void Activate()
     {
-        // Debug.Log("on");
         ClearHash();
         elapsed = 0;
-        damage = heart.Generate_Damage(triggerDmgRatio, ccType, ccPower);
+        damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
         gameObject.SetActive(true);
     }
 
@@ -47,7 +47,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             Deactivate();
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         // other.gameObject.layer는 레이어 인덱스 (ex. 7)
@@ -86,7 +86,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         duration = 999999999;
         gameObject.SetActive(true);
     }
-    
+
     public int CompareTo(HitBoxTrigger other)
     {
         // id 멤버를 기준으로 크기를 비교
