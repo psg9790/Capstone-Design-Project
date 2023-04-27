@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
 {
     static public Inventory instance;
     [ShowInInspector] public List<Item> items = new List<Item>(); // 아이템 배열
+    [AssetList(Path = "/Resources/ItemData/")]
     public List<ItemData> itemDatas = new List<ItemData>();
 
     [SerializeField] private Transform slotParent; // 슬롯의 부모가 되는 곳을 담을 곳
