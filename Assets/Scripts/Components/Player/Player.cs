@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set; }
     public CapsuleCollider capsuleCollider { get; private set; }
     public WeaponManager weaponManager { get; private set; }
+    public Heart heart { get; private set; }
     
     public NavMeshAgent nav { get; private set; }
     private static Player instance;
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
             animator = GetComponent<Animator>();
             capsuleCollider = GetComponent<CapsuleCollider>();
             nav = GetComponent<NavMeshAgent>();
+            heart = GetComponent<Heart>();
             // DontDestroyOnLoad(gameObject);
             return;
         }

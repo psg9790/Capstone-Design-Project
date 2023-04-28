@@ -20,6 +20,7 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected WeaponPositionData weaponPositionData;
 
     [Header("무기정보")] 
+    [SerializeField] protected HitBox attack_effect;
     [SerializeField] protected RuntimeAnimatorController weaponAnimator;
     [SerializeField] protected string _name;
     [SerializeField] protected float attackDamamge;
