@@ -56,6 +56,7 @@ public class HitBox : MonoBehaviour
         hitBoxTriggers = GetComponentsInChildren<HitBoxTrigger>(true);
         for (int i = 0; i < hitBoxTriggers.Length; i++)
         {
+            hitBoxTriggers[i].gameObject.SetActive(false);
             hitBoxTriggers[i].Init(heart, targetMask);
             hitBoxTriggers[i].startTime /= heart.ATK_SPEED;
             hitBoxTriggers[i].duration /= heart.ATK_SPEED;
