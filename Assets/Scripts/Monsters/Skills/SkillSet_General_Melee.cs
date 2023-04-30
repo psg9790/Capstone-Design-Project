@@ -49,7 +49,7 @@ namespace Monsters.Skill
 
         public override void DoPossibleEngage()
         {
-            if (skill01_coolDown <= 0)
+            if (skill01_coolDown <= 0) // 스킬1 시전 가능하면 시전
             {
                 skill01_coolDown = SKILL01;
                 // 애니메이션 재생

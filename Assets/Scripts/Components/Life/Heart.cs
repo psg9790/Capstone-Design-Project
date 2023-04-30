@@ -122,6 +122,14 @@ public class Heart : MonoBehaviour
         cur_hp = max_hp;
     }
 
+    [FoldoutGroup("Functions")]
+    [Button]
+    public void ForceDead()
+    {
+        cur_hp = 0;
+        OnDeath.Invoke();
+    }
+
     public Damage Generate_Damage(float dmgRate, CC_type cc, float power)
     {
         float rand = Random.Range(0f, 100f);
