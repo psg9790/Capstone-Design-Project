@@ -5,12 +5,12 @@ using UnityEngine.AI;
 public class Move : MonoBehaviour
 {
     NavMeshAgent navAgent;
-    private Animator anim;
+    //private Animator anim;
     
     void Awake()
     {
-        navAgent = GetComponent<NavMeshAgent> ();
-        anim = GetComponent<Animator>();
+        navAgent = GetComponent<NavMeshAgent> (); 
+        // anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -23,7 +23,7 @@ public class Move : MonoBehaviour
             if (Physics.Raycast(ray, out hitInfo))
             {
                 navAgent.SetDestination(hitInfo.point); 
-                anim.SetTrigger("walk");
+                //anim.SetTrigger("walk");
             } 
         }
         
