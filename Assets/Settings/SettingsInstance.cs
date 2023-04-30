@@ -126,7 +126,11 @@ public class SettingsInstance : MonoBehaviour
 
     public void CancelChangesButton()
     {
+        
+        BgmSlider.value = BgmValue;
+        SfxSlider.value = SFXValue;
         gameObject.SetActive(false);
+        
     }
 }
 

@@ -7,31 +7,37 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public ItemSlotUI itemSlotui;
-    private Item _item;
     private Item dropItem;
     public ItemSlot dropSlot;
     public Image image;
-    private SlotToolTip theSlot;
     public SlotToolTip _SlotToolTip;
     
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            /*
-            DragSlot.instance.dragSlot = this;
-            if (itemSlotui.item != null && itemSlotui.item.ItemType==Weapon)     
-            {
-               if (itemSlotui.item.type == itemSlotui.item.ItemType.Weapon)
-               {
-                    Inventory.instance.weaponBack.gameObject.SetActive(false);
-                    Inventory.instance.weaponImage.sprite = itemSlotui.image.sprite;
-                    Inventory.instance.weaponImage.color = itemSlotui.image.color;
-                    Inventory.instance.weaponImage.gameObject.SetActive(true);
-                }
-                
-            }
             
+            DragSlot.instance.dragSlot = this;
+            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)     
+            {
+                if (Inventory.instance.isInstallation == true)
+                {
+                    UnityEngine.Debug.Log("true");
+                    Inventory.instance.AddItem(Inventory.instance.tempItem);
+                    Inventory.instance.tempItem = itemSlotui.item;
+                }
+                else {
+                    Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
+                    Inventory.instance.weaponBack.gameObject.SetActive(false);
+                    Inventory.instance.weaponImage.gameObject.SetActive(true);
+                    Inventory.instance.isInstallation = true;
+                }
+                Inventory.instance.weaponImage.sprite = itemSlotui.image.sprite;
+                Inventory.instance.weaponImage.color = itemSlotui.image.color;
+                Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            }
+            /*
             if (itemSlotui.item != null && itemSlotui.item.ItemType==Artifact)        // 아티팩트일 때    
             {
                 if (itemSlotui.item.type == itemSlotui.item.ItemType.Weapon)
@@ -39,8 +45,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     
                 }
             }
-            DragSlot.instance.dragSlot = null;
             */
+            DragSlot.instance.dragSlot = null;
+            
         }
          
         
@@ -101,10 +108,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // 마우스가 슬롯에 들어갈 때 발동.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (itemSlotui != null)
+       
+        if (itemSlotui.item != null)
         {
-            _SlotToolTip.ShowToolTip(itemSlotui.item, transform.position);
+            _SlotToolTip.ShowToolTip(itemSlotui.item,transform.position);
         }
+        
     }
     
     // 슬롯에서 빠져나갈 때 발동. 

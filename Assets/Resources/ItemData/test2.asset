@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: test2
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 21300000, guid: 3390647031b5c794eba542e6cd263c27, type: 3}
-  name: 
-  tooltip: 
+  name: test
+  tooltip: test
   itemType: 0
   weaponType: 0
+  weapon_gameObject: {fileID: 0}
   weapon_atk: 111
   weapon_atkSpeed: 1
   weapon_ccType: 0

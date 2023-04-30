@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private ItemSlot[] slots;
     public Image weaponImage;
     public Image weaponBack;
+    public Item tempItem;
+    public bool isInstallation=false;
 
     private void OnValidate()
     {
