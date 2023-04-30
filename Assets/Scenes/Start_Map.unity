@@ -521,6 +521,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 107711752}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &115367836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 192268, guid: 8e471ae92060449db87eb9db9264eb21,
+    type: 3}
+  m_PrefabInstance: {fileID: 482734333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &115367838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115367836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &138265555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9464,6 +9490,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1550124723}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1576699907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 192268, guid: 8e471ae92060449db87eb9db9264eb21,
+    type: 3}
+  m_PrefabInstance: {fileID: 872250027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1576699909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576699907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &1584917066
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13335,9 +13387,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 511895466}
         m_TargetAssemblyTypeName: MAP_interact, Assembly-CSharp
-        m_MethodName: Move_Growth_Dun
+        m_MethodName: Move_Dun
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14287,6 +14339,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Growth_Dungeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 337607232797417313, guid: abf9677d2eb44487b8964c4d42133035,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 655481343}
+    - target: {fileID: 337607232797417313, guid: abf9677d2eb44487b8964c4d42133035,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Move_Dun
       objectReference: {fileID: 0}
     - target: {fileID: 337607233203409598, guid: abf9677d2eb44487b8964c4d42133035,
         type: 3}

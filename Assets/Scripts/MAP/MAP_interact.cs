@@ -69,7 +69,7 @@ public class MAP_interact : MonoBehaviour
     
     
     
-    public void Move_Growth_Dun()
+    public void Move_Dun()
     {
         SceneManager.LoadScene(SceneName);
     }
