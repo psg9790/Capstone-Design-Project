@@ -58,57 +58,35 @@ public class ItemGenerator : MonoBehaviour
         if (isWeapon) // 무기 데이터 생성
         {
             ItemData wData = weaponDatas[UnityEngine.Random.Range(0, weaponDatas.Length)];
-            List<WeaponKey> wKeys = new List<WeaponKey>();
+            Dictionary<WeaponKey, float> wOptions = new Dictionary<WeaponKey, float>();
             for (int i = 0; i < System.Enum.GetValues(typeof(WeaponKey)).Length; i++)
             {
-                wKeys.Add((WeaponKey)i);
+                wOptions.Add((WeaponKey)i,
+                    (float)Math.Round(UnityEngine.Random.Range(0, float.Parse(wDic[heart.LEVEL][((WeaponKey)i).ToString()].ToString())), 1));
             }
-            List<float> wVals = new List<float>();
-            for (int i = 0; i < System.Enum.GetValues(typeof(WeaponKey)).Length; i++)
-            {
-                wVals.Add(UnityEngine.Random.Range(0, float.Parse(wDic[heart.LEVEL][((WeaponKey)i).ToString()].ToString())));
-            }
-            Weapon weapon = new Weapon(wData, id_generate++, heart.LEVEL, wKeys, wVals);
-            drop.item = weapon;
+            wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(wOptions[WeaponKey.SOCKET]);
+            Weapon weapon = new Weapon(wData, id_generate++, heart.LEVEL, wOptions);
+            drop.Adjust(weapon);
         }
         else // 아티팩트 데이터 생성
         {
-            List<ArtifactKey> aKeys = new List<ArtifactKey>();
-            for (int i = 0; i < System.Enum.GetValues(typeof(ArtifactKey)).Length; i++) // 옵션들을 확률적으로 추가시켜줌
+            Dictionary<ArtifactKey, float> aOptions = new Dictionary<ArtifactKey, float>();
+            for (int i = 0; i < System.Enum.GetValues(typeof(ArtifactKey)).Length; i++) // 옵션들을 확률적으로 추가
             {
                 if (UnityEngine.Random.Range(0, 100) < 50)
                 {
-                    aKeys.Add((ArtifactKey)i);
+                    aOptions.Add((ArtifactKey)i, 
+                        UnityEngine.Random.Range(0, float.Parse(aDic[heart.LEVEL][((ArtifactKey)i).ToString()].ToString())));
                 }
             }
-            if (aKeys.Count == 0) // 하나도 생성되지 않았을 경우 하나는 넣어줌
+            if (aOptions.Count == 0) // 옵션 최소 1개는 보장
             {
-                aKeys.Add((ArtifactKey)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length));
+                int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
+                aOptions.Add((ArtifactKey)randIdx, 
+                    UnityEngine.Random.Range(0, float.Parse(aDic[heart.LEVEL][((ArtifactKey)randIdx).ToString()].ToString())));
             }
-            List<float> aVals = new List<float>();
-            for (int i = 0; i < aKeys.Count; i++)
-            {
-                aVals.Add(UnityEngine.Random.Range(0, float.Parse(aDic[heart.LEVEL][aKeys[i].ToString()].ToString())));
-            }
-            Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aKeys, aVals);
-            drop.item = arti;
+            Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aOptions);
+            drop.Adjust(arti);
         }
-
-        // // Item.cs gen
-        // Item item = new Item();
-        // item.id = registerId++;
-        // item.tier = heart.LEVEL;
-
-        // arti
-        // item.itemData = artifactDatas[UnityEngine.Random.Range(0, artifactDatas.Length)];
-        // item.itemOption.typeidx = new List<ItemValueType>();
-        // item.itemOption.values = new List<float>();
-        // int typeidx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ItemValueType)).Length);
-        // ItemValueType type = (ItemValueType)typeidx;
-        // item.itemOption.typeidx.Add(type);
-        // float target = UnityEngine.Random.Range(0, float.Parse(dic[heart.LEVEL][type.ToString()].ToString()));
-        // item.itemOption.values.Add(target);
-
-        // drop.item = item;
     }
 }

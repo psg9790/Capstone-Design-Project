@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Weapon : Item
 {
-    public List<WeaponKey> weaponKeys;
-    public List<float> weaponValues;
+    // public List<WeaponKey> weaponKeys;
+    // public List<float> weaponValues;
 
-    public Weapon(ItemData itemData, ulong id, short tier, List<WeaponKey> weaponKeys, List<float> weaponValues)
+    [ShowInInspector] public Dictionary<WeaponKey, float> options;
+
+    public Weapon(ItemData itemData, ulong id, short tier, Dictionary<WeaponKey, float> options)
     {
         this.itemData = itemData;
         this.id = id;
         this.tier = tier;
-        this.weaponKeys = weaponKeys;
-        this.weaponValues = weaponValues;
+        this.options = options;
     }
 
     public override List<string> Options_ToString()
@@ -25,5 +27,6 @@ public class Weapon : Item
 public enum WeaponKey
 {
     ATK,
-    ATKSPEED
+    ATKSPEED,
+    SOCKET
 }
