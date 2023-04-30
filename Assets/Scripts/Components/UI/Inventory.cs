@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour
     [ShowInInspector] public List<Item> items = new List<Item>(); // 아이템 배열
     [AssetList(Path = "/Resources/ItemData/")]
     public List<ItemData> itemDatas = new List<ItemData>();
+    [SerializeField] public Transform artifactParent; // 슬롯의 부모가 되는 곳을 담을 곳
+    [SerializeField] public Artifact[] artifacts;
 
     [SerializeField] private Transform slotParent; // 슬롯의 부모가 되는 곳을 담을 곳
     [SerializeField] private ItemSlot[] slots;
@@ -24,6 +26,7 @@ public class Inventory : MonoBehaviour
     private void OnValidate()
     {
         slots = slotParent.GetComponentsInChildren<ItemSlot>();
+        artifacts = artifactParent.GetComponentsInChildren<Artifact>();
     }
 
     void Awake()

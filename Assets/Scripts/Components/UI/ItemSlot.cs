@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public ItemSlotUI itemSlotui;
-    private Item dropItem;
     public ItemSlot dropSlot;
     public Image image;
     public SlotToolTip _SlotToolTip;
@@ -19,7 +18,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             
             DragSlot.instance.dragSlot = this;
-            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)     
+            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)
             {
                 if (Inventory.instance.isInstallation == true)
                 {
@@ -27,22 +26,33 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.AddItem(Inventory.instance.tempItem);
                     Inventory.instance.tempItem = itemSlotui.item;
                 }
-                else {
+                else
+                {
                     Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
                     Inventory.instance.weaponBack.gameObject.SetActive(false);
                     Inventory.instance.weaponImage.gameObject.SetActive(true);
                     Inventory.instance.isInstallation = true;
                 }
+
                 Inventory.instance.weaponImage.sprite = itemSlotui.image.sprite;
                 Inventory.instance.weaponImage.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+                /*
+                for (int i = 0; i < Inventory.instance.tempItem.)
+                {
+                    Inventory.instance.artifacts[i].lockImage.gameObject.SetActive(false);
+                    
+                }
+                */
             }
             /*
-            if (itemSlotui.item != null && itemSlotui.item.ItemType==Artifact)        // 아티팩트일 때    
+            else if (itemSlotui.item != null && itemSlotui.item.itemData.itemType==ItemType.Artifact)        // 아티팩트일 때    
             {
-                if (itemSlotui.item.type == itemSlotui.item.ItemType.Weapon)
+                for(int i=0;Inventory.instance.artifacts[i];i++)
                 {
-                    
+                    Inventory.instance.artifacts[i].artifactImage.sprite = itemSlotui.image.sprite ;
+                    Inventory.instance.artifacts[i].artifactImage.gameObject.SetActive(true);
+                    break;
                 }
             }
             */
