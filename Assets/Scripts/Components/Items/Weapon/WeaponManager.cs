@@ -6,7 +6,6 @@ using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
-
 public class WeaponManager
 {
    public BaseWeapon Weapon { get; private set; }

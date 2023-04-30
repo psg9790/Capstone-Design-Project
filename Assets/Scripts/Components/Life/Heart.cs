@@ -20,7 +20,7 @@ public class Heart : MonoBehaviour
     [FoldoutGroup("Attributes")]
     [InfoBox("이 변수들을 플레이 중 직접 수정하면 다른 오브젝트 작동 시 (장비 장착/해제 등) 오류가 발생할 수도 있습니다.")]
     [SerializeField]
-    private int level; // 레벨이 속값으로 존재해야 될 것 같은게 이 값에 따라 드랍하는 아이템의 수치를 정해줘야 할듯
+    private short level; // 레벨이 속값으로 존재해야 될 것 같은게 이 값에 따라 드랍하는 아이템의 수치를 정해줘야 할듯
 
     [FoldoutGroup("Attributes")] [SerializeField]
     private float max_hp; // 최대 체력
@@ -59,7 +59,7 @@ public class Heart : MonoBehaviour
     private bool cc_knockback_immune; // 넉백 면역
 
     
-    public int LEVEL => level;
+    public short LEVEL => level;
     public float MAX_HP => max_hp;
     public float CUR_HP => cur_hp;
     public float ATK => atk;
