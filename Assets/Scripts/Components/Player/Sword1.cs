@@ -8,38 +8,36 @@ using UnityEngine;
 
 public class Sword1 : BaseWeapon
 {
-    public GameObject attack;
-    private GameObject effect;
-    public Vector3 mouselook;
-    private int eff;
-    private int seff;
+    
+    
 
     private void Awake()
     {
         
-        for (int i = 0; i < Player.Instance.effectGenerator.childCount; i++)
-        {
-            if (Player.Instance.effectGenerator.GetChild(i).name == _name+"eff")
-            {
-                eff = i;
-                
-            }
-
-            if (Player.Instance.effectGenerator.GetChild(i).name == _name+"Skilleff")
-            {
-                seff = i;
-            }
-        }
+        // for (int i = 0; i < Player.Instance.effectGenerator.childCount; i++)
+        // {
+        //     if (Player.Instance.effectGenerator.GetChild(i).name == _name+"eff")
+        //     {
+        //         eff = i;
+        //         
+        //     }
+        //
+        //     if (Player.Instance.effectGenerator.GetChild(i).name == _name+"Skilleff")
+        //     {
+        //         seff = i;
+        //     }
+        // }
     }
 
     public override void Attack(BaseState state,Vector3 looking)
     {
-        mouselook = looking;
+       
     }
 
     public override void StartAttack()
     {
-        
+        HitBox hitBox = Instantiate(attack_effect);
+        hitBox.Particle_Play(Player.Instance.heart);
         // effect = Instantiate(attack);
         // effect.transform.position = Player.Instance.effectGenerator.position;
         //
@@ -48,8 +46,8 @@ public class Sword1 : BaseWeapon
         // effect.transform.eulerAngles += new Vector3(-20f, 0f, 0f);
         // effect.SetActive(true);
         // effect.GetComponent<ParticleSystem>().Play();
-        Player.Instance.effectGenerator.GetChild(eff).gameObject.SetActive(true);
-        Player.Instance.effectGenerator.GetChild(eff).gameObject.GetComponent<ParticleSystem>().Play();
+        // Player.Instance.effectGenerator.GetChild(eff).gameObject.SetActive(true);
+        // Player.Instance.effectGenerator.GetChild(eff).gameObject.GetComponent<ParticleSystem>().Play();
 
     }
     public override void EndAttack()
@@ -58,13 +56,13 @@ public class Sword1 : BaseWeapon
         // effect.GetComponent<ParticleSystem>().Stop();
         // effect.SetActive(false);
         // Destroy(effect);
-        Player.Instance.effectGenerator.GetChild(eff).gameObject.GetComponent<ParticleSystem>().Stop();
-        Player.Instance.effectGenerator.GetChild(eff).gameObject.SetActive(false);
+        // Player.Instance.effectGenerator.GetChild(eff).gameObject.GetComponent<ParticleSystem>().Stop();
+        // Player.Instance.effectGenerator.GetChild(eff).gameObject.SetActive(false);
     }
     public override void Skill()
     {
-        Player.Instance.effectGenerator.GetChild(seff).gameObject.SetActive(true);
-        Player.Instance.effectGenerator.GetChild(seff).gameObject.GetComponent<ParticleSystem>().Play();
+        // Player.Instance.effectGenerator.GetChild(seff).gameObject.SetActive(true);
+        // Player.Instance.effectGenerator.GetChild(seff).gameObject.GetComponent<ParticleSystem>().Play();
         
         
     }

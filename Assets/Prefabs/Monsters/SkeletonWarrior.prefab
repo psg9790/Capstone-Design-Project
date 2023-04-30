@@ -528,8 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778ca472aa1c17743afc44a43a1c03ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHitBox: {fileID: 5155674456295676244}
-  baseSkillEffect: {fileID: 234268255858695950}
+  baseSkillEffect: {fileID: 8204595239827621955, guid: bb975d6f1ca8f8b45b032d393b39a69f,
+    type: 3}
   skill01_coolDown: 0
 --- !u!114 &489164932030698349
 MonoBehaviour:
@@ -1420,6 +1420,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   duration: 0
+  parent_particle: {fileID: 0}
 --- !u!1 &2991821679112777340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3820,18 +3821,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f75f8f1252f81b449aed10fea464e132, type: 3}
---- !u!114 &234268255858695950 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2727187186041286522, guid: f75f8f1252f81b449aed10fea464e132,
-    type: 3}
-  m_PrefabInstance: {fileID: 2781153051948839028}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630e1199c8bc6a64bafbb7deb9e31931, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2776719970078657234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4582690613557926, guid: f75f8f1252f81b449aed10fea464e132,

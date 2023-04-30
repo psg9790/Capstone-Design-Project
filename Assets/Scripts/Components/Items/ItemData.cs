@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public Sprite iconSprite;
-    public string name;
+    public string itemName;
     [Multiline] public string tooltip;
     [EnumToggleButtons] public ItemType itemType;
     
@@ -18,7 +18,7 @@ public class ItemData : ScriptableObject
     [ShowIf("itemType", ItemType.Weapon)] public CC_type weapon_ccType;
     
 
-    [ShowIfGroup("itemType", ItemType.Artifact)] public ArtifactType artifactType;
+    // [ShowIfGroup("itemType", ItemType.Artifact)] public ItemValueType valueType;
 
 }
 
@@ -34,9 +34,11 @@ public enum WeaponType
     LongBow
 }
 
-public enum ArtifactType
+public enum ItemValueType
 {
     DEF,
     HP,
-    MOVEMENT_SPEED
+    MOVEMENTSPEED, 
+    ATK,
+    ATKSPEED
 }

@@ -3311,12 +3311,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   level: 0
-  max_hp: 0
-  cur_hp: 0
-  atk: 0
+  max_hp: 100
+  cur_hp: 100
+  atk: 10
   def: 0
   movement_speed: 0
-  atk_speed: 0
+  atk_speed: 1
   skill_cooldown: 0
   criticalRate: 0
   criticalDamage: 2
