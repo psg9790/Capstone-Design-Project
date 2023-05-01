@@ -28,7 +28,7 @@ public class NPC_Interact : MonoBehaviour
 
     private void OnTriggerExit(Collider col)
     {
-        if (col.tag == "Player")
+        if (col.CompareTag("Player")) 
         {
             NPC_Text.SetActive(false);
         }
@@ -43,7 +43,7 @@ public class NPC_Interact : MonoBehaviour
             Ray ray = getCamera.ScreenPointToRay(Input.mousePosition);
             
             //raycast(입력, 출력): 레이저 받았을 때 리턴값을 t,f로 주기 위함. 
-            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag=="NPC")
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.CompareTag("NPC"))
             {
                 isAction = true;
                 //레이저 맞은 오브젝트 이름 받음

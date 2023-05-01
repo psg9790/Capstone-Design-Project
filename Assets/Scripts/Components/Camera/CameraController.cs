@@ -46,23 +46,21 @@ public class CameraController : MonoBehaviour
             {
                 OnPlayerMove(); // 카메라 움직이기
             }
-        }
 
-        Vector3 direction = (Player.Instance.transform.position - transform.position).normalized;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
-            1 << LayerMask.NameToLayer("WALL"));
-        for (int i = 0; i < hits.Length; i++)
-        {
-            Debug.Log(hits[i].transform.parent.gameObject);
-            transwall[] obj = hits[i].transform.parent.GetComponentsInChildren<transwall>();
-            for (int j = 0; j < obj.Length; j++)
+
+            Vector3 direction = (Player.Instance.transform.position - transform.position).normalized;
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
+                1 << LayerMask.NameToLayer("WALL"));
+            for (int i = 0; i < hits.Length; i++)
             {
-                obj[j]?.trans();
+                Debug.Log(hits[i].transform.parent.gameObject);
+                transwall[] obj = hits[i].transform.parent.GetComponentsInChildren<transwall>();
+                for (int j = 0; j < obj.Length; j++)
+                {
+                    obj[j]?.trans();
+                }
             }
-            
-            
         }
-
     }
 
     private Tweener move; // Tweener 하나로 움직임 관리
