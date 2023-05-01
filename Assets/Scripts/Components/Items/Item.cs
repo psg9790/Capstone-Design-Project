@@ -1,27 +1,26 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class ItemBase : MonoBehaviour
+
+public class Item
 {
-    public ItemType type;
-    [SerializeField] private int _id;
-    [SerializeField] private string _name;
-    [Multiline] 
-    [SerializeField] private string _toolip;
-    [SerializeField] private Sprite _iconSprite;
-    [SerializeField] private GameObject _dropItemPrefab;
-
+    public ItemData itemData;
+    public ulong id;
+    public short tier;
     
-    
-    
-}
+    public Item()
+    {
+    }
 
+    public Item(ItemData itemData, ulong id, short tier)
+    {
+        this.itemData = itemData;
+        this.id = id;
+        this.tier = tier;
+    }
 
-
-public enum ItemType
-{
-    Weapon,
-    Artifact,
-    Potion
+    public virtual List<string> Options_ToString()
+    {
+        return null;
+    }
 }

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set; }
     public CapsuleCollider capsuleCollider { get; private set; }
     public WeaponManager weaponManager { get; private set; }
+    public Heart heart { get; private set; }
     
     public NavMeshAgent nav { get; private set; }
     private static Player instance;
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     private Transform rightHand;
     
     public Transform effectGenerator;
+    
+    public RuntimeAnimatorController BaseAnimator;
     
     // Dash
     [Header("dash")]
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour
     {
         if (instance == null)
         {
+            UnityEngine.Debug.Log("Player Awake");
             instance = this;
             weaponManager = new WeaponManager(rightHand);
             weaponManager.unRegisterWeapon = (weapon) => { Destroy(weapon); };
@@ -49,6 +53,7 @@ public class Player : MonoBehaviour
             animator = GetComponent<Animator>();
             capsuleCollider = GetComponent<CapsuleCollider>();
             nav = GetComponent<NavMeshAgent>();
+            heart = GetComponent<Heart>();
             // DontDestroyOnLoad(gameObject);
             return;
         }
@@ -69,7 +74,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine?.UpdateState();
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            weaponManager.Weapon?.Skill();
+        }
         
     }
 

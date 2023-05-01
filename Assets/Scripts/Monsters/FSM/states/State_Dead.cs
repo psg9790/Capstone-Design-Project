@@ -12,10 +12,12 @@ namespace Monsters.FSM
             monster.state = EMonsterState.Die;
             // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.bodyCollider.enabled = false;
+            monster.nav.enabled = false;
             monster.animator.SetTrigger("Die");
             monster.afterDeadElapsed = 0f;
             Debug.Log("enter die state");
             // 아이템 생성
+            ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart);
         }
 
         public override void Execute(Monster monster)

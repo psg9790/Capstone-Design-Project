@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5504523452849746296}
   - component: {fileID: 1718233614426990598}
   - component: {fileID: 2324859025100246213}
-  - component: {fileID: 1573633910877019997}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -130,26 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPositionData: {fileID: 11400000, guid: 615664fa13bfc88439f8472d4e008d45, type: 2}
+  attack_effect: {fileID: 5104748647811299519, guid: 6b4bd9d990d246d4c87be0264e784e82,
+    type: 3}
   weaponAnimator: {fileID: 9100000, guid: d9bc75987f1c8d94eab9b98553a9d430, type: 2}
-  _name: 
+  _name: Sword1
   attackDamamge: 0
   attackSpeed: 0
   attackRange: 0
-  attack: {fileID: 1942681157837952, guid: e33991926c05bf84da712ff9a8903dda, type: 3}
-  mouselook: {x: 0, y: 0, z: 0}
---- !u!114 &1573633910877019997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4590876673305520610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 630e1199c8bc6a64bafbb7deb9e31931, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  col: {fileID: 5504523452849746296}

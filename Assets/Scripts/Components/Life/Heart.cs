@@ -20,46 +20,46 @@ public class Heart : MonoBehaviour
     [FoldoutGroup("Attributes")]
     [InfoBox("이 변수들을 플레이 중 직접 수정하면 다른 오브젝트 작동 시 (장비 장착/해제 등) 오류가 발생할 수도 있습니다.")]
     [SerializeField]
-    private int level; // 레벨이 속값으로 존재해야 될 것 같은게 이 값에 따라 드랍하는 아이템의 수치를 정해줘야 할듯
+    private short level; // 레벨이 속값으로 존재해야 될 것 같은게 이 값에 따라 드랍하는 아이템의 수치를 정해줘야 할듯
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float max_hp;
+    private float max_hp; // 최대 체력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float cur_hp;
+    private float cur_hp; // 현재 체력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float atk;
+    private float atk; // 현재 공격력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float def;
+    private float def; // 현재 방어력
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float movement_speed;
+    private float movement_speed = 1;
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float atk_speed;
+    private float atk_speed = 1;
 
     [FoldoutGroup("Attributes")] [SerializeField]
     private float skill_cooldown;
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float criticalRate;
+    private float criticalRate; // 0 ~ 100
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private float criticalDamage = 2f;
+    private float criticalDamage = 2f; // *1, *1.1, *1.5...
     
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool immune;
+    private bool immune; // 데미지, cc 모두 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_stiff_immune;
+    private bool cc_stiff_immune; // 경직 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_knockback_immune;
+    private bool cc_knockback_immune; // 넉백 면역
 
     
-    public int LEVEL => level;
+    public short LEVEL => level;
     public float MAX_HP => max_hp;
     public float CUR_HP => cur_hp;
     public float ATK => atk;
@@ -85,11 +85,12 @@ public class Heart : MonoBehaviour
         if (DamageFontManager.Instance == null) // 데미지 폰트 띄우는 매니저 생성
         {
             GameObject dmg = new GameObject("DamageFontManager + canvas");
-            dmg.AddComponent<DamageFontManager>();
+            dmg.AddComponent<DamageFontManager>().Init();
         }
         if (useMonsterHpBar) // 일반 몬스터인 경우 hpbar UI 생성, 생성과 함께 pool이 존재하지 않으면 생성해서 소속됨
         {
-            hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
+            // hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
+            hpbar = Instantiate(HPbarManager.Instance.hpbar).GetComponent<HPbar_custom>();
             hpbar.Activate(this);
         }
     }
@@ -119,6 +120,14 @@ public class Heart : MonoBehaviour
     public void RestoreAll_CUR_HP()
     {
         cur_hp = max_hp;
+    }
+
+    [FoldoutGroup("Functions")]
+    [Button]
+    public void ForceDead()
+    {
+        cur_hp = 0;
+        OnDeath.Invoke();
     }
 
     public Damage Generate_Damage(float dmgRate, CC_type cc, float power)

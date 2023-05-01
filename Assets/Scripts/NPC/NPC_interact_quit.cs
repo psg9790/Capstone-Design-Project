@@ -9,7 +9,6 @@ public class NPC_interact_quit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -21,6 +20,7 @@ public class NPC_interact_quit : MonoBehaviour
     public void Text_Exit()
     {
         npcText.SetActive(false);
+        
     }
     
 }
