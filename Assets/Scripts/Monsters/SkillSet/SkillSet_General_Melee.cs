@@ -7,7 +7,6 @@ namespace Monsters.Skill
 {
     public class SkillSet_General_Melee : SkillSet
     {
-        // [FoldoutGroup("HitBoxes")] [Required] public HitBox baseHitBox;
         public HitBox baseSkillEffect;
         [ReadOnly] public float skill01_coolDown;
         private float SKILL01 = 5f;
@@ -22,17 +21,9 @@ namespace Monsters.Skill
 
         void BaseHitOn() // 기본 검 공격 collider enabled = true;
         {
-            // baseSkillEffect.SetDamage(heart.Generate_Damage(1, CC_type.None, 0));
             HitBox hitbox = Instantiate(baseSkillEffect);
             hitbox.Particle_Play(heart);
-            // baseHitBox.COLLIDER_ON(heart.Generate_Damage(1, CC_type.None, 0));
         }
-
-        // void BaseHitOff() // collider enabled = false;
-        // {
-        //     baseSkillEffect.Particle_Stop();
-        //     // baseHitBox.COLLIDER_OFF();
-        // }
 
         void EndEngage()
         {
@@ -41,8 +32,6 @@ namespace Monsters.Skill
 
         public override void Terminate()
         {
-            // BaseHitOff();
-            // baseSkillEffect.Particle_Stop();
             // 스킬 취소 없음? 관대한 캔슬
             EndEngage();
         }
@@ -54,7 +43,7 @@ namespace Monsters.Skill
                 skill01_coolDown = SKILL01;
                 // 애니메이션 재생
                 // Debug.Log("skill01");
-                monster.whileEngage = false;
+                monster.whileEngage = false; // 나중에 삭제
                 return;
             }
 
