@@ -66,10 +66,9 @@ public class TreasureBox : MonoBehaviour
        
         yield return  new WaitForSeconds(0.2f);
 
-        int random = Random.Range(1, 5);
+        int random = Random.Range(2, 100);
         Debug.Log("drop item: "+random);
-        
-        
+
     }
 
     private void drop()
