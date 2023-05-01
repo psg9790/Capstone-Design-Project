@@ -32,7 +32,7 @@ public class DungeonCreator : MonoBehaviour
 
     private void Start()
     {
-
+        
 
         if (Camera.main != null)
         {
