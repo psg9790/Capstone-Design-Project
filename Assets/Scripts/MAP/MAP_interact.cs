@@ -1,65 +1,77 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 public class MAP_interact : MonoBehaviour
 {
     public GameObject Map_Select;
-    public GameObject Map_Growth;
-    public GameObject Map_Record;
+    
+    public GameObject Player;
 
-    public string Growth_Dun;
+    private Move PlayerMove;
 
-    public string Record_Dun;
+    private NavMeshAgent NavOnOff;
+
+    public string SceneName;
+
+    private bool isEnter;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerMove = Player.GetComponent<Move>();
+        NavOnOff = Player.GetComponent<NavMeshAgent>();
+        isEnter = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isEnter && Input.GetKeyDown(KeyCode.F))
+        {
+            Player.GetComponent<Move>().enabled = false;
+            Player.GetComponent<NavMeshAgent>().enabled = false;
+            Debug.Log("portal click");
+            Map_Select.SetActive(true);   
+        }
         
     }
-    // 성장던전 선택
-    public void Select_Growth()
+
+     void OnTriggerStay(Collider other)
     {
-        Map_Select.SetActive(false);
-        Map_Growth.SetActive(true);
-    }
-    
-    // 던전 선택창으로 되돌아가기
-    public void Return_Select()
-    {
-        if (Map_Growth.activeSelf == true){
-            Map_Growth.SetActive(false);
-        }else if (Map_Record.activeSelf == true) {
-            Map_Record.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            isEnter = true;
         }
-        Map_Select.SetActive(true);
-    }
-    
-    // 기록던전 선택
-    public void Select_Record()
-    {
-        Map_Select.SetActive(false);
-        Map_Record.SetActive(true);
-    }
-    
-    //던전 선택 종료
-    public void Off_Select()
-    {
-        Map_Select.SetActive(false);
     }
 
-    public void Move_Growth_Dun()
+    void OnTriggerExit()
     {
-        SceneManager.LoadScene(Growth_Dun);
+        isEnter = false;
     }
-
-    public void Move_Record_Dun()
+    private void OnTriggerExit(Collider col)
     {
-        SceneManager.LoadScene(Record_Dun);
+        if (col.CompareTag("Player")) 
+        {
+            Map_Select.SetActive(false);
+        }
     }
+    
+    public void quit()
+    {
+        Map_Select.SetActive(false);
+        Player.GetComponent<Move>().enabled = true;
+        Player.GetComponent<NavMeshAgent>().enabled = true;
+    }
+    
+    
+    
+    public void Move_Dun()
+    {
+        SceneManager.LoadScene(SceneName);
+    }
+    
 }
