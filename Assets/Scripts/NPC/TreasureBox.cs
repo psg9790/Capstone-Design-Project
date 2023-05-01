@@ -68,10 +68,7 @@ public class TreasureBox : MonoBehaviour
 
         int random = Random.Range(1, 5);
         Debug.Log("drop item: "+random);
-        for (int i = 0; i < random; i++)
-        {
-            this.drop();
-        }
+        
         
     }
 

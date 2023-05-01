@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8674695522669954863}
   - component: {fileID: 8674695522669954832}
   - component: {fileID: 8674695522669954833}
-  - component: {fileID: 8674695522669954834}
   - component: {fileID: 8674695522669954835}
   - component: {fileID: 4443520030426967996}
   m_Layer: 0
@@ -137,19 +136,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &8674695522669954834
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8674695522669954837}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.917874, y: 2, z: 2.6595833}
-  m_Center: {x: -0.019622922, y: 0, z: 0.008515239}
 --- !u!54 &8674695522669954835
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -178,3 +164,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d452f70a00728424c9bb72239beda3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ListUI: {fileID: 0}
+  Text: {fileID: 0}
