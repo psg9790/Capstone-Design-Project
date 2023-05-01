@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -14,19 +13,18 @@ public class ItemSlotUI : MonoBehaviour
     private Item _item;
     private Item dropItem;
 
-    public Item item {
+    public Item item
+    {
         get { return _item; }
-        set {
+        set
+        {
             _item = value;
-            if (_item != null) {
-                image.sprite = item.itemImage;
-                image.color = new Color(1, 1, 1 );
+            if (_item != null)
+            {
+                image.sprite = item.itemData.iconSprite;
+                image.color = new Color(1, 1, 1);
                 this.gameObject.SetActive(true);
-            } 
+            }
         }
     }
-
-    
-
-   
 }

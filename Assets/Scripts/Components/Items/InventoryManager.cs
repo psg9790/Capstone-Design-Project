@@ -11,7 +11,6 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager inctance;
 
     public GameObject Sword;
-
     private void Awake()
     {
         if (inctance == null)
@@ -44,6 +43,14 @@ public class InventoryManager : MonoBehaviour
     void weaponOut()
     {
         Player.Instance.weaponManager.UnRegisterWeapon();
-        
+    }
+
+    public ItemData testData;
+    [Button]
+    public void DEBUG_weaponIn()
+    {
+        GameObject weapon = Instantiate(testData.weapon_gameObject);
+        Player.Instance.weaponManager.SetWeapon(weapon);
+        Player.Instance.weaponManager.item = new Item(testData);
     }
 }

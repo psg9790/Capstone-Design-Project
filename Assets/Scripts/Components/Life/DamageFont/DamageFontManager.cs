@@ -14,10 +14,12 @@ public class DamageFontManager : MonoBehaviour
     private static DamageFontManager instance;
     public static DamageFontManager Instance => instance;
 
-    public Camera cam; // 카메라 해싱용
+    public Camera cam; // 2D 포지셔닝용
     private Stack<DamageFont> closed = new Stack<DamageFont>(); // pooling
 
-    void Awake()
+    public GameObject damageFont;
+
+    public void Init()
     {
         if (instance != null)
         {
@@ -38,6 +40,8 @@ public class DamageFontManager : MonoBehaviour
             Screen.currentResolution.height);
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
         scaler.matchWidthOrHeight = 0.5f;
+
+        damageFont = Resources.Load("UI/DamageFont").GameObject();
     }
 
     private void OnDestroy()
@@ -57,7 +61,8 @@ public class DamageFontManager : MonoBehaviour
         }
         else
         {
-            dmgFont = Instantiate(Resources.Load("UI/DamageFont")).GetComponent<DamageFont>();
+            // dmgFont = Instantiate(Resources.Load("UI/DamageFont")).GetComponent<DamageFont>();
+            dmgFont = Instantiate(damageFont).GetComponent<DamageFont>();
             dmgFont.transform.SetParent(this.transform);
         }
 

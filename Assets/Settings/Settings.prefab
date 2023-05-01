@@ -225,7 +225,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 582623903384283750}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.81333333
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -998,8 +998,8 @@ MonoBehaviour:
   asset: {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd, type: 2}
   resolutionDropdown: {fileID: 582623903617225458}
   fullscreen: {fileID: 582623903082996054}
-  BgmSlider: {fileID: 0}
-  SfxSlider: {fileID: 0}
+  BgmSlider: {fileID: 6250448730890960692}
+  SfxSlider: {fileID: 779633009638398117}
   v_sync: {fileID: 1210899503383006237}
 --- !u!1 &582623902454195499
 GameObject:
