@@ -45,12 +45,12 @@ public class SceneLoadInstance : MonoBehaviour
 
     public void OpenSettingsWindow()
     {
-        if (ReferenceEquals(settings, null))
+        if (ReferenceEquals(SettingsInstance.Instance, null))
         {
             settings = Instantiate(settingsPrefab).GetComponent<SettingsInstance>();
         }
 
-        settings.gameObject.SetActive(true);
+        SettingsInstance.Instance.gameObject.SetActive(true);
     }
 
     public void CloseSettingsWindow()

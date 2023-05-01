@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class SettingsInstance : MonoBehaviour
 {
+    private static SettingsInstance instance;
+    public static SettingsInstance Instance => instance;
+    
     List<Resolution> resolutions = new List<Resolution>();
     List<Resolution> monitor = new List<Resolution>();
     public UniversalRenderPipelineAsset asset;
@@ -28,9 +31,22 @@ public class SettingsInstance : MonoBehaviour
     QualitySettings qualitySetting;
     int sync_toggle;                               // 토글의 변한 정보를 담는 변수
 
+    private void Awake()
+    {
+        if (ReferenceEquals(instance, null))
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     void Start()
     {
-        
         InitUI();
     }
 
@@ -73,7 +89,6 @@ public class SettingsInstance : MonoBehaviour
 
         BgmSlider.value = BgmValue;
         SfxSlider.value = SFXValue;
-        
     }
 
     public void DropboxOptionChange(int x)                                              // 해상도 선택에 따른 변수 값 변경 함수
@@ -111,7 +126,11 @@ public class SettingsInstance : MonoBehaviour
 
     public void CancelChangesButton()
     {
+        
+        BgmSlider.value = BgmValue;
+        SfxSlider.value = SFXValue;
         gameObject.SetActive(false);
+        
     }
 }
 

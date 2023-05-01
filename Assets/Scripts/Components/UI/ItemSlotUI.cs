@@ -13,19 +13,18 @@ public class ItemSlotUI : MonoBehaviour
     private Item _item;
     private Item dropItem;
 
-    public Item item {
+    public Item item
+    {
         get { return _item; }
-        set {
+        set
+        {
             _item = value;
-            if (_item != null) {
+            if (_item != null)
+            {
                 image.sprite = item.itemData.iconSprite;
-                image.color = new Color(1, 1, 1 );
+                image.color = new Color(1, 1, 1);
                 this.gameObject.SetActive(true);
-            } 
+            }
         }
     }
-
-    
-
-   
 }
