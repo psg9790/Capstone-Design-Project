@@ -83,6 +83,6 @@ public class Inventory : MonoBehaviour
     public void DEBUG_AddRandomItem()
     {
         int idx = Random.Range(0, itemDatas.Count);
-        AddItem(new Item(itemDatas[idx]));
+        AddItem(new Item(itemDatas[idx], 0, 0));
     }
 }

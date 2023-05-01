@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -51,6 +52,6 @@ public class InventoryManager : MonoBehaviour
     {
         GameObject weapon = Instantiate(testData.weapon_gameObject);
         Player.Instance.weaponManager.SetWeapon(weapon);
-        Player.Instance.weaponManager.item = new Item(testData);
+        Player.Instance.weaponManager.item = new Item(testData, 0, 0);
     }
 }
