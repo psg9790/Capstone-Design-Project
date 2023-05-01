@@ -35,10 +35,8 @@ public class ItemGenerator : MonoBehaviour
         droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem");
     }
 
-
-    public void GenerateItem(Transform tf, Heart heart)
+    private DroppedItem InstantiateItem(Transform tf)
     {
-        // Item gen
         GameObject itemgo = Instantiate(droppedItemPrefab); // 프리팹 생성
         itemgo.transform.position = tf.position; // 몬스터가 죽은 위치 or 상자 깐 위치에서 생성
         itemgo.transform.rotation = UnityEngine.Random.rotation; // 랜덤 회전값
@@ -53,8 +51,30 @@ public class ItemGenerator : MonoBehaviour
         popDir = popDir.normalized;
         popDir *= 15;
         rigid.AddForce(popDir, ForceMode.Impulse); // 아이템이 튕겨나감 (Vector3.up 지향)
+        return drop;
+    }
 
+    public void GenerateItem(Transform tf, Heart heart)
+    {
+        // Item gen
+        // GameObject itemgo = Instantiate(droppedItemPrefab); // 프리팹 생성
+        // itemgo.transform.position = tf.position; // 몬스터가 죽은 위치 or 상자 깐 위치에서 생성
+        // itemgo.transform.rotation = UnityEngine.Random.rotation; // 랜덤 회전값
+        // DroppedItem drop = itemgo.AddComponent<DroppedItem>(); // 떨어진 아이템 스크립트
+        //
+        // // Item pop action
+        // Rigidbody rigid = itemgo.GetComponent<Rigidbody>();
+        // Vector3 popDir = Vector3.up;
+        // popDir += new Vector3(UnityEngine.Random.Range(0.0f, 1.0f),
+        //     0,
+        //     UnityEngine.Random.Range(0.0f, 1.0f));
+        // popDir = popDir.normalized;
+        // popDir *= 15;
+        // rigid.AddForce(popDir, ForceMode.Impulse); // 아이템이 튕겨나감 (Vector3.up 지향)
+        DroppedItem drop = InstantiateItem(tf);
+        
         bool isWeapon = UnityEngine.Random.Range(0, 100) < weaponItem_dropRatio; // 확률에 따라 무기 드롭, 아니면 아티팩트 생성
+        // 몬스터의 레벨에 따라 수치 다르게 랜덤 생성
         if (isWeapon) // 무기 데이터 생성
         {
             ItemData wData = weaponDatas[UnityEngine.Random.Range(0, weaponDatas.Length)];
@@ -88,5 +108,11 @@ public class ItemGenerator : MonoBehaviour
             Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aOptions);
             drop.Adjust(arti);
         }
+    }
+
+    public void PlayerDropsItem(Transform tf, Item item) // (플레이어 위치, 아이템 객체)
+    {
+        DroppedItem drop = InstantiateItem(tf);
+        drop.Adjust(item);
     }
 }

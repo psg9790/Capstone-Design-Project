@@ -11,17 +11,17 @@ using DG.Tweening;
 // 세팅창 키는것도 만들까
 public class SceneLoadInstance : MonoBehaviour
 {
-    [SerializeField] private SceneName[] movableScenes;
+    // [SerializeField] private SceneName[] movableScenes;
     private SettingsInstance settings;
     [SerializeField] private GameObject settingsPrefab;
 
     public void SwitchScene(string tgt)
     {
-        foreach(SceneName name in movableScenes)
+        for(int i =0; i < System.Enum.GetValues(typeof(SceneName)).Length; i++)
         {
-            if (name.ToString().CompareTo(tgt) == 0)
+            if (((SceneName)i).ToString() == tgt)
             {
-                SceneManager.LoadScene(name.ToString());
+                SceneManager.LoadScene(tgt.ToString());
                 return;
             }
         }
@@ -31,11 +31,11 @@ public class SceneLoadInstance : MonoBehaviour
 
     public void SwitchScene(SceneName tgt)
     {
-        foreach (SceneName name in movableScenes)
+        for (int i = 0; i < System.Enum.GetValues(typeof(SceneName)).Length; i++)
         {
-            if (name.CompareTo(tgt) == 0)
+            if ((SceneName)i == tgt)
             {
-                SceneManager.LoadScene(name.ToString());
+                SceneManager.LoadScene(tgt.ToString());
                 return;
             }
         }
@@ -45,11 +45,10 @@ public class SceneLoadInstance : MonoBehaviour
 
     public void OpenSettingsWindow()
     {
-        if (ReferenceEquals(SettingsInstance.Instance, null))
+        if (ReferenceEquals(SettingsInstance.Instance, null)) // 세팅 프리팹이 존재하지 않으면 생성, 근데 생성 안되어있을 경우는 없을것임 아마
         {
             settings = Instantiate(settingsPrefab).GetComponent<SettingsInstance>();
         }
-
         SettingsInstance.Instance.gameObject.SetActive(true);
     }
 
@@ -60,15 +59,17 @@ public class SceneLoadInstance : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.ExitPlaymode();
+        #else
+            Application.Quit();
+        #endif
     }
 }
 
-[Serializable]
+// 여기에 사용할 씬 이름 똑같이 넣어두면 호출 가능
 public enum SceneName
 {
     MainTitle,
-    InGameMain,
-    SoloDungeon,
-    RankDungeon
+    Start_Map
 }
