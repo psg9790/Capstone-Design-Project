@@ -16,11 +16,13 @@ public class Player_communication : MonoBehaviour
     //overlap sphere 사용하기 위한것
     public Collider[] colliders;
     public float radius = 1.0f;
-    List<string> dataList = new List < string>();
+    List<GameObject> dataList = new List <GameObject>();
+    
     private TMP_Text tmp;
     public RectTransform content;
     public GameObject listItemPrefab;
-    
+
+    private Transform[] childList;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,97 +32,50 @@ public class Player_communication : MonoBehaviour
     // Update is called once per frame
      void OnTriggerEnter(Collider other)
     {
-        
-        //radius를 기준으로 구 안에 있는 콜라이덛를 검출함
-        colliders =
-            Physics.OverlapSphere(this.transform.position, radius);
-        foreach (Collider col in colliders)
+        if (other.CompareTag("Treasure") || other.CompareTag("Item") || other.CompareTag("NPC"))
         {
-            //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
-            if (col.CompareTag("Treasure"))
-            {
-                dataList.Add("treasure");
-            }else if (col.CompareTag("NPC"))
-            {
-                dataList.Add("NPC");
-            }else if (col.CompareTag("Item"))
-            {
-                dataList.Add("NPC");
-            }
-        }
-
-        for (int i = 0; i < dataList.Count; i++)
-        {
-            GameObject item = Instantiate(listItemPrefab,content);
-            //tmp = item.GetComponentInChildren<Text>();
-            //tmp.text= dataList[i];
-            
-            
-        }
-    }
-    
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("NPC"))
-        {
-            ListUI.SetActive(true);
-            Text.text = "talk - F key";
-        }else if (other.CompareTag("Treasure"))
-        {
-            ListUI.SetActive(true);
-            Text.text = "open - F key";
+            scan(other);
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        //상호작용 중에는 NAV를 꺼둬서 이걸로 인식시킴
-        if (GetComponent<Move>().enabled == false)
-        {
-            
-            ListUI.SetActive(false);
-            
-        }
-        else
-        {
-            ListUI.SetActive(true);
-        }
-        
-    }
-    */
+     void scan(Collider other)
+     {
+         
+         for (int i = 0; i < content.transform.childCount; i++)
+         {
+             Debug.Log(content.transform.childCount +"삭제");
+             Destroy(content.GetChild(0).gameObject);
+             dataList.RemoveAt(0);
+         }
+         
+         //radius를 기준으로 구 안에 있는 콜라이덛를 검출함
+         colliders =
+             Physics.OverlapSphere(this.transform.position, radius);
+         
+         foreach (Collider col in colliders)
+         {
+             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
+             if (col.CompareTag("Treasure") || col.CompareTag("Item") || col.CompareTag("NPC"))
+             {
+                 dataList.Add(other.gameObject);
+             }
+             
+         }
 
-    private void OnTriggerExit(Collider other)
-    {
-        for (int i = 0; i < dataList.Count; i++)
-        {
-            Destroy(content.transform.GetChild(0).gameObject);
-        }
-        colliders =
-            Physics.OverlapSphere(this.transform.position, radius);
-        foreach (Collider col in colliders)
-        {
-            //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
-            if (col.CompareTag("Treasure"))
-            {
-                dataList.Add("treasure");
-            }else if (col.CompareTag("NPC"))
-            {
-                dataList.Add("NPC");
-            }else if (col.CompareTag("Item"))
-            {
-                dataList.Add("NPC");
-            }
-        }
+         for (int i = 0; i < dataList.Count; i++)
+         {
+             GameObject item = Instantiate(listItemPrefab, content);
+             TMP_Text Insert = item.GetComponentInChildren<TMP_Text>();
+             Insert.text = dataList[i].tag;
+         }
+     }
 
-        for (int i = 0; i < dataList.Count; i++)
-        {
-            
-            GameObject item = Instantiate(listItemPrefab,content);
-            item.GetComponentInChildren<Text>().text=dataList[i];
-            
-        }
-    }
-    
-    
+     void OnTriggerExit(Collider other)
+         {
+             if (other.CompareTag("Treasure") || other.CompareTag("Item") || other.CompareTag("NPC"))
+             {
+                 scan(other);
+             }
+             
+         }
 }
