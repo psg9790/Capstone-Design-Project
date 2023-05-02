@@ -45,7 +45,7 @@ namespace Monsters.Skill
                     break;
                 monster.rigid.velocity = Vector3.Lerp(monster.transform.forward * 20, Vector3.zero,
                     (hitBox.elapsed / hitBox.duration));
-                UnityEngine.Debug.Log((hitBox.duration - hitBox.elapsed) / hitBox.duration);
+                // UnityEngine.Debug.Log((hitBox.duration - hitBox.elapsed) / hitBox.duration);
                 // UnityEngine.Debug.Log(hitBox.duration.ToString() + hitBox.elapsed.ToString());
 
                 hitBox.transform.position = monster.transform.position;
