@@ -30,6 +30,7 @@ namespace Monsters.Skill
 
         void Skill01_Rush()
         {
+            monster.rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
             monster.rigid.velocity = monster.transform.forward * 20;
             HitBox hitBox =  Instantiate(skill01_Effect);
             hitBox.Particle_Play(heart);
@@ -56,6 +57,7 @@ namespace Monsters.Skill
         {
             if (skill01_coolDown <= 0)
             {
+                monster.rigid.constraints = RigidbodyConstraints.FreezeAll;
                 monster.animator.SetTrigger("Skill01");
                 skill01_coolDown = skill01_coolTime;
                 return;
