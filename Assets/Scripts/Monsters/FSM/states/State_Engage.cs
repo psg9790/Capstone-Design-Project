@@ -11,6 +11,8 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             // 가능한 공격 check -> whileAttack = true
+            monster.nav.enabled = false;
+            monster.rigid.isKinematic = false;
             monster.state = EMonsterState.Engage;
             monster.whileEngage = true;
             monster.DoPossibleEngage();
@@ -33,6 +35,8 @@ namespace Monsters.FSM
             base.Exit(monster);
             monster.skillset.Terminate();
             monster.whileEngage = false;
+            monster.rigid.isKinematic = true;
+            monster.nav.enabled = true;
             // Debug.Log("engage interrupt");
         }
     }
