@@ -29,8 +29,9 @@ public class HitBox : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             yield return null;
-            while (!pq.Empty() && (pq.Top().startTime >= elapsed))
+            while (!pq.Empty() && (pq.Top().startTime <= elapsed))
             {
+                Debug.Log("activate");
                 pq.Pop().Activate();
             }
         }

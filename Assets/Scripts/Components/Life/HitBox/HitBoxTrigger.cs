@@ -38,6 +38,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 
     private void Deactivate()
     {
+        Debug.Log("deactivate");
         gameObject.SetActive(false);
     }
 
@@ -98,6 +99,6 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         // id 멤버를 기준으로 크기를 비교
         if (startTime == other.startTime)
             return 0;
-        return startTime > other.startTime ? 1 : -1;
+        return startTime < other.startTime ? 1 : -1;
     }
 }

@@ -12,6 +12,7 @@ namespace Monsters.Skill
         private float skill01_range = 7f;
 
         public HitBox skill01_Effect;
+        public HitBox baseSkill_Effect;
         
         void Update()
         {
@@ -28,6 +29,12 @@ namespace Monsters.Skill
             }
         }
 
+        void BaseAttack()
+        {
+            HitBox hitBox =  Instantiate(baseSkill_Effect);
+            hitBox.Particle_Play(heart);
+        }
+        
         void Skill01_Rush()
         {
             monster.rigid.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
