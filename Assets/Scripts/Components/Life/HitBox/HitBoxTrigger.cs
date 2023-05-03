@@ -11,6 +11,9 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     public float startTime; // 인스펙터에서 수정
     public float duration; // 인스펙터에서 수정
     [HideInInspector] public int targetCount; // 판정 타겟 수=
+    public bool refreshAutomatically = false;
+    [ShowIf("refreshAutomatically", true)] public float refreshInterval = 0.25f;
+        
     [ShowInInspector][ReadOnly] private Damage damage; // 인스펙터에서 수정
 
     [BoxGroup("Skill")] [SerializeField] private float damageRatio = 1f; // 스킬 계수, 0.0 ~ 1.0
@@ -34,6 +37,10 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         elapsed = 0;
         damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
         gameObject.SetActive(true);
+        if (refreshAutomatically)
+        {
+            RefreshHashOnTime();
+        }
     }
 
     private void Deactivate()
@@ -51,7 +58,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // other.gameObject.layer는 레이어 인덱스 (ex. 7)
         // targetMask는 인덱스로 시프트까지 계산된 값 (ex. 128)
@@ -92,6 +99,20 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         elapsed = 0;
         duration = 999999999;
         gameObject.SetActive(true);
+    }
+
+    public void RefreshHashOnTime()
+    {
+        StartCoroutine(ClearHashOnSecondsCo(refreshInterval));
+    }
+    IEnumerator ClearHashOnSecondsCo(float phase)
+    {
+        while (elapsed <= duration)
+        {
+            yield return new WaitForSeconds(phase);
+            // Debug.Log("clear hash " + elapsed.ToString());
+            ClearHash();
+        }
     }
 
     public int CompareTo(HitBoxTrigger other)

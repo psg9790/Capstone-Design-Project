@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Bits: 2048
   elapsed: 0
   duration: 2.4
-  targetCount: 1
+  targetCount: 5
   parent_particle: {fileID: 1675697053587491722}
 --- !u!1 &1550128837826599952
 GameObject:
@@ -70,7 +70,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1553433061604859958
 Transform:
   m_ObjectHideFlags: 0
@@ -9838,8 +9838,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 0
-  duration: 2.4
+  duration: 2.1
   targetCount: 0
-  damageRatio: 1
+  refreshAutomatically: 1
+  refreshInterval: 0.25
+  damageRatio: 0.1
   ccType: 2
   ccPower: 3
