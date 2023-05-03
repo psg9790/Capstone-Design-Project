@@ -13,6 +13,7 @@ namespace CharacterController
         move,
         dash,
         attack,
+        skill,
     }
     public class StateMachine
     {

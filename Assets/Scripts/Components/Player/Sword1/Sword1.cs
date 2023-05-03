@@ -61,6 +61,8 @@ public class Sword1 : BaseWeapon
     }
     public override void Skill()
     {
+        HitBox hitBox = Instantiate(skill_effect);
+        hitBox.Particle_Play(Player.Instance.heart);
         // Player.Instance.effectGenerator.GetChild(seff).gameObject.SetActive(true);
         // Player.Instance.effectGenerator.GetChild(seff).gameObject.GetComponent<ParticleSystem>().Play();
         

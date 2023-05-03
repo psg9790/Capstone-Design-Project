@@ -74,10 +74,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine?.UpdateState();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            weaponManager.Weapon?.Skill();
-        }
+        
         
     }
 
@@ -94,6 +91,7 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.move, new MoveState(controller));
         stateMachine.AddState(StateName.dash, new DashState(controller));
         stateMachine.AddState(StateName.attack, new AttackState(controller));
+        stateMachine.AddState(StateName.skill, new SkillState(controller));
     }
     
     

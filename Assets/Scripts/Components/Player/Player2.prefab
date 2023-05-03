@@ -3160,7 +3160,7 @@ Transform:
   m_GameObject: {fileID: 5337324291364039534}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.868, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4461653071030296906}
@@ -3313,7 +3313,7 @@ MonoBehaviour:
   level: 0
   max_hp: 100
   cur_hp: 100
-  atk: 100
+  atk: 20
   def: 0
   movement_speed: 0
   atk_speed: 1

@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
             InputManager.Instance.AddPerformed(InputKey.RightClick, RighClickPerformed);
             // InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
+            InputManager.Instance.AddPerformed(InputKey.QClick, SkillClickPerformed);
         }
     
         player = GetComponent<Player>();
@@ -71,6 +72,14 @@ public class PlayerController : MonoBehaviour
         // }
         // player.attack();
     }
+
+    void SkillClickPerformed(InputAction.CallbackContext context)
+    {
+        player.stateMachine.ChangeState(StateName.skill);
+    }
+    
+    
+    
     // 마우스 우클릭 이동 
     void RighClickPerformed(InputAction.CallbackContext context)
     {

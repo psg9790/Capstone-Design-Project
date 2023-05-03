@@ -43,6 +43,7 @@ public class WeaponManager
          Object.Destroy(weaponObject);
       }
 
+      Weapon = null;
       Player.Instance.animator.runtimeAnimatorController = Player.Instance.BaseAnimator;
    }
 
