@@ -325,7 +325,6 @@ namespace Monsters
 
     public enum EMonsterType
     {
-        General_Melee,
-        General_Ranged
+        Skeleton_Warrior
     }
 }

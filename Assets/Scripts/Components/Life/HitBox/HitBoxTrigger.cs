@@ -10,6 +10,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     private LayerMask targetMask; // init
     public float startTime; // 인스펙터에서 수정
     public float duration; // 인스펙터에서 수정
+    [HideInInspector] public int targetCount; // 판정 타겟 수=
     [ShowInInspector][ReadOnly] private Damage damage; // 인스펙터에서 수정
 
     [BoxGroup("Skill")] [SerializeField] private float damageRatio = 1f; // 스킬 계수, 0.0 ~ 1.0
@@ -20,10 +21,11 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     private HashSet<string> hitHash = new HashSet<string>();
     private ParticleSystem particle;
 
-    public void Init(Heart heart, LayerMask targetMask)
+    public void Init(Heart heart, LayerMask targetMask, int targetCount)
     {
         this.heart = heart;
         this.targetMask = targetMask;
+        this.targetCount = targetCount;
     }
 
     public void Activate()
@@ -36,6 +38,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 
     private void Deactivate()
     {
+        Debug.Log("deactivate");
         gameObject.SetActive(false);
     }
 
@@ -63,7 +66,11 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     Vector3 dir = other.transform.position - transform.position;
                     dir.y = 0;
                     _heart.Take_Damage(damage, dir.normalized);
-                    // Debug.Log("hitttttt");
+                    
+                    if (hitHash.Count >= targetCount)
+                    {
+                        Deactivate();
+                    }
                 }
                 else
                 {
@@ -92,6 +99,6 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         // id 멤버를 기준으로 크기를 비교
         if (startTime == other.startTime)
             return 0;
-        return startTime > other.startTime ? 1 : -1;
+        return startTime < other.startTime ? 1 : -1;
     }
 }

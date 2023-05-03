@@ -12,9 +12,10 @@ using Object = System.Object;
 
 public class HitBox : MonoBehaviour
 {
-    // private Heart heart;
     public LayerMask targetMask; // 타깃 레이어. 이 레이어로 설정한 오브젝트만 충돌 판정한다
-    public float duration;
+    [ReadOnly] public float elapsed = 0; // 경과 시간
+    public float duration; // 총 플레이 시간
+    public int targetCount = 5; // 최대 때릴 수 있는 마릿수
     public ParticleSystem parent_particle; // 발동할 파티클 시스템을 인스펙터에서 끌어놓을 것
     private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>();
     private HitBoxTrigger[] hitBoxTriggers;
@@ -24,11 +25,13 @@ public class HitBox : MonoBehaviour
 
     IEnumerator ParticlePlayIE()
     {
-        while (parent_particle.time < parent_particle.main.duration) // 시간이 설정한 시간만큼 play되도록 유도
+        while (elapsed < duration) // 시간이 설정한 시간만큼 play되도록 유도
         {
+            elapsed += Time.deltaTime;
             yield return null;
-            while (!pq.Empty() && (pq.Top().startTime >= parent_particle.time))
+            while (!pq.Empty() && (pq.Top().startTime <= elapsed))
             {
+                Debug.Log("activate");
                 pq.Pop().Activate();
             }
         }
@@ -57,7 +60,7 @@ public class HitBox : MonoBehaviour
         for (int i = 0; i < hitBoxTriggers.Length; i++)
         {
             hitBoxTriggers[i].gameObject.SetActive(false);
-            hitBoxTriggers[i].Init(heart, targetMask);
+            hitBoxTriggers[i].Init(heart, targetMask, targetCount);
             hitBoxTriggers[i].startTime /= heart.ATK_SPEED;
             hitBoxTriggers[i].duration /= heart.ATK_SPEED;
 
