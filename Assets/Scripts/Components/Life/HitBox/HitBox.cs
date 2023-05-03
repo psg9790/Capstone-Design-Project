@@ -31,7 +31,7 @@ public class HitBox : MonoBehaviour
             yield return null;
             while (!pq.Empty() && (pq.Top().startTime <= elapsed))
             {
-                Debug.Log("activate");
+                // Debug.Log("activate");
                 pq.Pop().Activate();
             }
         }

@@ -38,7 +38,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 
     private void Deactivate()
     {
-        Debug.Log("deactivate");
+        // Debug.Log("deactivate");
         gameObject.SetActive(false);
     }
 
