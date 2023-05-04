@@ -22,10 +22,12 @@ public class overlapSphere : MonoBehaviour
     {
         //데이터 초기화하여 List<gameobject> 싹 비운 후 overlapsphere로 리스트 추가
         
+        
         //radius를 기준으로 구 안에 있는 콜라이덛를 검출함
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         int count = 0;
         dataList.Clear();
+        
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
