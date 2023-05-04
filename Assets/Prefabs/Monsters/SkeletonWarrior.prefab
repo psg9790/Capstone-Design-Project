@@ -431,6 +431,7 @@ MonoBehaviour:
   hpbar: {fileID: 0}
   upper_pos: {fileID: 1646481376034078110}
   useDamageFont: 1
+  damageFont_randomRange: {x: -50, y: 50, z: 100}
 --- !u!114 &489164932030698348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1386,7 +1387,9 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  elapsed: 0
   duration: 0
+  targetCount: 5
   parent_particle: {fileID: 0}
 --- !u!1 &2991821679112777340
 GameObject:

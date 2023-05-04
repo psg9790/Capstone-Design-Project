@@ -15,7 +15,7 @@ public class Heart : MonoBehaviour
     [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnHit; // 색상 전환용 이벤트 // <duration>
     [FoldoutGroup("Events")] public UnityEvent OnStiff; // cc기를 이벤트로 처리해서 상태 전이 // <duration>
     [FoldoutGroup("Events")] public UnityEvent OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
-    [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnKnockBack;
+    [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnKnockBack; // 넉백 시 발생할 이벤트
 
     [FoldoutGroup("Attributes")]
     [InfoBox("이 변수들을 플레이 중 직접 수정하면 다른 오브젝트 작동 시 (장비 장착/해제 등) 오류가 발생할 수도 있습니다.")]
@@ -73,24 +73,25 @@ public class Heart : MonoBehaviour
     public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
     [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
     [Required] public Transform upper_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
-    public bool useDamageFont = true;
+    public bool useDamageFont = true; // 데미지 폰트 사용여부 (인스펙터에서 수정)
+    [ShowIf("useDamageFont", true)] public Vector3 damageFont_randomRange = new Vector3(-50, 50, 100); // -x, +x, +y
 
     private void Awake()
     {
         if (HPbarManager.Instance == null)
         {
-            GameObject cvs = new GameObject("HpbarManager + canvas");
+            GameObject cvs = new GameObject("HpbarManager + canvas"); // Hpbar 매니저가 없으면 생성함
             cvs.AddComponent<HPbarManager>().Init();
         }
         if (DamageFontManager.Instance == null) // 데미지 폰트 띄우는 매니저 생성
         {
-            GameObject dmg = new GameObject("DamageFontManager + canvas");
+            GameObject dmg = new GameObject("DamageFontManager + canvas"); // DamageFont 매니저가 없으면 생성함
             dmg.AddComponent<DamageFontManager>().Init();
         }
         if (useMonsterHpBar) // 일반 몬스터인 경우 hpbar UI 생성, 생성과 함께 pool이 존재하지 않으면 생성해서 소속됨
         {
             // hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
-            hpbar = Instantiate(HPbarManager.Instance.hpbar).GetComponent<HPbar_custom>();
+            hpbar = Instantiate(HPbarManager.Instance.hpbar).GetComponent<HPbar_custom>(); // 이 객체가 HPbar를 사용하면 오브젝트를 생성
             hpbar.Activate(this);
         }
     }
@@ -124,13 +125,13 @@ public class Heart : MonoBehaviour
 
     [FoldoutGroup("Functions")]
     [Button]
-    public void ForceDead()
+    public void ForceDead() // 강제 kill
     {
         cur_hp = 0;
         OnDeath.Invoke();
     }
 
-    public Damage Generate_Damage(float dmgRate, CC_type cc, float power)
+    public Damage Generate_Damage(float dmgRate, CC_type cc, float power) // 외부에서 이 heart 기반으로 데미지 추출할 때 사용
     {
         float rand = Random.Range(0f, 100f);
         bool isCrit = (rand < CRITICAL_RATE) ? true : false;
@@ -147,14 +148,17 @@ public class Heart : MonoBehaviour
     
     [FoldoutGroup("Functions")]
     [Button]
-    public void Take_Damage(Damage dmg, Vector3 dir)
+    public void Take_Damage(Damage dmg, Vector3 dir) // 데미지 피해 입음
     {
         // 내부 처리
-        cur_hp -= dmg.damage;
+        float ins = dmg.damage;
+        ins = (int)(ins * Random.Range(0.75f, 1f));
+        
+        cur_hp -= ins;
         OnHit.Invoke(0.5f, -dir);
         if (useDamageFont)
         {
-            DamageFontManager.Instance.GenerateDamageFont(upper_pos.position, dmg);
+            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, ins, dmg.isCritical, damageFont_randomRange);
         }
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
@@ -175,6 +179,7 @@ public class Heart : MonoBehaviour
             OnDeath.Invoke();
         }
     }
+
 
     [FoldoutGroup("Functions")]
     [Button]

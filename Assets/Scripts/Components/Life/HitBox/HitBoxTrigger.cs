@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 {
@@ -11,29 +13,29 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     public float startTime; // 인스펙터에서 수정
     public float duration; // 인스펙터에서 수정
     [HideInInspector] public int targetCount; // 판정 타겟 수=
-    public bool refreshAutomatically = false;
-    [ShowIf("refreshAutomatically", true)] public float refreshInterval = 0.25f;
+    public bool refreshAutomatically = false; // 이 트리거를 반복 재생 할 것인가? (공격판정을 주기적으로 초기화 할 것인가?)
+    [ShowIf("refreshAutomatically", true)] public float refreshInterval = 0.25f; // 반복재생할 시간 간격
         
     [ShowInInspector][ReadOnly] private Damage damage; // 인스펙터에서 수정
 
     [BoxGroup("Skill")] [SerializeField] private float damageRatio = 1f; // 스킬 계수, 0.0 ~ 1.0
-    [BoxGroup("Skill")] [SerializeField] private CC_type ccType;
+    [BoxGroup("Skill")] [SerializeField] private CC_type ccType; // cc기
     [BoxGroup("Skill")] [SerializeField] private float ccPower; // 1 ~
 
-    private float elapsed = 0;
-    private HashSet<string> hitHash = new HashSet<string>();
-    private ParticleSystem particle;
+    private float elapsed = 0; // 실행 시간 카운트용
+    private HashSet<string> hitHash = new HashSet<string>(); // 타격 대상 중복타격 방지 위해 set 사용
+    // private ParticleSystem particle;
 
-    public void Init(Heart heart, LayerMask targetMask, int targetCount)
+    public void Init(Heart heart, LayerMask targetMask, int targetCount) // 초기 설정
     {
         this.heart = heart;
         this.targetMask = targetMask;
         this.targetCount = targetCount;
     }
 
-    public void Activate()
+    public void Activate() // 실행
     {
-        ClearHash();
+        // ClearHash();
         elapsed = 0;
         damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
         gameObject.SetActive(true);
@@ -41,22 +43,24 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         {
             RefreshHashOnTime();
         }
+
+        DOVirtual.DelayedCall(duration, () => Deactivate());
     }
 
-    private void Deactivate()
+    private void Deactivate() // 특정 조건 채울 시 (타겟 최대 수 초과, 실행 시간 종료 등) 판정 강제 종료
     {
         // Debug.Log("deactivate");
         gameObject.SetActive(false);
     }
-
-    private void Update()
-    {
-        elapsed += Time.deltaTime;
-        if (elapsed >= duration)
-        {
-            Deactivate();
-        }
-    }
+    //
+    // private void Update()
+    // {
+    //     elapsed += Time.deltaTime;
+    //     if (elapsed >= duration)
+    //     {
+    //         Deactivate();
+    //     }
+    // }
 
     private void OnTriggerStay(Collider other)
     {

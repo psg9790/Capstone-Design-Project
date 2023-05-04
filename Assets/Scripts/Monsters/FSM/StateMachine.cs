@@ -14,6 +14,8 @@
         {
             if (!ReferenceEquals(curstate, null))
             {
+                if (CheckCurState(EMonsterState.Dead))
+                    return;
                 curstate.Exit(monster); // 현재 상태가 존재하면 상태를 종료하는 메서드를 호출해줌
             }
 
