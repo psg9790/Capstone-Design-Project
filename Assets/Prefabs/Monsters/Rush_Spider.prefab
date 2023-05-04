@@ -1206,7 +1206,7 @@ MonoBehaviour:
       - m_Target: {fileID: 8047242669727763448}
         m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
         m_MethodName: OnStiff_Event
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1257,7 +1257,7 @@ MonoBehaviour:
   criticalDamage: 2
   immune: 0
   cc_stiff_immune: 1
-  cc_knockback_immune: 0
+  cc_knockback_immune: 1
   useMonsterHpBar: 1
   hpbar: {fileID: 0}
   upper_pos: {fileID: 6456757991986609491}
@@ -1373,7 +1373,7 @@ NavMeshAgent:
   m_Speed: 4
   m_Acceleration: 999
   avoidancePriority: 50
-  m_AngularSpeed: 0
+  m_AngularSpeed: 999
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

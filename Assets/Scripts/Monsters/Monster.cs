@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -116,7 +117,7 @@ namespace Monsters
             if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
             {
                 nav = agent;
-                nav.updateRotation = false;
+                // nav.updateRotation = false;
             }
             else
             {
@@ -177,7 +178,7 @@ namespace Monsters
             fsm.Execute();
 
             // nav용 rotation
-            NavRotation();
+            // NavRotation();
 
             // 시야에 플레이어가 있는지 갱신
             fov.FindVisiblePlayer();
@@ -284,12 +285,15 @@ namespace Monsters
             }
 
             // fsm.ChangeState(EMonsterState.Idle);
-            transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            // transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            // transform.DOLookAt(dir, 0.3f);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
-        public void OnStiff_Event() // 경직 시
+        public void OnStiff_Event(Vector3 dir) // 경직 시
         {
+            transform.DOLookAt(dir, 0.3f);
+            // Debug.DrawRay(transform.position + Vector3.up, dir, Color.red, 1f);
             fsm.ChangeState(EMonsterState.Stiff);
         }
 
@@ -299,6 +303,7 @@ namespace Monsters
         {
             knockback_power = power;
             knockback_dir = dir;
+            transform.DOLookAt(dir, 0.3f);
             fsm.ChangeState(EMonsterState.KnockBack);
         }
 
@@ -326,6 +331,7 @@ namespace Monsters
     public enum EMonsterType
     {
         Skeleton_Warrior,
-        Rush_Spider
+        Rush_Spider,
+        Boss1_Nightmare
     }
 }
