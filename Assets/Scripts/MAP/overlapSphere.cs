@@ -8,38 +8,57 @@ using UnityEngine;
 public class overlapSphere : MonoBehaviour
 {
     public float radius = 2.0f;
-    public Collider[] colliders;
-    
-    public List<GameObject> dataList = new List <GameObject>();
-    public RectTransform content;
-    public GameObject ListItemPrefab;
 
+    public List<GameObject> dataList = new List<GameObject>();
+    public RectTransform content;
+    private GameObject Incontents;
+    private GameObject ClearContents;
+    private int MAX = 50;
     private void Start()
     {
-        InitData();
     }
 
     private void Update()
     {
         //데이터 초기화하여 List<gameobject> 싹 비운 후 overlapsphere로 리스트 추가
-        InitData();
         
         //radius를 기준으로 구 안에 있는 콜라이덛를 검출함
-        colliders =
-            Physics.OverlapSphere(transform.position, radius);
-        
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        int count = 0;
+        dataList.Clear();
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
             if (col.CompareTag("Treasure") || col.CompareTag("Item") || col.CompareTag("NPC"))
             {
-                Debug.Log(col.gameObject.name+"추가");
+                Debug.Log(col.gameObject.name + "추가");
                 dataList.Add(col.gameObject);
+                
+                Incontents = content.GetChild(count).gameObject;
+                Incontents.SetActive(true);
+                Incontents.GetComponentInChildren<TMP_Text>().text = dataList[count].name;
+                count++;
+                
             }
         }
+        ClearContent(count);
 
     }
 
+    void ClearContent(int count)
+    {
+        for(int i= count;i<10;i++)
+        {
+            if (content.GetChild(i).gameObject.activeSelf)
+            {
+                content.GetChild(i).gameObject.SetActive(false);
+                break;
+            }
+        }
+    }
+}
+
+/*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Treasure") || other.CompareTag("Item") || other.CompareTag("NPC"))
@@ -81,9 +100,10 @@ public class overlapSphere : MonoBehaviour
             /*
             Item.GetComponentInChildren<TMP_Text>().text = dataList[i].name;
             UnityEngine.Debug.Log("생성된 목록: " + Item.name);
-            */
             
-    }
+            
+    } */
+    /*
     //목록에 데이터 추가
     void AddData()
     {
@@ -126,5 +146,6 @@ public class overlapSphere : MonoBehaviour
             Destroy(content.GetChild(0).gameObject);
         }
     }
+    */
     
-}
+
