@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using Unity.Collections;
 using Unity.Mathematics;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 public class CameraController : MonoBehaviour
 {
@@ -19,7 +22,7 @@ public class CameraController : MonoBehaviour
     {
         player = _player;
         transform.position = player.transform.position + offset;
-        transform.rotation = Quaternion.LookRotation(player.transform.position
+        transform.rotation = Quaternion.LookRotation((player.transform.position + Vector3.up)
                                                      - transform.position);
         attached = true;
     }
@@ -27,7 +30,7 @@ public class CameraController : MonoBehaviour
     public void AfterAttach()
     {
         transform.position = player.transform.position + offset;
-        transform.rotation = Quaternion.LookRotation(player.transform.position
+        transform.rotation = Quaternion.LookRotation((player.transform.position + Vector3.up)
                                                      - transform.position);
         attached = true;
     }
