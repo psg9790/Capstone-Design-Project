@@ -38,6 +38,7 @@ public class ItemGenerator : MonoBehaviour
     private DroppedItem InstantiateItem(Transform tf)
     {
         GameObject itemgo = Instantiate(droppedItemPrefab); // 프리팹 생성
+        itemgo.layer = LayerMask.NameToLayer("ITEM");
         itemgo.transform.position = tf.position; // 몬스터가 죽은 위치 or 상자 깐 위치에서 생성
         itemgo.transform.rotation = UnityEngine.Random.rotation; // 랜덤 회전값
         DroppedItem drop = itemgo.AddComponent<DroppedItem>(); // 떨어진 아이템 스크립트

@@ -97,7 +97,7 @@ namespace CharacterController
         }
         public override void OnEnterState()
         {
-            UnityEngine.Debug.Log("Idle enter");
+            // UnityEngine.Debug.Log("Idle enter");
         }
 
         public override void OnUpdateState()

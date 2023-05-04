@@ -31,9 +31,9 @@ public class Player : MonoBehaviour
     // Dash
     [Header("dash")]
     [SerializeField]
-    public float dashPower = 10f; // 대쉬 거리
+    public float dashDistance = 10f; // 대쉬 거리
     [SerializeField]
-    public float dashTetanyTime = 0.5f; // 대쉬 시간
+    public float dashDuration = 0.5f; // 대쉬 시간
     [SerializeField]
     public float dashCooltime = 1f; // 대쉬 쿨다운
 

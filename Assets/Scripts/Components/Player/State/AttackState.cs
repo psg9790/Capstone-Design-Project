@@ -13,7 +13,7 @@ namespace CharacterController
         }
         public override void OnEnterState()
         {
-            UnityEngine.Debug.Log("Attack enter");
+            // UnityEngine.Debug.Log("Attack enter");
             Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking = default;
@@ -53,7 +53,6 @@ namespace CharacterController
         public override void OnExitState()
         {
             Player.Instance.animator.ResetTrigger("attack");
-            
         }
         protected void LookAt(Vector3 direction)
         {

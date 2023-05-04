@@ -14,7 +14,7 @@ namespace CharacterController
         }
         public override void OnEnterState()
         {
-            UnityEngine.Debug.Log("Skill enter");
+            // UnityEngine.Debug.Log("Skill enter");
             Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking = default;

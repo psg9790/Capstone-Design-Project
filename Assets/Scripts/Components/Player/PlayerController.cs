@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using CharacterController;
-
+using Unity.VisualScripting;
 
 
 public class PlayerController : MonoBehaviour
 {
     public Player player { get; private set; }
-    
+    [Header("Item search radius")]
+    public float radius = 1f;
     
     public Camera cam;
     // private bool rightClickHold = false;
@@ -21,13 +22,8 @@ public class PlayerController : MonoBehaviour
     private Coroutine dashCoolTimeCoroutine;
     
     
-    [Header("dash")]
-    [SerializeField]
-    public float dashDistance = 10f; // 대쉬 거리
-    [SerializeField]
-    public float dashDuration = 0.5f; // 대쉬 시간
-    [SerializeField]
-    public float dashCooldown = 1f; // 대쉬 쿨다운
+    
+    // public float dashCooldown = Player.Instance.dashCooltime; // 대쉬 쿨다운
 
     public bool isDashing = false;
     private bool isDashCollTime = false;
@@ -51,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
+        searchItem();
     }
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
@@ -123,7 +119,7 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime >= dashCooldown)
+            if (currentTime >= Player.Instance.dashCooltime)
             {
                 break;
             }
@@ -144,6 +140,18 @@ public class PlayerController : MonoBehaviour
             Player.Instance.stateMachine.ChangeState(StateName.Idle);
         }
     }
-    
+
+    public void searchItem()
+    {
+        Collider[] colls = Physics.OverlapSphere(player.transform.position, radius,1 << LayerMask.NameToLayer("ITEM"));
+        
+        foreach (Collider coll in colls)
+        {
+            Item drop = coll.gameObject.GetComponent<DroppedItem>().item;
+            Debug.Log(drop.itemData.itemName);
+            // InventoryManager.Instance.addItem(drop);
+            // Destroy(coll.gameObject);
+        }
+    }
 
 }
