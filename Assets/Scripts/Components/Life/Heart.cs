@@ -150,6 +150,8 @@ public class Heart : MonoBehaviour
     [Button]
     public void Take_Damage(Damage dmg, Vector3 dir) // 데미지 피해 입음
     {
+        if (immune)
+            return;
         // 내부 처리
         float ins = dmg.damage;
         ins = (int)(ins * Random.Range(0.75f, 1f));
@@ -181,16 +183,16 @@ public class Heart : MonoBehaviour
     }
 
 
-    [FoldoutGroup("Functions")]
-    [Button]
-    public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
-    {
-        // 초 처리 
-
-        if (cur_hp <= 0)
-        {
-            Debug.Log("dead");
-            OnDeath.Invoke();
-        }
-    }
+    // [FoldoutGroup("Functions")]
+    // [Button]
+    // public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
+    // {
+    //     // 초 처리 
+    //
+    //     if (cur_hp <= 0)
+    //     {
+    //         Debug.Log("dead");
+    //         OnDeath.Invoke();
+    //     }
+    // }
 }
