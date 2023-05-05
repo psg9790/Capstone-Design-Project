@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 
 public class Item
@@ -7,6 +9,8 @@ public class Item
     public ItemData itemData;
     public ulong id;
     public short tier;
+    public string itemName;
+    [ColorPalette] public Color itemColor;
     
     public Item()
     {
