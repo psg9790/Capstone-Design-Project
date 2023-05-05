@@ -78,4 +78,5 @@ public class TreasureBox : MonoBehaviour
         vec3 += new Vector3(0.0f, 0.0f, 0.0f);
         itemGo.transform.position = vec3;
     }
+    
 }
