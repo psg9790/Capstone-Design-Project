@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 
@@ -16,8 +17,9 @@ namespace Monsters.FSM
             monster.state = EMonsterState.Engage;
             monster.whileEngage = true;
             monster.DoPossibleEngage();
-            monster.transform.rotation =
-                Quaternion.LookRotation(monster.player.transform.position - monster.transform.position, Vector3.up);
+            // monster.transform.rotation =
+            //     Quaternion.LookRotation(monster.player.transform.position - monster.transform.position, Vector3.up);
+            monster.transform.DOLookAt(monster.player.transform.position, 0.3f);
         }
 
         public override void Execute(Monster monster)

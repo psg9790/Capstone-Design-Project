@@ -13,7 +13,7 @@ using Random = UnityEngine.Random;
 public class Heart : MonoBehaviour
 {
     [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnHit; // 색상 전환용 이벤트 // <duration>
-    [FoldoutGroup("Events")] public UnityEvent OnStiff; // cc기를 이벤트로 처리해서 상태 전이 // <duration>
+    [FoldoutGroup("Events")] public UnityEvent<Vector3> OnStiff; // cc기를 이벤트로 처리해서 상태 전이 // <duration>
     [FoldoutGroup("Events")] public UnityEvent OnDeath; // 죽을 때 실행될 이벤트, 각 객체에서 알맞는 죽는 처리를 listener에 추가할 것
     [FoldoutGroup("Events")] public UnityEvent<float, Vector3> OnKnockBack; // 넉백 시 발생할 이벤트
 
@@ -150,6 +150,8 @@ public class Heart : MonoBehaviour
     [Button]
     public void Take_Damage(Damage dmg, Vector3 dir) // 데미지 피해 입음
     {
+        if (immune)
+            return;
         // 내부 처리
         float ins = dmg.damage;
         ins = (int)(ins * Random.Range(0.75f, 1f));
@@ -164,13 +166,13 @@ public class Heart : MonoBehaviour
         if (!cc_stiff_immune && // 경직 저항있으면 무시
             dmg.ccType == CC_type.Stiff)
         {
-            OnStiff.Invoke();
+            OnStiff.Invoke(-dir);
         }
 
         if (!cc_knockback_immune && // 넉백 저항있으면 무시
             dmg.ccType == CC_type.Knockback)
         {
-            OnKnockBack.Invoke(dmg.ccPower, dir);
+            OnKnockBack.Invoke(dmg.ccPower, -dir);
         }
 
         if (cur_hp <= 0)
@@ -181,16 +183,16 @@ public class Heart : MonoBehaviour
     }
 
 
-    [FoldoutGroup("Functions")]
-    [Button]
-    public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
-    {
-        // 초 처리 
-
-        if (cur_hp <= 0)
-        {
-            Debug.Log("dead");
-            OnDeath.Invoke();
-        }
-    }
+    // [FoldoutGroup("Functions")]
+    // [Button]
+    // public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
+    // {
+    //     // 초 처리 
+    //
+    //     if (cur_hp <= 0)
+    //     {
+    //         Debug.Log("dead");
+    //         OnDeath.Invoke();
+    //     }
+    // }
 }
