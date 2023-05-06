@@ -15,23 +15,23 @@ using Object = System.Object;
 
 public class HitBox : MonoBehaviour
 {
-    public LayerMask targetMask; // 타깃 레이어. 이 레이어로 설정한 오브젝트만 충돌 판정한다
-    [HideInInspector] public LayerMask heartLayer;
+    public LayerMask targetMask; // 타깃 레이어. 이 레이어로 설정한 오브젝트에 데미지 처리
+    [HideInInspector] public LayerMask heartLayer; // 발사한 오브젝트의 layer (이 layer에는 충돌 안하게 설정하기 위함)
     [ReadOnly] public float elapsed = 0; // 경과 시간
     public float duration; // 총 플레이 시간
     public int targetCount = 5; // 최대 때릴 수 있는 마릿수
     public ParticleSystem parent_particle; // 발동할 파티클 시스템을 인스펙터에서 끌어놓을 것
-    private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>();
-    private HitBoxTrigger[] hitBoxTriggers;
+    private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>(); // trigger들을 실행 시작 순서대로 정렬할 우선순위큐
+    private HitBoxTrigger[] hitBoxTriggers; // 오브젝트 하위에 있는 HitBoxTrigger들
 
-    public bool isBullet = false;
-    [ShowIf("isBullet")] public float bulletSpeed = 20f;
-    [InfoBox("방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
+    public bool isBullet = false; // 이 판정이 bullet 입니까?
+    [InfoBox("bullet 타입에서는 하나의 HitBoxTrigger만 사용 가능")] [ShowIf("isBullet")] public float bulletSpeed = 20f; // bullet 속도
+    [InfoBox("bulletDirection: 방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
              "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")] 
     [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
-    [ShowIf("isBullet")] public ParticleSystem bulletHitEffect;
-    [ShowIf("isBullet")] public bool isHoming = false;
-    [ShowIf("isHoming")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f;
+    [ShowIf("isBullet")] public ParticleSystem bulletHitEffect; // bullet 타격시 생성될 이펙트
+    [ShowIf("isBullet")] public bool isHoming = false; // 자동 추적
+    [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")] [ShowIf("isHoming")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f; // 자동 추적 성능
 
     private static float MyCustomDrawerStatic(float value, GUIContent label)
     {
@@ -59,6 +59,7 @@ public class HitBox : MonoBehaviour
 
     IEnumerator BulletPlayIE()
     {
+        pq.Pop().Activate();
         while (elapsed < duration) // 시간이 설정한 시간만큼 play되도록 유도
         {
             elapsed += Time.deltaTime;
@@ -73,10 +74,6 @@ public class HitBox : MonoBehaviour
             }
             transform.position = transform.position + transform.forward * bulletSpeed * Time.deltaTime;
             yield return null;
-            while (!pq.Empty() && (pq.Top().startTime <= elapsed))
-            {
-                pq.Pop().Activate();
-            }
         }
         
         // 설정한 시간을 모두 완수하면 삭제
@@ -103,12 +100,17 @@ public class HitBox : MonoBehaviour
         
         transform.position = heart.gameObject.transform.position; // 가장 부모의 위치와 방향만 잡아주면 자식들은 따라감
         transform.rotation = Quaternion.LookRotation(heart.gameObject.transform.forward);
-        if (isBullet)
+        if (isBullet) // bullet 분기
         {
             if (bulletDirection != Vector3.zero)
             {
                 transform.rotation = Quaternion.LookRotation(bulletDirection);
             }
+            pq.Push(GetComponentInChildren<HitBoxTrigger>());
+            pq.Top().Init(heart, targetMask, targetCount, this);
+            parent_particle.Play();
+            bulletPlayCoroutine = StartCoroutine(BulletPlayIE());
+            return;
         }
 
         if (heart.ATK_SPEED < 0.9999 || heart.ATK_SPEED > 1.0001) // 배속설정 되어있으면 적용
@@ -137,9 +139,6 @@ public class HitBox : MonoBehaviour
         }
 
         parent_particle.Play();
-        if (isBullet)
-            bulletPlayCoroutine = StartCoroutine(BulletPlayIE());
-        else
-            particlePlayCoroutine = StartCoroutine(ParticlePlayIE());
+        particlePlayCoroutine = StartCoroutine(ParticlePlayIE());
     }
 }
