@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194591403143482607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,12 +175,13 @@ MonoBehaviour:
   targetCount: 5
   parent_particle: {fileID: 9194591404155589448}
   isBullet: 1
-  bulletSpeed: 10
+  bulletSpeed: 40
+  bulletSpawnPoint: {x: 0, y: 0, z: 0}
   bulletDirection: {x: 0, y: 0, z: 0}
   bulletHitEffect: {fileID: 198340312939041550, guid: 9430c1d3f6d0ec04aa0a984219f3ef8d,
     type: 3}
   isHoming: 1
-  homingPerformance: 0.1
+  homingPerformance: 0.6
 --- !u!1 &9194591404155589451
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9194591404155589451}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

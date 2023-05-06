@@ -26,8 +26,10 @@ public class HitBox : MonoBehaviour
 
     public bool isBullet = false; // 이 판정이 bullet 입니까?
     [InfoBox("bullet 타입에서는 하나의 HitBoxTrigger만 사용 가능")] [ShowIf("isBullet")] public float bulletSpeed = 20f; // bullet 속도
+
     [InfoBox("bulletDirection: 방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
-             "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")] 
+             "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")]
+    [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletSpawnPoint = Vector3.zero;
     [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
     [ShowIf("isBullet")] public ParticleSystem bulletHitEffect; // bullet 타격시 생성될 이펙트
     [ShowIf("isBullet")] public bool isHoming = false; // 자동 추적
@@ -80,7 +82,7 @@ public class HitBox : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void BulletHit_Play(Vector3 hitPoint, Vector3 dir)
+    public void BulletHit_Play(Vector3 hitPoint, Vector3 dir) // bullet 충돌시 실행, 쓰지 마세요
     {
         StopCoroutine(bulletPlayCoroutine);
         // hit 이펙트 생성
@@ -94,24 +96,22 @@ public class HitBox : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void Particle_Play(Heart heart) // 파티클 재생
+    public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 rot) // bullet 판정 재생
+    {
+        heartLayer = heart.gameObject.layer;
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(bulletDirection);
+        pq.Push(GetComponentInChildren<HitBoxTrigger>());
+        pq.Top().Init(heart, targetMask, targetCount, this);
+        parent_particle.Play();
+        bulletPlayCoroutine = StartCoroutine(BulletPlayIE());
+    }
+    public void Particle_Play(Heart heart) // 일반 판정 재생
     {
         heartLayer = heart.gameObject.layer;
         
         transform.position = heart.gameObject.transform.position; // 가장 부모의 위치와 방향만 잡아주면 자식들은 따라감
         transform.rotation = Quaternion.LookRotation(heart.gameObject.transform.forward);
-        if (isBullet) // bullet 분기
-        {
-            if (bulletDirection != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(bulletDirection);
-            }
-            pq.Push(GetComponentInChildren<HitBoxTrigger>());
-            pq.Top().Init(heart, targetMask, targetCount, this);
-            parent_particle.Play();
-            bulletPlayCoroutine = StartCoroutine(BulletPlayIE());
-            return;
-        }
 
         if (heart.ATK_SPEED < 0.9999 || heart.ATK_SPEED > 1.0001) // 배속설정 되어있으면 적용
         {
