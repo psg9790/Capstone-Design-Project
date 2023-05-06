@@ -128,6 +128,10 @@ MonoBehaviour:
   duration: 1
   targetCount: 5
   parent_particle: {fileID: 5068548187404442213}
+  isBullet: 0
+  bulletSpeed: 10
+  bulletDirection: {x: 0, y: 0, z: 0}
+  isHoming: 0
 --- !u!1001 &4942425433859133739
 PrefabInstance:
   m_ObjectHideFlags: 0

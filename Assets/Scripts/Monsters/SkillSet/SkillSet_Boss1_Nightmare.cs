@@ -60,7 +60,7 @@ namespace Monsters.Skill
             // monster.rigid.velocity = monster.transform.forward * 20;
             while (hitBox != null)
             {
-                int mask = ~ LayerMask.GetMask("Monster");
+                int mask = ~ (LayerMask.GetMask("Monster") | LayerMask.GetMask("Player"));
                 if (!Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward * 2f, 1f, mask))
                 {
                     transform.position = transform.position
@@ -95,7 +95,7 @@ namespace Monsters.Skill
 
         public override void DoPossibleEngage()
         {
-            if (monster.playerDist >= 6)
+            if (monster.playerDist >= 8)
             {
                 if (hornAttack_cooldown <= 0)
                 {

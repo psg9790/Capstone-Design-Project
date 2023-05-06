@@ -53,6 +53,10 @@ MonoBehaviour:
   duration: 1
   targetCount: 5
   parent_particle: {fileID: 1675697053587491722}
+  isBullet: 0
+  bulletSpeed: 22
+  bulletDirection: {x: 0, y: 0, z: 0}
+  isHoming: 0
 --- !u!1 &1550128837826599952
 GameObject:
   m_ObjectHideFlags: 0
