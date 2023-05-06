@@ -64,7 +64,7 @@ namespace Monsters.Skill
                 if (!Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward * 2f, 1f, mask))
                 {
                     transform.position = transform.position
-                                         + Vector3.Lerp(transform.forward * 40, Vector3.zero,
+                                         + Vector3.Lerp(transform.forward * 35, Vector3.zero,
                                              (hitBox.elapsed / hitBox.duration)) * Time.deltaTime;
                 }
 
@@ -95,7 +95,7 @@ namespace Monsters.Skill
 
         public override void DoPossibleEngage()
         {
-            // if (monster.playerDist >= 9)
+            if (monster.playerDist >= 6)
             {
                 if (hornAttack_cooldown <= 0)
                 {
