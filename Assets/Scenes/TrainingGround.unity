@@ -123,6 +123,80 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &52742410
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 802868535619393056, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_Name
+      value: HornRush_Boss1_Nightmare
+      objectReference: {fileID: 0}
+    - target: {fileID: 802868535619393056, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1571939472979562584, guid: f6553d78baee2794f955da8b47521d61,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6553d78baee2794f955da8b47521d61, type: 3}
 --- !u!1 &126291730
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,8 +461,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451348246}
-  m_LocalRotation: {x: 0.4718584, y: 0, z: 0, w: 0.88167435}
-  m_LocalPosition: {x: 2.68, y: 15, z: -8.48}
+  m_LocalRotation: {x: 0.07777076, y: 0.91969424, z: -0.3043129, w: 0.23560128}
+  m_LocalPosition: {x: -5.7434907, y: 11.054486, z: 13.012961}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5720,7 +5794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &8457836566862051056
 GameObject:
   m_ObjectHideFlags: 0
@@ -6008,7 +6082,7 @@ NavMeshAgent:
   m_Radius: 3
   m_Speed: 6
   m_Acceleration: 999
-  avoidancePriority: 50
+  avoidancePriority: 40
   m_AngularSpeed: 999
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -6030,7 +6104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed2fc1f67d99240a5dc368f1c89e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
+  viewRadius: 40
   viewAngle: 180
   targetMask:
     serializedVersion: 2
@@ -6187,9 +6261,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37fc032bbb5944409a6f7deac7c2f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseAttack: {fileID: 656422059064697357, guid: e297bce5d7d84774a85a55a6aafe68a2,
+    type: 3}
   clawAttack: {fileID: 4942425433216582390, guid: 4f5644174c308f74faa63bec2a116645,
     type: 3}
-  baseAttack: {fileID: 656422059064697357, guid: e297bce5d7d84774a85a55a6aafe68a2,
+  hornAttack: {fileID: 7977120871170287946, guid: f6553d78baee2794f955da8b47521d61,
     type: 3}
 --- !u!137 &8457836566873426564
 SkinnedMeshRenderer:
