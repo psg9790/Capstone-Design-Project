@@ -92,7 +92,7 @@ namespace CharacterController
                 // 플레이어 이동
                 Vector3 dashVelocity = dashDirection * (dashDistance / dashDuration);//얼마나 이동할지 계산
                 Vector3 pp = Player.Instance.transform.position;
-                RaycastHit hit;
+                
                 Debug.DrawRay(pp,dashDirection, Color.red,0.5f);//플레이어 앞에 0.5f만큼 레이져
                 // 만약 플레이어 앞에 가로막는 벽이 없다면 이동 아니면 이동x
                 if (!Physics.Raycast(pp, dashDirection, 0.5f, 1 << LayerMask.NameToLayer("WALL")))

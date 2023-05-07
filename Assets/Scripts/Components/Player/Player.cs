@@ -92,6 +92,7 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.dash, new DashState(controller));
         stateMachine.AddState(StateName.attack, new AttackState(controller));
         stateMachine.AddState(StateName.skill, new SkillState(controller));
+        stateMachine.AddState(StateName.stiff, new StiffState(controller));
     }
     
     
@@ -104,5 +105,9 @@ public class Player : MonoBehaviour
         weaponManager.Weapon?.EndAttack();
     }
 
+    public void OnStartSkill()
+    {
+        weaponManager.Weapon?.Skill();
+    }
 }
 

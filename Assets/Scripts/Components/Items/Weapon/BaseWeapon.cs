@@ -6,7 +6,6 @@ using UnityEngine;
 
 public abstract class BaseWeapon : MonoBehaviour
 {
-    public int ComboCount { get; set; }
     public WeaponPositionData HandleData { get { return weaponPositionData; } }
     public RuntimeAnimatorController WeaponAnimator { get { return weaponAnimator; } }
     
@@ -23,6 +22,7 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected HitBox attack_effect;
     [SerializeField] protected HitBox skill_effect;
     [SerializeField] protected RuntimeAnimatorController weaponAnimator;
+    [SerializeField] public Transform shootpos;
     [SerializeField] protected string _name;
     [SerializeField] protected float attackDamamge;
     [SerializeField] protected float attackSpeed;

@@ -14,6 +14,7 @@ namespace CharacterController
         dash,
         attack,
         skill,
+        stiff,
     }
     public class StateMachine
     {

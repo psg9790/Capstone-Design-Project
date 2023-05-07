@@ -11,11 +11,13 @@ public class WeaponManager
    public BaseWeapon Weapon { get; private set; }
    public Action<GameObject> unRegisterWeapon { get; set; }
    private Transform handPostion;
-   private GameObject weaponObject;
+   public GameObject weaponObject;
    private GameObject equipweapon;
    public RuntimeAnimatorController BaseAnimator;
 
    public Item item;
+
+   public Vector3 atk_pos = Vector3.zero;
    
    public WeaponManager(Transform hand)
    {
@@ -61,6 +63,8 @@ public class WeaponManager
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
    }
+   
+   
    
    // [Button]
    // public void DEBUG_SETWEAPON()

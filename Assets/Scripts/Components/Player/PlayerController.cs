@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     // public float dashCooldown = Player.Instance.dashCooltime; // 대쉬 쿨다운
 
     public bool isDashing = false;
+    public bool isAttack = false;
     private bool isDashCollTime = false;
 
     private void Start()
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
     {
-        if (!isDashing)
+        if (!isDashing && !isAttack)
         {
             player.stateMachine.ChangeState(StateName.attack);
             // rightClickHold = true;

@@ -22,12 +22,13 @@ namespace CharacterController
             {
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                 looking = hit.point - Controller.transform.position;
+                Player.Instance.weaponManager.atk_pos = looking;
                 LookAt(hit.point - Controller.transform.position);
             }
             Player.Instance.nav.ResetPath();
             
             Player.Instance.animator.SetTrigger("skill");
-            Player.Instance.weaponManager.Weapon?.Skill();
+            // Player.Instance.weaponManager.Weapon?.Skill();
         }
         
 
