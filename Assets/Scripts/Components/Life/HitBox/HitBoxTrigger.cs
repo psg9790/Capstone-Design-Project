@@ -35,6 +35,17 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         this.targetMask = targetMask;
         this.targetCount = targetCount;
         this.hitBox = hitBox;
+        if (TryGetComponent<Rigidbody>(out Rigidbody rigid))
+        {
+            rigid.useGravity = false;
+            rigid.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
+        else
+        {
+            Rigidbody rig = this.gameObject.AddComponent<Rigidbody>();
+            rig.useGravity = false;
+            rig.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
     }
 
     public void Activate() // 실행
