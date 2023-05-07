@@ -27,7 +27,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 
     private HashSet<string> hitHash = new HashSet<string>(); // 타격 대상 중복타격 방지 위해 set 사용
 
-    private HitBox hitBox; // bullet 확인용 저장
+    private HitBox hitBox; // bullet 플래그 확인용 저장
 
     public void Init(Heart heart, LayerMask targetMask, int targetCount, HitBox hitBox) // 초기 설정
     {
@@ -77,11 +77,11 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, 1 << targetLayer))
                     {
                         dir.y = 0;
-                        hitBox.BulletHit_Play(hit.point, dir);
+                        hitBox.BulletHit(hit.point, dir);
                     }
                     else
                     {
-                        hitBox.BulletHit_Play(transform.position, Vector3.zero);
+                        hitBox.BulletHit(transform.position, Vector3.zero);
                     }
                 }
             }
@@ -91,11 +91,11 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                         1 << other.gameObject.layer))
                 {
                     dir.y = 0;
-                    hitBox.BulletHit_Play(hit.point, dir);
+                    hitBox.BulletHit(hit.point, dir);
                 }
                 else
                 {
-                    hitBox.BulletHit_Play(transform.position, Vector3.zero);
+                    hitBox.BulletHit(transform.position, Vector3.zero);
                 }
             }
 

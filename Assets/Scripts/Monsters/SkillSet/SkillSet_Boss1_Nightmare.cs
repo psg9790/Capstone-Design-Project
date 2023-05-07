@@ -9,6 +9,7 @@ namespace Monsters.Skill
 {
     public class SkillSet_Boss1_Nightmare : SkillSet
     {
+        public Transform bulletPos;
         public HitBox baseAttack;
 
         private float clawAttack_cooltime = 9f;
@@ -37,7 +38,8 @@ namespace Monsters.Skill
         void BaseAttack()
         {
             HitBox ba = Instantiate(baseAttack);
-            ba.Particle_Play(heart);
+            // ba.Particle_Play(heart);
+            ba.BulletParticle_Play(heart, bulletPos.position, bulletPos.forward);
         }
 
         void ClawAttack()

@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour
                 1 << LayerMask.NameToLayer("WALL"));
             for (int i = 0; i < hits.Length; i++)
             {
-                Debug.Log(hits[i].transform.gameObject.name);
+                // Debug.Log(hits[i].transform.gameObject.name);
                 transwall[] obj = hits[i].transform.parent.GetComponentsInChildren<transwall>();
                 for (int j = 0; j < obj.Length; j++)
                 {

@@ -6,6 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -29,11 +30,13 @@ public class HitBox : MonoBehaviour
 
     [InfoBox("bulletDirection: 방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
              "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")]
-    [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletSpawnPoint = Vector3.zero;
-    [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
+    // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletSpawnPoint = Vector3.zero;
+    // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
+    [ShowIf("isBullet")] public ParticleSystem bulletFlashEffect;
     [ShowIf("isBullet")] public ParticleSystem bulletHitEffect; // bullet 타격시 생성될 이펙트
     [ShowIf("isBullet")] public bool isHoming = false; // 자동 추적
-    [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")] [ShowIf("isHoming")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f; // 자동 추적 성능
+    [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")] 
+    [ShowIf("isBullet")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f; // 자동 추적 성능
 
     private static float MyCustomDrawerStatic(float value, GUIContent label)
     {
@@ -82,7 +85,20 @@ public class HitBox : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void BulletHit_Play(Vector3 hitPoint, Vector3 dir) // bullet 충돌시 실행, 쓰지 마세요
+    public void BulletFlash(Vector3 firePoint, Vector3 dir)
+    {
+        if (bulletFlashEffect != null)
+        {
+            ParticleSystem bf = Instantiate(bulletFlashEffect);
+            
+            var main = bf.main; // destroy on stop
+            main.stopAction = ParticleSystemStopAction.Destroy;
+            
+            bf.transform.position = firePoint;
+            bf.transform.LookAt(firePoint + dir);
+        }
+    }
+    public void BulletHit(Vector3 hitPoint, Vector3 dir) // bullet 충돌시 실행, 쓰지 마세요
     {
         StopCoroutine(bulletPlayCoroutine);
         // hit 이펙트 생성
@@ -90,17 +106,27 @@ public class HitBox : MonoBehaviour
         {
             // -dir 사용
             ParticleSystem bh = Instantiate(bulletHitEffect);
+            
+            var main = bh.main; // destroy on stop
+            main.stopAction = ParticleSystemStopAction.Destroy;
+            
             bh.transform.position = hitPoint;
             bh.transform.LookAt(hitPoint - dir);
         }
         Destroy(this.gameObject);
     }
 
-    public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 rot) // bullet 판정 재생
+
+    public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 dir) // bullet 판정 재생
     {
         heartLayer = heart.gameObject.layer;
         transform.position = pos;
-        transform.rotation = Quaternion.LookRotation(bulletDirection);
+        transform.LookAt(pos + dir);
+        BulletFlash(pos, dir);
+        
+        var main = parent_particle.main; // loop on
+        main.loop = true;
+        
         pq.Push(GetComponentInChildren<HitBoxTrigger>());
         pq.Top().Init(heart, targetMask, targetCount, this);
         parent_particle.Play();
