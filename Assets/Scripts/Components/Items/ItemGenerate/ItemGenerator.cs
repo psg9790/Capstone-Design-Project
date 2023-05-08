@@ -176,4 +176,36 @@ public class ItemGenerator : MonoBehaviour
         DroppedItem drop = InstantiateItem(Player.Instance.transform);
         drop.Adjust(item);
     }
+    
+    
+    [Button]
+    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket)
+    {
+        Dictionary<WeaponKey, float> inData = new Dictionary<WeaponKey, float>();
+        inData.Add(WeaponKey.ATK, atk);
+        inData.Add(WeaponKey.ATKSPEED, atkspeed);
+        inData.Add(WeaponKey.SOCKET, socket);
+
+        Weapon wItem = new Weapon(data, id_generate++, -1, inData);
+        Inventory.instance.AddItem(wItem);
+    }
+
+    [Button]
+    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed)
+    {
+        Dictionary<ArtifactKey, float> inData = new Dictionary<ArtifactKey, float>();
+        if(atk != 0)
+            inData.Add(ArtifactKey.ATK, atk);
+        if(atkspeed != 0)
+            inData.Add(ArtifactKey.ATKSPEED, atkspeed);
+        if (def != 0)
+            inData.Add(ArtifactKey.DEF, def);
+        if (hp != 0)
+            inData.Add(ArtifactKey.HP, hp);
+        if(movementspeed != 0)
+            inData.Add(ArtifactKey.MOVEMENTSPEED, movementspeed);
+
+        Artifact aItem = new Artifact(data, id_generate++, -1, inData);
+        Inventory.instance.AddItem(aItem);
+    }
 }

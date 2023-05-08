@@ -71,8 +71,9 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void removeItem(Item _item,ItemSlot itemSlot)
+    public void removeItem(Item _item, ItemSlot itemSlot)
     {
+        ItemGenerator.Instance.PlayerDropItem(_item);
         items.Remove(_item);
         itemSlot.itemSlotui.item = null;
         itemSlot.itemSlotui.image.sprite= null;

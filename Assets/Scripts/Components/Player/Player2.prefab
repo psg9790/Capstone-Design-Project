@@ -3145,6 +3145,7 @@ GameObject:
   - component: {fileID: 2411560938377292722}
   - component: {fileID: 2671801443289682286}
   - component: {fileID: 5661129087745828413}
+  - component: {fileID: 320304341889774561}
   m_Layer: 11
   m_Name: Player2
   m_TagString: Player
@@ -3328,6 +3329,22 @@ MonoBehaviour:
   upper_pos: {fileID: 3646912246967088869}
   useDamageFont: 1
   damageFont_randomRange: {x: -75, y: 75, z: 150}
+--- !u!114 &320304341889774561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337324291364039534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa18d6ad03c0044d48b71f42fdb846d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
+  dataList: []
+  content: {fileID: 0}
+  ItemData: []
 --- !u!1 &5520682822790751170
 GameObject:
   m_ObjectHideFlags: 0

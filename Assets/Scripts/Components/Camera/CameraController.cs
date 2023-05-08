@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     [Sirenix.OdinInspector.ReadOnly] public Player player; // 이 카메라가 쫓아다닐 플레이어 정보
     public Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
     public bool attached = false;
-    public bool rotateOnUpdate = true;
+    public bool rotateOnUpdate = false;
 
     [Button]
     public void Attach(Player _player) // 이 카메라에 플레이어 정보를 넣어주고 추적을 시작

@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        searchItem();
+        // searchItem();
     }
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     public void searchItem()
     {
-        Collider[] colls = Physics.OverlapSphere(player.transform.position, radius,1 << LayerMask.NameToLayer("ITEM"));
+        Collider[] colls = Physics.OverlapSphere(player.transform.position, radius,1 << LayerMask.NameToLayer("Item"));
         
         foreach (Collider coll in colls)
         {
