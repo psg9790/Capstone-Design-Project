@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,7 +40,7 @@ namespace Monsters
         [HideInInspector] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
 
         [ShowInInspector]
-        public Dictionary<EMonsterState, AudioClip> sound = new Dictionary<EMonsterState, AudioClip>();
+        public Dictionary<EMonsterState, AudioClip> sound = new Dictionary<EMonsterState, AudioClip>(); // 사운드 아카이브
 
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
@@ -116,7 +117,7 @@ namespace Monsters
             if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
             {
                 nav = agent;
-                nav.updateRotation = false;
+                // nav.updateRotation = false;
             }
             else
             {
@@ -177,7 +178,7 @@ namespace Monsters
             fsm.Execute();
 
             // nav용 rotation
-            NavRotation();
+            // NavRotation();
 
             // 시야에 플레이어가 있는지 갱신
             fov.FindVisiblePlayer();
@@ -236,7 +237,7 @@ namespace Monsters
         }
 
 
-        public Vector3 GetRandomPosInPatrolRadius()
+        public Vector3 GetRandomPosInPatrolRadius() // 주변 랜덤 순찰 지점을 계산
         {
             Vector3 target = Vector3.zero;
             target.z += Random.Range(-patrolRadius, patrolRadius);
@@ -253,7 +254,7 @@ namespace Monsters
         MaterialPropertyBlock mpb;
         private Coroutine hitColorCo;
 
-        private void SetSMRPropertyBlocks(MaterialPropertyBlock mpb)
+        private void SetSMRPropertyBlocks(MaterialPropertyBlock mpb) // 피격시 몸통 빨갛게 만드려면 shader접근필요-최적화 위해 MaterialPropertyBlock사용
         {
             for (int i = 0; i < renders.Count; i++)
             {
@@ -270,7 +271,7 @@ namespace Monsters
             SetSMRPropertyBlocks(null);
         }
 
-        public void OnHit_Event(float duration, Vector3 dir)
+        public void OnHit_Event(float duration, Vector3 dir) // 피격 시
         {
             if (renders.Count == 0)
             {
@@ -283,36 +284,40 @@ namespace Monsters
                 StopCoroutine(hitColorCo);
             }
 
-            fsm.ChangeState(EMonsterState.Idle);
-            transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            // fsm.ChangeState(EMonsterState.Idle);
+            // transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+            // transform.DOLookAt(dir, 0.3f);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
-        public void OnStiff_Event()
+        public void OnStiff_Event(Vector3 dir) // 경직 시
         {
+            transform.DOLookAt(dir, 0.3f);
+            // Debug.DrawRay(transform.position + Vector3.up, dir, Color.red, 1f);
             fsm.ChangeState(EMonsterState.Stiff);
         }
 
         [HideInInspector] public float knockback_power;
         [HideInInspector] public Vector3 knockback_dir;
-        public void OnKnockback_Event(float power, Vector3 dir)
+        public void OnKnockback_Event(float power, Vector3 dir) // 넉백 시
         {
             knockback_power = power;
             knockback_dir = dir;
+            transform.DOLookAt(dir, 0.3f);
             fsm.ChangeState(EMonsterState.KnockBack);
         }
 
-        public void OnDeath_Event()
+        public void OnDeath_Event() // 사망 시
         {
-            fsm.ChangeState(EMonsterState.Die);
+            fsm.ChangeState(EMonsterState.Dead);
         }
 
-        void EndStiff()
+        void EndStiff() // 경직 해제 (애니메이션 이벤트용)
         {
             whileStiff = false;
         }
 
-        void EndKnockback()
+        void EndKnockback() // 넉백 해제 (애니메이션 이벤트용)
         {
             whileKnockback = false;
         }
@@ -325,7 +330,8 @@ namespace Monsters
 
     public enum EMonsterType
     {
-        General_Melee,
-        General_Ranged
+        Skeleton_Warrior,
+        Rush_Spider,
+        Boss1_Nightmare
     }
 }

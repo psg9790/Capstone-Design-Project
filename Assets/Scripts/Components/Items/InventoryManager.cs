@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -12,11 +13,15 @@ public class InventoryManager : MonoBehaviour
     private static InventoryManager inctance;
 
     public GameObject Sword;
+
+    public Item[] items;
+    
     private void Awake()
     {
         if (inctance == null)
         {
             inctance = this;
+            items = new Item[5];
             DontDestroyOnLoad(gameObject);
             return;
         }
@@ -32,6 +37,7 @@ public class InventoryManager : MonoBehaviour
     void Init()
     {
         // weaponIn();
+        
     }
     [Button]
     void weaponIn()
@@ -53,5 +59,18 @@ public class InventoryManager : MonoBehaviour
         GameObject weapon = Instantiate(testData.weapon_gameObject);
         Player.Instance.weaponManager.SetWeapon(weapon);
         Player.Instance.weaponManager.item = new Item(testData, 0, 0);
+    }
+
+    public void addItem(Item drop)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (items[i] == null)
+            {
+                items[i] = drop;
+                return;
+            }
+        }
+        Debug.Log("items full");
     }
 }

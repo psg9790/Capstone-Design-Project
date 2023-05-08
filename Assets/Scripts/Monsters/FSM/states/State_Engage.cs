@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 
@@ -11,11 +12,14 @@ namespace Monsters.FSM
         {
             base.Enter(monster);
             // 가능한 공격 check -> whileAttack = true
+            // monster.nav.enabled = false;
+            // monster.rigid.isKinematic = false;
             monster.state = EMonsterState.Engage;
             monster.whileEngage = true;
             monster.DoPossibleEngage();
-            monster.transform.rotation =
-                Quaternion.LookRotation(monster.player.transform.position - monster.transform.position, Vector3.up);
+            // monster.transform.rotation =
+            //     Quaternion.LookRotation(monster.player.transform.position - monster.transform.position, Vector3.up);
+            monster.transform.DOLookAt(monster.player.transform.position, 0.3f);
         }
 
         public override void Execute(Monster monster)
@@ -33,6 +37,8 @@ namespace Monsters.FSM
             base.Exit(monster);
             monster.skillset.Terminate();
             monster.whileEngage = false;
+            // monster.rigid.isKinematic = true;
+            // monster.nav.enabled = true;
             // Debug.Log("engage interrupt");
         }
     }

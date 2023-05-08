@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Monsters.FSM
 {
-    public class State_Die : State
+    public class State_Dead : State
     {
         public override void Enter(Monster monster)
         {
             base.Enter(monster);
-            monster.state = EMonsterState.Die;
+            monster.state = EMonsterState.Dead;
             // monster.transform.rotation = Quaternion.LookRotation(monster.gotAttackDir);
             monster.bodyCollider.enabled = false;
             monster.nav.enabled = false;
@@ -18,21 +19,26 @@ namespace Monsters.FSM
             Debug.Log("enter die state");
             // 아이템 생성
             ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart);
+            DOVirtual.DelayedCall(2f, () => Exit(monster));
         }
 
         public override void Execute(Monster monster)
         {
             base.Execute(monster);
             // 모션 끝나면 Exit
-            if (monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Die")
-                && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                monster.afterDeadElapsed += Time.deltaTime;
-                if (monster.afterDeadElapsed >= monster.afterDeadTime)
-                {
-                    Exit(monster);
-                }
-            }
+            // if (monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Die")
+            //     && monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            // {
+            //     // monster.afterDeadElapsed += Time.deltaTime;
+            //     // if (monster.afterDeadElapsed >= monster.afterDeadTime)
+            //     {
+            //         Exit(monster);
+            //     }
+            // }
+            // else
+            // {
+            //     Exit(monster); // 모션 안끝나면 안죽는 버그 있어서 바꿈
+            // }
         }
 
         public override void Exit(Monster monster)
