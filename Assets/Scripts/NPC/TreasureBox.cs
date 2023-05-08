@@ -51,13 +51,13 @@ public class TreasureBox : MonoBehaviour
         {
             isEnable = false;
         }
-
+        /*
         if (isActived!=true)
         {
-            Lid.transform.Rotate(-90,0,0);
+            //Lid.transform.Rotate(-90,0,0);
             isActived = false;
-            Lid.transform.GetChild(0).gameObject.SetActive(false);
-        }
+            //Lid.transform.GetChild(0).gameObject.SetActive(false);
+        }*/
     }
 
     
@@ -68,7 +68,7 @@ public class TreasureBox : MonoBehaviour
 
         int random = Random.Range(2, 100);
         Debug.Log("drop item: "+random);
-
+        drop();
     }
 
     private void drop()
@@ -78,4 +78,5 @@ public class TreasureBox : MonoBehaviour
         vec3 += new Vector3(0.0f, 0.0f, 0.0f);
         itemGo.transform.position = vec3;
     }
+    
 }

@@ -38,6 +38,7 @@ public class MAP_interact : MonoBehaviour
             Map_Select.SetActive(true);   
         }
         
+        
     }
 
      void OnTriggerStay(Collider other)
@@ -72,6 +73,11 @@ public class MAP_interact : MonoBehaviour
     public void Move_Dun()
     {
         SceneManager.LoadScene(SceneName);
+    }
+
+    public void GetItem()
+    {
+        
     }
     
 }
