@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "QClick",
+                    "type": "Button",
+                    "id": "410fe832-bf8a-4f41-9d54-6cd20a75a4eb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -170,6 +179,17 @@
                     "action": "UDLR",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2dd24756-12ea-4bfd-8a85-54e10bdc7173",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

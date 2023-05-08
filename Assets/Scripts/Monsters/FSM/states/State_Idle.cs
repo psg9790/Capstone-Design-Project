@@ -56,14 +56,14 @@ namespace Monsters.FSM
 
         public bool CheckForRunaway(Monster monster)
         {
-            if (monster.monsterType == EMonsterType.General_Ranged)
-            {
-                if (monster.playerDist < monster.runawayDistance)
-                {
-                    monster.fsm.ChangeState(EMonsterState.Runaway);
-                    return true;
-                }   
-            }
+            // if (monster.monsterType == EMonsterType.General_Ranged)
+            // {
+            //     if (monster.playerDist < monster.runawayDistance)
+            //     {
+            //         monster.fsm.ChangeState(EMonsterState.Runaway);
+            //         return true;
+            //     }   
+            // }
             return false;
         }
     }

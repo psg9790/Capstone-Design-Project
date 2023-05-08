@@ -29,7 +29,7 @@ namespace Monsters.FSM
             list.Add((int)EMonsterState.Runaway, new State_Runaway());
             list.Add((int)EMonsterState.ChasePlayer, new State_ChasePlayer());
             list.Add((int)EMonsterState.Stiff, new State_Stiff());
-            list.Add((int)EMonsterState.Die, new State_Die());
+            list.Add((int)EMonsterState.Dead, new State_Dead());
             list.Add((int)EMonsterState.Engage, new State_Engage());
             list.Add((int)EMonsterState.KnockBack, new State_KnockBack());
         }
@@ -51,7 +51,7 @@ namespace Monsters.FSM
         Patrol,
         ChasePlayer,
         Runaway,
-        Die,
+        Dead,
         Stiff,
         KnockBack,
         Engage

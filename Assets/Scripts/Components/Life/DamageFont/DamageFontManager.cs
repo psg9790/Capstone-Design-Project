@@ -26,10 +26,11 @@ public class DamageFontManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
+        
         instance = this;
         cam = Camera.main;
 
+        // 이 hpbar가 위치할 캔버스를 새로 생성
         rect = this.AddComponent<RectTransform>();
         canvas = this.AddComponent<Canvas>();
         scaler = this.AddComponent<CanvasScaler>();
@@ -50,7 +51,7 @@ public class DamageFontManager : MonoBehaviour
         cam = null;
     }
 
-    public void GenerateDamageFont(Vector3 target, Damage dmg) // 타겟 머리위에 데미지 폰트 띄움
+    public void GenerateDamageFont(Vector3 target, float damage, bool isCritical, Vector3 randomRange) // 타겟 머리위에 데미지 폰트 띄움
     {
         DamageFont dmgFont;
         if (closed.Count > 0)
@@ -67,7 +68,7 @@ public class DamageFontManager : MonoBehaviour
         }
 
 
-        dmgFont.Activate(dmg, target);
+        dmgFont.Activate(damage, isCritical, target, randomRange);
     }
 
     public void ReturnDamageFont(DamageFont font) // 사용 후에 풀에 반환

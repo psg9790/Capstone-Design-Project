@@ -39,7 +39,8 @@ public class UIRoll : MonoBehaviour
     
     private IEnumerator WaitForRolltime()
     {
-        float rollDelta = this.coolTime;
+        float rollDelta = Player.Instance.dashCooltime;
+        float roll = Player.Instance.dashCooltime;
         //UI에 text에 업데이트
         while (true)
         {
@@ -48,7 +49,7 @@ public class UIRoll : MonoBehaviour
             
             //imgCoolTime의 fillAmount도 같이 갱신
             //0 ~ 1
-            float fillAmount = 1- (rollDelta / this.coolTime);
+            float fillAmount = 1- (rollDelta / roll);
             this.imgCoolTime.fillAmount = fillAmount;
 
             if (rollDelta <= 0)

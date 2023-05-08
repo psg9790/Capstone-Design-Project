@@ -50,6 +50,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   duration: 0.5
+  targetCount: 5
   parent_particle: {fileID: 6015385756395923531}
 --- !u!1 &5889347485046268527
 GameObject:
@@ -63625,6 +63626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTime: 0.1
   duration: 0.1
+  targetCount: 0
   damageRatio: 1
   ccType: 3
   ccPower: 0

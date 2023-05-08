@@ -31,9 +31,9 @@ public class Player : MonoBehaviour
     // Dash
     [Header("dash")]
     [SerializeField]
-    public float dashPower = 10f; // 대쉬 거리
+    public float dashDistance = 10f; // 대쉬 거리
     [SerializeField]
-    public float dashTetanyTime = 0.5f; // 대쉬 시간
+    public float dashDuration = 0.5f; // 대쉬 시간
     [SerializeField]
     public float dashCooltime = 1f; // 대쉬 쿨다운
 
@@ -74,10 +74,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         stateMachine?.UpdateState();
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            weaponManager.Weapon?.Skill();
-        }
+        
         
     }
 
@@ -94,6 +91,8 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.move, new MoveState(controller));
         stateMachine.AddState(StateName.dash, new DashState(controller));
         stateMachine.AddState(StateName.attack, new AttackState(controller));
+        stateMachine.AddState(StateName.skill, new SkillState(controller));
+        stateMachine.AddState(StateName.stiff, new StiffState(controller));
     }
     
     
@@ -106,5 +105,9 @@ public class Player : MonoBehaviour
         weaponManager.Weapon?.EndAttack();
     }
 
+    public void OnStartSkill()
+    {
+        weaponManager.Weapon?.Skill();
+    }
 }
 

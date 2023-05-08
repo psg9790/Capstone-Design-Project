@@ -13,13 +13,8 @@ MonoBehaviour:
   m_Name: sword
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 21300000, guid: fc0baa37ef899844ca7808278421f949, type: 3}
-  name: sword
+  itemName: "\uAC80"
   tooltip: hehehee
   itemType: 0
-  weaponType: 0
   weapon_gameObject: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995,
     type: 3}
-  weapon_atk: 10
-  weapon_atkSpeed: 1
-  weapon_ccType: 3
-  artifactType: 0

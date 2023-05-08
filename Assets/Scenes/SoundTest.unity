@@ -6255,6 +6255,50 @@ MonoBehaviour:
   uiSkillBtn: {fileID: 206064586}
   uiRoll: {fileID: 109307}
   invenSet: {fileID: 1899039125}
+--- !u!1 &1411616344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411616346}
+  - component: {fileID: 1411616345}
+  m_Layer: 0
+  m_Name: testig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1411616345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411616344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a17d0f6cdd74b46ab95b8b25d3a457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1411616346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411616344}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1443410465 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2101927117100653894, guid: b12907bc3aefd0f44bf1984e84e60e07,
@@ -7599,6 +7643,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09184fd1adb894a4cad53c7bf7ead611, type: 2}
   - {fileID: 11400000, guid: 541b1eb17b8b9e24bab9483d5a197dd3, type: 2}
   - {fileID: 11400000, guid: 13045d23e2a26a449b7cfe327ceff7fd, type: 2}
+  artifactParent: {fileID: 0}
   slotParent: {fileID: 48093939}
   slots:
   - {fileID: 2035964986}
@@ -7631,6 +7676,7 @@ MonoBehaviour:
   - {fileID: 2005075703}
   weaponImage: {fileID: 0}
   weaponBack: {fileID: 0}
+  isInstallation: 0
 --- !u!114 &1900766681 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2101927117100653894, guid: b12907bc3aefd0f44bf1984e84e60e07,

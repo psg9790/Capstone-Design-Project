@@ -9,53 +9,69 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public ItemSlotUI itemSlotui;
     public ItemSlot dropSlot;
     public Image image;
-    public SlotToolTip _SlotToolTip;
-    
-
-    public void OnPointerClick(PointerEventData eventData)
+    public SlotToolTip _SlotToolTip; 
+    public Weapon weapon_item;
+    public int arti_count;
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            
             DragSlot.instance.dragSlot = this;
-            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)
+            if (itemSlotui.item != null && itemSlotui.item is Weapon)
             {
+                weapon_item = itemSlotui.item as Weapon; 
                 if (Inventory.instance.isInstallation == true)
                 {
-                    UnityEngine.Debug.Log("true");
-                    Inventory.instance.AddItem(Inventory.instance.tempItem);
+                    UnityEngine.Debug.Log("1");
+                    Inventory.instance.AddItem(Inventory.instance.tempItem);                    
                     Inventory.instance.tempItem = itemSlotui.item;
                 }
-                else
+                else if(Inventory.instance.isInstallation==false)
                 {
-                    Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
-                    Inventory.instance.weaponBack.gameObject.SetActive(false);
-                    Inventory.instance.weaponImage.gameObject.SetActive(true);
+                    Debug.Log("2");         
+                    Inventory.instance.tempItem = itemSlotui.item;                              // 무기 장착 아이템 정보 저장
+                    Inventory.instance.backImage.gameObject.SetActive(false);                   // back 이미지 없앰.
+                    Inventory.instance.weaponSlot.image.gameObject.SetActive(true);             // 무기 이미지 없앰.
                     Inventory.instance.isInstallation = true;
                 }
 
-                Inventory.instance.weaponImage.sprite = itemSlotui.image.sprite;
-                Inventory.instance.weaponImage.color = itemSlotui.image.color;
+                Inventory.instance.weaponSlot.image.sprite = itemSlotui.image.sprite;
+                Inventory.instance.weaponSlot.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
-                /*
-                for (int i = 0; i < Inventory.instance.tempItem.)
+                
+                for (int i = 0; i < 6; i++)
                 {
-                    Inventory.instance.artifacts[i].lockImage.gameObject.SetActive(false);
-                    
+                    Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
                 }
-                */
+                
+                arti_count = (int)(weapon_item.options[WeaponKey.SOCKET]);
+                
+
+                for (int i = 0; i <arti_count;i++)
+                {
+                    Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(false);
+                }
+                
+
             }
-            /*
-            else if (itemSlotui.item != null && itemSlotui.item.itemData.itemType==ItemType.Artifact)        // 아티팩트일 때    
+            
+            else if (itemSlotui.item != null && itemSlotui.item is Artifact && Inventory.instance.tempItem!=null)        // 아티팩트일 때    
             {
-                for(int i=0;Inventory.instance.artifacts[i];i++)
+                weapon_item=  Inventory.instance.tempItem as Weapon;
+                arti_count=(int)(weapon_item.options[WeaponKey.SOCKET]);
+                for (int i = 0; i < arti_count;i++)
                 {
-                    Inventory.instance.artifacts[i].artifactImage.sprite = itemSlotui.image.sprite ;
-                    Inventory.instance.artifacts[i].artifactImage.gameObject.SetActive(true);
-                    break;
+                    if (Inventory.instance.artifactUIs[i].isInstallation==false)
+                    {
+                        Inventory.instance.artifactUIs[i].artifactImage.sprite = itemSlotui.image.sprite ;
+                        Inventory.instance.artifactUIs[i].artifactImage.gameObject.SetActive(true);
+                        Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+                        Inventory.instance.artifactUIs[i].isInstallation = true;
+                        break;
+                    }
                 }
             }
-            */
+            
             DragSlot.instance.dragSlot = null;
             
         }
@@ -63,25 +79,29 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         if (itemSlotui.item != null)
         {
+            DragSlot.instance.beginSlot = 0;
+           
             DragSlot.instance.dragSlot = this;
             DragSlot.instance.DragSetImage(itemSlotui.image);
 
             DragSlot.instance.transform.position = eventData.position;
         }
-
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
-        if(itemSlotui.item!=null)
+        if (itemSlotui.item != null)
+        {
             DragSlot.instance.transform.position = eventData.position;
+        }
+           
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
@@ -91,10 +111,32 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         DragSlot.instance.dragSlot = null;
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
-        if(DragSlot.instance.dragSlot!=null)
+        if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 0 )
+        {
             ChangeSlot();
+        }else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 1)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
+            }
+            
+            Inventory.instance.AddItem(Inventory.instance.tempItem);
+            Inventory.instance.tempItem = null;
+            
+            Inventory.instance.weaponSlot.image.gameObject.SetActive(false);
+            Inventory.instance.backImage.gameObject.SetActive(true);
+            Inventory.instance.isInstallation = false;
+        } 
+        /*else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2)
+        {
+            Inventory.instance.AddItem();    // 아티팩트 인벤터리에 추가
+            
+        }
+        */
+        DragSlot.instance.dragSlot = null;
     }
 
     private void ChangeSlot()

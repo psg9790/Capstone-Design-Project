@@ -15,6 +15,8 @@ namespace Monsters.FOV
 
         [HideInInspector] public Monster monster;
 
+        public bool wallException = true;
+
         private void Awake()
         {
             monster = GetComponent<Monster>();
@@ -38,7 +40,17 @@ namespace Monsters.FOV
                         float dstToTarget = Vector3.Distance(transform.position, target.transform.position);
                         monster.playerDist = dstToTarget;
 
-                        if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                        if (wallException)
+                        {
+                            if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                            {
+                                monster.player = _player;
+                                monster.playerInSight = true;
+                                foundPlayer = true;
+                                monster.ExtendSight();
+                            }
+                        }
+                        else
                         {
                             monster.player = _player;
                             monster.playerInSight = true;

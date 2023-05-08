@@ -25,16 +25,16 @@ namespace Monsters.Skill
             hitbox.Particle_Play(heart);
         }
 
-        void EndEngage()
-        {
-            monster.whileEngage = false;
-        }
+        // protected void EndEngage()
+        // {
+        //     monster.whileEngage = false;
+        // }
 
-        public override void Terminate()
-        {
-            // 스킬 취소 없음? 관대한 캔슬
-            EndEngage();
-        }
+        // public override void Terminate()
+        // {
+        //     // 스킬 취소 없음? 관대한 캔슬
+        //     EndEngage();
+        // }
 
         public override void DoPossibleEngage()
         {

@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 973353961584380381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4382519942184311027}
@@ -375,7 +375,7 @@ MonoBehaviour:
       - m_Target: {fileID: 489164932030698348}
         m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
         m_MethodName: OnStiff_Event
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -431,6 +431,7 @@ MonoBehaviour:
   hpbar: {fileID: 0}
   upper_pos: {fileID: 1646481376034078110}
   useDamageFont: 1
+  damageFont_randomRange: {x: -50, y: 50, z: 100}
 --- !u!114 &489164932030698348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,9 +531,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 4
-  m_Acceleration: 9999
+  m_Acceleration: 999
   avoidancePriority: 50
-  m_AngularSpeed: 0
+  m_AngularSpeed: 999
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -1386,7 +1387,9 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  elapsed: 0
   duration: 0
+  targetCount: 5
   parent_particle: {fileID: 0}
 --- !u!1 &2991821679112777340
 GameObject:
@@ -1979,7 +1982,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4839823685400681141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

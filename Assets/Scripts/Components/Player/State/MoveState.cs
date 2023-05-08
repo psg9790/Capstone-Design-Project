@@ -16,7 +16,7 @@ namespace CharacterController
         public override void OnEnterState()
         {
             IsMove = true;
-            UnityEngine.Debug.Log("MoveState enter");
+            // UnityEngine.Debug.Log("MoveState enter");
             Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
@@ -36,7 +36,7 @@ namespace CharacterController
                 OnEnterState();
             }
             moveTarget = moveto;
-            UnityEngine.Debug.Log("MoveState");
+            // UnityEngine.Debug.Log("MoveState");
             Vector3 dist = moveTarget - Player.Instance.transform.position;
             if (IsMove && dist.magnitude <= 0.1f)
             {
@@ -70,7 +70,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
-            UnityEngine.Debug.Log("MoveState out");
+            // UnityEngine.Debug.Log("MoveState out");
             Player.Instance.animator.SetBool("speed", false);
         }
     }
