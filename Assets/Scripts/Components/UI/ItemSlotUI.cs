@@ -26,6 +26,7 @@ public class ItemSlotUI : MonoBehaviour
                 image.color = new Color(1, 1, 1);
                 this.gameObject.SetActive(true);
             }
+
         }
     }
 }
