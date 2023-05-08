@@ -9,6 +9,8 @@ public class DragSlot : MonoBehaviour
     static public DragSlot instance;
 
     public ItemSlot dragSlot;
+
+    public int beginSlot;
     //public Weapon weaponSlot;
 
     [SerializeField] private Image itemImage;
