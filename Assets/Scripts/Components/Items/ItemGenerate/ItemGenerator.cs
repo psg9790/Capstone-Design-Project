@@ -171,9 +171,9 @@ public class ItemGenerator : MonoBehaviour
     }
 
     // 플레이어가 인벤토리 바깥으로 아이템 드롭했을 때 바닥에 떨구는 기능
-    public void PlayerDropsItem(Transform tf, Item item) // (플레이어 위치, 아이템 객체)
+    public void PlayerDropItem(Item item) // (플레이어 위치, 아이템 객체)
     {
-        DroppedItem drop = InstantiateItem(tf);
+        DroppedItem drop = InstantiateItem(Player.Instance.transform);
         drop.Adjust(item);
     }
 }
