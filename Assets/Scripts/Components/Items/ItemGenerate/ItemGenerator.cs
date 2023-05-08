@@ -71,8 +71,7 @@ public class ItemGenerator : MonoBehaviour
         // popDir = popDir.normalized;
         // popDir *= 15;
         // rigid.AddForce(popDir, ForceMode.Impulse); // 아이템이 튕겨나감 (Vector3.up 지향)
-        DroppedItem drop = InstantiateItem(tf);
-        
+        Item created;
         bool isWeapon = UnityEngine.Random.Range(0, 100) < weaponItem_dropRatio; // 확률에 따라 무기 드롭, 아니면 아티팩트 생성
         // 몬스터의 레벨에 따라 수치 다르게 랜덤 생성
         if (isWeapon) // 무기 데이터 생성
@@ -86,7 +85,8 @@ public class ItemGenerator : MonoBehaviour
             }
             wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(wOptions[WeaponKey.SOCKET]);
             Weapon weapon = new Weapon(wData, id_generate++, heart.LEVEL, wOptions);
-            drop.Adjust(weapon);
+            // drop.Adjust(weapon);
+            created = weapon;
         }
         else // 아티팩트 데이터 생성
         {
@@ -106,13 +106,47 @@ public class ItemGenerator : MonoBehaviour
                     UnityEngine.Random.Range(0, float.Parse(aDic[heart.LEVEL][((ArtifactKey)randIdx).ToString()].ToString())));
             }
             Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aOptions);
-            drop.Adjust(arti);
+            // drop.Adjust(arti);
+            created = arti;
         }
+        DroppedItem drop = InstantiateItem(tf);
+        drop.Adjust(created);
     }
 
     public void PlayerDropsItem(Transform tf, Item item) // (플레이어 위치, 아이템 객체)
     {
         DroppedItem drop = InstantiateItem(tf);
         drop.Adjust(item);
+    }
+
+    [Button]
+    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket)
+    {
+        Dictionary<WeaponKey, float> inData = new Dictionary<WeaponKey, float>();
+        inData.Add(WeaponKey.ATK, atk);
+        inData.Add(WeaponKey.ATKSPEED, atkspeed);
+        inData.Add(WeaponKey.SOCKET, socket);
+        
+        Weapon wItem = new Weapon(data, id_generate++, -1, inData);
+        Inventory.instance.AddItem(wItem);
+    }
+
+    [Button]
+    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed)
+    {
+        Dictionary<ArtifactKey, float> inData = new Dictionary<ArtifactKey, float>();
+        if(atk != 0)
+            inData.Add(ArtifactKey.ATK, atk);
+        if(atkspeed != 0)
+            inData.Add(ArtifactKey.ATKSPEED, atkspeed);
+        if (def != 0)
+            inData.Add(ArtifactKey.DEF, def);
+        if (hp != 0)
+           inData.Add(ArtifactKey.HP, hp);
+        if(movementspeed != 0)
+            inData.Add(ArtifactKey.MOVEMENTSPEED, movementspeed);
+
+        Artifact aItem = new Artifact(data, id_generate++, -1, inData);
+        Inventory.instance.AddItem(aItem);
     }
 }

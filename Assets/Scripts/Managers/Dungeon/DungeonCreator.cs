@@ -32,8 +32,6 @@ public class DungeonCreator : MonoBehaviour
 
     private void Start()
     {
-        
-
         if (Camera.main != null)
         {
             if (Camera.main.TryGetComponent<CameraController>(out CameraController cameraController))
@@ -47,5 +45,21 @@ public class DungeonCreator : MonoBehaviour
         }
 
         spawners = FindObjectsOfType<Monsters.MonsterSpawner>();
+    }
+
+    public Transform[] positions;
+    private int positionIdx = 0;
+    [Button]
+    public void SwitchPosition()
+    {
+        ++positionIdx;
+        if (positionIdx >= positions.Length)
+        {
+            positionIdx = 0;
+        }
+
+        Player.Instance.nav.enabled = false;
+        Player.Instance.transform.position = positions[positionIdx].position;
+        Player.Instance.nav.enabled = true;
     }
 }
