@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8674695522669954832}
   - component: {fileID: 8674695522669954833}
   - component: {fileID: 8674695522669954835}
-  - component: {fileID: 4443520030426967996}
+  - component: {fileID: 406763875}
   m_Layer: 0
   m_Name: PLAYER
   m_TagString: Player
@@ -30,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8674695522669954837}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.4459202, y: 3.9211893, z: 2.9003139}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -99,9 +99,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.817975
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.09101248, z: 0}
 --- !u!114 &8674695522669954832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &4443520030426967996
+--- !u!114 &406763875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,8 +161,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8674695522669954837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d452f70a00728424c9bb72239beda3c4, type: 3}
+  m_Script: {fileID: 11500000, guid: aa18d6ad03c0044d48b71f42fdb846d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ListUI: {fileID: 0}
-  Text: {fileID: 0}
+  radius: 1
+  dataList: []
+  content: {fileID: 0}
+  ItemData: []
