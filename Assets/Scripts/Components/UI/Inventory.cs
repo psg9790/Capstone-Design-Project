@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
     }
 
     public void AddItem(Item item) {
-        if (items.Count < slots.Length)
+        if (IsEmpty())
         {
             items.Add(item);
             for (int i = 0; i<slots.Length; i++)
@@ -71,6 +71,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool IsEmpty()
+    {
+        if (items.Count < slots.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     public void removeItem(Item _item, ItemSlot itemSlot)
     {
         ItemGenerator.Instance.PlayerDropItem(_item);
