@@ -38,10 +38,12 @@ public class HitBox : MonoBehaviour
     [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")] 
     [ShowIf("isBullet")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f; // 자동 추적 성능
 
+    #if UNITY_EDITOR
     private static float MyCustomDrawerStatic(float value, GUIContent label)
     {
         return EditorGUILayout.Slider(label, value, 0f, 1f);
     }
+    #endif
 
     private Coroutine particlePlayCoroutine;
     private Coroutine bulletPlayCoroutine;
