@@ -99,7 +99,7 @@ namespace CharacterController
                 RaycastHit hit;
                 Vector3 dashVelocity = dashDirection * (dashDistance / dashDuration);//얼마나 이동할지 계산
                 Vector3 pp = Player.Instance.transform.position;
-                Vector3 nextpos = pp + (5 * Vector3.forward);
+                Vector3 nextpos = pp + Player.Instance.transform.forward;
                 nextpos += Vector3.up;
                 Ray ray = new Ray(nextpos,Vector3.down);
                 Debug.DrawRay(nextpos, Vector3.down, Color.red, 1f);
@@ -115,7 +115,6 @@ namespace CharacterController
                 //     Player.Instance.transform.position += dashVelocity * Time.deltaTime;
                 // }
                 
-
                 // Player.Instance.rigidbody.AddForce(dashVelocity * Time.deltaTime);
             }
         }

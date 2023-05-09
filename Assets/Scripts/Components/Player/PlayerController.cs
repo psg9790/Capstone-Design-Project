@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using CharacterController;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 
 public class PlayerController : MonoBehaviour
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
             InputManager.Instance.AddPerformed(InputKey.QClick, SkillClickPerformed);
             
+            
         }
     
         player = GetComponent<Player>();
@@ -54,6 +56,10 @@ public class PlayerController : MonoBehaviour
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (isAttack)
         {
             Player.Instance.animator.SetTrigger("attack");
@@ -86,6 +92,10 @@ public class PlayerController : MonoBehaviour
     // 마우스 우클릭 이동 
     void RighClickPerformed(InputAction.CallbackContext context)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         // 이동하면 안되는 조건문 추가
         if (!isDashing)
         {

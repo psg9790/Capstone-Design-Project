@@ -129,10 +129,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPositionData: {fileID: 11400000, guid: 615664fa13bfc88439f8472d4e008d45, type: 2}
-  attack_effect: {fileID: 5104748647811299519, guid: 6b4bd9d990d246d4c87be0264e784e82,
-    type: 3}
-  skill_effect: {fileID: 5448270029611497593, guid: c0d59778dd1c94e9fa9bf4277aa9e21e,
-    type: 3}
+  attack_effect:
+  - {fileID: 5104748647811299519, guid: 6b4bd9d990d246d4c87be0264e784e82, type: 3}
+  - {fileID: 5104748647811299519, guid: c121dca6128cef74a8b71ccd9777045d, type: 3}
+  - {fileID: 0}
+  skill_effect:
+  - {fileID: 5448270029611497593, guid: c0d59778dd1c94e9fa9bf4277aa9e21e, type: 3}
+  - {fileID: 3822544459725987413, guid: adb48153a8eab04468b743bda64f1cc3, type: 3}
+  - {fileID: 0}
   weaponAnimator: {fileID: 9100000, guid: d9bc75987f1c8d94eab9b98553a9d430, type: 2}
   shootpos: {fileID: 0}
   _name: Sword1

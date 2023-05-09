@@ -15,7 +15,7 @@ public class Gun1 : BaseWeapon
 
     public override void StartAttack(int combo)
     {
-        HitBox hitBox = Instantiate(attack_effect);
+        HitBox hitBox = Instantiate(attack_effect[combo]);
 
         Vector3 pos = shootpos.position;
         Vector3 rot = Player.Instance.weaponManager.atk_pos;
@@ -32,7 +32,7 @@ public class Gun1 : BaseWeapon
     }
     public override void Skill()
     {
-        HitBox hitBox = Instantiate(skill_effect);
+        HitBox hitBox = Instantiate(skill_effect[0]);
         Vector3 pos = shootpos.position;
         Vector3 rot = Player.Instance.weaponManager.atk_pos;
         hitBox.BulletParticle_Play(Player.Instance.heart,pos,rot);
