@@ -43,7 +43,7 @@ public abstract class BaseWeapon : MonoBehaviour
 
     public abstract void Attack(BaseState state,Vector3 looking);
     public abstract void Skill();
-    public abstract void StartAttack();
+    public abstract void StartAttack(int combo);
     public abstract void EndAttack();
 
 }

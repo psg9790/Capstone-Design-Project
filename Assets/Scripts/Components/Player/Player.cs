@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
     {
         stateMachine?.UpdateState();
         
-        
     }
 
     private void FixedUpdate()
@@ -96,13 +95,14 @@ public class Player : MonoBehaviour
     }
     
     
-    public void OnStartAttack()
+    public void OnStartAttack(int combo)
     {
-        weaponManager.Weapon?.StartAttack();
+        weaponManager.Weapon?.StartAttack(combo);
     }
     public void OnEndAttack()
     {
         weaponManager.Weapon?.EndAttack();
+        stateMachine.ChangeState(StateName.Idle);
     }
 
     public void OnStartSkill()

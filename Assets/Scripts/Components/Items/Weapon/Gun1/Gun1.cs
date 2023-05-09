@@ -13,7 +13,7 @@ public class Gun1 : BaseWeapon
        
     }
 
-    public override void StartAttack()
+    public override void StartAttack(int combo)
     {
         HitBox hitBox = Instantiate(attack_effect);
 
@@ -28,7 +28,7 @@ public class Gun1 : BaseWeapon
     }
     public override void EndAttack()
     {
-        Player.Instance.stateMachine?.CurrentState?.OnExitState();
+        // Player.Instance.stateMachine?.CurrentState?.OnExitState();
     }
     public override void Skill()
     {

@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
             // InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
             InputManager.Instance.AddPerformed(InputKey.QClick, SkillClickPerformed);
+            
         }
     
         player = GetComponent<Player>();
@@ -53,6 +54,10 @@ public class PlayerController : MonoBehaviour
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
     {
+        if (isAttack)
+        {
+            Player.Instance.animator.SetTrigger("attack");
+        }
         if (!isDashing && !isAttack)
         {
             player.stateMachine.ChangeState(StateName.attack);
@@ -72,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void SkillClickPerformed(InputAction.CallbackContext context)
     {
+        
         player.stateMachine.ChangeState(StateName.skill);
     }
     
