@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using UnityEngine;
 using Random = System.Random;
 
@@ -19,6 +18,7 @@ public class ItemGenerator : MonoBehaviour
     [ShowInInspector] [ReadOnly] private ItemData[] artifactDatas;
     [ShowInInspector] [ReadOnly] private ItemData[] weaponDatas;
 
+    private Transform parent_droppedItem;
     private GameObject droppedItemPrefab; // 드랍 아이템 프리팹
 
     private ulong id_generate = 0;
@@ -42,12 +42,17 @@ public class ItemGenerator : MonoBehaviour
 
     private DroppedItem InstantiateItem(Transform tf)
     {
-        GameObject itemgo = Instantiate(droppedItemPrefab); // 프리팹 생성
+        if (ReferenceEquals(parent_droppedItem, null))
+        {
+            parent_droppedItem = new GameObject("DroppedItems").transform;
+            
+        }
+        GameObject itemgo = Instantiate(droppedItemPrefab, tf.position, Quaternion.LookRotation(Vector3.up), parent_droppedItem); // 프리팹 생성
         itemgo.layer = LayerMask.NameToLayer("Item");
-        itemgo.transform.position = tf.position; // 몬스터가 죽은 위치 or 상자 깐 위치에서 생성
-        itemgo.transform.rotation = UnityEngine.Random.rotation; // 랜덤 회전값
-        DroppedItem drop = itemgo.AddComponent<DroppedItem>(); // 떨어진 아이템 스크립트
-
+        // itemgo.transform.position = tf.position; // 몬스터가 죽은 위치 or 상자 깐 위치에서 생성
+        // itemgo.transform.rotation = UnityEngine.Random.rotation; // 랜덤 회전값
+        DroppedItem drop = itemgo.GetComponent<DroppedItem>(); // 떨어진 아이템 스크립트
+        
         // Item pop action
         Rigidbody rigid = itemgo.GetComponent<Rigidbody>();
         Vector3 popDir = Vector3.up;

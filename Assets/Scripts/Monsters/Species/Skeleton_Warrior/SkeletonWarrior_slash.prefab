@@ -61,6 +61,8 @@ MonoBehaviour:
   startTime: 0.1
   duration: 0.2
   targetCount: 0
+  refreshAutomatically: 0
+  refreshInterval: 0.25
   damageRatio: 1
   ccType: 0
   ccPower: 0
@@ -114,10 +116,24 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  heartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   elapsed: 0
   duration: 0.5
   targetCount: 5
   parent_particle: {fileID: 7899817067623148170}
+  slashSound: {fileID: 8300000, guid: 43065fa3e836c42429751a014d4c2924, type: 3}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
+  isBullet: 0
+  bulletSpeed: 20
+  bulletFlashEffect: {fileID: 0}
+  bulletFlashSound: {fileID: 0}
+  bulletHitEffect: {fileID: 0}
+  bulletHitSound: {fileID: 0}
+  isHoming: 0
+  homingPerformance: 0.1
 --- !u!1 &8005343390548948010
 GameObject:
   m_ObjectHideFlags: 0
@@ -29484,6 +29500,8 @@ MonoBehaviour:
   startTime: 0
   duration: 0.1
   targetCount: 0
+  refreshAutomatically: 0
+  refreshInterval: 0.25
   damageRatio: 1
   ccType: 0
   ccPower: 0
