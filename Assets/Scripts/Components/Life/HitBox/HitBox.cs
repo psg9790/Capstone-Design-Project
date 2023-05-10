@@ -7,11 +7,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Monsters;
 using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using Object = System.Object;
 
 public class HitBox : MonoBehaviour
@@ -38,13 +40,18 @@ public class HitBox : MonoBehaviour
     [ShowIf("isBullet")]
     public ParticleSystem bulletFlashEffect;
 
+    [ShowIf("isBullet")] public AudioClip bulletFlashSound;
     [ShowIf("isBullet")] public ParticleSystem bulletHitEffect; // bullet 타격시 생성될 이펙트
+    [ShowIf("isBullet")] public AudioClip bulletHitSound;
     [ShowIf("isBullet")] public bool isHoming = false; // 자동 추적
 
     [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")]
     [ShowIf("isBullet")]
     [CustomValueDrawer("MyCustomDrawerStatic")]
     public float homingPerformance = 0.1f; // 자동 추적 성능
+
+    private Coroutine particlePlayCoroutine;
+    private Coroutine bulletPlayCoroutine;
 
 #if UNITY_EDITOR
     private static float MyCustomDrawerStatic(float value, GUIContent label)
@@ -53,8 +60,10 @@ public class HitBox : MonoBehaviour
     }
 #endif
 
-    private Coroutine particlePlayCoroutine;
-    private Coroutine bulletPlayCoroutine;
+    void Init()
+    {
+        ChangeLayersRecursively(this.transform, "Effect");
+    }
 
     IEnumerator ParticlePlayIE()
     {
@@ -75,17 +84,36 @@ public class HitBox : MonoBehaviour
     IEnumerator BulletPlayIE()
     {
         pq.Pop().Activate();
+        Heart homingTarget = null;
         while (elapsed < duration) // 시간이 설정한 시간만큼 play되도록 유도
         {
             elapsed += Time.deltaTime;
             if (isHoming)
             {
-                int layer = LayerMask.NameToLayer("Player");
-                if (Mathf.Log(targetMask, 2) == layer)
+                int targetLayer = (int)Mathf.Log(targetMask, 2);
+                if (targetLayer == LayerMask.NameToLayer("Player"))
                 {
                     transform.rotation = Quaternion.Lerp(transform.rotation,
-                        Quaternion.LookRotation(Player.Instance.transform.position - transform.position),
+                        Quaternion.LookRotation((Player.Instance.transform.position + Vector3.up) - transform.position),
                         homingPerformance);
+                }
+                else if (targetLayer == LayerMask.NameToLayer("Monster"))
+                {
+                    if (ReferenceEquals(homingTarget, null))
+                    {
+                        Collider[] cols = Physics.OverlapSphere(transform.position, 10f,
+                            1 << LayerMask.NameToLayer("Monster"));
+                        if (cols.Length > 0)
+                        {
+                            homingTarget = cols[0].GetComponent<Heart>();
+                        }
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.Lerp(transform.rotation,
+                            Quaternion.LookRotation((homingTarget.transform.position + Vector3.up) - transform.position),
+                            homingPerformance);
+                    }
                 }
             }
 
@@ -106,6 +134,20 @@ public class HitBox : MonoBehaviour
             var main = bf.main; // destroy on stop
             main.stopAction = ParticleSystemStopAction.Destroy;
 
+            if (bulletFlashSound != null)
+            {
+                AudioSource audioSource = bf.transform.AddComponent<AudioSource>();
+                audioSource.clip = bulletFlashSound;
+                audioSource.loop = false;
+                audioSource.time = 0;
+                audioSource.playOnAwake = false;
+                AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+                if (effectMixer.Length != 0)
+                    audioSource.outputAudioMixerGroup = effectMixer[0];
+                audioSource.spatialBlend = 1;
+                audioSource.Play();
+            }
+
             bf.transform.position = firePoint;
             bf.transform.LookAt(firePoint + dir);
         }
@@ -124,6 +166,20 @@ public class HitBox : MonoBehaviour
             var main = bh.main; // destroy on stop
             main.stopAction = ParticleSystemStopAction.Destroy;
 
+            if (bulletHitSound != null)
+            {
+                AudioSource audioSource = bh.transform.AddComponent<AudioSource>();
+                audioSource.clip = bulletHitSound;
+                audioSource.loop = false;
+                audioSource.time = 0;
+                audioSource.playOnAwake = false;
+                AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+                if (effectMixer.Length != 0)
+                    audioSource.outputAudioMixerGroup = effectMixer[0];
+                audioSource.spatialBlend = 1;
+                audioSource.Play();
+            }
+
             bh.transform.position = hitPoint;
             bh.transform.LookAt(hitPoint - dir);
         }
@@ -135,7 +191,8 @@ public class HitBox : MonoBehaviour
 
     public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 dir) // bullet 판정 재생
     {
-        ChangeLayersRecursively(this.transform, "Effect");
+        // ChangeLayersRecursively(this.transform, "Effect");
+        Init();
         heartLayer = heart.gameObject.layer;
 
         transform.position = pos;
@@ -154,7 +211,8 @@ public class HitBox : MonoBehaviour
 
     public void Particle_Play(Heart heart) // 일반 판정 재생
     {
-        ChangeLayersRecursively(this.transform, "Effect");
+        // ChangeLayersRecursively(this.transform, "Effect");
+        Init();
         heartLayer = heart.gameObject.layer;
 
         transform.position = heart.gameObject.transform.position; // 가장 부모의 위치와 방향만 잡아주면 자식들은 따라감

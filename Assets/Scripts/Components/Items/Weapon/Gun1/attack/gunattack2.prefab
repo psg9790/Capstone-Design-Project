@@ -5060,7 +5060,9 @@ MonoBehaviour:
   bulletSpeed: 15
   bulletFlashEffect: {fileID: 198594740086084638, guid: 7c4fb72ecb3bf9d4bb527abaae35f132,
     type: 3}
+  bulletFlashSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
   bulletHitEffect: {fileID: 198381662199079310, guid: 5559b3dc6f8d5914f8b78b7c0b797b75,
     type: 3}
-  isHoming: 0
+  bulletHitSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
+  isHoming: 1
   homingPerformance: 0.1
