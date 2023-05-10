@@ -145,6 +145,8 @@ public class HitBox : MonoBehaviour
                 if (effectMixer.Length != 0)
                     audioSource.outputAudioMixerGroup = effectMixer[0];
                 audioSource.spatialBlend = 1;
+                audioSource.rolloffMode = AudioRolloffMode.Linear;
+                audioSource.maxDistance = 30f;
                 audioSource.Play();
             }
 
@@ -177,6 +179,8 @@ public class HitBox : MonoBehaviour
                 if (effectMixer.Length != 0)
                     audioSource.outputAudioMixerGroup = effectMixer[0];
                 audioSource.spatialBlend = 1;
+                audioSource.rolloffMode = AudioRolloffMode.Linear;
+                audioSource.maxDistance = 30f;
                 audioSource.Play();
             }
 
