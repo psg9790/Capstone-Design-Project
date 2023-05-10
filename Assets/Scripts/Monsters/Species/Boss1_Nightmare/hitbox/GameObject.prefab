@@ -4995,7 +4995,7 @@ MonoBehaviour:
   startTime: 0
   duration: 10
   targetCount: 0
-  refreshAutomatically: 0
+  refreshAutomatically: 1
   refreshInterval: 0.25
   damageRatio: 1
   ccType: 0
@@ -5054,7 +5054,7 @@ MonoBehaviour:
     m_Bits: 0
   elapsed: 0
   duration: 10
-  targetCount: 5
+  targetCount: 1
   parent_particle: {fileID: 5376175015904738955}
   isBullet: 1
   bulletSpeed: 10

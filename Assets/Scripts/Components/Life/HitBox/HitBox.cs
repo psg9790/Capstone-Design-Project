@@ -21,29 +21,37 @@ public class HitBox : MonoBehaviour
     [ReadOnly] public float elapsed = 0; // 경과 시간
     public float duration; // 총 플레이 시간
     public int targetCount = 5; // 최대 때릴 수 있는 마릿수
+    [ShowInInspector] [ReadOnly] private int hitCount = 0;
     public ParticleSystem parent_particle; // 발동할 파티클 시스템을 인스펙터에서 끌어놓을 것
     private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>(); // trigger들을 실행 시작 순서대로 정렬할 우선순위큐
     private HitBoxTrigger[] hitBoxTriggers; // 오브젝트 하위에 있는 HitBoxTrigger들
 
     public bool isBullet = false; // 이 판정이 bullet 입니까?
-    [InfoBox("bullet 타입에서는 하나의 HitBoxTrigger만 사용 가능")] [ShowIf("isBullet")] public float bulletSpeed = 20f; // bullet 속도
+
+    [InfoBox("bullet 타입에서는 하나의 HitBoxTrigger만 사용 가능")] [ShowIf("isBullet")]
+    public float bulletSpeed = 20f; // bullet 속도
 
     [InfoBox("bulletDirection: 방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
              "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")]
     // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletSpawnPoint = Vector3.zero;
     // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
-    [ShowIf("isBullet")] public ParticleSystem bulletFlashEffect;
+    [ShowIf("isBullet")]
+    public ParticleSystem bulletFlashEffect;
+
     [ShowIf("isBullet")] public ParticleSystem bulletHitEffect; // bullet 타격시 생성될 이펙트
     [ShowIf("isBullet")] public bool isHoming = false; // 자동 추적
-    [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")] 
-    [ShowIf("isBullet")] [CustomValueDrawer("MyCustomDrawerStatic")] public float homingPerformance = 0.1f; // 자동 추적 성능
 
-    #if UNITY_EDITOR
+    [InfoBox("homingPerformance: bullet의 속도가 높을 때 높은 수치로 설정하는 것을 추천")]
+    [ShowIf("isBullet")]
+    [CustomValueDrawer("MyCustomDrawerStatic")]
+    public float homingPerformance = 0.1f; // 자동 추적 성능
+
+#if UNITY_EDITOR
     private static float MyCustomDrawerStatic(float value, GUIContent label)
     {
         return EditorGUILayout.Slider(label, value, 0f, 1f);
     }
-    #endif
+#endif
 
     private Coroutine particlePlayCoroutine;
     private Coroutine bulletPlayCoroutine;
@@ -59,7 +67,7 @@ public class HitBox : MonoBehaviour
                 pq.Pop().Activate();
             }
         }
-        
+
         // 설정한 시간을 모두 완수하면 삭제
         Destroy(this.gameObject);
     }
@@ -76,13 +84,15 @@ public class HitBox : MonoBehaviour
                 if (Mathf.Log(targetMask, 2) == layer)
                 {
                     transform.rotation = Quaternion.Lerp(transform.rotation,
-                        Quaternion.LookRotation(Player.Instance.transform.position - transform.position), homingPerformance);
+                        Quaternion.LookRotation(Player.Instance.transform.position - transform.position),
+                        homingPerformance);
                 }
             }
+
             transform.position = transform.position + transform.forward * bulletSpeed * Time.deltaTime;
             yield return null;
         }
-        
+
         // 설정한 시간을 모두 완수하면 삭제
         Destroy(this.gameObject);
     }
@@ -92,30 +102,34 @@ public class HitBox : MonoBehaviour
         if (bulletFlashEffect != null)
         {
             ParticleSystem bf = Instantiate(bulletFlashEffect);
-            
+
             var main = bf.main; // destroy on stop
             main.stopAction = ParticleSystemStopAction.Destroy;
-            
+
             bf.transform.position = firePoint;
             bf.transform.LookAt(firePoint + dir);
         }
     }
+
     public void BulletHit(Vector3 hitPoint, Vector3 dir) // bullet 충돌시 실행, 쓰지 마세요
     {
-        StopCoroutine(bulletPlayCoroutine);
+        // StopCoroutine(bulletPlayCoroutine);
+        hitCount++;
         // hit 이펙트 생성
         if (bulletHitEffect != null)
         {
             // -dir 사용
             ParticleSystem bh = Instantiate(bulletHitEffect);
-            
+
             var main = bh.main; // destroy on stop
             main.stopAction = ParticleSystemStopAction.Destroy;
-            
+
             bh.transform.position = hitPoint;
             bh.transform.LookAt(hitPoint - dir);
         }
-        Destroy(this.gameObject);
+
+        if (hitCount >= targetCount)
+            Destroy(this.gameObject);
     }
 
 
@@ -123,24 +137,26 @@ public class HitBox : MonoBehaviour
     {
         ChangeLayersRecursively(this.transform, "Effect");
         heartLayer = heart.gameObject.layer;
-        
+
         transform.position = pos;
         transform.LookAt(pos + dir);
         BulletFlash(pos, dir);
-        
+
         var main = parent_particle.main; // loop on
         main.loop = true;
-        
+
         pq.Push(GetComponentInChildren<HitBoxTrigger>());
-        pq.Top().Init(heart, targetMask, targetCount, this);
+        HitBoxTrigger hbt = pq.Top();
+        hbt.Init(heart, targetMask, targetCount, this);
         parent_particle.Play();
         bulletPlayCoroutine = StartCoroutine(BulletPlayIE());
     }
+
     public void Particle_Play(Heart heart) // 일반 판정 재생
     {
         ChangeLayersRecursively(this.transform, "Effect");
         heartLayer = heart.gameObject.layer;
-        
+
         transform.position = heart.gameObject.transform.position; // 가장 부모의 위치와 방향만 잡아주면 자식들은 따라감
         transform.rotation = Quaternion.LookRotation(heart.gameObject.transform.forward);
 
@@ -165,18 +181,18 @@ public class HitBox : MonoBehaviour
 
             if (hitBoxTriggers[i].startTime + hitBoxTriggers[i].duration > duration) // 실수 방지를 위한 duration clamping
                 hitBoxTriggers[i].duration = duration - hitBoxTriggers[i].startTime;
-            
+
             pq.Push(hitBoxTriggers[i]);
         }
 
         parent_particle.Play();
         particlePlayCoroutine = StartCoroutine(ParticlePlayIE());
     }
-    
+
     public void ChangeLayersRecursively(Transform trans, string name) // 이 이펙트 자식까지 모두 layer 변경해주는 재귀함수
     {
         trans.gameObject.layer = LayerMask.NameToLayer(name);
-        foreach(Transform child in trans)
+        foreach (Transform child in trans)
         {
             ChangeLayersRecursively(child, name);
         }

@@ -123,6 +123,145 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11750951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11750955}
+  - component: {fileID: 11750954}
+  - component: {fileID: 11750953}
+  - component: {fileID: 11750952}
+  m_Layer: 0
+  m_Name: Gun1(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &11750952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11750951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c283735905a51804487fd689d8933c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPositionData: {fileID: 11400000, guid: 3238c3dc78eba774cbbb372b3f6ba8a5, type: 2}
+  attack_effect: {fileID: 9194591403454043446, guid: 1feebc071ea4f0d418e2f0ab61c202f3,
+    type: 3}
+  skill_effect: {fileID: 6150470737697167925, guid: a09f4a3f24db2504dad29f42c9d4b2d4,
+    type: 3}
+  weaponAnimator: {fileID: 9100000, guid: 0bcf19848b4e49643967aa3500dec2ae, type: 2}
+  shootpos: {fileID: 70014828}
+  _name: 
+  attackDamamge: 0
+  attackSpeed: 0
+  attackRange: 0
+--- !u!23 &11750953
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11750951}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 08bc8d68ad6ed244eaa09dd7e8e18118, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &11750954
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11750951}
+  m_Mesh: {fileID: 4300000, guid: b9b7f814120cc114688b5c66fb600bb9, type: 3}
+--- !u!4 &11750955
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11750951}
+  m_LocalRotation: {x: 0.00000011920929, y: 1, z: 0.000000005962435, w: -0.00000004371139}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 70014828}
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &70014827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70014828}
+  m_Layer: 0
+  m_Name: shootpos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &70014828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70014827}
+  m_LocalRotation: {x: -0.00000011920929, y: -1, z: -0.000000005962435, w: -0.00000004371139}
+  m_LocalPosition: {x: 0.009, y: 0.145, z: 0.405}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 11750955}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &126291730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,7 +3085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a7066ea445d5749b7a4326079c083a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sword: {fileID: 8359160531845497347, guid: 6dcce4bdda9f6f648ba1e80061313ee2, type: 3}
+  Sword: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995, type: 3}
   testData: {fileID: 11400000, guid: 13045d23e2a26a449b7cfe327ceff7fd, type: 2}
 --- !u!4 &1825219692
 Transform:
