@@ -121,7 +121,9 @@ public class HitBox : MonoBehaviour
 
     public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 dir) // bullet 판정 재생
     {
+        ChangeLayersRecursively(this.transform, "Effect");
         heartLayer = heart.gameObject.layer;
+        
         transform.position = pos;
         transform.LookAt(pos + dir);
         BulletFlash(pos, dir);
@@ -136,6 +138,7 @@ public class HitBox : MonoBehaviour
     }
     public void Particle_Play(Heart heart) // 일반 판정 재생
     {
+        ChangeLayersRecursively(this.transform, "Effect");
         heartLayer = heart.gameObject.layer;
         
         transform.position = heart.gameObject.transform.position; // 가장 부모의 위치와 방향만 잡아주면 자식들은 따라감
@@ -168,5 +171,14 @@ public class HitBox : MonoBehaviour
 
         parent_particle.Play();
         particlePlayCoroutine = StartCoroutine(ParticlePlayIE());
+    }
+    
+    public void ChangeLayersRecursively(Transform trans, string name) // 이 이펙트 자식까지 모두 layer 변경해주는 재귀함수
+    {
+        trans.gameObject.layer = LayerMask.NameToLayer(name);
+        foreach(Transform child in trans)
+        {
+            ChangeLayersRecursively(child, name);
+        }
     }
 }

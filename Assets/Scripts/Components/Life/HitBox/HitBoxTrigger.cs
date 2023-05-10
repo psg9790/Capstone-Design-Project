@@ -97,6 +97,8 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             }
             else if (other.gameObject.layer != hitBox.heartLayer) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
             {
+                // UnityEngine.Debug.Log(LayerMask.LayerToName(other.gameObject.layer));
+                // UnityEngine.Debug.Log(other.gameObject.name);
                 if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
                         1 << other.gameObject.layer))
                 {
