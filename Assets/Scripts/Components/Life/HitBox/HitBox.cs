@@ -25,6 +25,12 @@ public class HitBox : MonoBehaviour
     public int targetCount = 5; // 최대 때릴 수 있는 마릿수
     [ShowInInspector] [ReadOnly] private int hitCount = 0;
     public ParticleSystem parent_particle; // 발동할 파티클 시스템을 인스펙터에서 끌어놓을 것
+    
+    [HideIf("isBullet")] public AudioClip slashSound;
+    [HideIf("isBullet")] public float slashSoundTime;
+    [HideIf("isBullet")] public AudioClip slashHitSound;
+    private AudioSource slashAudioSource;
+    
     private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>(); // trigger들을 실행 시작 순서대로 정렬할 우선순위큐
     private HitBoxTrigger[] hitBoxTriggers; // 오브젝트 하위에 있는 HitBoxTrigger들
 
@@ -63,18 +69,38 @@ public class HitBox : MonoBehaviour
     void Init()
     {
         ChangeLayersRecursively(this.transform, "Effect");
+        if (!isBullet)
+        {
+            slashAudioSource = transform.AddComponent<AudioSource>();
+            slashAudioSource.loop = false;
+            slashAudioSource.time = 0;
+            slashAudioSource.playOnAwake = false;
+            AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+            if (effectMixer.Length != 0)
+                slashAudioSource.outputAudioMixerGroup = effectMixer[0];
+            slashAudioSource.spatialBlend = 1;
+            slashAudioSource.rolloffMode = AudioRolloffMode.Linear;
+            slashAudioSource.maxDistance = 30f;
+        }
     }
 
     IEnumerator ParticlePlayIE()
     {
-        while (elapsed < duration) // 시간이 설정한 시간만큼 play되도록 유도
+        bool slashSoundPlayed = false;
+        while (elapsed < duration) // 시간이 설정한 시간만큼 play 되도록 유도
         {
             elapsed += Time.deltaTime;
-            yield return null;
             while (!pq.Empty() && (pq.Top().startTime <= elapsed))
             {
                 pq.Pop().Activate();
             }
+
+            if (!slashSoundPlayed && slashSoundTime <= elapsed && slashSound != null)
+            {
+                slashSoundPlayed = true;
+                slashAudioSource.PlayOneShot(slashSound);
+            }
+            yield return null;
         }
 
         // 설정한 시간을 모두 완수하면 삭제
@@ -192,6 +218,13 @@ public class HitBox : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    public void SlashHit()
+    {
+        if (slashHitSound == null)
+            return;
+        slashAudioSource.PlayOneShot(slashHitSound);
+    }
+
 
     public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 dir) // bullet 판정 재생
     {
@@ -231,6 +264,8 @@ public class HitBox : MonoBehaviour
                 var main = particles[i].main;
                 main.simulationSpeed = heart.ATK_SPEED;
             }
+
+            slashSoundTime = slashSoundTime / heart.ATK_SPEED;
         }
 
         hitBoxTriggers = GetComponentsInChildren<HitBoxTrigger>(true); // hitboxtrigger 우선순위큐 초기화

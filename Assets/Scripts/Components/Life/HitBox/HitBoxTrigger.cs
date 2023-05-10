@@ -132,6 +132,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     Vector3 dir = other.transform.position - transform.position;
                     dir.y = 0;
                     _heart.Take_Damage(damage, dir.normalized);
+                    hitBox.SlashHit();
 
                     if (hitHash.Count >= targetCount)
                     {
