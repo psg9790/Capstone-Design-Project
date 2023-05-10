@@ -102,20 +102,22 @@ namespace CharacterController
                 Vector3 nextpos = pp + Player.Instance.transform.forward;
                 nextpos += Vector3.up;
                 Ray ray = new Ray(nextpos,Vector3.down);
-                Debug.DrawRay(nextpos, Vector3.down, Color.red, 1f);
-                if (Physics.Raycast(ray, out hit,2f, 1 << LayerMask.NameToLayer("Walkable")))
+                Debug.DrawRay(nextpos, Vector3.down, Color.red, 10f);
+                if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
                 {
                     
+                    // 만약 플레이어 앞에 Wall 이면 이동x
+                    Debug.DrawRay(pp,dashDirection, Color.red,1f);//플레이어 앞에 레이져 발사
+                    if (Physics.Raycast(pp, dashDirection, 1f, 1 << LayerMask.NameToLayer("WALL")))
+                    {
+                        Debug.Log("cant dash");
+                        return;
+                    }
+
+                    dashDirection = hit.point - pp;
+                    dashVelocity = dashDirection * (dashDistance / dashDuration);
                     Player.Instance.transform.position += dashVelocity * Time.deltaTime;
                 }
-                // Debug.DrawRay(pp,dashDirection, Color.red,1f);//플레이어 앞에 0.5f만큼 레이져
-                // 만약 플레이어 앞에 가로막는 벽이 없다면 이동 아니면 이동x
-                // if (!Physics.Raycast(pp, dashDirection, 1f, 1 << LayerMask.NameToLayer("WALL")))
-                // {
-                //     Player.Instance.transform.position += dashVelocity * Time.deltaTime;
-                // }
-                
-                // Player.Instance.rigidbody.AddForce(dashVelocity * Time.deltaTime);
             }
         }
 
