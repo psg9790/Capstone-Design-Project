@@ -31,7 +31,7 @@ public class GrowthLevelManager : MonoBehaviour
     private void InitGrowthDungeon()
     {
         // level 0
-        worldLevel = 0;
+        worldLevel = -1;
 
         if (Player.Instance == null)
             Instantiate(playerPrefab);
@@ -41,10 +41,24 @@ public class GrowthLevelManager : MonoBehaviour
         
         // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
+
     }
 
     private void ChooseRandomMap()
     {
+        worldLevel++;
+        
+        int randType = UnityEngine.Random.Range(0, 2);
+        if (randType == 0) // 던전1
+        {
+            
+            playerSpawnPoint = dungeon1_spawnPoint.position;
+        }
+        else // 미로 랜덤 생성
+        {
+            
+        }
+        
         playerSpawnPoint = dungeon1_spawnPoint.position;
     }
 
