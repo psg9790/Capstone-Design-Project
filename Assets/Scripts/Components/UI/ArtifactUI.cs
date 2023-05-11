@@ -5,23 +5,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ArtifactUI : MonoBehaviour, IPointerClickHandler//, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class ArtifactUI : MonoBehaviour
 {
     public Image lockImage;
-    public Image artifactImage;
     public bool isInstallation=false;
+    public ItemSlot itemSlot;
+    public int artiNumber;
     
-
+    /*
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            DragArtiSlot.instance.dragArtiSlot = this;
-            if (DragArtiSlot.instance.dragArtiSlot.isInstallation == true)
+            DragSlot.instance.dragSlot = this;
+            if (isInstallation == true)
             {
-                artifactImage.sprite = null;
-                artifactImage.gameObject.SetActive(false);
-                //Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);      
+                itemSlot.itemSlotui.image.sprite = null;
+                itemSlot.itemSlotui.gameObject.SetActive(false);
+                Inventory.instance.AddItem(itemSlot.itemSlotui.item);      
                 DragArtiSlot.instance.dragArtiSlot.isInstallation = false;
             }
         }
