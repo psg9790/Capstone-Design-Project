@@ -14,6 +14,7 @@ public class GrowthLevelManager : MonoBehaviour
     private Vector3 playerSpawnPoint;
 
     [ReadOnly] public int worldLevel; // 월드레벨, 처음엔 0
+    [ReadOnly] public int curWorldMapType;
     [ReadOnly] public int curLevelMobCount = 0;
     [HideInInspector] public UnityEvent decreaseMobCount;
 
@@ -62,19 +63,21 @@ public class GrowthLevelManager : MonoBehaviour
             Instantiate(playerPrefab);
 
         // 랜덤 던전 선택
-        ChooseRandomMap();
+        MakeRandomMap();
 
         // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
     }
 
-    private void ChooseRandomMap()
+    [Button]
+    private void MakeRandomMap()
     {
         worldLevel++;
         curLevelMobCount = 0;
 
-        int randType = UnityEngine.Random.Range(0, 2);
-        if (randType == 0) // 던전1
+        curWorldMapType = UnityEngine.Random.Range(0, 2);
+        curWorldMapType = 1;
+        if (curWorldMapType == 0) // 던전1
         {
             playerSpawnPoint = dungeon1_spawnPoint.position;
         }
@@ -86,7 +89,8 @@ public class GrowthLevelManager : MonoBehaviour
             }
 
             maze_parent = new GameObject("maze_parent");
-            randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_spawnPoint.position, mazeIndent, maxMazeBlockCount);
+            maze_parent.transform.position = maze_spawnPoint.position;
+                randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_spawnPoint.position, mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();
         }
 

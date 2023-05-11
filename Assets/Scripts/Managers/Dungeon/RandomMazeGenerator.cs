@@ -44,6 +44,7 @@ public class RandomMazeGenerator
             {
                 int randBlock = UnityEngine.Random.Range(0, mazePrefabs.Length); // 랜덤 블록 인덱스
                 GameObject newBlock = Object.Instantiate(mazePrefabs[randBlock]); // 랜덤 블록 생성
+                newBlock.transform.SetParent(parentTransform);
                 newBlock.transform.position = popPos; // 위치 설정
                 closed.Add(popPos);
                 for (int i = 0; i < 4; i++)
