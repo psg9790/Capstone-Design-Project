@@ -56,8 +56,8 @@ public class ArtifactSlot : ItemSlot
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
             ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
+            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
         }
        
         Inventory.instance.artifactUIs[number].isInstallation = false;
