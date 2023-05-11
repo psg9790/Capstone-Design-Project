@@ -17,12 +17,14 @@ public class Gun1 : BaseWeapon
     {
         HitBox hitBox = Instantiate(attack_effect[combo]);
 
-        Vector3 pos = shootpos.position;
-        Vector3 rot = Player.Instance.weaponManager.atk_pos;
-        /*Vector3 rot = Player.Instance.weaponManager.atk_pos - pos;
-        rot.y = 0f;*/
-        
-        hitBox.BulletParticle_Play(Player.Instance.heart,pos,rot);
+        if (hitBox.isBullet)
+        {
+            Bullet_Play(hitBox);
+        }
+        else
+        {
+            hitBox.Particle_Play(Player.Instance.heart);
+        }
         
 
     }
@@ -30,14 +32,20 @@ public class Gun1 : BaseWeapon
     {
         // Player.Instance.stateMachine?.CurrentState?.OnExitState();
     }
-    public override void Skill()
+    public override void Skill(int i)
     {
-        HitBox hitBox = Instantiate(skill_effect[0]);
-        Vector3 pos = shootpos.position;
-        Vector3 rot = Player.Instance.weaponManager.atk_pos;
-        hitBox.BulletParticle_Play(Player.Instance.heart,pos,rot);
-        
-        
-        
+        HitBox hitBox = Instantiate(skill_effect[i]);
+        if (hitBox.isBullet)
+        {
+            Bullet_Play(hitBox);
+        }
+        else
+        {
+            hitBox.Particle_Play(Player.Instance.heart);
+        }
+    }
+    public override void EndSkill()
+    {
+        Player.Instance.animator.SetInteger("skillnum",-1);
     }
 }

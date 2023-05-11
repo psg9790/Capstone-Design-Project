@@ -18,7 +18,14 @@ public class Sword1 : BaseWeapon
     {
         
         HitBox hitBox = Instantiate(attack_effect[combo]);
-        hitBox.Particle_Play(Player.Instance.heart);
+        if (hitBox.isBullet)
+        {
+            Bullet_Play(hitBox);
+        }
+        else
+        {
+            hitBox.Particle_Play(Player.Instance.heart);
+        }
         
 
     }
@@ -26,15 +33,24 @@ public class Sword1 : BaseWeapon
     {
         // Player.Instance.animator.ResetTrigger("attack");
     }
-    public override void Skill()
+    public override void Skill(int i)
     {
-        HitBox hitBox = Instantiate(skill_effect[1]);
-        hitBox.Particle_Play(Player.Instance.heart);
-       
+        HitBox hitBox = Instantiate(skill_effect[i]);
         
-        
+        if (hitBox.isBullet)
+        {
+            Bullet_Play(hitBox);
+        }
+        else
+        {
+            hitBox.Particle_Play(Player.Instance.heart);
+        }
     }
 
+    public override void EndSkill()
+    {
+        Player.Instance.animator.SetInteger("skillnum",-1);
+    }
     
 
 }

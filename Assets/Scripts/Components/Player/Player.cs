@@ -105,9 +105,14 @@ public class Player : MonoBehaviour
         stateMachine.ChangeState(StateName.Idle);
     }
 
-    public void OnStartSkill()
+    public void OnStartSkill(int i) // i = skill input
     {
-        weaponManager.Weapon?.Skill();
+        weaponManager.Weapon?.Skill(i);
+    }
+
+    public void OnEndSkill()
+    {
+        stateMachine.ChangeState(StateName.Idle);
     }
 }
 

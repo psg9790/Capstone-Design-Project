@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  offset: {x: -5, y: 11, z: 5}
+  offset: {x: 0, y: 15, z: -7}
   attached: 0
   rotateOnUpdate: 0
 --- !u!1 &506465611
@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 1231878824354940382, guid: 9a1f4ff0974ee494380010a20e818ee8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1231878824354940382, guid: 9a1f4ff0974ee494380010a20e818ee8,
         type: 3}
@@ -3119,7 +3119,7 @@ PrefabInstance:
     - target: {fileID: 5337324291364039534, guid: 07a2ea6d9a3dbad43936ec15f197b206,
         type: 3}
       propertyPath: m_Name
-      value: Player2
+      value: TestPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 5337324291364039534, guid: 07a2ea6d9a3dbad43936ec15f197b206,
         type: 3}
@@ -3129,7 +3129,7 @@ PrefabInstance:
     - target: {fileID: 7848080700785682662, guid: 07a2ea6d9a3dbad43936ec15f197b206,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07a2ea6d9a3dbad43936ec15f197b206, type: 3}

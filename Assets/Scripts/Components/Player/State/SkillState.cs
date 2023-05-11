@@ -7,7 +7,9 @@ namespace CharacterController
 {
     public class SkillState : BaseState
     {
+        private bool[] isCollTime = {false,false,false,false};
         
+        private Coroutine coolTimeCoroutine;
         public SkillState(PlayerController controller) : base(controller)
         {
             
@@ -15,6 +17,25 @@ namespace CharacterController
         public override void OnEnterState()
         {
             // UnityEngine.Debug.Log("Skill enter");
+            Player.Instance.nav.ResetPath();
+            int num = Controller.skillnum;
+            if (!isCollTime[num])
+            {
+                isCollTime[num] = true;
+                skill(num);
+                
+                coolTimeCoroutine = CoolTimeHelper.StartCoroutine(CoolTimeCoroutine(num));
+            }
+            else
+            {
+                Debug.Log(num+"번 째 스킬 쿨타임중...");
+                Player.Instance.stateMachine.ChangeState(StateName.Idle);
+            }
+
+        }
+
+        public void skill(int num)
+        {
             Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking;
@@ -27,10 +48,9 @@ namespace CharacterController
             }
             Player.Instance.nav.ResetPath();
             
+            Player.Instance.animator.SetInteger("skillnum", num);
             Player.Instance.animator.SetTrigger("skill");
-            // Player.Instance.weaponManager.Weapon?.Skill();
         }
-        
 
         
         public override void OnUpdateState()
@@ -46,7 +66,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
-            
+            Player.Instance.animator.SetInteger("skillnum",-1);
         }
         protected void LookAt(Vector3 direction)
         {
@@ -56,6 +76,24 @@ namespace CharacterController
                 Controller.transform.rotation = targetAngle;
             }
         }
+        private IEnumerator CoolTimeCoroutine(int i) // 쿨타임 계산
+        {
+            float currentTime = 0f;
+            while (true)
+            {
+                currentTime += Time.deltaTime;
+                if (currentTime >= Player.Instance.weaponManager.CoolTime[i])
+                {
+                    break;
+                }
+
+                yield return null;
+            }
+
+            isCollTime[i] = false;
+        }
+        
+        
+        
     }
-    
 }
