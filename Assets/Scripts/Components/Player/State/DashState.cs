@@ -29,10 +29,13 @@ namespace CharacterController
             {
                 Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
                 RaycastHit hit;
+                Plane GroupPlane = new Plane(Vector3.up, Vector3.zero);
+                
                 // 수정할 부분
                 // 여기를 땅찍는쪽으로 방향 받는게 아니라 아무대나 눌러도 방향만 받아오게 한 다음에
                 // 업데이트에서 이동할 위치에 위에서 레이져 쏴서 그 곳이 워커블인지 확인하면
                 // 맵밖 찍어도 구르기를 하고 알아서 충돌처리나 기울기 처리도 될거같음
+                
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
                 {
                     Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
@@ -40,21 +43,7 @@ namespace CharacterController
                     LookAt(hit.point - pltp);
                     
                     dashDirection = (hit.point - pltp).normalized;
-                }
-
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Vector3 clickPosition = hit.point;
-
-                    // 현재 위치와 대쉬할 방향 벡터 계산
-                    Vector3 currentPosition = Controller.transform.position;
-                    Vector3 dashVector = clickPosition - currentPosition;
-                    dashVector.y = 0f;
-                    // float _dashDistance = dashVector.magnitude;
-                
-                    // 대쉬할 방향 벡터 저장
-                    // dashDirection = dashVector.normalized;
-                
+                    
                     // NavMeshAgent 비활성화
                     Player.Instance.nav.enabled = false;
                 
@@ -63,6 +52,23 @@ namespace CharacterController
                     dashStartTime = Time.time;
                     Player.Instance.animator.SetTrigger("doDodge");
                 }
+
+                
+                
+                // if (Physics.Raycast(ray, out hit))
+                // {
+                //     Vector3 clickPosition = hit.point;
+                //
+                //     // 현재 위치와 대쉬할 방향 벡터 계산
+                //     Vector3 currentPosition = Controller.transform.position;
+                //     Vector3 dashVector = clickPosition - currentPosition;
+                //     dashVector.y = 0f;
+                //     // float _dashDistance = dashVector.magnitude;
+                //
+                //     // 대쉬할 방향 벡터 저장
+                //     // dashDirection = dashVector.normalized;
+                //     
+                // }
             }
             else
             {
@@ -90,18 +96,28 @@ namespace CharacterController
             else
             {
                 // 플레이어 이동
+                RaycastHit hit;
                 Vector3 dashVelocity = dashDirection * (dashDistance / dashDuration);//얼마나 이동할지 계산
                 Vector3 pp = Player.Instance.transform.position;
-                
-                Debug.DrawRay(pp,dashDirection, Color.red,0.5f);//플레이어 앞에 0.5f만큼 레이져
-                // 만약 플레이어 앞에 가로막는 벽이 없다면 이동 아니면 이동x
-                if (!Physics.Raycast(pp, dashDirection, 0.5f, 1 << LayerMask.NameToLayer("WALL")))
+                Vector3 nextpos = pp + Player.Instance.transform.forward;
+                nextpos += Vector3.up;
+                Ray ray = new Ray(nextpos,Vector3.down);
+                Debug.DrawRay(nextpos, Vector3.down, Color.red, 10f);
+                if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
                 {
+                    
+                    // 만약 플레이어 앞에 Wall 이면 이동x
+                    Debug.DrawRay(pp,dashDirection, Color.red,1f);//플레이어 앞에 레이져 발사
+                    if (Physics.Raycast(pp, dashDirection, 1f, 1 << LayerMask.NameToLayer("WALL")))
+                    {
+                        Debug.Log("cant dash");
+                        return;
+                    }
+
+                    dashDirection = hit.point - pp;
+                    dashVelocity = dashDirection * (dashDistance / dashDuration);
                     Player.Instance.transform.position += dashVelocity * Time.deltaTime;
                 }
-                
-
-                // Player.Instance.rigidbody.AddForce(dashVelocity * Time.deltaTime);
             }
         }
 

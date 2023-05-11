@@ -74,4 +74,8 @@ public enum InputKey
     SpaceClick,
     F,
     QClick,
+    WClick,
+    EClick,
+    RClick,
+    
 }
