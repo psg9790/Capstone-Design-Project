@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
 
 
             Vector3 direction = (Player.Instance.transform.position - transform.position).normalized;
-            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity,
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Vector3.Distance(transform.position,Player.Instance.transform.position),
                 1 << LayerMask.NameToLayer("WALL"));
             for (int i = 0; i < hits.Length; i++)
             {

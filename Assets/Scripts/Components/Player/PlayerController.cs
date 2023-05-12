@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isDashing = false;
     public bool isAttack = false;
+    public bool isSkill = false;
     
     private bool isDashCollTime = false;
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             Player.Instance.animator.SetTrigger("attack");
         }
-        if (!isDashing && !isAttack)
+        if (!isDashing && !isAttack && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.attack);
             // rightClickHold = true;
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // 이동하면 안되는 조건문 추가
-        if (!isDashing)
+        if (!isDashing && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.move);
             // rightClickHold = true;
