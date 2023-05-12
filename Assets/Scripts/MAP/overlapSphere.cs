@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class overlapSphere : MonoBehaviour
 {
@@ -19,11 +20,16 @@ public class overlapSphere : MonoBehaviour
     private GameObject ClearContents;
     private int MAX = 28;
     public Inventory inven;
+    public int ClickNum;
+    public bool clicked;
     
     private void Start()
     {
         content= GameObject.Find("Content").GetComponent<RectTransform>();
         inven = GameObject.Find("InvenSet").GetComponent<Inventory>();
+        
+        clicked = false;
+        ClickNum = 100;
     }
 
     private void Update()
@@ -33,29 +39,40 @@ public class overlapSphere : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         int count = 0;
         dataList.Clear();
-        
+        Collider[] coll= new Collider[40];
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
             if (col.CompareTag("Item") )
             {
-                Debug.Log(col.gameObject.name + "추가");
                 dataList.Add(col.gameObject);
                 Incontents = content.GetChild(count).gameObject;
                 Incontents.SetActive(true);
-                
+                //Incontents.GetComponentInChildren<TMP_Text>().text =
+                    //col.gameObject.GetComponent<FeildItem>().item.itemName;
+                    coll[count] = col;
                 count++;
             }
             
         }
+        
         ClearContent(count);
-
+        
+        if ( clicked && inven.IsEmpty() ) 
+        {
+            UnityEngine.Debug.Log("클릭 인식함..?");
+            inven.AddItem(dataList[ClickNum].GetComponent<FeildItem>().item);
+            Destroy(dataList[ClickNum].gameObject);
+            clicked = false;
+        }
+        
+        //F키 입력 시 첫번 째 아이템 정보 옮기기
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
             inven.AddItem(dataList[0].GetComponent<FeildItem>().item);
             Destroy(dataList[0].gameObject);
-            UnityEngine.Debug.Log("Destroyed");
         }
+        
     }
 
     void ClearContent(int count)
@@ -69,7 +86,17 @@ public class overlapSphere : MonoBehaviour
             }
         }
     }
+    
+    public void ClickEvent(int val)
+    {
 
+        clicked = true;
+        ClickNum = val;
+        UnityEngine.Debug.Log(ClickNum + "캐릭터에 인...직...");
+        
+    }
+    
+    
 }
 
 

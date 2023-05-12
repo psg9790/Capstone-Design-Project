@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5602098309189909759}
   - component: {fileID: 5602098309189909758}
   - component: {fileID: 5602098309189909753}
+  - component: {fileID: 5712473690129932465}
   m_Layer: 5
   m_Name: Comminication
   m_TagString: Untagged
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -122,9 +123,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 406763875, guid: 567feb9566eca48d69d49cd124368db9, type: 3}
-        m_TargetAssemblyTypeName: overlapSphere, Assembly-CSharp
-        m_MethodName: AddItem
+      - m_Target: {fileID: 5712473690129932465}
+        m_TargetAssemblyTypeName: ClickedbuttonData, Assembly-CSharp
+        m_MethodName: clicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -134,6 +135,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5712473690129932465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602098309189909755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc17cf2cded64ddf8447048afcbd62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 4461186421554022304, guid: 99ddefce57bb742ea892148b19dbe8c7, type: 3}
+  num: 0
 --- !u!1 &5602098309515199133
 GameObject:
   m_ObjectHideFlags: 0
