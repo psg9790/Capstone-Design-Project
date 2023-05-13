@@ -11,5 +11,10 @@ public class MazeComponent : MonoBehaviour
         
         return 0;
     }
+
+    public void Terminate()
+    {
+        Destroy(this.gameObject);
+    }
     
 }

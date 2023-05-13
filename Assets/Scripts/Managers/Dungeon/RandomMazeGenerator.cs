@@ -16,6 +16,8 @@ public class RandomMazeGenerator
     private List<Vector3> opened = new List<Vector3>();
     private GameObject[] mazePrefabs;
 
+    public List<MazeComponent> mazeComponents = new List<MazeComponent>();
+
     public RandomMazeGenerator(Transform parent, Vector3 pos, int blockSize, int roomCount)
     {
         parentTransform = parent;
@@ -58,6 +60,7 @@ public class RandomMazeGenerator
                 }
                 if (newBlock.TryGetComponent<MazeComponent>(out MazeComponent newMaze))
                 {
+                    mazeComponents.Add(newMaze);
                     GrowthLevelManager.Instance.curLevelMobCount += newMaze.SpawnMonsters();
                 }
             }
@@ -67,5 +70,13 @@ public class RandomMazeGenerator
         opened.Clear();
         openedHash.Clear();
         closed.Clear();
+    }
+
+    public void Terminate()
+    {
+        for (int i = 0; i < mazeComponents.Count; i++)
+        {
+            mazeComponents[i].Terminate();
+        }
     }
 }

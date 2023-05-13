@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class GrowthLevelManager : MonoBehaviour
@@ -23,7 +25,8 @@ public class GrowthLevelManager : MonoBehaviour
     public int mazeIndent = 28;
     public int maxMazeBlockCount = 12;
     
-    private GameObject maze_parent;
+    public GameObject maze_parent;
+    public NavMeshSurface maze_parent_nav;
     private RandomMazeGenerator randomMazeGenerator;
 
     
@@ -56,6 +59,7 @@ public class GrowthLevelManager : MonoBehaviour
 
     private void InitGrowthDungeon()
     {
+        maze_spawnPoint.transform.position += new Vector3(mazeIndent >> 1, 0, mazeIndent >> 1);
         // level 0
         worldLevel = -1;
 
@@ -67,6 +71,11 @@ public class GrowthLevelManager : MonoBehaviour
 
         // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
+    }
+
+    private void UpdateNavMesh()
+    {
+        maze_parent_nav.UpdateNavMesh(maze_parent_nav.navMeshData);
     }
 
     [Button]
@@ -83,15 +92,25 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else // 미로 랜덤 생성
         {
-            if (!ReferenceEquals(maze_parent, null)) // 기존 미로 삭제
+            playerSpawnPoint = maze_spawnPoint.position;
+            if (!ReferenceEquals(randomMazeGenerator, null)) // 기존 미로 삭제
             {
-                Destroy(maze_parent);
+                randomMazeGenerator.Terminate();
+                randomMazeGenerator = null;
+                // Destroy(maze_parent);
             }
 
-            maze_parent = new GameObject("maze_parent");
-            maze_parent.transform.position = maze_spawnPoint.position;
-                randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_spawnPoint.position, mazeIndent, maxMazeBlockCount);
+            randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();
+            
+            if (maze_parent_nav.navMeshData == null)
+            {
+                maze_parent_nav.BuildNavMesh();
+            }
+            else
+            {
+                Invoke("UpdateNavMesh", Time.deltaTime * 1.5f);
+            }
         }
 
         // // 디버그
@@ -109,5 +128,7 @@ public class GrowthLevelManager : MonoBehaviour
         Player.Instance.nav.enabled = false;
         Player.Instance.transform.position = pos;
         Player.Instance.nav.enabled = true;
+        
+        Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
     }
 }
