@@ -78,6 +78,11 @@ public class GrowthLevelManager : MonoBehaviour
         maze_parent_nav.UpdateNavMesh(maze_parent_nav.navMeshData);
     }
 
+    public void UpdateNavMeshDelay(float sec)
+    {
+        Invoke("UpdateNavMesh", sec);
+    }
+
     [Button]
     private void MakeRandomMap()
     {
@@ -109,7 +114,8 @@ public class GrowthLevelManager : MonoBehaviour
             }
             else
             {
-                Invoke("UpdateNavMesh", Time.deltaTime * 1.5f);
+                // Invoke("UpdateNavMesh", Time.deltaTime * 1.5f);
+                UpdateNavMeshDelay(Time.deltaTime * 1.5f);
             }
         }
 
