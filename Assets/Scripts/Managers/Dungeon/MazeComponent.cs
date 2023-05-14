@@ -31,9 +31,9 @@ public class MazeComponent : MonoBehaviour
         GameObject wallgo = Resources.Load("MazeComponents/Wall/Wall").GameObject();
         for (int i = 0; i < 4; i++)
         {
-            dy[i] = dy[i] >> 1;
-            dx[i] = dx[i] >> 1;
-            Vector3 wallPos = mid_point.position + new Vector3(dx[i], 0, dy[i]);
+            // dy[i] = dy[i] >> 1;
+            // dx[i] = dx[i] >> 1;
+            Vector3 wallPos = mid_point.position + new Vector3(generator.dx[i] >> 1, 0, generator.dy[i] >> 1);
             GameObject newWall = Instantiate(wallgo, wallPos, Quaternion.LookRotation(wallPos - mid_point.position));
             newWall.name = "wall " + this.gameObject.name + i.ToString();
             newWall.layer = LayerMask.NameToLayer("FakeWall");
@@ -49,6 +49,7 @@ public class MazeComponent : MonoBehaviour
         {
             Vector3 dir = new Vector3(dx[i], 0, dy[i]);
             hits = Physics.RaycastAll(mid_point.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("FakeWall"));
+            UnityEngine.Debug.DrawRay(mid_point.position, dir, Color.red, 3f);
             for (int j = 0; j < hits.Length; j++)
             {
                 Destroy(hits[j].transform.gameObject);
