@@ -49,11 +49,14 @@ public class MazeComponent : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             Vector3 dir = new Vector3(dx[i], 0, dy[i]);
-            hits = Physics.RaycastAll(mid_point.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("FakeWall"));
+            hits = Physics.RaycastAll(mid_point.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Wall"));
             UnityEngine.Debug.DrawRay(mid_point.position, dir, Color.red, 3f);
             for (int j = 0; j < hits.Length; j++)
             {
-                Destroy(hits[j].transform.gameObject);
+                if (hits[i].transform.gameObject.CompareTag("FakeWall"))
+                {
+                    Destroy(hits[j].transform.gameObject);
+                }
             }
         }
         GrowthLevelManager.Instance.UpdateNavMeshDelay(Time.deltaTime * 1.5f);
