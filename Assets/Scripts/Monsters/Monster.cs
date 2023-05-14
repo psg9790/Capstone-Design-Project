@@ -30,6 +30,7 @@ namespace Monsters
         [HideInInspector] public MonsterFOV fov; // 시야, 컴포넌트 미리 추가 필요
         [HideInInspector] public SkillSet skillset; // 몬스터별 스킬 구현 사용
         [HideInInspector] public Rigidbody rigid; // 넉백용
+        [HideInInspector] public MazeComponent MazeComponent;
         
         // behavior
         public StateMachine fsm; // 상태의 변경을 관리할 장치, 상태 변경 시 이전 상태의 Exit() 실행 후 새로운 상태의 Enter()를 실행시켜 줌

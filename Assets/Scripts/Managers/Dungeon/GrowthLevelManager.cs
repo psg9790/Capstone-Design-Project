@@ -18,8 +18,8 @@ public class GrowthLevelManager : MonoBehaviour
     [ReadOnly] public int worldLevel; // 월드 레벨(난이도), 처음엔 0
     [ReadOnly] public int curWorldMapType; // 0~10까지 확률적으로 맵 생성
     
-    [ReadOnly] public int curLevelMobCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
-    [HideInInspector] public UnityEvent decreaseMobCount; // 몹 갯수 줄이는 이벤트
+    [ReadOnly] public int curLevelMonsterCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
+    // [HideInInspector] public UnityEvent decreaseMobCount; // 몹 갯수 줄이는 이벤트
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
     public int mazeIndent = 28; // 미로 블럭들 사이의 간격
@@ -36,7 +36,7 @@ public class GrowthLevelManager : MonoBehaviour
         {
             instance = this;
             InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
-            decreaseMobCount.AddListener(DecreaseMobCount); // 몹 감소 이벤트 등록
+            // decreaseMobCount.AddListener(DecreaseMobCount); // 몹 감소 이벤트 등록
         }
         else
         {
@@ -44,14 +44,14 @@ public class GrowthLevelManager : MonoBehaviour
         }
     }
 
-    private void DecreaseMobCount() // 몬스터 감소 이벤트, 일정 횟수 이상 몹을 해치우면 보스 생성 등 로직 추가 가능
+    public void DecreaseMonsterCount() // 몬스터 감소 이벤트, 일정 횟수 이상 몹을 해치우면 보스 생성 등 로직 추가 가능
     {
-        if (curLevelMobCount > 0)
+        if (curLevelMonsterCount > 0)
         {
-            curLevelMobCount--;
+            curLevelMonsterCount--;
         }
 
-        if (curLevelMobCount == 0)
+        if (curLevelMonsterCount == 0)
         {
             // 보스몹 생성
         }
@@ -87,7 +87,7 @@ public class GrowthLevelManager : MonoBehaviour
     public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
         worldLevel++;
-        curLevelMobCount = 0;
+        curLevelMonsterCount = 0;
 
         MakeRandomMap();
         

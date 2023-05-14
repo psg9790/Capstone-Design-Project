@@ -11,13 +11,17 @@ public class MazeComponent : MonoBehaviour
     public List<Transform> monsterSpawnPoints = new List<Transform>(); // 몬스터를 스폰할 위치 좌표들
     [SerializeField][Required] private Transform mid_point; // 이 미로 블럭의 정중앙 위치값, 미로 블럭 클리어 시 4방향의 벽을 부수기 위함
 
-    private int[] dy = new int[4];
-    private int[] dx = new int[4];
+    private int[] dy = new int[4]; // randomGenerator dy 카피
+    private int[] dx = new int[4]; // randomGenerator dx 카피
+
+    private int monsterCount;
     
     public int SpawnMonsters() // 몬스터들을 생성하고 마릿수를 반환 (일정 %의 몹 제거시 이벤트 활용을 위함)
     {
-        
-        return 0;
+        int rst = 0;
+
+
+        return monsterCount = rst;
     }
 
     // private RandomMazeGenerator generator; // dy, dx를 가져오기 위한 변수
@@ -39,7 +43,7 @@ public class MazeComponent : MonoBehaviour
     }
 
     [Button]
-    public void CollapseWalls() // 미로 블럭 내 모든 몬스터 제거시 방 오픈?
+    private void CollapseWalls() // 미로 블럭 내 모든 몬스터 제거시 방 오픈?
     {
         RaycastHit[] hits;
         for (int i = 0; i < 4; i++)
@@ -60,6 +64,24 @@ public class MazeComponent : MonoBehaviour
         return playerSpawnPoint;
     }
 
+    public void DecreaseMonsterCount()
+    {
+        if (monsterCount > 0)
+        {
+            monsterCount--;
+            GrowthLevelManager.Instance.DecreaseMonsterCount();   
+        }
+        CheckCollapseWalls();
+    }
+
+    public void CheckCollapseWalls()
+    {
+        if (monsterCount <= 0)
+        {
+            CollapseWalls();
+        }
+    }
+    
     public void Terminate() // 미로 블럭 셧다운
     {
         Destroy(this.gameObject);
