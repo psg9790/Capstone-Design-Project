@@ -73,18 +73,8 @@ public class PlayerController : MonoBehaviour
         if (!isDashing && !isAttack && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.attack);
-            // rightClickHold = true;
-            // player.stateMachine.OnEnterState();
         }
-        // player.stateMachine.ChangeState();
-        // Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-        // RaycastHit hit;
-        // if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-        // {
-        //     Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-        //     LookAt(hit.point - transform.position);
-        // }
-        // player.attack();
+        
     }
 
     void QClickPerformed(InputAction.CallbackContext context)
@@ -119,15 +109,9 @@ public class PlayerController : MonoBehaviour
         if (!isDashing && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.move);
-            // rightClickHold = true;
-            // player.stateMachine.OnEnterState();
+            
         }
     }
-    
-    // void RighClickCanceled(InputAction.CallbackContext context)
-    // {
-    //     rightClickHold = false;
-    // }
     
     // 스페이스바 대쉬
     void SpaceClickPerformed(InputAction.CallbackContext context)
@@ -185,8 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             Item drop = coll.gameObject.GetComponent<DroppedItem>().item;
             Debug.Log(drop.itemData.itemName);
-            // InventoryManager.Instance.addItem(drop);
-            // Destroy(coll.gameObject);
+            
         }
     }
 
