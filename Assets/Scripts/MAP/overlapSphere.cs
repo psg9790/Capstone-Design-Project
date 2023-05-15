@@ -60,8 +60,12 @@ public class overlapSphere : MonoBehaviour
         
         if ( clicked)// && inven.IsEmpty() ) 
         {
+            clicked = false;
             UnityEngine.Debug.Log("클릭 인식함..?");
-            inven.AddItem(dataList[ClickNum].GetComponent<DroppedItem>().item);
+            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
+            //inven.AddItem(dataList[ClickNum].GetComponent<DroppedItem>().item);
+            UnityEngine.Debug.Log(GetItem.itemName);
+            Inventory.instance.AddItem(GetItem);
             Destroy(dataList[ClickNum].gameObject);
             clicked = false;
         }
@@ -69,8 +73,12 @@ public class overlapSphere : MonoBehaviour
         //F키 입력 시 첫번 째 아이템 정보 옮기기
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0)// && inven.IsEmpty()) 
         {
-            inven.AddItem(dataList[0].GetComponent<DroppedItem>().item);
-            
+            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
+
+            //inven.AddItem(dataList[0].GetComponent<DroppedItem>().item);
+            UnityEngine.Debug.Log(GetItem.itemName);
+
+            Inventory.instance.AddItem(GetItem);
             Destroy(dataList[0].gameObject);
         }
         
