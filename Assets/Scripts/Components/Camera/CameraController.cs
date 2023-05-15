@@ -62,6 +62,7 @@ public class CameraController : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 // Debug.Log(hits[i].transform.gameObject.name);
+                
                 transwall[] obj = hits[i].transform.parent.GetComponentsInChildren<transwall>();
                 for (int j = 0; j < obj.Length; j++)
                 {
