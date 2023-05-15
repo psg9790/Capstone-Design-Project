@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MazeComponent : MonoBehaviour
 {
@@ -19,7 +20,21 @@ public class MazeComponent : MonoBehaviour
     public int SpawnMonsters() // 몬스터들을 생성하고 마릿수를 반환 (일정 %의 몹 제거시 이벤트 활용을 위함)
     {
         int rst = 0;
-
+        for (int i = 0; i < monsterSpawnPoints.Count; i++)
+        {
+            int newMonsterCount = Random.Range(1, 3);
+            for (int j = 0; j < newMonsterCount; j++)
+            {
+                int newMonsterIdx = Random.Range(0, GrowthLevelManager.Instance.general_monsters.Length);
+                Monsters.Monster newMonster = Instantiate(GrowthLevelManager.Instance.general_monsters[newMonsterIdx], 
+                        monsterSpawnPoints[i].transform.position, 
+                        monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
+                newMonster.Init(monsterSpawnPoints[i].transform.position, 4f);
+                newMonster.mazeComponent = this;
+                newMonster.transform.SetParent(this.transform);
+                rst++;
+            }
+        }
 
         return monsterCount = rst;
     }

@@ -310,6 +310,10 @@ namespace Monsters
 
         public void OnDeath_Event() // 사망 시
         {
+            if (!ReferenceEquals(mazeComponent, null))
+            {
+                mazeComponent.DecreaseMonsterCount();
+            }
             fsm.ChangeState(EMonsterState.Dead);
         }
 
