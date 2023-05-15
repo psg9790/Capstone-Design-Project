@@ -68,6 +68,7 @@ namespace CharacterController
         public override void OnExitState()
         {
             Controller.isSkill = false;
+            // Player.Instance.animator.SetTrigger("resetanim");
             Player.Instance.animator.SetInteger("skillnum",-1);
         }
         protected void LookAt(Vector3 direction)
