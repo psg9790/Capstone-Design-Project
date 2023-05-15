@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     [Header("Item search radius")]
     public float radius = 1f;
     
-    public Camera cam;
     // private bool rightClickHold = false;
     // private bool leftClick = false;
     // private bool SpaceClick = false;
@@ -51,7 +50,6 @@ public class PlayerController : MonoBehaviour
         }
     
         player = GetComponent<Player>();
-        cam = Camera.main;
         
     }
 
@@ -79,21 +77,25 @@ public class PlayerController : MonoBehaviour
 
     void QClickPerformed(InputAction.CallbackContext context)
     {
+        if(isSkill) return;
         skillnum = 0;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void WClickPerformed(InputAction.CallbackContext context)
     {
+        if(isSkill) return;
         skillnum = 1;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void EClickPerformed(InputAction.CallbackContext context)
     {
+        if(isSkill) return;
         skillnum = 2;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void RClickPerformed(InputAction.CallbackContext context)
     {
+        if(isSkill) return;
         skillnum = 3;
         player.stateMachine.ChangeState(StateName.skill);
     }
