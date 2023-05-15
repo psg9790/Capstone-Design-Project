@@ -34,10 +34,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.weaponSlot.image.gameObject.SetActive(true);             // 무기 이미지 없앰.
                     Inventory.instance.isInstallation = true;
                 }
-
+                
                 Inventory.instance.weaponSlot.image.sprite = itemSlotui.image.sprite;
                 Inventory.instance.weaponSlot.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+                
+                
+                GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
+                Player.Instance.weaponManager.SetWeapon(weapon);
                 
                 for (int i = 0; i < 6; i++)
                 {

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using CharacterController;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 
 public class PlayerController : MonoBehaviour
@@ -21,12 +22,14 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine dashCoolTimeCoroutine;
     
-    
+    // 스킬 입력 키
+    public int skillnum = -1;
     
     // public float dashCooldown = Player.Instance.dashCooltime; // 대쉬 쿨다운
 
     public bool isDashing = false;
     public bool isAttack = false;
+    
     private bool isDashCollTime = false;
 
     private void Start()
@@ -38,7 +41,12 @@ public class PlayerController : MonoBehaviour
             InputManager.Instance.AddPerformed(InputKey.RightClick, RighClickPerformed);
             // InputManager.Instance.AddCanceled(InputKey.RightClick, RighClickCanceled);
             InputManager.Instance.AddPerformed(InputKey.SpaceClick, SpaceClickPerformed);
-            InputManager.Instance.AddPerformed(InputKey.QClick, SkillClickPerformed);
+            InputManager.Instance.AddPerformed(InputKey.QClick, QClickPerformed);
+            InputManager.Instance.AddPerformed(InputKey.WClick, WClickPerformed);
+            InputManager.Instance.AddPerformed(InputKey.EClick, EClickPerformed);
+            InputManager.Instance.AddPerformed(InputKey.RClick, RClickPerformed);
+
+            
         }
     
         player = GetComponent<Player>();
@@ -53,6 +61,14 @@ public class PlayerController : MonoBehaviour
     // 마우스 좌클릭 공격
     void LeftClickPerformed(InputAction.CallbackContext context)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (isAttack)
+        {
+            Player.Instance.animator.SetTrigger("attack");
+        }
         if (!isDashing && !isAttack)
         {
             player.stateMachine.ChangeState(StateName.attack);
@@ -70,16 +86,34 @@ public class PlayerController : MonoBehaviour
         // player.attack();
     }
 
-    void SkillClickPerformed(InputAction.CallbackContext context)
+    void QClickPerformed(InputAction.CallbackContext context)
     {
+        skillnum = 0;
         player.stateMachine.ChangeState(StateName.skill);
     }
-    
-    
+    void WClickPerformed(InputAction.CallbackContext context)
+    {
+        skillnum = 1;
+        player.stateMachine.ChangeState(StateName.skill);
+    }
+    void EClickPerformed(InputAction.CallbackContext context)
+    {
+        skillnum = 2;
+        player.stateMachine.ChangeState(StateName.skill);
+    }
+    void RClickPerformed(InputAction.CallbackContext context)
+    {
+        skillnum = 3;
+        player.stateMachine.ChangeState(StateName.skill);
+    }
     
     // 마우스 우클릭 이동 
     void RighClickPerformed(InputAction.CallbackContext context)
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         // 이동하면 안되는 조건문 추가
         if (!isDashing)
         {

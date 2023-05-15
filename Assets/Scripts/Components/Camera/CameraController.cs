@@ -14,9 +14,29 @@ using Vector3 = UnityEngine.Vector3;
 public class CameraController : MonoBehaviour
 {
     [Sirenix.OdinInspector.ReadOnly] public Player player; // 이 카메라가 쫓아다닐 플레이어 정보
-    public Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
+    [SerializeField] private Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터
     public bool attached = false;
-    public bool rotateOnUpdate = false;
+    [SerializeField] private bool rotateOnUpdate = false;
+    [SerializeField] private GameObject floor_fog_prefab;
+    private GameObject floor_fog;
+
+    [Button]
+    public void AttachPlayerInstance()
+    {
+        player = Player.Instance;
+        transform.position = player.transform.position + offset;
+        transform.rotation = Quaternion.LookRotation((player.transform.position + Vector3.up)
+                                                     - transform.position);
+        if (ReferenceEquals(floor_fog, null))
+        {
+            if (floor_fog_prefab != null)
+            {
+                floor_fog = Instantiate(floor_fog_prefab);
+            }
+        }
+
+        attached = true;
+    }
 
     [Button]
     public void Attach(Player _player) // 이 카메라에 플레이어 정보를 넣어주고 추적을 시작
@@ -25,10 +45,18 @@ public class CameraController : MonoBehaviour
         transform.position = player.transform.position + offset;
         transform.rotation = Quaternion.LookRotation((player.transform.position + Vector3.up)
                                                      - transform.position);
+        if (ReferenceEquals(floor_fog, null))
+        {
+            if (floor_fog_prefab != null)
+            {
+                floor_fog = Instantiate(floor_fog_prefab);
+            }
+        }
+
         attached = true;
     }
 
-    public void AfterAttach()
+    public void AfterAttach() // trainingGround 탈부착용
     {
         transform.position = player.transform.position + offset;
         transform.rotation = Quaternion.LookRotation((player.transform.position + Vector3.up)
@@ -49,11 +77,15 @@ public class CameraController : MonoBehaviour
             if (diff.magnitude > 0.1f) // 그 크기가 일정이상 커지면
             {
                 OnPlayerMove(); // 카메라 움직이기
+                if (!ReferenceEquals(floor_fog, null))
+                {
+                    floor_fog.transform.position = player.transform.position - Vector3.up * 2f;
+                }
             }
 
-            if(rotateOnUpdate)
+            if (rotateOnUpdate)
                 transform.rotation = Quaternion.LookRotation(player.transform.position
-                                                         - transform.position);
+                                                             - transform.position);
 
 
             Vector3 direction = (Player.Instance.transform.position - transform.position).normalized;
@@ -62,6 +94,7 @@ public class CameraController : MonoBehaviour
             for (int i = 0; i < hits.Length; i++)
             {
                 // Debug.Log(hits[i].transform.gameObject.name);
+
                 transwall[] obj = hits[i].transform.parent.GetComponentsInChildren<transwall>();
                 for (int j = 0; j < obj.Length; j++)
                 {

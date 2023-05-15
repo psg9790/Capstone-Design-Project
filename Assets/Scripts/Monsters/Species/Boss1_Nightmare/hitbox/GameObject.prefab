@@ -4995,7 +4995,7 @@ MonoBehaviour:
   startTime: 0
   duration: 10
   targetCount: 0
-  refreshAutomatically: 0
+  refreshAutomatically: 1
   refreshInterval: 0.25
   damageRatio: 1
   ccType: 0
@@ -5054,13 +5054,18 @@ MonoBehaviour:
     m_Bits: 0
   elapsed: 0
   duration: 10
-  targetCount: 5
+  targetCount: 1
   parent_particle: {fileID: 5376175015904738955}
+  slashSound: {fileID: 0}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 0}
   isBullet: 1
   bulletSpeed: 10
   bulletFlashEffect: {fileID: 198011077953338982, guid: 3e68e6af559566b41970280a9ec5611e,
     type: 3}
+  bulletFlashSound: {fileID: 0}
   bulletHitEffect: {fileID: 198340312939041550, guid: 9430c1d3f6d0ec04aa0a984219f3ef8d,
     type: 3}
+  bulletHitSound: {fileID: 0}
   isHoming: 0
   homingPerformance: 0.1
