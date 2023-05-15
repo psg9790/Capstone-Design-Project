@@ -49,10 +49,24 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  heartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   elapsed: 0
   duration: 2.4
   targetCount: 5
   parent_particle: {fileID: 1675697053587491722}
+  slashSound: {fileID: 8300000, guid: 2cebe5ef59f447d4d803665e3ecf1a2f, type: 3}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
+  isBullet: 0
+  bulletSpeed: 20
+  bulletFlashEffect: {fileID: 0}
+  bulletFlashSound: {fileID: 0}
+  bulletHitEffect: {fileID: 0}
+  bulletHitSound: {fileID: 0}
+  isHoming: 0
+  homingPerformance: 0.1
 --- !u!1 &1550128837826599952
 GameObject:
   m_ObjectHideFlags: 0

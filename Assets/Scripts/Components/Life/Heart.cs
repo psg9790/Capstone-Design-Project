@@ -50,13 +50,13 @@ public class Heart : MonoBehaviour
     private float criticalDamage = 2f; // *1, *1.1, *1.5...
     
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool immune; // 데미지, cc 모두 면역
+    public bool immune; // 데미지, cc 모두 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_stiff_immune; // 경직 면역
+    public bool cc_stiff_immune; // 경직 면역
 
     [FoldoutGroup("Attributes")] [SerializeField]
-    private bool cc_knockback_immune; // 넉백 면역
+    public bool cc_knockback_immune; // 넉백 면역
 
     
     public short LEVEL => level;

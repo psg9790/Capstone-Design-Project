@@ -10,7 +10,7 @@ public class DroppedItem : MonoBehaviour
     public void Adjust(Item item)
     {
         this.item = item;
-        gameObject.name = item.itemData.itemName;
+        gameObject.name = item.itemName;
         VisualEffect();
     }
 

@@ -16,8 +16,13 @@ public class WeaponManager
    public RuntimeAnimatorController BaseAnimator;
 
    public Item item;
-
+   
    public Vector3 atk_pos = Vector3.zero;
+   
+   // Weapon Coll Time
+   
+   public float[] CoolTime = {0,0,0,0};
+   
    
    public WeaponManager(Transform hand)
    {
@@ -32,7 +37,10 @@ public class WeaponManager
       weapon.transform.localPosition = weaponInfo.HandleData.localPosition;
       weapon.transform.localEulerAngles = weaponInfo.HandleData.localRotation;
       weapon.transform.localScale = weaponInfo.HandleData.localScale;
-      
+      CoolTime[0] = weaponInfo.QCoolTime;
+      CoolTime[1] = weaponInfo.WCoolTime;
+      CoolTime[2] = weaponInfo.ECoolTime;
+      CoolTime[3] = weaponInfo.RCoolTime;
       equipweapon = weapon;
       weapon.SetActive(false);
       
@@ -59,6 +67,7 @@ public class WeaponManager
 
       RegisterWeapon(weapon);
       weaponObject = weapon;
+      
       Weapon = weapon.GetComponent<BaseWeapon>();
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;

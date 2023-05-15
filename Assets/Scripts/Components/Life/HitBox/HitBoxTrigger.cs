@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -54,13 +53,13 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
         gameObject.SetActive(true);
 
+        if (refreshAutomatically)
+        {
+            RefreshHashOnTime();
+        }
+
         if (!hitBox.isBullet) // bullet의 생명주기는 HitBox 스크립트에서 관리
         {
-            if (refreshAutomatically)
-            {
-                RefreshHashOnTime();
-            }
-
             DOVirtual.DelayedCall(duration, () => Deactivate());
         }
     }
@@ -84,6 +83,9 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             {
                 if (other.TryGetComponent<Heart>(out Heart _heart))
                 {
+                    if (hitHash.Contains(_heart.transform.root.gameObject.name))
+                        return;
+                    hitHash.Add(_heart.transform.root.gameObject.name);
                     _heart.Take_Damage(damage, dir.normalized);
                     if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, 1 << targetLayer))
                     {
@@ -94,10 +96,15 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     {
                         hitBox.BulletHit(transform.position, Vector3.zero);
                     }
+
+                    // if (hitHash.Count >= targetCount) // 혀용 타수 초과시 파괴
+                    //     Destroy(hitBox.gameObject);
                 }
             }
             else if (other.gameObject.layer != hitBox.heartLayer) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
             {
+                // UnityEngine.Debug.Log(LayerMask.LayerToName(other.gameObject.layer));
+                // UnityEngine.Debug.Log(other.gameObject.name);
                 if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
                         1 << other.gameObject.layer))
                 {
@@ -108,6 +115,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                 {
                     hitBox.BulletHit(transform.position, Vector3.zero);
                 }
+                Destroy(hitBox.gameObject);
             }
 
             return;
@@ -124,6 +132,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     Vector3 dir = other.transform.position - transform.position;
                     dir.y = 0;
                     _heart.Take_Damage(damage, dir.normalized);
+                    hitBox.SlashHit();
 
                     if (hitHash.Count >= targetCount)
                     {

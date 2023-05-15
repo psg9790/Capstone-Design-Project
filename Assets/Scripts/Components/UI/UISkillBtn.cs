@@ -5,45 +5,35 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UISkillBtn : MonoBehaviour
-{ 
-    private Button btn;
+{
     private bool isDelay = false;
     private int coolTime=5;
     public Image imgCoolTime;
     public TMP_Text txtCoolTime;
     // Start is called before the first frame update
-    void Start()
-    {
-        this.btn = this.GetComponent<Button>();
-        Debug.Log("start");
-        this.btn.onClick.AddListener(() =>
-        {
-            Debug.Log("btn");
-            
-            if (this.isDelay) return;
-
-            this.isDelay = true;
-            //cooltime 이미지의 fillAmount = 0
-            this.imgCoolTime.fillAmount = 0;
-            //txtCoolTime 활성화
-            this.txtCoolTime.gameObject.SetActive(true);
-            // 쿨타임을 보여준다.
-            this.txtCoolTime.text = string.Format("{0}", this.coolTime);
-            
-            //시간 재기(Update)  
-            this.StartCoroutine(this.WaitForCooltime());
-            
-        });
-        
-    }
     
     public void Init()                      //초기화
     {
-        Debug.Log("init");
         //cooltime 이미지의 fillAmount = 1
         this.imgCoolTime.fillAmount = 1;
         //txtCoolTime 비활성화
         this.txtCoolTime.gameObject.SetActive(false);
+    }
+
+    public void skill_cool()
+    {
+        if (this.isDelay) return;
+
+        this.isDelay = true;
+        //cooltime 이미지의 fillAmount = 0
+        this.imgCoolTime.fillAmount = 0;
+        //txtCoolTime 활성화
+        this.txtCoolTime.gameObject.SetActive(true);
+        // 쿨타임을 보여준다.
+        this.txtCoolTime.text = string.Format("{0}", this.coolTime);
+            
+        //시간 재기(Update)  
+        this.StartCoroutine(this.WaitForCooltime());
     }
 
     private IEnumerator WaitForCooltime()
