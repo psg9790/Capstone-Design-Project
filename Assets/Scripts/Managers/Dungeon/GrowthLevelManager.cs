@@ -99,7 +99,7 @@ public class GrowthLevelManager : MonoBehaviour
     {
         
         curWorldMapType = UnityEngine.Random.Range(0, 10);
-        // curWorldMapType = 1;
+        // curWorldMapType = 5; // force maze
         if (curWorldMapType < 4) // 던전1
         {
             playerSpawnPoint = dungeon1_spawnPoint.position;
