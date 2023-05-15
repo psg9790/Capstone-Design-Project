@@ -16,7 +16,7 @@ public class overlapSphere : MonoBehaviour
     public List<GameObject> dataList = new List<GameObject>();
     
     public RectTransform content;
-    private GameObject Incontents;
+    public GameObject Incontents;
     private GameObject ClearContents;
     private int MAX = 28;
     public Inventory inven;
@@ -48,8 +48,10 @@ public class overlapSphere : MonoBehaviour
                 dataList.Add(col.gameObject);
                 Incontents = content.GetChild(count).gameObject;
                 Incontents.SetActive(true);
-                //Incontents.GetComponentInChildren<TMP_Text>().text =
                     //col.gameObject.GetComponent<FeildItem>().item.itemName;
+                TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
+                name.text = col.GetComponent<FeildItem>().itemName;
+                
                     coll[count] = col;
                 count++;
             }

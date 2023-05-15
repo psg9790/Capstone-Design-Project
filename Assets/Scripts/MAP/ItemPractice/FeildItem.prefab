@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7961002101147529135}
   - component: {fileID: 1022995256189102774}
   - component: {fileID: -8540865186207010868}
-  - component: {fileID: 7011345264156684252}
-  m_Layer: 15
+  - component: {fileID: 4486338025853323641}
+  m_Layer: 14
   m_Name: FeildItem
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7011345264156684252
+--- !u!114 &4486338025853323641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,3 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba2b386c5bfc4cbbb9bc3117843ec24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  tier: 0
+  itemName: 
