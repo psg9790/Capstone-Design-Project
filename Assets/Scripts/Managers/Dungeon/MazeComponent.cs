@@ -9,7 +9,7 @@ public class MazeComponent : MonoBehaviour
 {
     [SerializeField][Required] private Transform playerSpawnPoint; // 이 미로 블럭 내에서 플레이어가 스폰될 수 있는 위치
     public List<Transform> monsterSpawnPoints = new List<Transform>(); // 몬스터를 스폰할 위치 좌표들
-    [SerializeField][Required] private Transform mid_point; // 이 미로 블럭의 정중앙 위치값, 미로 블럭 클리어 시 4방향의 벽을 부수기 위함
+    private Vector3 mid_point; // 이 미로 블럭의 정중앙 위치값, 미로 블럭 클리어 시 4방향의 벽을 부수기 위함
 
     private int[] dy = new int[4]; // randomGenerator dy 카피
     private int[] dx = new int[4]; // randomGenerator dx 카피
@@ -27,6 +27,8 @@ public class MazeComponent : MonoBehaviour
     // private RandomMazeGenerator generator; // dy, dx를 가져오기 위한 변수
     public void BuildWalls(RandomMazeGenerator generator) // 미로 블럭 기준으로 처음에는 4방향 진로를 모두 막아둠
     {
+        mid_point = transform.position + new Vector3(14, 4, 14);
+        
         // this.generator = generator;
         Array.Copy(generator.dy, dy, 4);
         Array.Copy(generator.dx, dx, 4);
@@ -34,8 +36,8 @@ public class MazeComponent : MonoBehaviour
         GameObject wallgo = Resources.Load("MazeComponents/Wall/Wall").GameObject();
         for (int i = 0; i < 4; i++)
         {
-            Vector3 wallPos = mid_point.position + new Vector3(generator.dx[i] >> 1, 0, generator.dy[i] >> 1);
-            GameObject newWall = Instantiate(wallgo, wallPos, Quaternion.LookRotation(wallPos - mid_point.position));
+            Vector3 wallPos = mid_point + new Vector3(generator.dx[i] >> 1, 0, generator.dy[i] >> 1);
+            GameObject newWall = Instantiate(wallgo, wallPos, Quaternion.LookRotation(wallPos - mid_point));
             newWall.name = "wall " + this.gameObject.name + i.ToString();
             newWall.layer = LayerMask.NameToLayer("WALL");
             newWall.transform.SetParent(this.transform);
@@ -49,8 +51,8 @@ public class MazeComponent : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             Vector3 dir = new Vector3(dx[i], 0, dy[i]);
-            hits = Physics.RaycastAll(mid_point.position, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Wall"));
-            UnityEngine.Debug.DrawRay(mid_point.position, dir, Color.red, 3f);
+            hits = Physics.RaycastAll(mid_point, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Wall"));
+            UnityEngine.Debug.DrawRay(mid_point, dir, Color.red, 3f);
             for (int j = 0; j < hits.Length; j++)
             {
                 if (hits[i].transform.gameObject.CompareTag("FakeWall"))
