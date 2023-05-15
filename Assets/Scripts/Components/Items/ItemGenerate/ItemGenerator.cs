@@ -181,6 +181,16 @@ public class ItemGenerator : MonoBehaviour
         DroppedItem drop = InstantiateItem(Player.Instance.transform);
         drop.Adjust(item);
     }
+
+    [Button]
+    public void RemoveAllItems()
+    {
+        if (!ReferenceEquals(parent_droppedItem, null))
+        {
+            Destroy(parent_droppedItem);
+            parent_droppedItem = new GameObject("DroppedItems").transform;
+        }
+    }
     
     
     [Button]

@@ -35,15 +35,16 @@ public class Inventory : MonoBehaviour
     {
         EmptySlot();
         artifactNumbering();
+        instance = this;
+        grade_image = new Sprite[7];
+        this.gameObject.SetActive(false);
     }
 
     private void Start()
     {
         // AddItem(items[0]);
         // AddItem(items[1]);
-        instance = this;
-        grade_image = new Sprite[7];
-        this.gameObject.SetActive(false);
+        
     }
 
     public void EmptySlot(){

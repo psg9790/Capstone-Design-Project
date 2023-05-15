@@ -56,9 +56,9 @@ MonoBehaviour:
   duration: 0.5
   targetCount: 5
   parent_particle: {fileID: 6015385756395923531}
-  slashSound: {fileID: 0}
+  slashSound: {fileID: 8300000, guid: 43065fa3e836c42429751a014d4c2924, type: 3}
   slashSoundTime: 0
-  slashHitSound: {fileID: 0}
+  slashHitSound: {fileID: 8300000, guid: 43065fa3e836c42429751a014d4c2924, type: 3}
   isBullet: 0
   bulletSpeed: 20
   bulletFlashEffect: {fileID: 0}
@@ -63639,11 +63639,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fe9f5f8c12ca746bb5a1ef0b3064e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startTime: 0.1
-  duration: 0.1
+  startTime: 0
+  duration: 0.2
   targetCount: 0
   refreshAutomatically: 0
   refreshInterval: 0.25
   damageRatio: 1
-  ccType: 3
+  ccType: 0
   ccPower: 0

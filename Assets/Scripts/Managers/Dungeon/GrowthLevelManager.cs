@@ -30,13 +30,19 @@ public class GrowthLevelManager : MonoBehaviour
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
 
+    [HideInInspector] public GameObject[] general_monsters;
+    [HideInInspector] public GameObject[] boss_monsters;
     
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
+            boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
+            
             InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
+
             // decreaseMobCount.AddListener(DecreaseMobCount); // 몹 감소 이벤트 등록
         }
         else
@@ -87,6 +93,8 @@ public class GrowthLevelManager : MonoBehaviour
     [Button]
     public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
+        ItemGenerator.Instance.RemoveAllItems();
+        
         worldLevel++;
         curLevelMonsterCount = 0;
 
@@ -135,6 +143,7 @@ public class GrowthLevelManager : MonoBehaviour
         // // 디버그
         // playerSpawnPoint = dungeon1_spawnPoint.position;
     }
+
 
     private void TeleportPlayer(Vector3 pos) // 플레이어 위치 이동 (에이전트 on/off)
     {
