@@ -42,6 +42,7 @@ public class Inventory : MonoBehaviour
         // AddItem(items[0]);
         // AddItem(items[1]);
         instance = this;
+        this.gameObject.SetActive(false);
     }
 
     public void EmptySlot(){

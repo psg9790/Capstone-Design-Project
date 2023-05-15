@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2253,6 +2253,7 @@ MonoBehaviour:
   offset: {x: 0, y: 15, z: -10}
   attached: 0
   rotateOnUpdate: 0
+  floor_fog_prefab: {fileID: 0}
 --- !u!1001 &404441661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3288,7 +3289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Map_Select: {fileID: 1177401144}
-  Player: {fileID: 406763866}
+  Player: {fileID: 0}
   SceneName: PlayerTestMap
 --- !u!1 &514742813
 GameObject:
@@ -10583,7 +10584,7 @@ PrefabInstance:
     - target: {fileID: 8272649621318715134, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8272649621433344364, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
@@ -12765,6 +12766,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 1953474487}
   arti_count: 0
   number: 0
+  grade_Back: {fileID: 0}
 --- !u!1 &1740081107
 GameObject:
   m_ObjectHideFlags: 0
@@ -16432,7 +16434,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 406763866}
+      objectReference: {fileID: 0}
     - target: {fileID: 3160683565422621008, guid: e5ac89322207242e6b858c0ec34af9bb,
         type: 3}
       propertyPath: Map_Select
