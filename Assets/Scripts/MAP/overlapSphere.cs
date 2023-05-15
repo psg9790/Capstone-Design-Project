@@ -49,7 +49,7 @@ public class overlapSphere : MonoBehaviour
                 Incontents.SetActive(true);
                     //col.gameObject.GetComponent<FeildItem>().item.itemName;
                 TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
-                name.text = col.GetComponent<FeildItem>().itemName;
+                name.text = col.GetComponent<DroppedItem>().item.itemName;
                 
                 count++;
             }
@@ -58,18 +58,19 @@ public class overlapSphere : MonoBehaviour
         
         ClearContent(count);
         
-        if ( clicked && inven.IsEmpty() ) 
+        if ( clicked)// && inven.IsEmpty() ) 
         {
             UnityEngine.Debug.Log("클릭 인식함..?");
-            inven.AddItem(dataList[ClickNum].GetComponent<FeildItem>().item);
+            inven.AddItem(dataList[ClickNum].GetComponent<DroppedItem>().item);
             Destroy(dataList[ClickNum].gameObject);
             clicked = false;
         }
         
         //F키 입력 시 첫번 째 아이템 정보 옮기기
-        if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
+        if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0)// && inven.IsEmpty()) 
         {
-            inven.AddItem(dataList[0].GetComponent<FeildItem>().item);
+            inven.AddItem(dataList[0].GetComponent<DroppedItem>().item);
+            
             Destroy(dataList[0].gameObject);
         }
         

@@ -24,7 +24,7 @@ public class TreasureBox : MonoBehaviour
     {
         Lid =transform.GetChild(1).gameObject;
         dropPostion = transform.GetChild(3).gameObject;
-        
+        generator = ItemGenerator.Instance;
     }
     
     void Update()
@@ -72,7 +72,7 @@ public class TreasureBox : MonoBehaviour
         int random = Random.Range(2, 100);
         Debug.Log("drop item: "+random);
         //drop();
-        //generator.GenerateItem(transform, );
+        generator.GenerateItem(dropPostion.transform, 1);
     }
 
     private void drop()
