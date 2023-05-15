@@ -37,7 +37,7 @@ namespace CharacterController
 
         public void skill(int num)
         {
-            Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
