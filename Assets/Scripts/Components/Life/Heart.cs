@@ -182,6 +182,94 @@ public class Heart : MonoBehaviour
         }
     }
 
+    public void PlayerItemEquip()
+    {
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+            return;
+        
+        if(Inventory.instance == null)
+            Debug.LogError("Inventory 인스턴스가 없습니다");
+
+        // 공격력 계산 : (기본 공격력 + 아티팩트 공격력) * 무기 공격력 %
+        float calcATK = 20;
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.ATK] != null)
+                {
+                    calcATK += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.ATK];
+                }
+            }
+        }
+        if(Inventory.instance.tempItem != null)
+            calcATK = calcATK + calcATK * (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK] * 0.01f;
+        atk = calcATK;
+        
+        // 방어력 계산 : (기본 방어력 + 아티팩트 방어력)
+        float calcDEF = 5;
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.DEF] != null)
+                {
+                    calcDEF += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.DEF];
+                }
+            }
+        }
+        def = calcDEF;
+        
+        // 체력 계산 : (기본 체력 + 아티팩트 체력)
+        float calcHP = 100;
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.HP] != null)
+                {
+                    calcHP += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.HP];
+                }
+            }
+        }
+        max_hp = calcHP;
+        
+        // 공격속도 계산 : (기본 공격속도 + 아티팩트 공격속도)
+        float calcATKSPEED = 1;
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.ATKSPEED] != null)
+                {
+                    calcATKSPEED += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.ATKSPEED];
+                }
+            }
+        }
+        if(Inventory.instance.tempItem != null)
+            calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
+        atk_speed = calcATKSPEED;
+        
+        // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도)
+        float calcMOVEMENTSPEED = 1;
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.MOVEMENTSPEED] != null)
+                {
+                    calcMOVEMENTSPEED += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.MOVEMENTSPEED];
+                }
+            }
+        }
+        movement_speed = calcMOVEMENTSPEED;
+    }
+
 
     // [FoldoutGroup("Functions")]
     // [Button]

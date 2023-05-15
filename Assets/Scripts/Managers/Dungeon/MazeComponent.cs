@@ -79,9 +79,16 @@ public class MazeComponent : MonoBehaviour
                 }
             }
         }
-
-        CameraController.Instance.cam.DOShakePosition(0.5f, 2);
+        
+        ShakeCamera();
+        SoundManager.instance.PlaySoundComponent(Resources.Load<AudioClip>("MazeComponents/Wall/wallBreak"), Player.Instance.transform.position);
         GrowthLevelManager.Instance.UpdateNavMeshDelay(Time.deltaTime * 1.5f);
+    }
+
+    [Button]
+    private void ShakeCamera()
+    {
+        CameraController.Instance.cam.DOShakePosition(0.5f, 1, 20, 180);
     }
 
     public Transform ReturnPlayerSpawnPoint() // 현재 블럭에서 플레이어가 스폰될 수 있는 위치를 반환
