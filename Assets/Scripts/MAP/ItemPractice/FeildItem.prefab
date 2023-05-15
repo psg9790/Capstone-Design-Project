@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1022995256189102774}
   - component: {fileID: -8540865186207010868}
   - component: {fileID: 4486338025853323641}
+  - component: {fileID: -3585161116506042009}
   m_Layer: 14
   m_Name: FeildItem
   m_TagString: Item
@@ -130,3 +131,15 @@ MonoBehaviour:
   id: 0
   tier: 0
   itemName: 
+--- !u!114 &-3585161116506042009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760577693322034993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cabb30405e0f704ca88c9c27cc2a7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
     public List<ItemData> itemDatas = new List<ItemData>();
     [SerializeField] public Transform artifactParent; // 슬롯의 부모가 되는 곳을 담을 곳
     [SerializeField] public ArtifactUI[] artifactUIs;
-    public Image[] grade_image;
+    public Sprite[] grade_image;
     
     [SerializeField] private Transform slotParent; // 슬롯의 부모가 되는 곳을 담을 곳
     [SerializeField] private ItemSlot[] slots;
@@ -42,6 +42,7 @@ public class Inventory : MonoBehaviour
         // AddItem(items[0]);
         // AddItem(items[1]);
         instance = this;
+        grade_image = new Sprite[7];
     }
 
     public void EmptySlot(){
@@ -64,25 +65,25 @@ public class Inventory : MonoBehaviour
                     switch (slots[i].itemSlotui.item.tier)
                     {
                         case 0:
-                            slots[i].grade_Back = grade_image[0]; 
+                            slots[i].grade_Back.sprite = grade_image[0]; 
                             break;
                         case 1:
-                            slots[i].grade_Back = grade_image[1]; 
+                            slots[i].grade_Back.sprite = grade_image[1]; 
                             break;
                         case 2:
-                            slots[i].grade_Back = grade_image[2]; 
+                            slots[i].grade_Back.sprite = grade_image[2]; 
                             break;
                         case 3:
-                            slots[i].grade_Back = grade_image[3] ; 
+                            slots[i].grade_Back.sprite = grade_image[3] ; 
                             break;
                         case 4:
-                            slots[i].grade_Back = grade_image[4]; 
+                            slots[i].grade_Back.sprite = grade_image[4]; 
                             break;
                         case 5:
-                            slots[i].grade_Back = grade_image[5]; 
+                            slots[i].grade_Back.sprite = grade_image[5]; 
                             break;
                         case 6:
-                            slots[i].grade_Back = grade_image[6]; 
+                            slots[i].grade_Back.sprite = grade_image[6]; 
                             break;
                     }
                     slots[i].grade_Back.gameObject.SetActive(true); 
