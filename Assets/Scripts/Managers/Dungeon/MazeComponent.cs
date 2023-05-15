@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -63,7 +64,7 @@ public class MazeComponent : MonoBehaviour
     [Button]
     private void CollapseWalls() // 미로 블럭 내 모든 몬스터 제거시 방 오픈?
     {
-        Debug.Log("collapse walls");
+        // Debug.Log("collapse walls");
         RaycastHit[] hits;
         for (int i = 0; i < 4; i++)
         {
@@ -78,6 +79,8 @@ public class MazeComponent : MonoBehaviour
                 }
             }
         }
+
+        CameraController.Instance.cam.DOShakePosition(0.5f, 2);
         GrowthLevelManager.Instance.UpdateNavMeshDelay(Time.deltaTime * 1.5f);
     }
 

@@ -314,7 +314,7 @@ namespace Monsters
             {
                 mazeComponent.DecreaseMonsterCount();
             }
-            else
+            else if (GrowthLevelManager.Instance != null)
             {
                 GrowthLevelManager.Instance.DecreaseMonsterCount();
             }

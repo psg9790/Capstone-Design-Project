@@ -77,7 +77,6 @@ public class GrowthLevelManager : MonoBehaviour
         // maze_spawnPoint.transform.position += new Vector3(mazeIndent >> 1, 0, mazeIndent >> 1);
         // level 0
         worldLevel = 0;
-        LevelDisplay();
 
         if (Player.Instance == null)
             Instantiate(playerPrefab);
@@ -87,6 +86,8 @@ public class GrowthLevelManager : MonoBehaviour
 
         // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
+        
+        LevelDisplay();
     }
 
     private void UpdateNavMesh() // 네브메시 업데이트
