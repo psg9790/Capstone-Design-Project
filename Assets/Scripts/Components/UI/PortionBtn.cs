@@ -13,41 +13,16 @@ public class PortionBtn : MonoBehaviour
     public TMP_Text txtCoolTime;
     public TMP_Text txtPortionNum;
     public TMP_Text txtMessage;
-    [SerializeField] public int PotionNum ; 
+    [SerializeField] public int PotionNum ;
+    public float hp;
     void Start()
     {
-        this.btn = this.GetComponent<Button>();
+        
 
         PotionNum =3;
         txtPortionNum.text = PotionNum.ToString();
         this.txtPortionNum.gameObject.SetActive(true);
-        
-        this.btn.onClick.AddListener(() =>
-        {
-            if (this.isDelay) return;
-
-            if (this.PotionNum == 0)
-            {
-                StartCoroutine("WaitMessagetime");
-                return;
-            }
-
-            PotionNum--;
-            // 체력차는 거 구현
-            txtPortionNum.text = PotionNum.ToString();
-            this.isDelay = true;
-            //cooltime 이미지의 fillAmount = 0
-            this.imgCoolTime.fillAmount = 0;
-            //txtCoolTime 활성화
-            this.txtCoolTime.gameObject.SetActive(true);
-            // 쿨타임을 보여준다.
-            this.txtCoolTime.text = string.Format("{0}", this.coolTime);
-            
-            //시간 재기(Update)  
-            this.StartCoroutine(this.WaitForCooltime());
-            
-        });
-        
+        hp = Player.Instance.heart.CUR_HP;
     }
 
     // Update is called once per frame
@@ -84,5 +59,31 @@ public class PortionBtn : MonoBehaviour
         txtMessage.gameObject.SetActive(true); 
         yield return new WaitForSeconds(1);
         txtMessage.gameObject.SetActive(false);
+    }
+
+    public void Portion_Use()
+    {
+        if (this.isDelay) return;
+
+        if (this.PotionNum == 0)
+        {
+            StartCoroutine("WaitMessagetime");
+            return;
+        }
+
+        PotionNum--;
+        // 체력차는 거 구현
+        Player.Instance.heart.Restore_CUR_HP(50);
+        txtPortionNum.text = PotionNum.ToString();
+        this.isDelay = true;
+        //cooltime 이미지의 fillAmount = 0
+        this.imgCoolTime.fillAmount = 0;
+        //txtCoolTime 활성화
+        this.txtCoolTime.gameObject.SetActive(true);
+        // 쿨타임을 보여준다.
+        this.txtCoolTime.text = string.Format("{0}", this.coolTime);
+            
+        //시간 재기(Update)  
+        this.StartCoroutine(this.WaitForCooltime());
     }
 }

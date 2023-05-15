@@ -112,7 +112,8 @@ public class Player : MonoBehaviour
 
     public void OnEndSkill()
     {
-        stateMachine.ChangeState(StateName.Idle);
+        Debug.Log("endskill");
+        stateMachine?.ChangeState(StateName.Idle);
     }
 }
 

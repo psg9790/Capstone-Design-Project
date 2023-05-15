@@ -19,8 +19,9 @@ namespace CharacterController
             // UnityEngine.Debug.Log("Skill enter");
             Player.Instance.nav.ResetPath();
             int num = Controller.skillnum;
-            if (!isCollTime[num])
+            if (!isCollTime[num] && !Controller.isSkill)
             {
+                Controller.isSkill = true;
                 isCollTime[num] = true;
                 skill(num);
                 
@@ -66,6 +67,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
+            Controller.isSkill = false;
             Player.Instance.animator.SetInteger("skillnum",-1);
         }
         protected void LookAt(Vector3 direction)

@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isDashing = false;
     public bool isAttack = false;
+    public bool isSkill = false;
     
     private bool isDashCollTime = false;
 
@@ -69,21 +70,11 @@ public class PlayerController : MonoBehaviour
         {
             Player.Instance.animator.SetTrigger("attack");
         }
-        if (!isDashing && !isAttack)
+        if (!isDashing && !isAttack && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.attack);
-            // rightClickHold = true;
-            // player.stateMachine.OnEnterState();
         }
-        // player.stateMachine.ChangeState();
-        // Ray ray = cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
-        // RaycastHit hit;
-        // if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
-        // {
-        //     Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-        //     LookAt(hit.point - transform.position);
-        // }
-        // player.attack();
+        
     }
 
     void QClickPerformed(InputAction.CallbackContext context)
@@ -115,18 +106,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // 이동하면 안되는 조건문 추가
-        if (!isDashing)
+        if (!isDashing && !isSkill)
         {
             player.stateMachine.ChangeState(StateName.move);
-            // rightClickHold = true;
-            // player.stateMachine.OnEnterState();
+            
         }
     }
-    
-    // void RighClickCanceled(InputAction.CallbackContext context)
-    // {
-    //     rightClickHold = false;
-    // }
     
     // 스페이스바 대쉬
     void SpaceClickPerformed(InputAction.CallbackContext context)
@@ -184,8 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             Item drop = coll.gameObject.GetComponent<DroppedItem>().item;
             Debug.Log(drop.itemData.itemName);
-            // InventoryManager.Instance.addItem(drop);
-            // Destroy(coll.gameObject);
+            
         }
     }
 
