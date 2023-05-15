@@ -26,10 +26,10 @@ public class overlapSphere : MonoBehaviour
     private void Start()
     {
         content= GameObject.Find("Content").GetComponent<RectTransform>();
-        inven = GameObject.Find("InvenSet").GetComponent<Inventory>();
-        
+        inven = Inventory.instance;
         clicked = false;
         ClickNum = 100;
+        
     }
 
     private void Update()
@@ -39,7 +39,6 @@ public class overlapSphere : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         int count = 0;
         dataList.Clear();
-        Collider[] coll= new Collider[40];
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
@@ -52,7 +51,6 @@ public class overlapSphere : MonoBehaviour
                 TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
                 name.text = col.GetComponent<FeildItem>().itemName;
                 
-                    coll[count] = col;
                 count++;
             }
             

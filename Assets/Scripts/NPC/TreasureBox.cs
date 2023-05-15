@@ -16,12 +16,15 @@ public class TreasureBox : MonoBehaviour
     public GameObject itemPrefeb;
     private GameObject dropPostion;
     private int random;
+
+    public ItemGenerator generator;
     
     // Start is called before the first frame update
     void Start()
     {
         Lid =transform.GetChild(1).gameObject;
         dropPostion = transform.GetChild(3).gameObject;
+        
     }
     
     void Update()
@@ -68,7 +71,8 @@ public class TreasureBox : MonoBehaviour
 
         int random = Random.Range(2, 100);
         Debug.Log("drop item: "+random);
-        drop();
+        //drop();
+        //generator.GenerateItem(transform, );
     }
 
     private void drop()
@@ -77,6 +81,7 @@ public class TreasureBox : MonoBehaviour
         Vector3 vec3 = dropPostion.transform.position;
         vec3 += new Vector3(0.0f, 0.0f, 0.0f);
         itemGo.transform.position = vec3;
+        
     }
     
 }
