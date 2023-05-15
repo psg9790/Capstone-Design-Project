@@ -65,7 +65,7 @@ public class ItemGenerator : MonoBehaviour
         return drop;
     }
 
-    public void GenerateItem(Transform tf, Heart heart)
+    public void GenerateItem(Transform tf, int level)
     {
         DroppedItem drop = InstantiateItem(tf);
 
@@ -78,7 +78,7 @@ public class ItemGenerator : MonoBehaviour
             float valRatio = 0;
             for (int i = 0; i < System.Enum.GetValues(typeof(WeaponKey)).Length; i++)
             {
-                float valBound = float.Parse(wDic[heart.LEVEL][((WeaponKey)i).ToString()].ToString());
+                float valBound = float.Parse(wDic[level][((WeaponKey)i).ToString()].ToString());
                 float randValue = UnityEngine.Random.Range(0, valBound);
                 if (randValue / valBound > valRatio)
                 {
@@ -88,7 +88,7 @@ public class ItemGenerator : MonoBehaviour
             }
             wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(wOptions[WeaponKey.SOCKET]);
             
-            Weapon weapon = new Weapon(wData, id_generate++, heart.LEVEL, wOptions);
+            Weapon weapon = new Weapon(wData, id_generate++, (short)level, wOptions);
             weapon.itemName = weapon.itemData.itemName;
             if (valRatio >= 0.96f)
                 weapon.itemColor = Color.red;
@@ -111,7 +111,7 @@ public class ItemGenerator : MonoBehaviour
             {
                 if (UnityEngine.Random.Range(0, 100) < 50)
                 {
-                    float valBound = float.Parse(aDic[heart.LEVEL][((ArtifactKey)i).ToString()].ToString());
+                    float valBound = float.Parse(aDic[level][((ArtifactKey)i).ToString()].ToString());
                     float randValue = UnityEngine.Random.Range(0, valBound);
                     if (randValue / valBound > valRatio)
                     {
@@ -126,14 +126,14 @@ public class ItemGenerator : MonoBehaviour
             if (aOptions.Count == 0) // 옵션 최소 1개는 보장
             {
                 int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
-                float valBound = float.Parse(aDic[heart.LEVEL][((ArtifactKey)randIdx).ToString()].ToString());
+                float valBound = float.Parse(aDic[level][((ArtifactKey)randIdx).ToString()].ToString());
                 float randVal = UnityEngine.Random.Range(0, valBound);
                 valKey = (ArtifactKey)randIdx;
                 valRatio = randVal / valBound;
                 aOptions.Add((ArtifactKey)randIdx, randVal);
             }
 
-            Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aOptions);
+            Artifact arti = new Artifact(artifactDatas[level], id_generate++, (short)level, aOptions);
 
             // 접두어
             sb.Clear();
