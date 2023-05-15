@@ -37,7 +37,7 @@ public class MazeComponent : MonoBehaviour
             Vector3 wallPos = mid_point.position + new Vector3(generator.dx[i] >> 1, 0, generator.dy[i] >> 1);
             GameObject newWall = Instantiate(wallgo, wallPos, Quaternion.LookRotation(wallPos - mid_point.position));
             newWall.name = "wall " + this.gameObject.name + i.ToString();
-            newWall.layer = LayerMask.NameToLayer("FakeWall");
+            newWall.layer = LayerMask.NameToLayer("WALL");
             newWall.transform.SetParent(this.transform);
         }
     }
