@@ -34,15 +34,14 @@ public class NPC_Trigger : MonoBehaviour
     public Vector3 pos;
     public Animator anim;
 
-    public GameObject PLAYER;
-    private Move MoveEnable;
+    //private Move MoveEnable;
     
     private void Start()
     {
         pos = transform.eulerAngles;
         isTalking = false;
         isEnable = false;
-        MoveEnable = PLAYER.GetComponent<Move>();
+        //MoveEnable = PLAYER.GetComponent<Move>();
     }
 
     // Update is called once per frame
@@ -53,9 +52,10 @@ public class NPC_Trigger : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && isEnable&&isTalking!=true)
         {
             //캐릭터 마우스 이동 OFF
-            MoveEnable.enabled = false;
+            //MoveEnable.enabled = false;
             //캐릭터 중지시킴
-            PLAYER.GetComponent<NavMeshAgent>().enabled = false;
+            //PLAYER.GetComponent<NavMeshAgent>().enabled = false;
+            
             //대화시작시 F로 대화 다시 시작 방지
             isTalking = true;
             //캐릭터를 바라봄
@@ -97,8 +97,7 @@ public class NPC_Trigger : MonoBehaviour
     if (NPC_Text.activeSelf == false )
     {
         isTalking = false;
-        MoveEnable.enabled = true;
-        PLAYER.GetComponent<NavMeshAgent>().enabled = true;
+        //PLAYER.GetComponent<NavMeshAgent>().enabled = true;
     }
 }
 

@@ -57,6 +57,7 @@ public class WeaponSlot : ItemSlot
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            //ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
         }
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
