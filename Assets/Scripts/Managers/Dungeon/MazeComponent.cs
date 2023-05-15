@@ -62,15 +62,16 @@ public class MazeComponent : MonoBehaviour
     [Button]
     private void CollapseWalls() // 미로 블럭 내 모든 몬스터 제거시 방 오픈?
     {
+        Debug.Log("collapse walls");
         RaycastHit[] hits;
         for (int i = 0; i < 4; i++)
         {
             Vector3 dir = new Vector3(dx[i], 0, dy[i]);
-            hits = Physics.RaycastAll(mid_point, dir, dir.magnitude, 1 << LayerMask.NameToLayer("Wall"));
+            hits = Physics.RaycastAll(mid_point, dir, dir.magnitude, 1 << LayerMask.NameToLayer("WALL"));
             UnityEngine.Debug.DrawRay(mid_point, dir, Color.red, 3f);
             for (int j = 0; j < hits.Length; j++)
             {
-                if (hits[i].transform.gameObject.CompareTag("FakeWall"))
+                if (hits[j].transform.gameObject.CompareTag("FakeWall"))
                 {
                     Destroy(hits[j].transform.gameObject);
                 }
