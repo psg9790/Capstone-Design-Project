@@ -3286,8 +3286,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 1
   cam: {fileID: 0}
+  skillnum: -1
   isDashing: 0
   isAttack: 0
+  isSkill: 0
 --- !u!114 &5661129087745828413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3337,7 +3339,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5337324291364039534}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa18d6ad03c0044d48b71f42fdb846d4, type: 3}
   m_Name: 
@@ -3345,7 +3347,10 @@ MonoBehaviour:
   radius: 2
   dataList: []
   content: {fileID: 0}
-  ItemData: []
+  Incontents: {fileID: 0}
+  inven: {fileID: 0}
+  ClickNum: 0
+  clicked: 0
 --- !u!81 &6641276521668875943
 AudioListener:
   m_ObjectHideFlags: 0
