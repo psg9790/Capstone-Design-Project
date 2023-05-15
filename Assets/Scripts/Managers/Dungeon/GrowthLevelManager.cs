@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using Sequence = DG.Tweening.Sequence;
 
 public class GrowthLevelManager : MonoBehaviour
 {
@@ -15,13 +18,15 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject playerPrefab; // 플레이어 없으면 생성용
     private Vector3 playerSpawnPoint; // 코드 내부에서 새로운 스폰포인트 지정용
 
-    [ReadOnly] public int worldLevel; // 월드 레벨(난이도), 처음엔 0
-    [ReadOnly] public int curWorldMapType; // 0~10까지 확률적으로 맵 생성
+    [ReadOnly] public int worldLevel; // 월드 레벨 (난이도), 처음엔 0
+    [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
     
     [ReadOnly] public int curLevelMonsterCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
-    // [HideInInspector] public UnityEvent decreaseMobCount; // 몹 갯수 줄이는 이벤트
+    [HideInInspector] public Transform parent_spawnedMonsters;
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
+    public List<Transform> dungeon1_monsterSpawnPoints = new List<Transform>(); // 던전1 몬스터 소환 포인트
+    
     public int mazeIndent = 28; // 미로 블럭들 사이의 간격
     public int maxMazeBlockCount = 12; // 최대로 생성할 미로 방의 개수
 
@@ -30,8 +35,11 @@ public class GrowthLevelManager : MonoBehaviour
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
 
-    [HideInInspector] public GameObject[] general_monsters;
-    [HideInInspector] public GameObject[] boss_monsters;
+    [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
+    [HideInInspector] public GameObject[] boss_monsters; // 프리팹 로드
+
+    [SerializeField] private CanvasGroup levelCG;
+    [SerializeField] private TMP_Text levelTMP;
     
     private void Awake()
     {
@@ -69,6 +77,7 @@ public class GrowthLevelManager : MonoBehaviour
         // maze_spawnPoint.transform.position += new Vector3(mazeIndent >> 1, 0, mazeIndent >> 1);
         // level 0
         worldLevel = 0;
+        LevelDisplay();
 
         if (Player.Instance == null)
             Instantiate(playerPrefab);
@@ -97,7 +106,8 @@ public class GrowthLevelManager : MonoBehaviour
         
         worldLevel++;
         curLevelMonsterCount = 0;
-
+        LevelDisplay();
+        
         MakeRandomMap();
         
         TeleportPlayer(playerSpawnPoint);
@@ -112,19 +122,42 @@ public class GrowthLevelManager : MonoBehaviour
             randomMazeGenerator = null;
             // Destroy(maze_parent);
         }
+
+        if (parent_spawnedMonsters != null)
+        {
+            Destroy(parent_spawnedMonsters.gameObject);
+        }
+        parent_spawnedMonsters = new GameObject("parent_spawnedMonsters").transform;
+
         curWorldMapType = UnityEngine.Random.Range(0, 10);
         // curWorldMapType = 5; // force maze
         if (curWorldMapType < 4) // 던전1
         {
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
+
+            for (int i = 0; i < dungeon1_monsterSpawnPoints.Count; i++)
+            {
+                int dun1_monsterCount = UnityEngine.Random.Range(4, 7);
+                for (int j = 0; j < dun1_monsterCount; j++)
+                {
+                    int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
+                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster], 
+                        dungeon1_monsterSpawnPoints[i].transform.position, 
+                        dungeon1_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
+                    newMonster.Init(dungeon1_monsterSpawnPoints[i].transform.position, 4f);
+                    // newMonster.mazeComponent = this;
+                    // newMonster.transform.SetParent(this.transform);
+                    newMonster.transform.SetParent(parent_spawnedMonsters);
+                    curLevelMonsterCount++;
+                }
+            }
         }
         else // 미로 랜덤 생성
         {
             // playerSpawnPoint = maze_spawnPoint.position;
             dungeon1_parent.SetActive(false);
             
-
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();
             playerSpawnPoint = randomMazeGenerator.PlayerSpawnPoint().position;
@@ -158,5 +191,19 @@ public class GrowthLevelManager : MonoBehaviour
         Player.Instance.nav.enabled = true;
         
         Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
+    }
+
+    private void LevelDisplay()
+    {
+        levelTMP.text = "Level " + worldLevel;
+        RectTransform cgRect = levelCG.GetComponent<RectTransform>();
+        float yy = cgRect.anchoredPosition.y;
+        Sequence levelSequence = DOTween.Sequence();
+        levelSequence.Append(levelCG.DOFade(1, 0.5f).From(0))
+            .Join(cgRect.DOAnchorPosY(yy - 50, 0.5f))
+            .AppendInterval(1.5f)
+            .Append(levelCG.DOFade(0, 0.5f).From(1))
+            .Join(cgRect.DOAnchorPosY(yy, 0.5f));
+        
     }
 }

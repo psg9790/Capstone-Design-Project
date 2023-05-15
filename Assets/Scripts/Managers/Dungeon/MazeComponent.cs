@@ -31,7 +31,8 @@ public class MazeComponent : MonoBehaviour
                         monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
                 newMonster.Init(monsterSpawnPoints[i].transform.position, 4f);
                 newMonster.mazeComponent = this;
-                newMonster.transform.SetParent(this.transform);
+                // newMonster.transform.SetParent(this.transform);
+                newMonster.transform.SetParent(GrowthLevelManager.Instance.parent_spawnedMonsters);
                 rst++;
             }
         }
