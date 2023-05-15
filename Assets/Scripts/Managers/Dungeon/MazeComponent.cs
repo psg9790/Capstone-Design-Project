@@ -15,7 +15,7 @@ public class MazeComponent : MonoBehaviour
     private int[] dy = new int[4]; // randomGenerator dy 카피
     private int[] dx = new int[4]; // randomGenerator dx 카피
 
-    private int monsterCount;
+    [ShowInInspector] [ReadOnly] private int monsterCount;
     
     public int SpawnMonsters() // 몬스터들을 생성하고 마릿수를 반환 (일정 %의 몹 제거시 이벤트 활용을 위함)
     {

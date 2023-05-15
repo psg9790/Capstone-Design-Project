@@ -144,6 +144,7 @@ public class GrowthLevelManager : MonoBehaviour
         // playerSpawnPoint = dungeon1_spawnPoint.position;
     }
 
+
     private void TeleportPlayer(Vector3 pos) // 플레이어 위치 이동 (에이전트 on/off)
     {
         if (Player.Instance == null)
