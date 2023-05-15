@@ -56,10 +56,15 @@ MonoBehaviour:
   duration: 0.5
   targetCount: 5
   parent_particle: {fileID: 6015385756395923531}
+  slashSound: {fileID: 0}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 0}
   isBullet: 0
   bulletSpeed: 20
   bulletFlashEffect: {fileID: 0}
+  bulletFlashSound: {fileID: 0}
   bulletHitEffect: {fileID: 0}
+  bulletHitSound: {fileID: 0}
   isHoming: 0
   homingPerformance: 0.1
 --- !u!1 &5889347485046268527
@@ -63593,7 +63598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5312660850129658335
 Transform:
   m_ObjectHideFlags: 0
