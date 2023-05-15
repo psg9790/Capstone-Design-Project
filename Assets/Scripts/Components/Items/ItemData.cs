@@ -7,6 +7,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public Sprite iconSprite;
+    [ShowIf("itemType", ItemType.Weapon)] public List<Sprite> skillSprites = new List<Sprite>();
     public string itemName;
     [Multiline] public string tooltip;
     [EnumToggleButtons] public ItemType itemType;

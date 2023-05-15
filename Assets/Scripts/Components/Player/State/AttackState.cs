@@ -38,6 +38,10 @@ namespace CharacterController
 
         }
 
+        public void comboattack()
+        {
+            Player.Instance.animator.SetTrigger("attack");
+        }
         
         public override void OnUpdateState()
         {
@@ -52,6 +56,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
+            Debug.Log("end atk");
             Controller.isAttack = false;
             Player.Instance.animator.ResetTrigger("attack");
         }
