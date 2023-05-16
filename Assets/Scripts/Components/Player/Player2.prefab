@@ -3269,6 +3269,8 @@ MonoBehaviour:
   rightHand: {fileID: 3635370818571052140}
   effectGenerator: {fileID: 2970473760335879018}
   BaseAnimator: {fileID: 9100000, guid: 7a1538e734265a6438f6611452b3f5eb, type: 2}
+  baseWeapon: {fileID: 5575774330155073843, guid: 8da42cb67ed8f1243bbb1f380118e167,
+    type: 3}
   dashDistance: 5
   dashDuration: 0.5
   dashCooltime: 1
@@ -3285,7 +3287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
-  cam: {fileID: 0}
   skillnum: -1
   isDashing: 0
   isAttack: 0

@@ -16,7 +16,8 @@ namespace CharacterController
             Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking = default;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+            int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                 looking = hit.point - Player.Instance.transform.position;

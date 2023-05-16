@@ -400,10 +400,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8244ccae05a23e409ef80cc27117be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   player: {fileID: 0}
-  offset: {x: 0, y: 15, z: -7}
+  offset: {x: -10, y: 10, z: -10}
   attached: 0
   rotateOnUpdate: 0
+  floor_fog_prefab: {fileID: 0}
 --- !u!1 &506465611
 GameObject:
   m_ObjectHideFlags: 0
@@ -3089,7 +3091,7 @@ PrefabInstance:
     - target: {fileID: 4709125317617349076, guid: 07a2ea6d9a3dbad43936ec15f197b206,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4709125317617349076, guid: 07a2ea6d9a3dbad43936ec15f197b206,
         type: 3}
@@ -3531,7 +3533,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090703946
 GameObject:

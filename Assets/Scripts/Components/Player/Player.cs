@@ -27,7 +27,8 @@ public class Player : MonoBehaviour
     public Transform effectGenerator;
     
     public RuntimeAnimatorController BaseAnimator;
-    
+
+    public GameObject baseWeapon;
     // Dash
     [Header("dash")]
     [SerializeField]
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
             capsuleCollider = GetComponent<CapsuleCollider>();
             nav = GetComponent<NavMeshAgent>();
             heart = GetComponent<Heart>();
+            weaponManager.SetWeapon(baseWeapon);
             // DontDestroyOnLoad(gameObject);
             return;
         }
