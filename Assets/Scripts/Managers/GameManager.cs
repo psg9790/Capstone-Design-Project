@@ -10,12 +10,8 @@ public class GameManager : MonoBehaviour
 {
     
     // singleton
-    static GameManager instance;
-    
-    
-    // important
-    public ISave save = new JsonSave();
-    
+    private static GameManager instance;
+
     public static GameManager Instance { get { return instance; } }
 
     public GameObject menuSet;
@@ -32,7 +28,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
         }
         else
         {
@@ -59,7 +54,6 @@ public class GameManager : MonoBehaviour
                 menuSet.SetActive(true); 
             }
         }
-        
     }
 
 

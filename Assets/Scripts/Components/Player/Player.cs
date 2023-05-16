@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
     {
         stateMachine?.UpdateState();
         
-        
     }
 
     private void FixedUpdate()
@@ -96,18 +95,25 @@ public class Player : MonoBehaviour
     }
     
     
-    public void OnStartAttack()
+    public void OnStartAttack(int combo)
     {
-        weaponManager.Weapon?.StartAttack();
+        weaponManager.Weapon?.StartAttack(combo);
     }
     public void OnEndAttack()
     {
         weaponManager.Weapon?.EndAttack();
+        stateMachine.ChangeState(StateName.Idle);
     }
 
-    public void OnStartSkill()
+    public void OnStartSkill(int i) // i = skill input
     {
-        weaponManager.Weapon?.Skill();
+        weaponManager.Weapon?.Skill(i);
+    }
+
+    public void OnEndSkill()
+    {
+        Debug.Log("endskill");
+        stateMachine?.ChangeState(StateName.Idle);
     }
 }
 

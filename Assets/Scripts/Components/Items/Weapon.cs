@@ -28,5 +28,7 @@ public enum WeaponKey
 {
     ATK,
     ATKSPEED,
-    SOCKET
+    SOCKET,
+    CRIT_RATE,
+    CRIT_DAMAGE
 }

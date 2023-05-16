@@ -17,7 +17,7 @@ namespace CharacterController
         {
             IsMove = true;
             // UnityEngine.Debug.Log("MoveState enter");
-            Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
             {

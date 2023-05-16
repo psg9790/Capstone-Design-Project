@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cbd43d70feaf64faedce72b433f642, type: 3}
   m_Name: sword
   m_EditorClassIdentifier: 
-  iconSprite: {fileID: 21300000, guid: fc0baa37ef899844ca7808278421f949, type: 3}
+  iconSprite: {fileID: 21300000, guid: 62a99ebf2f5cfe04da1d208b9e7817a9, type: 3}
+  skillSprites:
+  - {fileID: 21300000, guid: 3434169aea05eeb4185f2fa72c80bf31, type: 3}
+  - {fileID: 21300000, guid: 99a2865a0e99cb84785c1111f3ba062e, type: 3}
+  - {fileID: 21300000, guid: c67cb5ecf78926749a4848e6546d330c, type: 3}
+  - {fileID: 21300000, guid: 487ca9c97a2121c49b97711625081a3b, type: 3}
   itemName: "\uAC80"
-  tooltip: hehehee
+  tooltip: "\uAC80"
   itemType: 0
   weapon_gameObject: {fileID: 4590876673305520610, guid: 2f98bfa5afe8c47e7bb47024441b4995,
     type: 3}

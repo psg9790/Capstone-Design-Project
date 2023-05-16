@@ -30,5 +30,6 @@ public enum ArtifactKey
     DEF,
     MOVEMENTSPEED,
     ATK,
-    ATKSPEED
+    ATKSPEED,
+    CRIT_RATE
 }

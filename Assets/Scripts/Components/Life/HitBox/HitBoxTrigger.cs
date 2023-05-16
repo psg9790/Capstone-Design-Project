@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -54,13 +53,13 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
         gameObject.SetActive(true);
 
+        if (refreshAutomatically)
+        {
+            RefreshHashOnTime();
+        }
+
         if (!hitBox.isBullet) // bullet의 생명주기는 HitBox 스크립트에서 관리
         {
-            if (refreshAutomatically)
-            {
-                RefreshHashOnTime();
-            }
-
             DOVirtual.DelayedCall(duration, () => Deactivate());
         }
     }
@@ -75,15 +74,19 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         // other.gameObject.layer는 레이어 인덱스 (ex. 7)
         // targetMask는 인덱스로 시프트까지 계산된 값 (ex. 128)
 
+        
+        int targetLayer = (int)Mathf.Log(targetMask, 2);
         if (hitBox.isBullet) // bullet일 시 분기
         {
             Vector3 dir = other.transform.position - transform.position;
-            int targetLayer = (int)Mathf.Log(targetMask, 2);
 
             if (other.gameObject.layer == targetLayer)
             {
                 if (other.TryGetComponent<Heart>(out Heart _heart))
                 {
+                    if (hitHash.Contains(_heart.transform.gameObject.name))
+                        return;
+                    hitHash.Add(_heart.transform.gameObject.name);
                     _heart.Take_Damage(damage, dir.normalized);
                     if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, 1 << targetLayer))
                     {
@@ -94,10 +97,15 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     {
                         hitBox.BulletHit(transform.position, Vector3.zero);
                     }
+
+                    // if (hitHash.Count >= targetCount) // 혀용 타수 초과시 파괴
+                    //     Destroy(hitBox.gameObject);
                 }
             }
             else if (other.gameObject.layer != hitBox.heartLayer) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
             {
+                // UnityEngine.Debug.Log(LayerMask.LayerToName(other.gameObject.layer));
+                // UnityEngine.Debug.Log(other.gameObject.name);
                 if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
                         1 << other.gameObject.layer))
                 {
@@ -108,22 +116,25 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                 {
                     hitBox.BulletHit(transform.position, Vector3.zero);
                 }
+                Destroy(hitBox.gameObject);
             }
 
             return;
         }
 
         // 일반 판정
-        if ((1 << other.gameObject.layer) == targetMask)
+        if (other.gameObject.layer == targetLayer)
         {
-            if (!hitHash.Contains(other.transform.root.name)) // 최상위부모 이름,,, 히트한 타겟이 해싱되어 있으면 다시 타격 x 
+            if (!hitHash.Contains(other.transform.name)) // 최상위부모 이름,,, 히트한 타겟이 해싱되어 있으면 다시 타격 x 
             {
-                hitHash.Add(other.transform.root.name); // 히트한 타겟 해싱
-                if (other.transform.root.TryGetComponent<Heart>(out Heart _heart))
+                if (other.transform.TryGetComponent<Heart>(out Heart _heart))
                 {
+                    hitHash.Add(other.transform.name); // 히트한 타겟 해싱
                     Vector3 dir = other.transform.position - transform.position;
                     dir.y = 0;
                     _heart.Take_Damage(damage, dir.normalized);
+                    hitBox.SlashHit();
+                    
 
                     if (hitHash.Count >= targetCount)
                     {
@@ -132,7 +143,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                 }
                 else
                 {
-                    Debug.Log(other.transform.root.name + ": 심장이 없음");
+                    Debug.Log(other.transform.name + ": 심장이 없음");
                 }
             }
         }

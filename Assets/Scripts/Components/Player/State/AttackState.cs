@@ -13,7 +13,7 @@ namespace CharacterController
         public override void OnEnterState()
         {
             Controller.isAttack = true;
-            Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking = default;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
@@ -38,6 +38,10 @@ namespace CharacterController
 
         }
 
+        public void comboattack()
+        {
+            Player.Instance.animator.SetTrigger("attack");
+        }
         
         public override void OnUpdateState()
         {
@@ -52,6 +56,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
+            Debug.Log("end atk");
             Controller.isAttack = false;
             Player.Instance.animator.ResetTrigger("attack");
         }
