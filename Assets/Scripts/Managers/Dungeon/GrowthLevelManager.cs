@@ -27,12 +27,15 @@ public class GrowthLevelManager : MonoBehaviour
     [HideInInspector] public Transform parent_spawnedMonsters;
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
+    public Transform dungeon3_spawnPoint;
     public List<Transform> dungeon1_monsterSpawnPoints = new List<Transform>(); // 던전1 몬스터 소환 포인트
+    public List<Transform> dungeon3_monsterSpawnPoints = new List<Transform>(); // 던전3 몬스터 소환 포인트
     
     public int mazeIndent = 28; // 미로 블럭들 사이의 간격
     public int maxMazeBlockCount = 12; // 최대로 생성할 미로 방의 개수
 
     [Required] public GameObject dungeon1_parent;
+    [Required] public GameObject dungeon3_parent;
     [Required] public GameObject maze_parent; // 동적 생성된 미로 오브젝트 관리용
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
@@ -138,7 +141,7 @@ public class GrowthLevelManager : MonoBehaviour
         parent_spawnedMonsters = new GameObject("parent_spawnedMonsters").transform;
 
         curWorldMapType = UnityEngine.Random.Range(0, 10);
-        if (curWorldMapType < 4) // 던전1
+        if (curWorldMapType < 2) // 던전 1
         {
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
@@ -159,9 +162,17 @@ public class GrowthLevelManager : MonoBehaviour
                 }
             }
         }
+        else if (curWorldMapType < 4) // 던전 3
+        {
+            dungeon3_parent.SetActive(true);
+            playerSpawnPoint = dungeon3_spawnPoint.position;
+            
+
+        }
         else // 미로 랜덤 생성
         {
             dungeon1_parent.SetActive(false);
+            dungeon3_parent.SetActive(false);
             
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();

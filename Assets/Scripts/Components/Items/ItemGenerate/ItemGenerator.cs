@@ -195,7 +195,7 @@ public class ItemGenerator : MonoBehaviour
     {
         if (!ReferenceEquals(parent_droppedItem, null))
         {
-            Destroy(parent_droppedItem);
+            Destroy(parent_droppedItem.gameObject);
             parent_droppedItem = new GameObject("DroppedItems").transform;
         }
     }
