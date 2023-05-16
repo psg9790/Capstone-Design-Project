@@ -24,6 +24,7 @@ public class GrowthLevelManager : MonoBehaviour
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
     
     [ReadOnly] public int curLevelMonsterCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
+    [ReadOnly] public int curLevelMaxMonsterCount;
     [HideInInspector] public Transform parent_spawnedMonsters;
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
@@ -70,9 +71,10 @@ public class GrowthLevelManager : MonoBehaviour
             curLevelMonsterCount--;
         }
 
-        if (curLevelMonsterCount == 0)
+        if (curLevelMonsterCount <= curLevelMaxMonsterCount * 0.1f)
         {
-            // 보스몹 생성
+            // 보스맵 포탈 생성
+            
         }
     }
 
@@ -167,7 +169,21 @@ public class GrowthLevelManager : MonoBehaviour
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
             
-
+            for (int i = 0; i < dungeon3_monsterSpawnPoints.Count; i++)
+            {
+                int dun3_monsterCount = UnityEngine.Random.Range(4, 7);
+                for (int j = 0; j < dun3_monsterCount; j++)
+                {
+                    int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
+                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster], 
+                        dungeon3_monsterSpawnPoints[i].transform.position, 
+                        dungeon3_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
+                    newMonster.Init(dungeon3_monsterSpawnPoints[i].transform.position, 4f);
+                    newMonster.transform.SetParent(parent_spawnedMonsters);
+                    newMonster.heart.SetMonsterStatByLevel((short)worldLevel);
+                    curLevelMonsterCount++;
+                }
+            }
         }
         else // 미로 랜덤 생성
         {
@@ -187,6 +203,8 @@ public class GrowthLevelManager : MonoBehaviour
                 UpdateNavMeshDelay(Time.deltaTime * 1.5f);
             }
         }
+
+        curLevelMaxMonsterCount = curLevelMonsterCount;
     }
 
 
