@@ -22,9 +22,10 @@ public class overlapSphere : MonoBehaviour
     public Inventory inven;
     public int ClickNum;
     public bool clicked;
-    
+    public GameObject commu_bar;
     private void Start()
     {
+        commu_bar = GameObject.Find("commu_bar"); 
         content= GameObject.Find("Content").GetComponent<RectTransform>();
         inven = Inventory.instance;
         clicked = false;
@@ -44,6 +45,10 @@ public class overlapSphere : MonoBehaviour
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
             if (col.CompareTag("Item") )
             {
+                if (commu_bar.activeSelf == false)
+                {
+                    commu_bar.SetActive(true);
+                }
                 dataList.Add(col.gameObject);
                 Incontents = content.GetChild(count).gameObject;
                 Incontents.SetActive(true);
@@ -55,10 +60,14 @@ public class overlapSphere : MonoBehaviour
             }
             
         }
-        
+        if ( dataList.Count == 0)
+        {
+            if(commu_bar.activeSelf == true )
+                commu_bar.SetActive(false);
+        }
         ClearContent(count);
         
-        if ( clicked)// && inven.IsEmpty() ) 
+        if ( clicked && inven.IsEmpty() ) 
         {
             clicked = false;
             UnityEngine.Debug.Log("클릭 인식함..?");
@@ -68,10 +77,11 @@ public class overlapSphere : MonoBehaviour
             Inventory.instance.AddItem(GetItem);
             Destroy(dataList[ClickNum].gameObject);
             clicked = false;
+            
         }
         
         //F키 입력 시 첫번 째 아이템 정보 옮기기
-        if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0)// && inven.IsEmpty()) 
+        if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
             Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
 
@@ -80,6 +90,7 @@ public class overlapSphere : MonoBehaviour
 
             Inventory.instance.AddItem(GetItem);
             Destroy(dataList[0].gameObject);
+            
         }
         
     }

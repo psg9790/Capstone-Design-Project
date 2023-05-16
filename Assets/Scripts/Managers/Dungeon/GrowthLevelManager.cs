@@ -24,15 +24,19 @@ public class GrowthLevelManager : MonoBehaviour
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
     
     [ReadOnly] public int curLevelMonsterCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
+    [ReadOnly] public int curLevelMaxMonsterCount;
     [HideInInspector] public Transform parent_spawnedMonsters;
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
+    public Transform dungeon3_spawnPoint;
     public List<Transform> dungeon1_monsterSpawnPoints = new List<Transform>(); // 던전1 몬스터 소환 포인트
+    public List<Transform> dungeon3_monsterSpawnPoints = new List<Transform>(); // 던전3 몬스터 소환 포인트
     
     public int mazeIndent = 28; // 미로 블럭들 사이의 간격
     public int maxMazeBlockCount = 12; // 최대로 생성할 미로 방의 개수
 
     [Required] public GameObject dungeon1_parent;
+    [Required] public GameObject dungeon3_parent;
     [Required] public GameObject maze_parent; // 동적 생성된 미로 오브젝트 관리용
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
@@ -67,9 +71,10 @@ public class GrowthLevelManager : MonoBehaviour
             curLevelMonsterCount--;
         }
 
-        if (curLevelMonsterCount == 0)
+        if (curLevelMonsterCount <= curLevelMaxMonsterCount * 0.1f)
         {
-            // 보스몹 생성
+            // 보스맵 포탈 생성
+            
         }
     }
 
@@ -138,7 +143,7 @@ public class GrowthLevelManager : MonoBehaviour
         parent_spawnedMonsters = new GameObject("parent_spawnedMonsters").transform;
 
         curWorldMapType = UnityEngine.Random.Range(0, 10);
-        if (curWorldMapType < 4) // 던전1
+        if (curWorldMapType < 2) // 던전 1
         {
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
@@ -159,9 +164,31 @@ public class GrowthLevelManager : MonoBehaviour
                 }
             }
         }
+        else if (curWorldMapType < 4) // 던전 3
+        {
+            dungeon3_parent.SetActive(true);
+            playerSpawnPoint = dungeon3_spawnPoint.position;
+            
+            for (int i = 0; i < dungeon3_monsterSpawnPoints.Count; i++)
+            {
+                int dun3_monsterCount = UnityEngine.Random.Range(4, 7);
+                for (int j = 0; j < dun3_monsterCount; j++)
+                {
+                    int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
+                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster], 
+                        dungeon3_monsterSpawnPoints[i].transform.position, 
+                        dungeon3_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
+                    newMonster.Init(dungeon3_monsterSpawnPoints[i].transform.position, 4f);
+                    newMonster.transform.SetParent(parent_spawnedMonsters);
+                    newMonster.heart.SetMonsterStatByLevel((short)worldLevel);
+                    curLevelMonsterCount++;
+                }
+            }
+        }
         else // 미로 랜덤 생성
         {
             dungeon1_parent.SetActive(false);
+            dungeon3_parent.SetActive(false);
             
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();
@@ -176,6 +203,8 @@ public class GrowthLevelManager : MonoBehaviour
                 UpdateNavMeshDelay(Time.deltaTime * 1.5f);
             }
         }
+
+        curLevelMaxMonsterCount = curLevelMonsterCount;
     }
 
 
