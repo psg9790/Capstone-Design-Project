@@ -116,6 +116,7 @@ public class ItemGenerator : MonoBehaviour
                 {
                     float valBound = float.Parse(aDic[level][((ArtifactKey)i).ToString()].ToString());
                     float randValue = UnityEngine.Random.Range(0, valBound);
+                    randValue = (float)Math.Round(randValue, 1);
                     if (randValue / valBound > valRatio)
                     {
                         valRatio = randValue / valBound;
@@ -131,6 +132,7 @@ public class ItemGenerator : MonoBehaviour
                 int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
                 float valBound = float.Parse(aDic[level][((ArtifactKey)randIdx).ToString()].ToString());
                 float randVal = UnityEngine.Random.Range(0, valBound);
+                randVal = (float)Math.Round(randVal, 1);
                 valKey = (ArtifactKey)randIdx;
                 valRatio = randVal / valBound;
                 aOptions.Add((ArtifactKey)randIdx, randVal);
@@ -156,6 +158,9 @@ public class ItemGenerator : MonoBehaviour
                     break;
                 case ArtifactKey.MOVEMENTSPEED:
                     sb.Append("기민함의 ");
+                    break;
+                case ArtifactKey.CRIT_RATE:
+                    sb.Append("치명의 ");
                     break;
             }
 
@@ -197,19 +202,21 @@ public class ItemGenerator : MonoBehaviour
     
     
     [Button]
-    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket)
+    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket, float critRate, float critDamage)
     {
         Dictionary<WeaponKey, float> inData = new Dictionary<WeaponKey, float>();
         inData.Add(WeaponKey.ATK, atk);
         inData.Add(WeaponKey.ATKSPEED, atkspeed);
         inData.Add(WeaponKey.SOCKET, socket);
+        inData.Add(WeaponKey.CRIT_RATE, critRate);
+        inData.Add(WeaponKey.CRIT_DAMAGE, critDamage);
 
         Weapon wItem = new Weapon(data, id_generate++, -1, inData);
         Inventory.instance.AddItem(wItem);
     }
 
     [Button]
-    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed)
+    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed, float critRate)
     {
         Dictionary<ArtifactKey, float> inData = new Dictionary<ArtifactKey, float>();
         if(atk != 0)
@@ -222,6 +229,8 @@ public class ItemGenerator : MonoBehaviour
             inData.Add(ArtifactKey.HP, hp);
         if(movementspeed != 0)
             inData.Add(ArtifactKey.MOVEMENTSPEED, movementspeed);
+        if(critRate != 0)
+            inData.Add(ArtifactKey.CRIT_RATE, critRate);
 
         Artifact aItem = new Artifact(data, id_generate++, -1, inData);
         Inventory.instance.AddItem(aItem);

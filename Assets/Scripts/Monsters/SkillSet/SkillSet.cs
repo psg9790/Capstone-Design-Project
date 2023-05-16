@@ -11,7 +11,7 @@ namespace Monsters.Skill
 {
     public abstract class SkillSet : MonoBehaviour
     {
-        public float statGrowthByLevelUp = 1.2f;
+        public float statGrowthByLevelUp = 1.3f;
         
         protected Monster monster;
         protected Heart heart;
