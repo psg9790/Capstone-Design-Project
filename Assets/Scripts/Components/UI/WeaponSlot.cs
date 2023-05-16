@@ -87,7 +87,10 @@ public class WeaponSlot : ItemSlot
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
-
+        
+            GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
+            Player.Instance.weaponManager.SetWeapon(weapon);
+            
             for (int i = 0; i < 6; i++)
             {
                 UnityEngine.Debug.Log("unlock");

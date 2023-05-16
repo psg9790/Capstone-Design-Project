@@ -17,9 +17,10 @@ public class HudUI : MonoBehaviour
     public UISkillBtn[] uiSkillBtn=new UISkillBtn[4];
     public PortionBtn portionBtn;
     public UIRoll uiRoll;
+    public GameObject menuSet;
     public GameObject invenSet;
     float delay = 0.5f;
-
+        
     void Start() 
     {
         for (int i = 0; i < 4; i++)
@@ -48,7 +49,19 @@ public class HudUI : MonoBehaviour
                 uiRoll.RollSkillCool();
             }
         }
-
+        if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
+        {
+            if (menuSet.activeSelf)
+            {
+                Time.timeScale = 1;
+                menuSet.SetActive(false);
+            }
+            else
+            {
+                Time.timeScale = 0;
+                menuSet.SetActive(true); 
+            }
+        }
         if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
         {
             curHp = Player.Instance.heart.CUR_HP;
