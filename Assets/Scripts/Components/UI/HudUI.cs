@@ -65,7 +65,8 @@ public class HudUI : MonoBehaviour
         if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
         {
             curHp = Player.Instance.heart.CUR_HP;
-            StartCoroutine(HandleHp());
+            hpImage.fillAmount =  Mathf.Lerp(hpBar.value,(float)curHp / (float)maxHp,Time.deltaTime*30);
+            hpBackImage.fillAmount =  Mathf.Lerp(hpBackBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
         }
 
         if (Input.GetKeyDown(KeyCode.I))

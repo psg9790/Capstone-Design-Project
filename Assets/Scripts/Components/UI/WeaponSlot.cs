@@ -14,6 +14,7 @@ public class WeaponSlot : ItemSlot
             {
                 UnityEngine.Debug.Log("Asdfqedgfhqrethqrethwrtgher");
                 Player.Instance.weaponManager.UnRegisterWeapon();
+                grade_Back.gameObject.SetActive(false);
                 for (int i = 0; i < 6; i++)
                 {
                     Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
@@ -65,6 +66,7 @@ public class WeaponSlot : ItemSlot
         DragSlot.instance.dragSlot = null;
         Inventory.instance.tempItem = null;
         Inventory.instance.isInstallation = false;
+        
     }
 
     public override void OnDrop(PointerEventData eventData)
@@ -74,8 +76,7 @@ public class WeaponSlot : ItemSlot
             weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;
             if (Inventory.instance.isInstallation == true)
             {
-                Inventory.instance.AddItem(Inventory.instance.tempItem); 
-                Inventory.instance.slots[Inventory.instance.items.Count -2].grade_Back.gameObject.SetActive(false);// 현재 ㅊ
+                Inventory.instance.AddItem(Inventory.instance.tempItem); // 현재 ㅊ
             }
             else
             {
@@ -83,6 +84,7 @@ public class WeaponSlot : ItemSlot
                 Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true); // 무기 이미지 없앰.
                 Inventory.instance.isInstallation = true;
             }
+            grade_Back.gameObject.SetActive(true);
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;

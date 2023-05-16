@@ -19,7 +19,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             DragSlot.instance.dragSlot = this;
-            if (itemSlotui.item != null && itemSlotui.item is Weapon)
+            if (itemSlotui.item != null && itemSlotui.item is Weapon)                             // 무기 장착
             {
                 weapon_item = itemSlotui.item as Weapon; 
                 if (Inventory.instance.isInstallation == true)
@@ -36,6 +36,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.isInstallation = true;
                 }
                 
+                Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(true);
                 Inventory.instance.weaponSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
                 Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
@@ -131,6 +132,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             }
             
             Player.Instance.weaponManager.UnRegisterWeapon();
+            Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(false);
+           
             Inventory.instance.AddItem(Inventory.instance.tempItem);
             
             Inventory.instance.tempItem = null;
@@ -158,7 +161,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void ChangeSlot()
     {
         Item tempItem = itemSlotui.item;                                // 현재 장착하고 있는 아이템
-        
+        grade_Back.gameObject.SetActive(true);
         itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item;    // 바뀔 아이템
         
         if (tempItem != null)
@@ -167,6 +170,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
+            DragSlot.instance.dragSlot.grade_Back.gameObject.SetActive(false);
             DragSlot.instance.dragSlot.itemSlotui.item = null;
             DragSlot.instance.dragSlot.itemSlotui.image.sprite=null;
             DragSlot.instance.dragSlot.itemSlotui.gameObject.SetActive(false);
