@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -18,6 +19,7 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject playerPrefab; // 플레이어 없으면 생성용
     private Vector3 playerSpawnPoint; // 코드 내부에서 새로운 스폰포인트 지정용
 
+    public int maxLevel; // 마지막 레벨
     [ReadOnly] public int worldLevel; // 월드 레벨 (난이도), 처음엔 0
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
     
@@ -38,8 +40,9 @@ public class GrowthLevelManager : MonoBehaviour
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
     [HideInInspector] public GameObject[] boss_monsters; // 프리팹 로드
 
-    [SerializeField] private CanvasGroup levelCG;
-    [SerializeField] private TMP_Text levelTMP;
+    [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
+    [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
+
     
     private void Awake()
     {
@@ -50,8 +53,6 @@ public class GrowthLevelManager : MonoBehaviour
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
             
             InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
-
-            // decreaseMobCount.AddListener(DecreaseMobCount); // 몹 감소 이벤트 등록
         }
         else
         {
@@ -74,7 +75,7 @@ public class GrowthLevelManager : MonoBehaviour
 
     private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
     {
-        // maze_spawnPoint.transform.position += new Vector3(mazeIndent >> 1, 0, mazeIndent >> 1);
+        maxLevel = ItemGenerator.Instance.maxLevel;
         // level 0
         worldLevel = 0;
 
@@ -103,9 +104,16 @@ public class GrowthLevelManager : MonoBehaviour
     [Button]
     public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
-        ItemGenerator.Instance.RemoveAllItems();
-        
         worldLevel++;
+        if (worldLevel > maxLevel)
+        {
+            // 성장형 던전 클리어
+            // UI 표시 및 획득한 리롤 토큰 저장
+            Debug.Log("성장형 던전 클리어");
+            return;
+        }
+        
+        ItemGenerator.Instance.RemoveAllItems();
         curLevelMonsterCount = 0;
         LevelDisplay();
         
@@ -121,7 +129,6 @@ public class GrowthLevelManager : MonoBehaviour
         {
             randomMazeGenerator.Terminate();
             randomMazeGenerator = null;
-            // Destroy(maze_parent);
         }
 
         if (parent_spawnedMonsters != null)
@@ -131,7 +138,6 @@ public class GrowthLevelManager : MonoBehaviour
         parent_spawnedMonsters = new GameObject("parent_spawnedMonsters").transform;
 
         curWorldMapType = UnityEngine.Random.Range(0, 10);
-        // curWorldMapType = 5; // force maze
         if (curWorldMapType < 4) // 던전1
         {
             dungeon1_parent.SetActive(true);
@@ -147,16 +153,14 @@ public class GrowthLevelManager : MonoBehaviour
                         dungeon1_monsterSpawnPoints[i].transform.position, 
                         dungeon1_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
                     newMonster.Init(dungeon1_monsterSpawnPoints[i].transform.position, 4f);
-                    // newMonster.mazeComponent = this;
-                    // newMonster.transform.SetParent(this.transform);
                     newMonster.transform.SetParent(parent_spawnedMonsters);
+                    newMonster.heart.SetMonsterStatByLevel((short)worldLevel);
                     curLevelMonsterCount++;
                 }
             }
         }
         else // 미로 랜덤 생성
         {
-            // playerSpawnPoint = maze_spawnPoint.position;
             dungeon1_parent.SetActive(false);
             
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
@@ -169,13 +173,9 @@ public class GrowthLevelManager : MonoBehaviour
             }
             else
             {
-                // Invoke("UpdateNavMesh", Time.deltaTime * 1.5f);
                 UpdateNavMeshDelay(Time.deltaTime * 1.5f);
             }
         }
-
-        // // 디버그
-        // playerSpawnPoint = dungeon1_spawnPoint.position;
     }
 
 

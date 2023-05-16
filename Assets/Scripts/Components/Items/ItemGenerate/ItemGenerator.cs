@@ -24,6 +24,8 @@ public class ItemGenerator : MonoBehaviour
     private ulong id_generate = 0;
     private int weaponItem_dropRatio = 10; // 무기 드롭 확률 : 0 ~ 100 %
 
+    public int maxLevel;
+
     StringBuilder sb = new StringBuilder();
 
     private void Awake()
@@ -37,7 +39,8 @@ public class ItemGenerator : MonoBehaviour
         aDic = CSVReader.Read("ItemData/Randomize/ArtifactRandomizeByLevel"); // 아티팩트 랜덤 datasheet 불러옴
         artifactDatas = Resources.LoadAll<ItemData>("ItemData/Artifact/"); // 아티팩트 티어 리스트를 불러옴
         weaponDatas = Resources.LoadAll<ItemData>("ItemData/Weapon/"); // 무기종류 데이터를 불러옴
-        droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem");
+        droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem"); // 드롭아이템 오브젝트 프리팹 로드
+        maxLevel = aDic.Count - 1;
     }
 
     private DroppedItem InstantiateItem(Transform tf)

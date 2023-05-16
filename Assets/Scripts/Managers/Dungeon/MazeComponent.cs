@@ -34,6 +34,7 @@ public class MazeComponent : MonoBehaviour
                 newMonster.mazeComponent = this;
                 // newMonster.transform.SetParent(this.transform);
                 newMonster.transform.SetParent(GrowthLevelManager.Instance.parent_spawnedMonsters);
+                newMonster.heart.SetMonsterStatByLevel((short)GrowthLevelManager.Instance.worldLevel);
                 rst++;
             }
         }

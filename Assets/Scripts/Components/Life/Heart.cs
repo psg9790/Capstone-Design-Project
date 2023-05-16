@@ -3,9 +3,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Monsters.Skill;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
@@ -268,6 +270,23 @@ public class Heart : MonoBehaviour
             }
         }
         movement_speed = calcMOVEMENTSPEED;
+    }
+
+    public void SetMonsterStatByLevel(short level)
+    {
+        this.level = level;
+        GetComponent<SkillSet>().SetMonsterStatByLevel(level);
+    }
+
+    public void SetStat(float atk, float hp, float def, float atkspeed, float movespeed)
+    {
+        this.atk = atk;
+        this.max_hp = hp;
+        cur_hp = max_hp;
+        this.def = def;
+        this.atk_speed = atkspeed;
+        this.movement_speed = movespeed;
+        GetComponent<NavMeshAgent>().speed = movement_speed;
     }
 
 

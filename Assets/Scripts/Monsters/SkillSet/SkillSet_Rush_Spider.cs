@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Monsters.FSM;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Monsters.Skill
@@ -14,6 +15,7 @@ namespace Monsters.Skill
 
         public HitBox skill01_Effect;
         public HitBox baseSkill_Effect;
+
 
         void Update()
         {
@@ -72,6 +74,38 @@ namespace Monsters.Skill
 
             // monster.rigid.isKinematic = true;
             monster.nav.enabled = true;
+        }
+
+
+        private static List<float> atk_byLevel = new List<float>();
+        private static List<float> hp_byLevel = new List<float>();
+        private static List<float> def_byLevel = new List<float>();
+        private static List<float> atkspeed_byLevel= new List<float>();
+        private static List<float> movementspeed_byLevel = new List<float>();
+        public override void SetMonsterStatByLevel(short level)
+        {
+            if (atk_byLevel.Count == 0) // 새로운 전역 레벨 변수 추가
+            {
+                float calcatk, calchp, calcdef, calcatkspeed, calcmovespeed;
+                atk_byLevel.Add(calcatk = heart.ATK);
+                hp_byLevel.Add(calchp = heart.MAX_HP);
+                def_byLevel.Add(calcdef = heart.DEF);
+                atkspeed_byLevel.Add(calcatkspeed = heart.ATK_SPEED);
+                movementspeed_byLevel.Add(calcmovespeed = heart.MOVEMENT_SPEED);
+                for (int i = 0; i < GrowthLevelManager.Instance.maxLevel; i++)
+                {
+                    atk_byLevel.Add(calcatk *= statGrowthByLevelUp);
+                    hp_byLevel.Add(calchp *= statGrowthByLevelUp);
+                    def_byLevel.Add(calcdef *= statGrowthByLevelUp);
+                    atkspeed_byLevel.Add(calcatkspeed += (statGrowthByLevelUp * 0.05f));
+                    movementspeed_byLevel.Add(calcmovespeed += (statGrowthByLevelUp * 0.05f));
+                }
+            }
+            else // 기존에 생성된 전역 변수 사용
+            {
+                heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level], 
+                    atkspeed_byLevel[level], movementspeed_byLevel[level]);
+            }
         }
 
         public override void DoPossibleEngage()
