@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using DG.Tweening;
+using Monsters.FSM;
 using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using Random = System.Random;
 using Sequence = DG.Tweening.Sequence;
 
 public class GrowthLevelManager : MonoBehaviour
@@ -29,6 +31,7 @@ public class GrowthLevelManager : MonoBehaviour
 
     public Transform dungeon1_spawnPoint; // 던전 1에서 스폰될 위치
     public Transform dungeon3_spawnPoint;
+    public Transform bossRoom_spawnPoint;
     public List<Transform> dungeon1_monsterSpawnPoints = new List<Transform>(); // 던전1 몬스터 소환 포인트
     public List<Transform> dungeon3_monsterSpawnPoints = new List<Transform>(); // 던전3 몬스터 소환 포인트
     
@@ -39,6 +42,8 @@ public class GrowthLevelManager : MonoBehaviour
     [Required] public GameObject dungeon3_parent;
     [Required] public GameObject maze_parent; // 동적 생성된 미로 오브젝트 관리용
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
+    [Required] public MagicPortal magicPortal_prefab;
+    [Required] public NextLevelPortal nextLevelPortal_prefab;
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
 
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
@@ -64,19 +69,58 @@ public class GrowthLevelManager : MonoBehaviour
         }
     }
 
+    private Coroutine bossTrackingCoroutine;
+
+    private IEnumerator BossTrackingIE(Monsters.Monster monster)
+    {
+        while (true)
+        {
+            yield return null;
+            if (monster.fsm != null)
+            {
+                if (monster.fsm.CheckCurState(EMonsterState.Dead))
+                {
+                    break;
+                }
+            }
+        }
+        // 보스 사망
+        NextLevelPortal nxtPortal = Instantiate(nextLevelPortal_prefab);
+        nxtPortal.transform.position = Player.Instance.transform.position;
+        nxtPortal.Activate(true);
+    }
     public void DecreaseMonsterCount() // 몬스터 감소 이벤트, 일정 횟수 이상 몹을 해치우면 보스 생성 등 로직 추가 가능
     {
         if (curLevelMonsterCount > 0)
         {
             curLevelMonsterCount--;
         }
+        else
+        {
+            return;
+        }
 
         if (curLevelMonsterCount <= curLevelMaxMonsterCount * 0.1f)
         {
             // 보스맵 포탈 생성
+            MagicPortal bossPortal = Instantiate(magicPortal_prefab);
+            bossPortal.transform.position = Player.Instance.transform.position;
+            bossPortal.Activate(bossRoom_spawnPoint, true);
             
+            // 보스 스폰
+            int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+            Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+                .GetComponent<Monsters.Monster>();
+            newBoss.Init(bossRoom_spawnPoint.position, 4f);
+            newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+            if (bossTrackingCoroutine != null)
+            {
+                StopCoroutine(bossTrackingCoroutine);
+            }
+            bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
         }
     }
+
 
     private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
     {
@@ -208,7 +252,7 @@ public class GrowthLevelManager : MonoBehaviour
     }
 
 
-    private void TeleportPlayer(Vector3 pos) // 플레이어 위치 이동 (에이전트 on/off)
+    public void TeleportPlayer(Vector3 pos) // 플레이어 위치 이동 (에이전트 on/off)
     {
         if (Player.Instance == null)
         {
