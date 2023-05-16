@@ -19,10 +19,10 @@ public class Inventory : MonoBehaviour
     public Sprite[] grade_image;
     
     [SerializeField] private Transform slotParent; // 슬롯의 부모가 되는 곳을 담을 곳
-    [SerializeField] private ItemSlot[] slots;
+    [SerializeField] public ItemSlot[] slots;
     public ItemSlot weaponSlot;
     public Image backImage;
-    public Item tempItem;
+    public Item tempItem=null;
     public bool isInstallation=false;
 
     private void OnValidate()
@@ -33,11 +33,21 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        EmptySlot();
-        artifactNumbering();
-        instance = this;
-        grade_image = new Sprite[7];
-        this.gameObject.SetActive(false);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+            EmptySlot();
+            artifactNumbering();
+       
+            grade_image = new Sprite[6]; 
+            this.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (instance != this) //instance가 내가 아니라면 이미 instance가 하나 존재하고 있다는 의미
+                Destroy(this.gameObject);
+        }
     }
 
     private void Start()

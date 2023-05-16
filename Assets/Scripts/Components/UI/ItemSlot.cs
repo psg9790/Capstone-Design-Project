@@ -31,13 +31,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 else if(Inventory.instance.isInstallation==false)
                 {
                     Inventory.instance.tempItem = itemSlotui.item;                              // 무기 장착 아이템 정보 저장
-                    Inventory.instance.backImage.gameObject.SetActive(false);                   // back 이미지 없앰.
-                    Inventory.instance.weaponSlot.image.gameObject.SetActive(true);             // 무기 이미지 없앰.
+                     // back 이미지 없앰.
+                    Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);             // 무기 이미지 없앰.
                     Inventory.instance.isInstallation = true;
                 }
                 
-                Inventory.instance.weaponSlot.image.sprite = itemSlotui.image.sprite;
-                Inventory.instance.weaponSlot.image.color = itemSlotui.image.color;
+                Inventory.instance.weaponSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
+                Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
                 
                 
@@ -130,10 +130,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
             }
             
+            Player.Instance.weaponManager.UnRegisterWeapon();
             Inventory.instance.AddItem(Inventory.instance.tempItem);
+            
             Inventory.instance.tempItem = null;
             
-            Inventory.instance.weaponSlot.image.gameObject.SetActive(false);
+            Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(false);
             Inventory.instance.backImage.gameObject.SetActive(true);
             Inventory.instance.isInstallation = false;
         } else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2)
@@ -155,9 +157,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void ChangeSlot()
     {
-        Item tempItem = itemSlotui.item;
+        Item tempItem = itemSlotui.item;                                // 현재 장착하고 있는 아이템
         
-        itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item;
+        itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item;    // 바뀔 아이템
         
         if (tempItem != null)
         {
@@ -166,7 +168,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         else
         {
             DragSlot.instance.dragSlot.itemSlotui.item = null;
-            DragSlot.instance.dragSlot.image.sprite=null;
+            DragSlot.instance.dragSlot.itemSlotui.image.sprite=null;
             DragSlot.instance.dragSlot.itemSlotui.gameObject.SetActive(false);
         }
     }

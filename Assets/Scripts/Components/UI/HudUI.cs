@@ -49,9 +49,9 @@ public class HudUI : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.A))             //curHp != Player.Instance.heart.CUR_HP;
+        if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
         {
-            curHp -= 10;//curHp = Player.Instance.heart.CUR_HP;
+            curHp = Player.Instance.heart.CUR_HP;
             StartCoroutine(HandleHp());
         }
 

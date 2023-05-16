@@ -10,18 +10,20 @@ public class WeaponSlot : ItemSlot
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             DragSlot.instance.dragSlot = this;
-            if (Inventory.instance.tempItem!=null)
+            if (Inventory.instance.isInstallation==true)
             {
-                UnityEngine.Debug.Log("weaponslot2");
+                UnityEngine.Debug.Log("Asdfqedgfhqrethqrethwrtgher");
+                Player.Instance.weaponManager.UnRegisterWeapon();
                 for (int i = 0; i < 6; i++)
                 {
                     Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
                 }
 
                 Inventory.instance.AddItem(Inventory.instance.tempItem);
+                DragSlot.instance.dragSlot.grade_Back.gameObject.SetActive(false);
                 Inventory.instance.tempItem = null;
                 
-                Inventory.instance.weaponSlot.image.gameObject.SetActive(false);
+                Inventory.instance.weaponSlot.itemSlotui.gameObject.SetActive(false);
                 Inventory.instance.backImage.gameObject.SetActive(true);
                 Inventory.instance.isInstallation = false;
             }
@@ -72,17 +74,18 @@ public class WeaponSlot : ItemSlot
             weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;
             if (Inventory.instance.isInstallation == true)
             {
-                Inventory.instance.AddItem(Inventory.instance.tempItem);
+                Inventory.instance.AddItem(Inventory.instance.tempItem); 
+                Inventory.instance.slots[Inventory.instance.items.Count -2].grade_Back.gameObject.SetActive(false);// 현재 ㅊ
             }
             else
             {
                 Inventory.instance.backImage.gameObject.SetActive(false); // back 이미지 없앰.
-                Inventory.instance.weaponSlot.image.gameObject.SetActive(true); // 무기 이미지 없앰.
+                Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true); // 무기 이미지 없앰.
                 Inventory.instance.isInstallation = true;
             }
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
-            Inventory.instance.weaponSlot.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
-            Inventory.instance.weaponSlot.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
+            Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
+            Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
 
             for (int i = 0; i < 6; i++)

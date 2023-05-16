@@ -11,10 +11,11 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     
     public AudioMixer audioMixer; // 오디오 믹서
-
+    
+    
     [SerializeField] private SoundComponent soundComponent_prefab;
     private Stack<SoundComponent> closed = new Stack<SoundComponent>();
-
+    
     private void Awake()
     {
         if (instance == null)
