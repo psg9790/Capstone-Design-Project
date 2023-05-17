@@ -38,8 +38,8 @@ namespace Monsters.Skill
         void BaseAttack()
         {
             HitBox ba = Instantiate(baseAttack);
-            // ba.Particle_Play(heart);
-            ba.BulletParticle_Play(heart, bulletPos.position, bulletPos.forward);
+            ba.Particle_Play(heart);
+            // ba.BulletParticle_Play(heart, bulletPos.position, bulletPos.forward);
         }
 
         void ClawAttack()
