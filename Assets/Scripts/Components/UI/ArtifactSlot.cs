@@ -58,18 +58,18 @@ public class ArtifactSlot : ItemSlot
         {
             ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            Inventory.instance.artifactUIs[number].isInstallation = false;
         }
-       
-        Inventory.instance.artifactUIs[number].isInstallation = false;
+        
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
     }
 
     public override void OnDrop(PointerEventData eventData)
     {
-        if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.itemSlotui.item is Artifact && Inventory.instance.isInstallation==true)
+        
+        if (DragSlot.instance.dragSlot != null && (DragSlot.instance.dragSlot.itemSlotui.item.itemData.itemType==ItemType.Artifact ) && Inventory.instance.isInstallation==true)
         {
-
             if (Inventory.instance.artifactUIs[number].isInstallation==true)
             {
                 Inventory.instance.AddItem(itemSlotui.item);

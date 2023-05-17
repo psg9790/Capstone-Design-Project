@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector.Editor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -20,7 +22,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             DragSlot.instance.dragSlot = this;
-            if (itemSlotui.item != null && itemSlotui.item is Weapon)                             // 무기 장착
+            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)                             // 무기 장착
             {
                 weapon_item = itemSlotui.item as Weapon; 
                 if (Inventory.instance.isInstallation == true)
@@ -61,7 +63,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 
 
             }
-            else if (itemSlotui.item != null && itemSlotui.item is Artifact && Inventory.instance.tempItem!=null)        // 아티팩트일 때    
+            else if (itemSlotui.item != null && itemSlotui.item.itemData.itemType==ItemType.Artifact && Inventory.instance.tempItem!=null)        // 아티팩트일 때    
             {
                 weapon_item=  Inventory.instance.tempItem as Weapon;
                 arti_count=(int)(weapon_item.options[WeaponKey.SOCKET]);
@@ -111,10 +113,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
+       
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
             ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
+            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            DragSlot.instance.dragSlot.itemSlotui.image.gameObject.SetActive(false);
         }
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
