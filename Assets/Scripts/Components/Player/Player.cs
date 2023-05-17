@@ -55,7 +55,6 @@ public class Player : MonoBehaviour
             capsuleCollider = GetComponent<CapsuleCollider>();
             nav = GetComponent<NavMeshAgent>();
             heart = GetComponent<Heart>();
-            weaponManager.SetWeapon(baseWeapon);
             // DontDestroyOnLoad(gameObject);
             return;
         }
@@ -71,6 +70,8 @@ public class Player : MonoBehaviour
     {
         InitStateMachine();
         nav.updateRotation = false;
+        
+        weaponManager.SetWeapon(baseWeapon);
     }
 
     void Update()
