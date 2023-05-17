@@ -12,7 +12,6 @@ public class WeaponSlot : ItemSlot
             DragSlot.instance.dragSlot = this;
             if (Inventory.instance.isInstallation==true)
             {
-                UnityEngine.Debug.Log("Asdfqedgfhqrethqrethwrtgher");
                 Player.Instance.weaponManager.UnRegisterWeapon();
                 grade_Back.gameObject.SetActive(false);
                 for (int i = 0; i < 6; i++)
@@ -71,7 +70,7 @@ public class WeaponSlot : ItemSlot
 
     public override void OnDrop(PointerEventData eventData)
     {
-        if (DragSlot.instance.dragSlot.itemSlotui.item is Weapon)
+        if (DragSlot.instance.dragSlot.itemSlotui.item is Weapon && !(DragSlot.instance.dragSlot.itemSlotui.item is Artifact))
         { 
             weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;
             if (Inventory.instance.isInstallation == true)

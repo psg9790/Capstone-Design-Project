@@ -13,7 +13,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int arti_count;
     public int number;
     public Image grade_Back;
-
+    private bool tooltip=false;
+    
     public virtual void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -141,7 +142,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(false);
             Inventory.instance.backImage.gameObject.SetActive(true);
             Inventory.instance.isInstallation = false;
-        } else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2)
+        } else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2 )
         {
             if (DragSlot.instance.dragSlot.itemSlotui.item!=null)
             {
@@ -180,9 +181,10 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // 마우스가 슬롯에 들어갈 때 발동.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (itemSlotui.item != null)
+        if (itemSlotui.item != null && tooltip==false)
         {
             _SlotToolTip.ShowToolTip(itemSlotui.item,transform.position);
+            tooltip = true;
         }
         
     }
@@ -190,6 +192,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // 슬롯에서 빠져나갈 때 발동. 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _SlotToolTip.HideToolTip();
+        if (tooltip == true) 
+        {
+            _SlotToolTip.HideToolTip();
+            tooltip = false;
+        }
+        
     }
 }

@@ -67,7 +67,7 @@ public class ArtifactSlot : ItemSlot
 
     public override void OnDrop(PointerEventData eventData)
     {
-        if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.itemSlotui.item is Artifact)
+        if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.itemSlotui.item is Artifact && Inventory.instance.isInstallation==true)
         {
 
             if (Inventory.instance.artifactUIs[number].isInstallation==true)
