@@ -10,38 +10,35 @@ using CharacterController;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance {get {return instance;}}
+    public static Player Instance
+    {
+        get { return instance; }
+    }
+
     public StateMachine stateMachine { get; private set; }
     public Rigidbody rigidbody { get; private set; }
     public Animator animator { get; private set; }
     public CapsuleCollider capsuleCollider { get; private set; }
     public WeaponManager weaponManager { get; private set; }
     public Heart heart { get; private set; }
-    
+
     public NavMeshAgent nav { get; private set; }
     private static Player instance;
 
-    [SerializeField]
-    private Transform rightHand;
-    
+    [SerializeField] private Transform rightHand;
+
     public Transform effectGenerator;
-    
+
     public RuntimeAnimatorController BaseAnimator;
 
     public GameObject baseWeapon;
-    // Dash
-    [Header("dash")]
-    [SerializeField]
-    public float dashDistance = 10f; // 대쉬 거리
-    [SerializeField]
-    public float dashDuration = 0.5f; // 대쉬 시간
-    [SerializeField]
-    public float dashCooltime = 1f; // 대쉬 쿨다운
 
-    
-    
-    
-    
+    // Dash
+    [Header("dash")] [SerializeField] public float dashDistance = 10f; // 대쉬 거리
+    [SerializeField] public float dashDuration = 0.5f; // 대쉬 시간
+    [SerializeField] public float dashCooltime = 1f; // 대쉬 쿨다운
+
+
     private void Awake()
     {
         if (instance == null)
@@ -58,6 +55,7 @@ public class Player : MonoBehaviour
             // DontDestroyOnLoad(gameObject);
             return;
         }
+
         DestroyImmediate(gameObject);
     }
 
@@ -70,14 +68,15 @@ public class Player : MonoBehaviour
     {
         InitStateMachine();
         nav.updateRotation = false;
-        
+
         weaponManager.SetWeapon(baseWeapon);
+        heart.PlayerItemEquip();
     }
 
     void Update()
     {
         stateMachine?.UpdateState();
-        
+        UpdateStat();
     }
 
     private void FixedUpdate()
@@ -85,10 +84,10 @@ public class Player : MonoBehaviour
         stateMachine?.FixedUpdateState();
     }
 
-    private void InitStateMachine() // 새로운 상태 추하갈 때 stateMachine.AddState(StateName.새로운상태, new 새로운상태State(controller)); 추가
+    private void
+        InitStateMachine() // 새로운 상태 추하갈 때 stateMachine.AddState(StateName.새로운상태, new 새로운상태State(controller)); 추가
     {
-        
-        PlayerController controller = GetComponent<PlayerController>();        
+        PlayerController controller = GetComponent<PlayerController>();
         stateMachine = new StateMachine(StateName.Idle, new IdleState(controller));
         stateMachine.AddState(StateName.move, new MoveState(controller));
         stateMachine.AddState(StateName.dash, new DashState(controller));
@@ -96,12 +95,24 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.skill, new SkillState(controller));
         stateMachine.AddState(StateName.stiff, new StiffState(controller));
     }
-    
-    
+
+    public void UpdateStat()
+    {
+        if (Inventory.instance != null)
+        {
+            if (Inventory.instance.gameObject.activeSelf)
+            {
+                heart.PlayerItemEquip();
+            }
+        }
+    }
+
+
     public void OnStartAttack(int combo)
     {
         weaponManager.Weapon?.StartAttack(combo);
     }
+
     public void OnEndAttack()
     {
         weaponManager.Weapon?.EndAttack();
@@ -119,4 +130,3 @@ public class Player : MonoBehaviour
         stateMachine?.ChangeState(StateName.Idle);
     }
 }
-

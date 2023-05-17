@@ -183,6 +183,7 @@ public class Heart : MonoBehaviour
         }
     }
 
+    [Button]
     public void PlayerItemEquip()
     {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
@@ -190,7 +191,7 @@ public class Heart : MonoBehaviour
         
         if(Inventory.instance == null)
             Debug.LogError("Inventory 인스턴스가 없습니다");
-
+        
         float calcATK = 20;
         float calcDEF = 5;
         float calcHP = 100;
@@ -199,36 +200,49 @@ public class Heart : MonoBehaviour
         float calcCRITRATE = 5f;
         float calcCRITDAMAGE = 2;
 
+        if (Inventory.instance.tempItem == null)
+        {
+            // 기본 스탯
+            atk = calcATK;
+            def = calcDEF;
+            max_hp = calcHP;
+            atk_speed = calcATKSPEED;
+            movement_speed = calcMOVEMENTSPEED;
+            criticalRate = calcCRITRATE;
+            criticalDamage = calcCRITDAMAGE;
+            return;
+        }
+        
         for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
         {
             if (Inventory.instance.artifactUIs[i].isInstallation)
             {
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.ATK] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATK))
                 {
                     calcATK += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.ATK];
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.DEF] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.DEF))
                 {
                     calcDEF += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.DEF];
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.HP] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.HP))
                 {
                     calcHP += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.HP];
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.ATKSPEED] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATKSPEED))
                 {
                     calcATKSPEED += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.ATKSPEED];
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.MOVEMENTSPEED] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.MOVEMENTSPEED))
                 {
                     calcMOVEMENTSPEED += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.MOVEMENTSPEED];
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options[ArtifactKey.CRIT_RATE] != null)
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.CRIT_RATE))
                 {
                     calcCRITRATE += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
                         .options[ArtifactKey.CRIT_RATE];

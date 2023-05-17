@@ -15,14 +15,14 @@ public class Inventory : MonoBehaviour
     [AssetList(Path = "/Resources/ItemData/")]
     public List<ItemData> itemDatas = new List<ItemData>();
     [SerializeField] public Transform artifactParent; // 슬롯의 부모가 되는 곳을 담을 곳
-    [SerializeField] public ArtifactUI[] artifactUIs;
+    [ShowInInspector] [SerializeField] public ArtifactUI[] artifactUIs;
     public Sprite[] grade_image;
     
     [SerializeField] private Transform slotParent; // 슬롯의 부모가 되는 곳을 담을 곳
     [SerializeField] public ItemSlot[] slots;
     public ItemSlot weaponSlot;
     public Image backImage;
-    public Item tempItem=null;
+    [ShowInInspector] public Item tempItem=null;
     public bool isInstallation=false;
 
     private void OnValidate()
