@@ -64,11 +64,11 @@ public class WeaponManager
       {
          UnRegisterWeapon();
       }
-
-      RegisterWeapon(weapon);
-      weaponObject = weapon;
+      GameObject BaseWeapon = Object.Instantiate(weapon);
+      RegisterWeapon(BaseWeapon);
+      weaponObject = BaseWeapon;
       
-      Weapon = weapon.GetComponent<BaseWeapon>();
+      Weapon = BaseWeapon.GetComponent<BaseWeapon>();
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
    }
@@ -76,10 +76,11 @@ public class WeaponManager
    public void SetBase()
    {
       GameObject weapon = Player.Instance.baseWeapon;
-      RegisterWeapon(weapon);
-      weaponObject = weapon;
+      GameObject BaseWeapon = Object.Instantiate(weapon);
+      RegisterWeapon(BaseWeapon);
+      weaponObject = BaseWeapon;
       
-      Weapon = weapon.GetComponent<BaseWeapon>();
+      Weapon = BaseWeapon.GetComponent<BaseWeapon>();
       weaponObject.SetActive(true);
       Player.Instance.animator.runtimeAnimatorController = Weapon.WeaponAnimator;
    }

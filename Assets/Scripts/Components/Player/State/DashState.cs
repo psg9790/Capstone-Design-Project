@@ -59,7 +59,7 @@ namespace CharacterController
             if (direction != Vector3.zero)
             {
                 Quaternion targetAngle = Quaternion.LookRotation(direction);
-                Controller.transform.rotation = targetAngle;
+                Player.Instance.transform.rotation = targetAngle;
             }
         }
         public override void OnUpdateState()
