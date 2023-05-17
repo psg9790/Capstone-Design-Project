@@ -17,8 +17,8 @@ public class Map_Switch : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            GrowthLevelManager.Instance.NextLevel();
-        }
+            GrowthLevelManager.Instance.();
+     q   }
     }
     private void OnTriggerExit(Collider col)
     {
