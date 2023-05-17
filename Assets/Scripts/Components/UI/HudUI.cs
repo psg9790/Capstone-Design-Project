@@ -14,6 +14,7 @@ public class HudUI : MonoBehaviour
     
     private float maxHp = 100;
     private float curHp = 100;
+    private float afterCurhp = 100;
     public UISkillBtn[] uiSkillBtn=new UISkillBtn[4];
     public PortionBtn portionBtn;
     public UIRoll uiRoll;
@@ -64,9 +65,9 @@ public class HudUI : MonoBehaviour
         }
         if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
         {
-            curHp = Player.Instance.heart.CUR_HP;
-            hpImage.fillAmount =  Mathf.Lerp(hpBar.value,(float)curHp / (float)maxHp,Time.deltaTime*30);
-            hpBackImage.fillAmount =  Mathf.Lerp(hpBackBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
+            hp_Activity();
+            
+            hp_back_Activity();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -108,6 +109,37 @@ public class HudUI : MonoBehaviour
         hpImage.fillAmount =  Mathf.Lerp(hpBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
         yield return new WaitForSeconds(0.1f);
         hpBackImage.fillAmount =  Mathf.Lerp(hpBackBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
+    }
+    
+    private void hp_Activity()
+    {
+        float hp = Player.Instance.heart.CUR_HP;
+        if (curHp < hp)
+        {
+            curHp += Time.deltaTime * HPbar_custom.GAGE_SPEED * 3f;
+        }
+        if (curHp > hp)
+        {
+            curHp = hp;
+        }
+
+        hpBar.value = (float)curHp / (float)maxHp;
+        hpImage.fillAmount = hpBar.value;
+    }
+    
+    private void hp_back_Activity()
+    {
+        
+        if (afterCurhp >  curHp)
+        {
+            afterCurhp  -= Time.deltaTime * HPbar_custom.GAGE_SPEED;
+        }
+        if (afterCurhp  <  curHp)
+        {
+            afterCurhp  =  curHp;
+        }
+        hpBackBar.value = (float)curHp / (float)maxHp;
+        hpBackImage.fillAmount = hpBar.value;
     }
     
 }

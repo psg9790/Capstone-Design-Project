@@ -58,19 +58,20 @@ public class WeaponSlot : ItemSlot
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
+            ItemGenerator.Instance.PlayerDropItem(Inventory.instance.tempItem);
+            Player.Instance.weaponManager.UnRegisterWeapon();
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
-            //ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
+            Inventory.instance.isInstallation = false;
+            Inventory.instance.tempItem = null;
         }
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
-        Inventory.instance.tempItem = null;
-        Inventory.instance.isInstallation = false;
         
     }
 
     public override void OnDrop(PointerEventData eventData)
     {
-        if (DragSlot.instance.dragSlot.itemSlotui.item is Weapon && !(DragSlot.instance.dragSlot.itemSlotui.item is Artifact))
+        if (DragSlot.instance.dragSlot.itemSlotui.item.itemData.itemType==ItemType.Weapon)
         { 
             weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;
             if (Inventory.instance.isInstallation == true)
