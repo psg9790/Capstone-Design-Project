@@ -22,7 +22,7 @@ public class ItemGenerator : MonoBehaviour
     private GameObject droppedItemPrefab; // 드랍 아이템 프리팹
 
     private ulong id_generate = 0;
-    private int weaponItem_dropRatio = 10; // 무기 드롭 확률 : 0 ~ 100 %
+    private int weaponItem_dropRatio = 50; // 무기 드롭 확률 : 0 ~ 100 %
 
     public int maxLevel;
 
