@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 public class ArtifactSlot : ItemSlot
 {
     private Item artiItem;
-    public Artifact arti;
-    
+    public Item temp_arti;
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -70,15 +69,34 @@ public class ArtifactSlot : ItemSlot
         
         if (DragSlot.instance.dragSlot != null && (DragSlot.instance.dragSlot.itemSlotui.item.itemData.itemType==ItemType.Artifact ) && Inventory.instance.isInstallation==true)
         {
-            if (Inventory.instance.artifactUIs[number].isInstallation==true)
+            if (DragSlot.instance.beginSlot == 0)                           // 아이템 슬롯에서 드래그 하는 경우
             {
-                Inventory.instance.AddItem(itemSlotui.item);
-            }
+                if (Inventory.instance.artifactUIs[number].isInstallation==true)
+                {
+                    Inventory.instance.AddItem(itemSlotui.item);
+                }
 
-            Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
-            Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.item =  DragSlot.instance.dragSlot.itemSlotui.item;
-            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
-            Inventory.instance.artifactUIs[number].isInstallation = true;
+                Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
+                Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.item =  DragSlot.instance.dragSlot.itemSlotui.item;
+                Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+                Inventory.instance.artifactUIs[number].isInstallation = true;
+            } else if (DragSlot.instance.beginSlot == 2)
+            {
+                    temp_arti = itemSlotui.item;                                // 현재 장착하고 있는 아이템
+                    itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item;    // 바뀔 아이템
+        
+                    if (temp_arti != null)
+                    {
+                        DragSlot.instance.dragSlot.itemSlotui.item = temp_arti;
+                    }
+                    else
+                    {
+                        DragSlot.instance.dragSlot.itemSlotui.item = null;
+                        DragSlot.instance.dragSlot.itemSlotui.image.sprite=null;
+                        DragSlot.instance.dragSlot.itemSlotui.image.gameObject.SetActive(false);
+                        Inventory.instance.artifactUIs[DragSlot.instance.dragSlot.number].isInstallation = false;
+                    }
+            }
             
         }
         
