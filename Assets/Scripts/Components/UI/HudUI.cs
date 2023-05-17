@@ -50,7 +50,7 @@ public class HudUI : MonoBehaviour
                 uiRoll.RollSkillCool();
             }
         }
-        if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
+        if (Input.GetButtonDown("Cancel")/* && (invenSet.activeSelf)==false*/)
         {
             if (menuSet.activeSelf)
             {
@@ -59,8 +59,15 @@ public class HudUI : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 0;
-                menuSet.SetActive(true); 
+                if (invenSet.activeSelf)
+                {
+                    invenSet.SetActive(false);
+                }
+                else
+                {
+                    Time.timeScale = 0;
+                    menuSet.SetActive(true);
+                }
             }
         }
         if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;

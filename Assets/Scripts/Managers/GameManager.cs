@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get { return instance; } }
 
-    public GameObject menuSet;
-    public GameObject invenSet;
-    
+    // public GameObject menuSet;
+    // public GameObject invenSet;
+    //
     /*
     [Header("# Player Info")] 
     public int Hp;
@@ -34,27 +34,27 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Debug.LogWarning("GameManager cannot be two : Deleted.");
         }
-
+    
         Application.targetFrameRate = 60;
     }
-
-    void Update()
-    {
-        //Sub Menu
-        if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
-        {
-            if (menuSet.activeSelf)
-            {
-                Time.timeScale = 1;
-                menuSet.SetActive(false);
-            }
-            else
-            {
-                Time.timeScale = 0;
-                menuSet.SetActive(true); 
-            }
-        }
-    }
+    
+    // void Update()
+    // {
+    //     //Sub Menu
+    //     if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
+    //     {
+    //         if (menuSet.activeSelf)
+    //         {
+    //             Time.timeScale = 1;
+    //             menuSet.SetActive(false);
+    //         }
+    //         else
+    //         {
+    //             Time.timeScale = 0;
+    //             menuSet.SetActive(true); 
+    //         }
+    //     }
+    // }
 
 
 }
