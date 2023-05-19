@@ -190,9 +190,12 @@ public class Heart : MonoBehaviour
     {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
-        
-        if(Inventory.instance == null)
+
+        if (Inventory.instance == null)
+        {
             Debug.LogError("Inventory 인스턴스가 없습니다");
+            return;
+        }
         
         float calcATK = 20;
         float calcDEF = 5;
@@ -252,9 +255,15 @@ public class Heart : MonoBehaviour
                 }
             }
         }
-        // 공격력 계산 : (기본 공격력 + 아티팩트 공격력) * 무기 공격력 %
-        if(Inventory.instance.tempItem != null)
+
+        if (Inventory.instance.tempItem != null)
+        {
             calcATK = calcATK + calcATK * (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK] * 0.01f;
+            calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
+            calcCRITDAMAGE += ((Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE] * 0.01f);
+        }
+        
+        // 공격력 계산 : (기본 공격력 + 아티팩트 공격력) * 무기 공격력 %
         atk = calcATK;
         
         // 방어력 계산 : (기본 방어력 + 아티팩트 방어력)
@@ -264,8 +273,6 @@ public class Heart : MonoBehaviour
         max_hp = calcHP;
         
         // 공격속도 계산 : (기본 공격속도 + 아티팩트 공격속도)
-        if(Inventory.instance.tempItem != null)
-            calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
         atk_speed = calcATKSPEED;
         
         // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도) 최대이속 23
@@ -276,8 +283,6 @@ public class Heart : MonoBehaviour
         criticalRate = calcCRITRATE;
         
         // 치명데미지 계산
-        if (Inventory.instance.tempItem != null)
-            calcCRITDAMAGE += ((Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE] * 0.01f);
         criticalDamage = calcCRITDAMAGE;
     }
 
