@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.attack, new AttackState(controller));
         stateMachine.AddState(StateName.skill, new SkillState(controller));
         stateMachine.AddState(StateName.stiff, new StiffState(controller));
+        stateMachine.AddState(StateName.death, new DeathState(controller));
     }
 
     public void UpdateStat()
@@ -105,6 +106,8 @@ public class Player : MonoBehaviour
                 heart.PlayerItemEquip();
             }
         }
+
+        
     }
 
 
@@ -129,4 +132,19 @@ public class Player : MonoBehaviour
         Debug.Log("endskill");
         stateMachine?.ChangeState(StateName.Idle);
     }
+
+    public void OnDeath()
+    {
+        stateMachine.ChangeState(StateName.death);
+        capsuleCollider.enabled = false;
+    }
+    
+    [Button]
+    public void Respawn()
+    {
+        stateMachine?.ChangeState(StateName.Idle);
+        capsuleCollider.enabled = true;
+        heart.RestoreAll_CUR_HP();
+    }
+    
 }

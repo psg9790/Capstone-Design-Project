@@ -15,6 +15,7 @@ namespace CharacterController
         attack,
         skill,
         stiff,
+        death,
     }
     public class StateMachine
     {

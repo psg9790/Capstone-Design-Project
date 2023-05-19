@@ -3211,7 +3211,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 5
   m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 999
@@ -3290,6 +3290,7 @@ MonoBehaviour:
   isDashing: 0
   isAttack: 0
   isSkill: 0
+  isDeath: 0
 --- !u!114 &5661129087745828413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3310,7 +3311,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2411560938377292722}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnKnockBack:
     m_PersistentCalls:
       m_Calls: []
