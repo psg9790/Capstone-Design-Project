@@ -20,6 +20,10 @@ public class Weapon : Item
         this.options = options;
     }
 
+    // 공격력: 14% (+2%)
+    // 공격속도: 1.4 (-0.2)
+    // 치명타 확률:
+    // 치명타 피해:
     public override List<string> Options_ToString()
     {
         List<string> ret = new List<string>();
