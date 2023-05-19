@@ -53,6 +53,17 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void OnDestroy() // 플레이어 지울시 이벤트 삭제
+    {
+        InputManager.Instance.RemovePerformed(InputKey.LeftClick, LeftClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.RightClick, RighClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.SpaceClick, SpaceClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.QClick, QClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.WClick, WClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.EClick, EClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.RClick, RClickPerformed);
+    }
+
     private void Update()
     {
         // searchItem();

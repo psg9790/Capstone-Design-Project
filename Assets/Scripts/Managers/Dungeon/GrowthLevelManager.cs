@@ -78,7 +78,7 @@ public class GrowthLevelManager : MonoBehaviour
         while (true)
         {
             yield return null;
-            if (monster.fsm != null)
+            if (monster != null)
             {
                 if (monster.fsm.CheckCurState(EMonsterState.Dead))
                 {
