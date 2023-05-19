@@ -24,7 +24,7 @@ public class GrowthLevelManager : MonoBehaviour
     public int maxLevel; // 마지막 레벨
     [ReadOnly] public int worldLevel; // 월드 레벨 (난이도), 처음엔 0
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
-    
+
     [ReadOnly] public int curLevelMonsterCount = 0; // 현재 레벨 완료 및 보스몬스터 생성?을 위한 현재 몹 마릿수
     [ReadOnly] public int curLevelMaxMonsterCount;
     [HideInInspector] public Transform parent_spawnedMonsters;
@@ -34,7 +34,7 @@ public class GrowthLevelManager : MonoBehaviour
     public Transform bossRoom_spawnPoint;
     public List<Transform> dungeon1_monsterSpawnPoints = new List<Transform>(); // 던전1 몬스터 소환 포인트
     public List<Transform> dungeon3_monsterSpawnPoints = new List<Transform>(); // 던전3 몬스터 소환 포인트
-    
+
     public int mazeIndent = 28; // 미로 블럭들 사이의 간격
     public int maxMazeBlockCount = 12; // 최대로 생성할 미로 방의 개수
 
@@ -44,6 +44,7 @@ public class GrowthLevelManager : MonoBehaviour
     [Required] public NavMeshSurface maze_parent_nav; // 동적 네브메시 생성용
     [Required] public MagicPortal magicPortal_prefab;
     [Required] public NextLevelPortal nextLevelPortal_prefab;
+    private bool bossPortalGenerated = false;
     private RandomMazeGenerator randomMazeGenerator; // 랜덤 생성기 클래스
 
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
@@ -52,7 +53,7 @@ public class GrowthLevelManager : MonoBehaviour
     [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
     [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
 
-    
+
     private void Awake()
     {
         if (instance == null)
@@ -60,7 +61,7 @@ public class GrowthLevelManager : MonoBehaviour
             instance = this;
             general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
-            
+
             InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
         }
         else
@@ -73,6 +74,7 @@ public class GrowthLevelManager : MonoBehaviour
 
     private IEnumerator BossTrackingIE(Monsters.Monster monster)
     {
+        Monsters.Monster boss = monster;
         while (true)
         {
             yield return null;
@@ -83,12 +85,18 @@ public class GrowthLevelManager : MonoBehaviour
                     break;
                 }
             }
+            else
+            {
+                break;
+            }
         }
+
         // 보스 사망
         NextLevelPortal nxtPortal = Instantiate(nextLevelPortal_prefab);
         nxtPortal.transform.position = Player.Instance.transform.position;
         nxtPortal.Activate(true);
     }
+
     public void DecreaseMonsterCount() // 몬스터 감소 이벤트, 일정 횟수 이상 몹을 해치우면 보스 생성 등 로직 추가 가능
     {
         if (curLevelMonsterCount > 0)
@@ -102,22 +110,27 @@ public class GrowthLevelManager : MonoBehaviour
 
         if (curLevelMonsterCount <= curLevelMaxMonsterCount * 0.1f)
         {
-            // 보스맵 포탈 생성
-            MagicPortal bossPortal = Instantiate(magicPortal_prefab);
-            bossPortal.transform.position = Player.Instance.transform.position;
-            bossPortal.Activate(bossRoom_spawnPoint, true);
-            
-            // 보스 스폰
-            int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
-            Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
-                .GetComponent<Monsters.Monster>();
-            newBoss.Init(bossRoom_spawnPoint.position, 4f);
-            newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
-            if (bossTrackingCoroutine != null)
+            if (!bossPortalGenerated)
             {
-                StopCoroutine(bossTrackingCoroutine);
+                // 보스맵 포탈 생성
+                bossPortalGenerated = true;
+                MagicPortal bossPortal = Instantiate(magicPortal_prefab);
+                bossPortal.transform.position = Player.Instance.transform.position;
+                bossPortal.Activate(bossRoom_spawnPoint, true);
+
+                // 보스 스폰
+                int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+                Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+                    .GetComponent<Monsters.Monster>();
+                newBoss.Init(bossRoom_spawnPoint.position, 4f);
+                newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+                if (bossTrackingCoroutine != null)
+                {
+                    StopCoroutine(bossTrackingCoroutine);
+                }
+
+                bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
             }
-            bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
         }
     }
 
@@ -136,7 +149,7 @@ public class GrowthLevelManager : MonoBehaviour
 
         // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
-        
+
         LevelDisplay();
     }
 
@@ -153,6 +166,7 @@ public class GrowthLevelManager : MonoBehaviour
     [Button]
     public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
+        bossPortalGenerated = false;
         worldLevel++;
         if (worldLevel > maxLevel)
         {
@@ -161,13 +175,13 @@ public class GrowthLevelManager : MonoBehaviour
             Debug.Log("성장형 던전 클리어");
             return;
         }
-        
+
         ItemGenerator.Instance.RemoveAllItems();
         curLevelMonsterCount = 0;
         LevelDisplay();
-        
+
         MakeRandomMap();
-        
+
         TeleportPlayer(playerSpawnPoint);
     }
 
@@ -184,6 +198,7 @@ public class GrowthLevelManager : MonoBehaviour
         {
             Destroy(parent_spawnedMonsters.gameObject);
         }
+
         parent_spawnedMonsters = new GameObject("parent_spawnedMonsters").transform;
 
         curWorldMapType = UnityEngine.Random.Range(0, 10);
@@ -198,8 +213,8 @@ public class GrowthLevelManager : MonoBehaviour
                 for (int j = 0; j < dun1_monsterCount; j++)
                 {
                     int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
-                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster], 
-                        dungeon1_monsterSpawnPoints[i].transform.position, 
+                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster],
+                        dungeon1_monsterSpawnPoints[i].transform.position,
                         dungeon1_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
                     newMonster.Init(dungeon1_monsterSpawnPoints[i].transform.position, 4f);
                     newMonster.transform.SetParent(parent_spawnedMonsters);
@@ -212,15 +227,15 @@ public class GrowthLevelManager : MonoBehaviour
         {
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
-            
+
             for (int i = 0; i < dungeon3_monsterSpawnPoints.Count; i++)
             {
                 int dun3_monsterCount = UnityEngine.Random.Range(4, 7);
                 for (int j = 0; j < dun3_monsterCount; j++)
                 {
                     int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
-                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster], 
-                        dungeon3_monsterSpawnPoints[i].transform.position, 
+                    Monsters.Monster newMonster = Instantiate(general_monsters[rndGeneralMonster],
+                        dungeon3_monsterSpawnPoints[i].transform.position,
                         dungeon3_monsterSpawnPoints[i].transform.rotation).GetComponent<Monsters.Monster>();
                     newMonster.Init(dungeon3_monsterSpawnPoints[i].transform.position, 4f);
                     newMonster.transform.SetParent(parent_spawnedMonsters);
@@ -233,11 +248,12 @@ public class GrowthLevelManager : MonoBehaviour
         {
             dungeon1_parent.SetActive(false);
             dungeon3_parent.SetActive(false);
-            
-            randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position, mazeIndent, maxMazeBlockCount);
+
+            randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
+                mazeIndent, maxMazeBlockCount);
             randomMazeGenerator.RandomGenerate();
             playerSpawnPoint = randomMazeGenerator.PlayerSpawnPoint().position;
-            
+
             if (maze_parent_nav.navMeshData == null)
             {
                 maze_parent_nav.BuildNavMesh();
@@ -263,7 +279,7 @@ public class GrowthLevelManager : MonoBehaviour
         Player.Instance.nav.enabled = false;
         Player.Instance.transform.position = pos;
         Player.Instance.nav.enabled = true;
-        
+
         Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
     }
 
@@ -278,6 +294,5 @@ public class GrowthLevelManager : MonoBehaviour
             .AppendInterval(1.5f)
             .Append(levelCG.DOFade(0, 0.5f).From(1))
             .Join(cgRect.DOAnchorPosY(yy, 0.5f));
-        
     }
 }
