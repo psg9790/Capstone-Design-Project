@@ -154,14 +154,17 @@ public class Heart : MonoBehaviour
         if (immune)
             return;
         // 내부 처리
-        float ins = dmg.damage;
-        ins = (int)(ins * Random.Range(0.75f, 1f));
+        float damage = dmg.damage;
+        damage *= 250 / (250 + DEF); // 플레이어 방어력 최대 35*6=210 (경감률=250/(250+210)=45.6xx%)
+        damage = (int)(damage * Random.Range(0.75f, 1f));
         
-        cur_hp -= ins;
+        // cur_hp -= damage;
+        cur_hp = Mathf.Clamp(cur_hp - damage, 0, MAX_HP);
+        
         OnHit.Invoke(0.5f, -dir);
         if (useDamageFont)
         {
-            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, ins, dmg.isCritical, damageFont_randomRange);
+            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, damage, dmg.isCritical, damageFont_randomRange);
         }
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
@@ -178,7 +181,6 @@ public class Heart : MonoBehaviour
 
         if (cur_hp <= 0)
         {
-            cur_hp = 0;
             OnDeath.Invoke();
         }
     }
@@ -196,7 +198,7 @@ public class Heart : MonoBehaviour
         float calcDEF = 5;
         float calcHP = 100;
         float calcATKSPEED = 1;
-        float calcMOVEMENTSPEED = 1;
+        float calcMOVEMENTSPEED = 5;
         float calcCRITRATE = 5f;
         float calcCRITDAMAGE = 2;
 
@@ -208,6 +210,7 @@ public class Heart : MonoBehaviour
             max_hp = calcHP;
             atk_speed = calcATKSPEED;
             movement_speed = calcMOVEMENTSPEED;
+            Player.Instance.nav.speed = movement_speed;
             criticalRate = calcCRITRATE;
             criticalDamage = calcCRITDAMAGE;
             return;
@@ -265,9 +268,10 @@ public class Heart : MonoBehaviour
             calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
         atk_speed = calcATKSPEED;
         
-        // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도)
+        // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도) 최대이속 23
         movement_speed = calcMOVEMENTSPEED;
-        
+        Player.Instance.nav.speed = movement_speed;
+
         // 치명확률 계산
         criticalRate = calcCRITRATE;
         
@@ -277,7 +281,7 @@ public class Heart : MonoBehaviour
         criticalDamage = calcCRITDAMAGE;
     }
 
-    public void SetMonsterStatByLevel(short level)
+    public void SetMonsterStatByLevel(short level) // 이거 쓸것 (매개변수 월드레벨)
     {
         this.level = level;
         GetComponent<SkillSet>().SetMonsterStatByLevel(level);
