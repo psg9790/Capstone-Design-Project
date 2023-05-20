@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class Inventory : MonoBehaviour
     public Image backImage;
     [ShowInInspector] public Item tempItem=null;
     public bool isInstallation=false;
+
+    [SerializeField] private TMP_Text sideStatDisplayText;
 
     private void OnValidate()
     {
@@ -146,6 +149,18 @@ public class Inventory : MonoBehaviour
         {
             artifactUIs[i].artiNumber = i;
             artifactUIs[i].itemSlot.number = i;
+        }
+    }
+
+    public void SetSideStatDisplayText(string displayText)
+    {
+        if (sideStatDisplayText != null)
+        {
+            sideStatDisplayText.text = displayText;
+        }
+        else
+        {
+            Debug.LogError("sideStat 컴포넌트 부착 바람");
         }
     }
 }

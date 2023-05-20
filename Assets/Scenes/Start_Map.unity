@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -22498,6 +22498,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 409531941}
     m_Modifications:
+    - target: {fileID: 656839829863562069, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: sideStatDisplayText
+      value: 
+      objectReference: {fileID: 3039118497106150731}
     - target: {fileID: 864236679034979999, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
       propertyPath: m_Name
@@ -22618,6 +22623,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3464008178115627961, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3464008178115627961, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6811647553996305137, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -22637,6 +22652,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: MainTitle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550127317274531050, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7550127317274531050, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8739377136355458661, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
@@ -22671,6 +22696,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 105181ceffae09e409c9c551f95e4e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3039118497106150731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3464008178115627961, guid: fbdb589f1cba8444ba534360b64fd4ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 3039118497106150728}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3160683564870133935
