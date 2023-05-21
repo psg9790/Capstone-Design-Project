@@ -10,7 +10,7 @@ public class WeaponSlot : ItemSlot
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             DragSlot.instance.dragSlot = this;
-            if (Inventory.instance.isInstallation==true)
+            if (Inventory.instance.isInstallation==true && Inventory.instance.count<28)
             {
                 Player.Instance.weaponManager.UnRegisterWeapon();
                 grade_Back.gameObject.SetActive(false);
@@ -26,6 +26,13 @@ public class WeaponSlot : ItemSlot
                 Inventory.instance.weaponSlot.itemSlotui.gameObject.SetActive(false);
                 Inventory.instance.backImage.gameObject.SetActive(true);
                 Inventory.instance.isInstallation = false;
+            }
+            else if(Inventory.instance.isInstallation==true && Inventory.instance.count==28)
+            {
+                Inventory.instance.popUp.text="슬롯이 가득 차 있어 무기를 해제할 수 없습니다";
+                Inventory.instance.popUp.gameObject.SetActive(true);
+                Invoke("taketime", 1.0f);
+                Inventory.instance.popUp.gameObject.SetActive(false);;
             }
         }
     }
@@ -92,7 +99,7 @@ public class WeaponSlot : ItemSlot
         
             GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
             Player.Instance.weaponManager.SetWeapon(weapon);
-            
+
             for (int i = 0; i < 6; i++)
             {
                 UnityEngine.Debug.Log("unlock");
@@ -108,5 +115,10 @@ public class WeaponSlot : ItemSlot
                 Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(false);
             }
         }
+    }
+    
+    public void taketime()
+    {
+        Debug.Log("a");
     }
 }
