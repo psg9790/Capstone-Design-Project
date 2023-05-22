@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] public ItemSlot[] slots;
     public ItemSlot weaponSlot;
     public Image backImage;
-    [ShowInInspector] public Item tempItem=null;
+    [ShowInInspector] public Item tempItem = null;
     public bool isInstallation=false;
 
     [SerializeField] private TMP_Text sideStatDisplayText;
@@ -45,7 +45,8 @@ public class Inventory : MonoBehaviour
             // DontDestroyOnLoad(instance);
             EmptySlot();
             artifactNumbering();
-                
+
+            tempItem = null;
             grade_image = new Sprite[6]; 
             this.gameObject.SetActive(false);
         }
