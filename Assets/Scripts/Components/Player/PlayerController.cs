@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool isDashing = false;
     public bool isAttack = false;
     public bool isSkill = false;
+    public bool isDeath = false;
     
     private bool isDashCollTime = false;
 
@@ -53,6 +54,17 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void OnDestroy() // 플레이어 지울시 이벤트 삭제
+    {
+        InputManager.Instance.RemovePerformed(InputKey.LeftClick, LeftClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.RightClick, RighClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.SpaceClick, SpaceClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.QClick, QClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.WClick, WClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.EClick, EClickPerformed);
+        InputManager.Instance.RemovePerformed(InputKey.RClick, RClickPerformed);
+    }
+
     private void Update()
     {
         // searchItem();
@@ -68,7 +80,7 @@ public class PlayerController : MonoBehaviour
         {
             Player.Instance.animator.SetTrigger("attack");
         }
-        if (!isDashing && !isAttack && !isSkill)
+        if (!isDashing && !isAttack && !isSkill && !isDeath)
         {
             player.stateMachine.ChangeState(StateName.attack);
         }
@@ -77,25 +89,25 @@ public class PlayerController : MonoBehaviour
 
     void QClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill) return;
+        if(isSkill && !isDeath) return;
         skillnum = 0;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void WClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill) return;
+        if(isSkill && !isDeath) return;
         skillnum = 1;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void EClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill) return;
+        if(isSkill && !isDeath) return;
         skillnum = 2;
         player.stateMachine.ChangeState(StateName.skill);
     }
     void RClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill) return;
+        if(isSkill && !isDeath) return;
         skillnum = 3;
         player.stateMachine.ChangeState(StateName.skill);
     }
@@ -108,7 +120,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // 이동하면 안되는 조건문 추가
-        if (!isDashing && !isSkill)
+        if (!isDashing && !isSkill && !isDeath)
         {
             player.stateMachine.ChangeState(StateName.move);
             
@@ -118,7 +130,7 @@ public class PlayerController : MonoBehaviour
     // 스페이스바 대쉬
     void SpaceClickPerformed(InputAction.CallbackContext context)
     {
-        if (!isDashing && !isDashCollTime)
+        if (!isDashing && !isDashCollTime && !isDeath)
         {
             isDashing = true;
             isDashCollTime = true;

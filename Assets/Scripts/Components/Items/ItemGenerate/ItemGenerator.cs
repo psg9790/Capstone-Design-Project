@@ -22,7 +22,9 @@ public class ItemGenerator : MonoBehaviour
     private GameObject droppedItemPrefab; // 드랍 아이템 프리팹
 
     private ulong id_generate = 0;
-    private int weaponItem_dropRatio = 10; // 무기 드롭 확률 : 0 ~ 100 %
+    private int weaponItem_dropRatio = 50; // 무기 드롭 확률 : 0 ~ 100 %
+
+    public int maxLevel;
 
     StringBuilder sb = new StringBuilder();
 
@@ -37,7 +39,8 @@ public class ItemGenerator : MonoBehaviour
         aDic = CSVReader.Read("ItemData/Randomize/ArtifactRandomizeByLevel"); // 아티팩트 랜덤 datasheet 불러옴
         artifactDatas = Resources.LoadAll<ItemData>("ItemData/Artifact/"); // 아티팩트 티어 리스트를 불러옴
         weaponDatas = Resources.LoadAll<ItemData>("ItemData/Weapon/"); // 무기종류 데이터를 불러옴
-        droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem");
+        droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem"); // 드롭아이템 오브젝트 프리팹 로드
+        maxLevel = aDic.Count - 1;
     }
 
     private DroppedItem InstantiateItem(Transform tf)
@@ -65,7 +68,7 @@ public class ItemGenerator : MonoBehaviour
         return drop;
     }
 
-    public void GenerateItem(Transform tf, Heart heart)
+    public void GenerateItem(Transform tf, int level)
     {
         DroppedItem drop = InstantiateItem(tf);
 
@@ -78,7 +81,7 @@ public class ItemGenerator : MonoBehaviour
             float valRatio = 0;
             for (int i = 0; i < System.Enum.GetValues(typeof(WeaponKey)).Length; i++)
             {
-                float valBound = float.Parse(wDic[heart.LEVEL][((WeaponKey)i).ToString()].ToString());
+                float valBound = float.Parse(wDic[level][((WeaponKey)i).ToString()].ToString());
                 float randValue = UnityEngine.Random.Range(0, valBound);
                 if (randValue / valBound > valRatio)
                 {
@@ -88,7 +91,7 @@ public class ItemGenerator : MonoBehaviour
             }
             wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(wOptions[WeaponKey.SOCKET]);
             
-            Weapon weapon = new Weapon(wData, id_generate++, heart.LEVEL, wOptions);
+            Weapon weapon = new Weapon(wData, id_generate++, (short)level, wOptions);
             weapon.itemName = weapon.itemData.itemName;
             if (valRatio >= 0.96f)
                 weapon.itemColor = Color.red;
@@ -111,8 +114,9 @@ public class ItemGenerator : MonoBehaviour
             {
                 if (UnityEngine.Random.Range(0, 100) < 50)
                 {
-                    float valBound = float.Parse(aDic[heart.LEVEL][((ArtifactKey)i).ToString()].ToString());
+                    float valBound = float.Parse(aDic[level][((ArtifactKey)i).ToString()].ToString());
                     float randValue = UnityEngine.Random.Range(0, valBound);
+                    randValue = (float)Math.Round(randValue, 1);
                     if (randValue / valBound > valRatio)
                     {
                         valRatio = randValue / valBound;
@@ -126,14 +130,15 @@ public class ItemGenerator : MonoBehaviour
             if (aOptions.Count == 0) // 옵션 최소 1개는 보장
             {
                 int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
-                float valBound = float.Parse(aDic[heart.LEVEL][((ArtifactKey)randIdx).ToString()].ToString());
+                float valBound = float.Parse(aDic[level][((ArtifactKey)randIdx).ToString()].ToString());
                 float randVal = UnityEngine.Random.Range(0, valBound);
+                randVal = (float)Math.Round(randVal, 1);
                 valKey = (ArtifactKey)randIdx;
                 valRatio = randVal / valBound;
                 aOptions.Add((ArtifactKey)randIdx, randVal);
             }
 
-            Artifact arti = new Artifact(artifactDatas[heart.LEVEL], id_generate++, heart.LEVEL, aOptions);
+            Artifact arti = new Artifact(artifactDatas[level], id_generate++, (short)level, aOptions);
 
             // 접두어
             sb.Clear();
@@ -153,6 +158,9 @@ public class ItemGenerator : MonoBehaviour
                     break;
                 case ArtifactKey.MOVEMENTSPEED:
                     sb.Append("기민함의 ");
+                    break;
+                case ArtifactKey.CRIT_RATE:
+                    sb.Append("치명의 ");
                     break;
             }
 
@@ -181,22 +189,34 @@ public class ItemGenerator : MonoBehaviour
         DroppedItem drop = InstantiateItem(Player.Instance.transform);
         drop.Adjust(item);
     }
+
+    [Button]
+    public void RemoveAllItems()
+    {
+        if (!ReferenceEquals(parent_droppedItem, null))
+        {
+            Destroy(parent_droppedItem.gameObject);
+            parent_droppedItem = new GameObject("DroppedItems").transform;
+        }
+    }
     
     
     [Button]
-    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket)
+    public void DEBUG__GenerateWeapon(ItemData data, float atk, float atkspeed, int socket, float critRate, float critDamage)
     {
         Dictionary<WeaponKey, float> inData = new Dictionary<WeaponKey, float>();
         inData.Add(WeaponKey.ATK, atk);
         inData.Add(WeaponKey.ATKSPEED, atkspeed);
         inData.Add(WeaponKey.SOCKET, socket);
+        inData.Add(WeaponKey.CRIT_RATE, critRate);
+        inData.Add(WeaponKey.CRIT_DAMAGE, critDamage);
 
         Weapon wItem = new Weapon(data, id_generate++, -1, inData);
         Inventory.instance.AddItem(wItem);
     }
 
     [Button]
-    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed)
+    public void DEBUG__GenerateArtifact(ItemData data, float atk, float atkspeed, float def, float hp, float movementspeed, float critRate)
     {
         Dictionary<ArtifactKey, float> inData = new Dictionary<ArtifactKey, float>();
         if(atk != 0)
@@ -209,6 +229,8 @@ public class ItemGenerator : MonoBehaviour
             inData.Add(ArtifactKey.HP, hp);
         if(movementspeed != 0)
             inData.Add(ArtifactKey.MOVEMENTSPEED, movementspeed);
+        if(critRate != 0)
+            inData.Add(ArtifactKey.CRIT_RATE, critRate);
 
         Artifact aItem = new Artifact(data, id_generate++, -1, inData);
         Inventory.instance.AddItem(aItem);

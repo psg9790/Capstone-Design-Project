@@ -14,12 +14,14 @@ public class HudUI : MonoBehaviour
     
     private float maxHp = 100;
     private float curHp = 100;
+    private float afterCurhp = 100;
     public UISkillBtn[] uiSkillBtn=new UISkillBtn[4];
     public PortionBtn portionBtn;
     public UIRoll uiRoll;
+    public GameObject menuSet;
     public GameObject invenSet;
     float delay = 0.5f;
-
+        
     void Start() 
     {
         for (int i = 0; i < 4; i++)
@@ -48,11 +50,31 @@ public class HudUI : MonoBehaviour
                 uiRoll.RollSkillCool();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.A))             //curHp != Player.Instance.heart.CUR_HP;
+        if (Input.GetButtonDown("Cancel")/* && (invenSet.activeSelf)==false*/)
         {
-            curHp -= 10;//curHp = Player.Instance.heart.CUR_HP;
-            StartCoroutine(HandleHp());
+            if (menuSet.activeSelf)
+            {
+                Time.timeScale = 1;
+                menuSet.SetActive(false);
+            }
+            else
+            {
+                if (invenSet.activeSelf)
+                {
+                    invenSet.SetActive(false);
+                }
+                else
+                {
+                    Time.timeScale = 0;
+                    menuSet.SetActive(true);
+                }
+            }
+        }
+        if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
+        {
+            hp_Activity();
+            
+            hp_back_Activity();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -94,6 +116,37 @@ public class HudUI : MonoBehaviour
         hpImage.fillAmount =  Mathf.Lerp(hpBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
         yield return new WaitForSeconds(0.1f);
         hpBackImage.fillAmount =  Mathf.Lerp(hpBackBar.value,(float)curHp / (float)maxHp,Time.deltaTime*20);
+    }
+    
+    private void hp_Activity()
+    {
+        float hp = Player.Instance.heart.CUR_HP;
+        if (curHp < hp)
+        {
+            curHp += Time.deltaTime * HPbar_custom.GAGE_SPEED * 3f;
+        }
+        if (curHp > hp)
+        {
+            curHp = hp;
+        }
+
+        hpBar.value = (float)curHp / (float)maxHp;
+        hpImage.fillAmount = hpBar.value;
+    }
+    
+    private void hp_back_Activity()
+    {
+        
+        if (afterCurhp >  curHp)
+        {
+            afterCurhp  -= Time.deltaTime * HPbar_custom.GAGE_SPEED;
+        }
+        if (afterCurhp  <  curHp)
+        {
+            afterCurhp  =  curHp;
+        }
+        hpBackBar.value = (float)curHp / (float)maxHp;
+        hpBackImage.fillAmount = hpBar.value;
     }
     
 }

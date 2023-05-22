@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.30269486, b: 0, a: 1}
+      maxColor: {r: 0.8867924, g: 0.11433481, b: 0.8563538, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5054,7 +5054,7 @@ MonoBehaviour:
     m_Bits: 0
   elapsed: 0
   duration: 1.5
-  targetCount: 5
+  targetCount: 1
   parent_particle: {fileID: 5376175015904738955}
   slashSound: {fileID: 0}
   slashSoundTime: 0
@@ -5063,9 +5063,9 @@ MonoBehaviour:
   bulletSpeed: 15
   bulletFlashEffect: {fileID: 198594740086084638, guid: 7c4fb72ecb3bf9d4bb527abaae35f132,
     type: 3}
-  bulletFlashSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
+  bulletFlashSound: {fileID: 8300000, guid: 78419f98379502c4dbfb2774bc94e7c1, type: 3}
   bulletHitEffect: {fileID: 198381662199079310, guid: 5559b3dc6f8d5914f8b78b7c0b797b75,
     type: 3}
-  bulletHitSound: {fileID: 8300000, guid: e96b97bca408b0b46bf5877ade1ce5a5, type: 3}
+  bulletHitSound: {fileID: 8300000, guid: 78419f98379502c4dbfb2774bc94e7c1, type: 3}
   isHoming: 1
   homingPerformance: 0.1

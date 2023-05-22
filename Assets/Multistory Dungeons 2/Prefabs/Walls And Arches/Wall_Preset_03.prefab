@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33223632191329584}
   - component: {fileID: 23290801905714238}
   - component: {fileID: 65267709056111834}
-  - component: {fileID: 5583262149551574022}
+  - component: {fileID: 8770439470317204971}
   m_Layer: 0
   m_Name: Wall_Preset_03
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.0368958, y: 6.1856704, z: 0.98259735}
   m_Center: {x: -0.018447876, y: 3.0928352, z: -0.3539772}
---- !u!114 &5583262149551574022
+--- !u!114 &8770439470317204971
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,5 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 09a6bdff84cd47dabeaff92fe0467301, type: 2}
+  - {fileID: 2100000, guid: f7b2ad25264bd2f4eb60e6fee37f0281, type: 2}

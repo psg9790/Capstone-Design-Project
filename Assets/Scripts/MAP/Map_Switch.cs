@@ -8,7 +8,6 @@ public class Map_Switch : MonoBehaviour
 {
     
     //선택창
-    public GameObject portalUI;
     private void Start()
     {
         
@@ -18,14 +17,14 @@ public class Map_Switch : MonoBehaviour
     {
         if (col.tag == "Player")
         {
-            portalUI.SetActive(true);
+            GrowthLevelManager.Instance.NextLevel();
         }
     }
     private void OnTriggerExit(Collider col)
     {
         if (col.tag == "Player")
         {
-            portalUI.SetActive(false);
+            
         }
     }
 }

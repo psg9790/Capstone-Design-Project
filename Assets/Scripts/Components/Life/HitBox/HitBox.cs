@@ -98,7 +98,8 @@ public class HitBox : MonoBehaviour
             if (!slashSoundPlayed && slashSoundTime <= elapsed && slashSound != null)
             {
                 slashSoundPlayed = true;
-                slashAudioSource.PlayOneShot(slashSound);
+                // slashAudioSource.PlayOneShot(slashSound);
+                SoundManager.instance.PlaySoundComponent(slashSound, transform.position);
             }
             yield return null;
         }

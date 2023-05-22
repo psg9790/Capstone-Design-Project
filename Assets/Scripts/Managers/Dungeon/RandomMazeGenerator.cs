@@ -60,8 +60,9 @@ public class RandomMazeGenerator
                 // if (newBlock.TryGetComponent<MazeComponent>(out MazeComponent newMaze))
                 {
                     mazeComponents.Add(newMaze);
-                    newMaze.BuildWalls(this);
+                    // newMaze.BuildWalls(this);
                     GrowthLevelManager.Instance.curLevelMonsterCount += newMaze.SpawnMonsters();
+                    newMaze.SpawnTreasure();
                     // newMaze.CheckCollapseWalls();
                 }
                 newMaze.transform.SetParent(parentTransform);
@@ -69,9 +70,18 @@ public class RandomMazeGenerator
             if (opened.Count == 0)
                 break;
         }
+        BuildWalls();
         opened.Clear();
         openedHash.Clear();
         closed.Clear();
+    }
+
+    private void BuildWalls()
+    {
+        for (int i = 0; i < mazeComponents.Count; i++)
+        {
+            mazeComponents[i].BuildWalls(this);
+        }
     }
 
     public Transform PlayerSpawnPoint() // 가장 처음 생성한 블럭의 플레이어 생성 지점을 반환함
