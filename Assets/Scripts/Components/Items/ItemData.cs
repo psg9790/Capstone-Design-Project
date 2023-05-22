@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[Serializable]
 [CreateAssetMenu(fileName = "ItemData", menuName = "Item/ItemData", order = 1)]
 public class ItemData : ScriptableObject
 {

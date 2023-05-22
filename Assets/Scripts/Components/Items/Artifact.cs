@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[Serializable]
 public class Artifact : Item
 {
     // public List<ArtifactKey> artifactKeys;
@@ -72,6 +74,7 @@ public class Artifact : Item
     }
 }
 
+[Serializable]
 public enum ArtifactKey
 {
     HP,
