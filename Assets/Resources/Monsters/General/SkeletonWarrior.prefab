@@ -418,11 +418,11 @@ MonoBehaviour:
   max_hp: 100
   cur_hp: 100
   atk: 10
-  def: 1
-  movement_speed: 1
+  def: 5
+  movement_speed: 4
   atk_speed: 1
   skill_cooldown: 0
-  criticalRate: 50
+  criticalRate: 0
   criticalDamage: 2
   immune: 0
   cc_stiff_immune: 0
@@ -460,6 +460,7 @@ MonoBehaviour:
   fov: {fileID: 0}
   skillset: {fileID: 0}
   rigid: {fileID: 0}
+  mazeComponent: {fileID: 0}
   state: 0
   spawnPoint: {x: 0, y: 0, z: 0}
   patrolRadius: 0
@@ -496,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778ca472aa1c17743afc44a43a1c03ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statGrowthByLevelUp: 1.3
   baseSkillEffect: {fileID: 8204595239827621955, guid: bb975d6f1ca8f8b45b032d393b39a69f,
     type: 3}
   skill01_coolDown: 0
@@ -520,6 +522,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4160
   monster: {fileID: 0}
+  wallException: 1
 --- !u!195 &489164932030698338
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1387,10 +1390,24 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
+  heartLayer:
+    serializedVersion: 2
+    m_Bits: 0
   elapsed: 0
   duration: 0
   targetCount: 5
   parent_particle: {fileID: 0}
+  slashSound: {fileID: 0}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 0}
+  isBullet: 0
+  bulletSpeed: 20
+  bulletFlashEffect: {fileID: 0}
+  bulletFlashSound: {fileID: 0}
+  bulletHitEffect: {fileID: 0}
+  bulletHitSound: {fileID: 0}
+  isHoming: 0
+  homingPerformance: 0.1
 --- !u!1 &2991821679112777340
 GameObject:
   m_ObjectHideFlags: 0

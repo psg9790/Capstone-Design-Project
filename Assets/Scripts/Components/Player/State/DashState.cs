@@ -27,10 +27,10 @@ namespace CharacterController
             dashDuration = Player.Instance.dashDuration;
             if (!IsDash)
             {
-                Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+                Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
                 RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+                int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
                 {
                     Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                     Vector3 pltp = Player.Instance.transform.position;
@@ -59,7 +59,7 @@ namespace CharacterController
             if (direction != Vector3.zero)
             {
                 Quaternion targetAngle = Quaternion.LookRotation(direction);
-                Controller.transform.rotation = targetAngle;
+                Player.Instance.transform.rotation = targetAngle;
             }
         }
         public override void OnUpdateState()
@@ -81,6 +81,7 @@ namespace CharacterController
                 Ray ray = new Ray(nextpos,Vector3.down);
                 Debug.DrawRay(nextpos, Vector3.down, Color.red, 5f);
                 // 다음 예상 위치에서 바닥까지 레이져를 쏴서 다음 위치 벡터 찾기 
+                int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
                 if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
                 {
                     // 만약 플레이어 앞에 Wall 이면 이동x

@@ -37,10 +37,12 @@ namespace CharacterController
 
         public void skill(int num)
         {
-            Ray ray = Controller.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
+            Ray ray = CameraController.Instance.cam.ScreenPointToRay(InputManager.Instance.GetMousePosition());
             RaycastHit hit;
             Vector3 looking;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+            int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
             {
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
                 looking = hit.point - Player.Instance.transform.position;
@@ -68,6 +70,7 @@ namespace CharacterController
         public override void OnExitState()
         {
             Controller.isSkill = false;
+            // Player.Instance.animator.SetTrigger("resetanim");
             Player.Instance.animator.SetInteger("skillnum",-1);
         }
         protected void LookAt(Vector3 direction)
@@ -75,7 +78,7 @@ namespace CharacterController
             if (direction != Vector3.zero)
             {
                 Quaternion targetAngle = Quaternion.LookRotation(direction);
-                Controller.transform.rotation = targetAngle;
+                Player.Instance.transform.rotation = targetAngle;
             }
         }
         private IEnumerator CoolTimeCoroutine(int i) // 쿨타임 계산

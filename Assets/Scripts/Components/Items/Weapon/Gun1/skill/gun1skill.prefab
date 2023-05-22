@@ -56,14 +56,17 @@ MonoBehaviour:
   duration: 3
   targetCount: 5
   parent_particle: {fileID: 8041726205563455025}
+  slashSound: {fileID: 0}
+  slashSoundTime: 0
+  slashHitSound: {fileID: 0}
   isBullet: 1
   bulletSpeed: 10
   bulletFlashEffect: {fileID: 198447726614856880, guid: 204cbd858ac2d0d4480983869d028cfa,
     type: 3}
-  bulletFlashSound: {fileID: 8300000, guid: 43065fa3e836c42429751a014d4c2924, type: 3}
+  bulletFlashSound: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
   bulletHitEffect: {fileID: 198657971356398654, guid: e3c95c36cf0150845b1731308a11d182,
     type: 3}
-  bulletHitSound: {fileID: 8300000, guid: fe905b56192a3b94392a7f6901efc110, type: 3}
+  bulletHitSound: {fileID: 8300000, guid: 06ada5590eba8d6489b36c6f3c54ff78, type: 3}
   isHoming: 0
   homingPerformance: 0.1
 --- !u!1 &7880240341397107673
@@ -19652,7 +19655,7 @@ Transform:
   m_GameObject: {fileID: 8667530989287422610}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.67, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7085984693121629322}

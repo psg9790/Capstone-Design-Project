@@ -3,9 +3,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Monsters.Skill;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities.Editor;
+using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
@@ -133,9 +138,8 @@ public class Heart : MonoBehaviour
 
     public Damage Generate_Damage(float dmgRate, CC_type cc, float power) // 외부에서 이 heart 기반으로 데미지 추출할 때 사용
     {
-        float rand = Random.Range(0f, 100f);
-        bool isCrit = (rand < CRITICAL_RATE) ? true : false;
-        float calDamage = (ATK * dmgRate) * (isCrit ? CRITICAL_DAMAGE : 1);
+        bool isCrit = (Random.Range(0f, 100f) < CRITICAL_RATE) ? true : false;
+        float calDamage = (ATK * dmgRate) * (isCrit ? (CRITICAL_DAMAGE * 0.01f) : 1);
         Damage dmg = new Damage(calDamage, isCrit);
         if (cc != CC_type.None)
         {
@@ -153,14 +157,17 @@ public class Heart : MonoBehaviour
         if (immune)
             return;
         // 내부 처리
-        float ins = dmg.damage;
-        ins = (int)(ins * Random.Range(0.75f, 1f));
+        float damage = dmg.damage;
+        damage *= 250 / (250 + DEF); // 플레이어 방어력 최대 35*6=210 (경감률=250/(250+210)=45.6xx%)
+        damage = (int)(damage * Random.Range(0.75f, 1f));
         
-        cur_hp -= ins;
+        // cur_hp -= damage;
+        cur_hp = Mathf.Clamp(cur_hp - damage, 0, MAX_HP);
+        
         OnHit.Invoke(0.5f, -dir);
         if (useDamageFont)
         {
-            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, ins, dmg.isCritical, damageFont_randomRange);
+            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, damage, dmg.isCritical, damageFont_randomRange);
         }
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
@@ -177,9 +184,257 @@ public class Heart : MonoBehaviour
 
         if (cur_hp <= 0)
         {
-            cur_hp = 0;
             OnDeath.Invoke();
         }
+    }
+
+
+    private StringBuilder sb = new StringBuilder();
+    [Button]
+    public void PlayerItemEquip()
+    {
+        if (gameObject.layer != LayerMask.NameToLayer("Player"))
+            return;
+        
+        if (Inventory.instance == null)
+        {
+            Debug.LogError("Inventory 인스턴스가 없습니다");
+            return;
+        }
+        
+        bool playerStatChanged = false;
+        
+        float calcATK = 20;
+        float calcDEF = 5;
+        float calcHP = 100;
+        float calcATKSPEED = 1;
+        float calcMOVEMENTSPEED = 5;
+        float calcCRITRATE = 5f;
+        float calcCRITDAMAGE = 200;
+
+        float ATKbyArtifact = 0,
+            DEFbyArtifact = 0,
+            HPbyArtifact = 0,
+            ATKSPEEDbyArtifact = 0,
+            MOVEMENTSPEEDbyArtifact = 0,
+            CRITRATEbyArtifact = 0;
+        float ATKbyWeapon = 0, 
+            ATKSPEEDbyWeapon = 0, 
+            CRITDAMAGEbyWeapon = 0;
+        
+
+        if (Inventory.instance.tempItem == null)
+        {
+            // 기본 스탯
+            atk = calcATK;
+            def = calcDEF;
+            max_hp = calcHP;
+            atk_speed = calcATKSPEED;
+            movement_speed = calcMOVEMENTSPEED;
+            Player.Instance.nav.speed = movement_speed;
+            criticalRate = calcCRITRATE;
+            criticalDamage = calcCRITDAMAGE;
+            // sb.Clear();
+            // sb.Append("공격력: ");
+            // sb.Append(atk.ToString());
+            // sb.Append("\n");
+            // sb.Append("방어력: ");
+            // sb.Append(def.ToString());
+            // sb.Append("\n");
+            // sb.Append("체력: ");
+            // sb.Append(max_hp.ToString());
+            // sb.Append("\n");
+            // sb.Append("공격속도: ");
+            // sb.Append(atk_speed.ToString());
+            // sb.Append("\n");
+            // sb.Append("이동속도: ");
+            // sb.Append(movement_speed.ToString());
+            // sb.Append("\n");
+            // sb.Append("치명타 확률: ");
+            // sb.Append(criticalRate.ToString());
+            // sb.Append("%");
+            // sb.Append("\n");
+            // sb.Append("치명타 피해: ");
+            // sb.Append(criticalDamage.ToString());
+            // sb.Append("%");
+            // sb.Append("\n");
+            // Inventory.instance.SetSideStatDisplayText(sb.ToString());
+            // return;
+        }
+        
+        for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
+        {
+            if (Inventory.instance.artifactUIs[i].isInstallation)
+            {
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATK))
+                {
+                    ATKbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.ATK];
+                }
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.DEF))
+                {
+                    DEFbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.DEF];
+                }
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.HP))
+                {
+                    HPbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.HP];
+                }
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATKSPEED))
+                {
+                    ATKSPEEDbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.ATKSPEED];
+                }
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.MOVEMENTSPEED))
+                {
+                    MOVEMENTSPEEDbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.MOVEMENTSPEED];
+                }
+                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.CRIT_RATE))
+                {
+                    CRITRATEbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                        .options[ArtifactKey.CRIT_RATE];
+                }
+            }
+        }
+
+        if (Inventory.instance.tempItem != null)
+        {
+            ATKbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK];
+            ATKSPEEDbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
+            CRITDAMAGEbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE];
+            
+            // calcATK = calcATK + calcATK * (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK] * 0.01f;
+            // calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
+            // calcCRITDAMAGE += ((Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE] * 0.01f);
+        }
+
+        calcATK = (float)Math.Round((calcATK + ATKbyArtifact) * (1 + ATKbyWeapon * 0.01f), 2);
+        calcDEF = (float)Math.Round(calcDEF + DEFbyArtifact, 2);
+        calcHP = (float)Math.Round(calcHP + HPbyArtifact, 2);
+        calcATKSPEED = (float)Math.Round(calcATKSPEED + ATKSPEEDbyArtifact + ATKSPEEDbyWeapon, 2);
+        calcMOVEMENTSPEED = (float)Math.Round(calcMOVEMENTSPEED + MOVEMENTSPEEDbyArtifact, 2);
+        calcCRITRATE = (float)Math.Round(calcCRITRATE + CRITRATEbyArtifact, 2);
+        calcCRITDAMAGE = (float)Math.Round(calcCRITDAMAGE + CRITDAMAGEbyWeapon, 2);
+
+        // if ((Math.Abs(atk - calcATK) >= 0.1f) ||
+        //     (Math.Abs(def - calcDEF) >= 0.1f) ||
+        //     (Math.Abs(max_hp - calcHP) >= 0.1f) ||
+        //     (Math.Abs(atk_speed - calcATKSPEED) >= 0.1f) ||
+        //     (Math.Abs(movement_speed - calcMOVEMENTSPEED) >= 0.1f) ||
+        //     (Math.Abs(criticalRate - calcCRITRATE) >= 0.1f) ||
+        //     (Math.Abs(criticalDamage - calcCRITDAMAGE) >= 0.1f))
+        // {
+        //     playerStatChanged = true;
+        // }
+        //
+        // if (!playerStatChanged)
+        // {
+        //     return;
+        // }
+        
+        // 공격력 계산 : (기본 공격력 + 아티팩트 공격력) * 무기 공격력 %
+        atk = calcATK;
+        
+        // 방어력 계산 : (기본 방어력 + 아티팩트 방어력)
+        def = calcDEF;
+        
+        // 체력 계산 : (기본 체력 + 아티팩트 체력)
+        max_hp = calcHP;
+        
+        // 공격속도 계산 : (기본 공격속도 + 아티팩트 공격속도)
+        atk_speed = calcATKSPEED;
+        
+        // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도) 최대이속 23
+        movement_speed = calcMOVEMENTSPEED;
+        Player.Instance.nav.speed = movement_speed;
+
+        // 치명확률 계산
+        criticalRate = calcCRITRATE;
+        
+        // 치명데미지 계산
+        criticalDamage = calcCRITDAMAGE;
+        
+        sb.Clear();
+        sb.Append("공격력: ");
+        sb.Append(atk.ToString());
+        sb.Append("\n");
+        sb.Append("방어력: ");
+        sb.Append(def.ToString());
+        sb.Append("\n");
+        sb.Append("체력: ");
+        sb.Append(max_hp.ToString());
+        sb.Append("\n");
+        sb.Append("공격속도: ");
+        sb.Append(atk_speed.ToString());
+        sb.Append("\n");
+        sb.Append("이동속도: ");
+        sb.Append(movement_speed.ToString());
+        sb.Append("\n");
+        sb.Append("치명타 확률: ");
+        sb.Append(criticalRate.ToString());
+        sb.Append("%");
+        sb.Append("\n");
+        sb.Append("치명타 피해: ");
+        sb.Append(criticalDamage.ToString());
+        sb.Append("%");
+        sb.Append("\n");
+        sb.Append("\n");
+        sb.Append("무기");
+        sb.Append("\n");
+        sb.Append("공격력 +");
+        sb.Append(ATKbyWeapon.ToString());
+        sb.Append("%");
+        sb.Append("\n");
+        sb.Append("공격속도 +");
+        sb.Append(ATKSPEEDbyWeapon.ToString());
+        sb.Append("\n");
+        sb.Append("치명타 피해 +");
+        sb.Append(CRITDAMAGEbyWeapon.ToString());
+        sb.Append("%");
+        sb.Append("\n");
+        sb.Append("\n");
+        sb.Append("아티팩트");
+        sb.Append("\n");
+        sb.Append("공격력 +");
+        sb.Append(ATKbyArtifact.ToString());
+        sb.Append("\n");
+        sb.Append("방어력 +");
+        sb.Append(DEFbyArtifact.ToString());
+        sb.Append("\n");
+        sb.Append("체력 +");
+        sb.Append(HPbyArtifact.ToString());
+        sb.Append("\n");
+        sb.Append("공격속도 +");
+        sb.Append(ATKSPEEDbyArtifact.ToString());
+        sb.Append("\n");
+        sb.Append("이동속도 +");
+        sb.Append(MOVEMENTSPEEDbyArtifact.ToString());
+        sb.Append("\n");
+        sb.Append("치명타 확률 +");
+        sb.Append(CRITRATEbyArtifact.ToString());
+        sb.Append("%");
+        sb.Append("\n");
+        Inventory.instance.SetSideStatDisplayText(sb.ToString());
+
+    }
+
+    public void SetMonsterStatByLevel(short level) // 이거 쓸것 (매개변수 월드레벨)
+    {
+        this.level = level;
+        GetComponent<SkillSet>().SetMonsterStatByLevel(level);
+    }
+
+    public void SetStat(float atk, float hp, float def, float atkspeed, float movespeed)
+    {
+        this.atk = atk;
+        this.max_hp = hp;
+        cur_hp = max_hp;
+        this.def = def;
+        this.atk_speed = atkspeed;
+        this.movement_speed = movespeed;
+        GetComponent<NavMeshAgent>().speed = movement_speed;
     }
 
 

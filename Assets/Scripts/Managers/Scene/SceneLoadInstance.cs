@@ -22,6 +22,7 @@ public class SceneLoadInstance : MonoBehaviour
             if (((SceneName)i).ToString() == tgt)
             {
                 SceneManager.LoadScene(tgt.ToString());
+                Time.timeScale = 1;
                 return;
             }
         }
@@ -36,6 +37,7 @@ public class SceneLoadInstance : MonoBehaviour
             if ((SceneName)i == tgt)
             {
                 SceneManager.LoadScene(tgt.ToString());
+                Time.timeScale = 1;
                 return;
             }
         }

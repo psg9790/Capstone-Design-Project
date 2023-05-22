@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Timeline.Actions;
+// using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,14 +22,15 @@ public class overlapSphere : MonoBehaviour
     public Inventory inven;
     public int ClickNum;
     public bool clicked;
-    
+    public GameObject commu_bar;
     private void Start()
     {
+        commu_bar = GameObject.Find("commu_bar"); 
         content= GameObject.Find("Content").GetComponent<RectTransform>();
-        inven = GameObject.Find("InvenSet").GetComponent<Inventory>();
-        
+        inven = Inventory.instance;
         clicked = false;
         ClickNum = 100;
+        
     }
 
     private void Update()
@@ -39,40 +40,57 @@ public class overlapSphere : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         int count = 0;
         dataList.Clear();
-        Collider[] coll= new Collider[40];
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
             if (col.CompareTag("Item") )
             {
+                if (commu_bar.activeSelf == false)
+                {
+                    commu_bar.SetActive(true);
+                }
                 dataList.Add(col.gameObject);
                 Incontents = content.GetChild(count).gameObject;
                 Incontents.SetActive(true);
                     //col.gameObject.GetComponent<FeildItem>().item.itemName;
                 TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
-                name.text = col.GetComponent<FeildItem>().itemName;
+                name.text = col.GetComponent<DroppedItem>().item.itemName;
                 
-                    coll[count] = col;
                 count++;
             }
             
         }
-        
+        if ( dataList.Count == 0)
+        {
+            if(commu_bar.activeSelf == true )
+                commu_bar.SetActive(false);
+        }
         ClearContent(count);
         
         if ( clicked && inven.IsEmpty() ) 
         {
+            clicked = false;
             UnityEngine.Debug.Log("클릭 인식함..?");
-            inven.AddItem(dataList[ClickNum].GetComponent<FeildItem>().item);
+            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
+            //inven.AddItem(dataList[ClickNum].GetComponent<DroppedItem>().item);
+            UnityEngine.Debug.Log(GetItem.itemName);
+            Inventory.instance.AddItem(GetItem);
             Destroy(dataList[ClickNum].gameObject);
             clicked = false;
+            
         }
         
         //F키 입력 시 첫번 째 아이템 정보 옮기기
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
-            inven.AddItem(dataList[0].GetComponent<FeildItem>().item);
+            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
+
+            //inven.AddItem(dataList[0].GetComponent<DroppedItem>().item);
+            UnityEngine.Debug.Log(GetItem.itemName);
+
+            Inventory.instance.AddItem(GetItem);
             Destroy(dataList[0].gameObject);
+            
         }
         
     }

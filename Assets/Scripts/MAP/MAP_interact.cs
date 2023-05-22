@@ -9,7 +9,7 @@ public class MAP_interact : MonoBehaviour
 {
     public GameObject Map_Select;
     
-    public GameObject Player;
+//    public GameObject Player;
 
     //private Move PlayerMove;
 
@@ -23,7 +23,7 @@ public class MAP_interact : MonoBehaviour
     void Start()
     {
         //PlayerMove = Player.GetComponent<Move>();
-        NavOnOff = Player.GetComponent<NavMeshAgent>();
+       // NavOnOff = Player.GetComponent<NavMeshAgent>();
         isEnter = false;
     }
 
@@ -33,7 +33,7 @@ public class MAP_interact : MonoBehaviour
         if (isEnter && Input.GetKeyDown(KeyCode.F))
         {
            // Player.GetComponent<Move>().enabled = false;
-            Player.GetComponent<NavMeshAgent>().enabled = false;
+            //Player.GetComponent<NavMeshAgent>().enabled = false;
             Debug.Log("portal click");
             Map_Select.SetActive(true);   
         }
@@ -65,7 +65,7 @@ public class MAP_interact : MonoBehaviour
     {
         Map_Select.SetActive(false);
        // Player.GetComponent<Move>().enabled = true;
-        Player.GetComponent<NavMeshAgent>().enabled = true;
+        //Player.GetComponent<NavMeshAgent>().enabled = true;
     }
     
     

@@ -11,8 +11,11 @@ namespace Monsters.Skill
 {
     public abstract class SkillSet : MonoBehaviour
     {
+        public float statGrowthByLevelUp = 1.3f;
+        
         protected Monster monster;
         protected Heart heart;
+        
 
         private void Awake()
         {
@@ -29,6 +32,8 @@ namespace Monsters.Skill
             EndEngage();
         } // cc기나 캔슬에 의해 현재 공격중인 오브젝트를 모두 초기화하고 꺼줄 필요가 있음
 
+        public abstract void SetMonsterStatByLevel(short level);
+        
         public abstract void DoPossibleEngage();
     }
 }
