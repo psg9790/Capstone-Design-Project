@@ -28,6 +28,9 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private TMP_Text sideStatDisplayText;
 
+    public int count;
+    public TMP_Text popUp;
+    
     private void OnValidate()
     {
         slots = slotParent.GetComponentsInChildren<ItemSlot>();
@@ -42,7 +45,7 @@ public class Inventory : MonoBehaviour
             // DontDestroyOnLoad(instance);
             EmptySlot();
             artifactNumbering();
-       
+                
             grade_image = new Sprite[6]; 
             this.gameObject.SetActive(false);
         }
@@ -60,7 +63,9 @@ public class Inventory : MonoBehaviour
         
     }
 
-    public void EmptySlot(){
+    public void EmptySlot()
+    {
+        count = 0;
         for (int i=0; i < 28; i++) {
             slots[i].itemSlotui.item = null;
             slots[i].number = i;
@@ -69,7 +74,7 @@ public class Inventory : MonoBehaviour
     }
 
     public void AddItem(Item item) {
-        if (IsEmpty())
+        if (IsEmpty() && count<28)
         {
             items.Add(item);
             for (int i = 0; i<28; i++)
@@ -102,21 +107,24 @@ public class Inventory : MonoBehaviour
                             break;
                     }
                     slots[i].grade_Back.gameObject.SetActive(true); 
+                    count++;
+                    Debug.Log("aaaaaaaaaaa");
                     break;
                 }
             }
         }
-        else
+        else if(count==28)
         {
-            Debug.Log(items.Count);
-            Debug.Log(slots.Length);
-            print("슬롯이 가득 차 있습니다.");
+            popUp.text="슬롯이 가득 차 있습니다.";
+            popUp.gameObject.SetActive(true);
+            Invoke("taketime", 1.0f);
+            popUp.gameObject.SetActive(false);
         }
     }
 
     public bool IsEmpty()
     {
-        if (items.Count < slots.Length)
+        if (count < slots.Length)
         {
             return true;
         }
@@ -134,6 +142,7 @@ public class Inventory : MonoBehaviour
         itemSlot.itemSlotui.item = null;
         itemSlot.itemSlotui.image.sprite= null;
         itemSlot.itemSlotui.gameObject.SetActive(false);
+        count--;
     }
 
     [Button]
@@ -163,4 +172,9 @@ public class Inventory : MonoBehaviour
             Debug.LogError("sideStat 컴포넌트 부착 바람");
         }
     }
+    public void taketime()
+    {
+        Debug.Log("a");
+    }
+    
 }

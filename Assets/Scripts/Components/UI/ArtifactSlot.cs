@@ -14,7 +14,7 @@ public class ArtifactSlot : ItemSlot
         {
             DragSlot.instance.dragSlot = this;
             artiItem = DragSlot.instance.dragSlot.itemSlotui.item;
-            if (artiItem!=null)
+            if (artiItem!=null && Inventory.instance.count!=28)
             {
                 Color color = Inventory.instance.artifactUIs[number].itemSlot.image.color;
                 color.a = 0;
@@ -23,6 +23,13 @@ public class ArtifactSlot : ItemSlot
                 Inventory.instance.artifactUIs[number].isInstallation = false;           
                 DragSlot.instance.dragSlot.itemSlotui.item= null;    
 
+            }
+            else
+            {
+                Inventory.instance.popUp.text="슬롯이 가득 차 있어 아티팩트를 해제할 수 없습니다";
+                Inventory.instance.popUp.gameObject.SetActive(true);
+                Invoke("taketime", 1.0f);
+                Inventory.instance.popUp.gameObject.SetActive(false);
             }
         }
         DragSlot.instance.dragSlot =null;
@@ -80,6 +87,7 @@ public class ArtifactSlot : ItemSlot
                 Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.item =  DragSlot.instance.dragSlot.itemSlotui.item;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
                 Inventory.instance.artifactUIs[number].isInstallation = true;
+
             } else if (DragSlot.instance.beginSlot == 2)
             {
                     temp_arti = itemSlotui.item;                                // 현재 장착하고 있는 아이템
@@ -101,5 +109,10 @@ public class ArtifactSlot : ItemSlot
         }
         
         DragSlot.instance.dragSlot =null;
+    }
+    
+    public void taketime()
+    {
+        Debug.Log("a");
     }
 }

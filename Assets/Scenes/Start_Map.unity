@@ -22500,7 +22500,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 656839829863562069, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}
-      propertyPath: sideStatDisplayText
+      propertyPath: popUp
       value: 
       objectReference: {fileID: 3039118497106150731}
     - target: {fileID: 864236679034979999, guid: fbdb589f1cba8444ba534360b64fd4ca,
@@ -22700,7 +22700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &3039118497106150731 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3464008178115627961, guid: fbdb589f1cba8444ba534360b64fd4ca,
+  m_CorrespondingSourceObject: {fileID: 2275663972759854793, guid: fbdb589f1cba8444ba534360b64fd4ca,
     type: 3}
   m_PrefabInstance: {fileID: 3039118497106150728}
   m_PrefabAsset: {fileID: 0}
