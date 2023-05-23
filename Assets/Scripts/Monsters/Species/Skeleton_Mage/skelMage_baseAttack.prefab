@@ -126,15 +126,15 @@ MonoBehaviour:
   slashSoundTime: 0
   slashHitSound: {fileID: 0}
   isBullet: 1
-  bulletSpeed: 20
+  bulletSpeed: 10
   bulletFlashEffect: {fileID: 198594740086084638, guid: 804ae8f9f84a897418a43058844761ab,
     type: 3}
   bulletFlashSound: {fileID: 0}
   bulletHitEffect: {fileID: 198034330539653080, guid: c2b56ab585925cb4caf968d84119f31a,
     type: 3}
   bulletHitSound: {fileID: 0}
-  isHoming: 0
-  homingPerformance: 0.1
+  isHoming: 1
+  homingPerformance: 0.025
 --- !u!1 &9211275919671707203
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,9 +146,6 @@ GameObject:
   - component: {fileID: 9206070367102112797}
   - component: {fileID: 9011818095395554975}
   - component: {fileID: 9013803789767115915}
-  - component: {fileID: 9098696025569971271}
-  - component: {fileID: 9156381624637377665}
-  - component: {fileID: 9093826384371939347}
   - component: {fileID: 9102659342293393045}
   - component: {fileID: 8667886305022240222}
   m_Layer: 15
@@ -5024,55 +5021,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &9098696025569971271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211275919671707203}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605a456cfc02f6b499a64717539a27e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 15
-  hitOffset: 0.1
-  UseFirePointRotation: 0
-  rotationOffset: {x: 0, y: 0, z: 0}
-  hit: {fileID: 1738658161782828, guid: c2b56ab585925cb4caf968d84119f31a, type: 3}
-  flash: {fileID: 1664480636356834, guid: 804ae8f9f84a897418a43058844761ab, type: 3}
-  Detached:
-  - {fileID: 9212050230712448309}
---- !u!54 &9156381624637377665
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211275919671707203}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
---- !u!135 &9093826384371939347
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211275919671707203}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &9102659342293393045
 Light:
   m_ObjectHideFlags: 0

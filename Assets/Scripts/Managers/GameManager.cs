@@ -65,8 +65,8 @@ public class GameManager : MonoBehaviour
     //     }
     // }
 
-    private string diceFilePath = "Resources\\dice.json";
-    [Button]
+    private string diceFilePath;
+
     public int EndOfGrowthDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
     {
         CheckDiceFileExists();
@@ -74,23 +74,26 @@ public class GameManager : MonoBehaviour
         return GetCurrentDiceCount();
     }
 
+    [Button]
     public void ModifyDiceCount(int amount) // 주사위 갯수 조정, 저장
     {
         CheckDiceFileExists();
+        JObject diceJson;
         using (StreamReader file = File.OpenText(diceFilePath))
         {
             using (JsonTextReader reader = new JsonTextReader(file))
             {
-                JObject diceJson = (JObject)JToken.ReadFrom(reader);
+                diceJson = (JObject)JToken.ReadFrom(reader);
 
                 int curCount = int.Parse(diceJson["diceCount"].ToString());
                 curCount += amount;
                 diceJson["diceCount"] = curCount;
-                File.WriteAllText(diceFilePath, diceJson.ToString());
             }
-        }  
+        }
+        File.WriteAllText(diceFilePath, diceJson.ToString());
     }
-    
+
+    [Button]
     public int GetCurrentDiceCount() // 현재 주사위를 몇개 보유중인지 확인
     {
         CheckDiceFileExists();
@@ -110,6 +113,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckDiceFileExists() // 주사위 저장 파일이 존재하는지 확인
     {
+        diceFilePath = Application.persistentDataPath + "/dice.json";
         if (!File.Exists(diceFilePath))
         {
             Debug.Log("주사위 파일 존재하지 않음, 생성");
@@ -119,24 +123,82 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private string itemsFilePath = "Resources\\items.json";
-    private void CheckItemFileExists()
+    private string itemsFilePath;
+    public void CheckItemsFileExists()
     {
+        itemsFilePath = Application.persistentDataPath + "/items.json";
         if (!File.Exists(itemsFilePath))
         {
             Debug.Log("아이템 파일 존재하지 않음, 생성");
-            JItemList newList = new JItemList();
+            JItemsList newList = new JItemsList();
             for (int i = 0; i < 6; i++)
             {
                 newList.items.Add(null);
             }
-            JsonConvert.SerializeObject(newList);
+            // newList.items = ConvertArtifactToJArtifact(ItemGenerator.Instance.Generate6ItemsForChallenge());
+
+            string result = JsonConvert.SerializeObject(newList, Formatting.Indented,
+                new JsonSerializerSettings() {
+                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                });
+            File.WriteAllText(itemsFilePath, result);
         }
+    }
+
+    [Button]
+    public void RerollItems()
+    {
+        CheckItemsFileExists();
+        
+        if (GetCurrentDiceCount() <= 0) // 주사위가 충분하지 않은 경우
+        {
+            UnityEngine.Debug.Log("주사위가 충분하지 않습니다.");
+            return;
+        }
+        
+        ModifyDiceCount(-1);
+
+        JItemsList newList = new JItemsList();
+        newList.items = ConvertArtifactToJArtifact(ItemGenerator.Instance.Generate6ItemsForChallenge());
+        string result = JsonConvert.SerializeObject(newList, Formatting.Indented,
+            new JsonSerializerSettings() {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+        File.WriteAllText(itemsFilePath, result);
+
+    }
+
+    private List<JArtifact> ConvertArtifactToJArtifact(List<Artifact> input)
+    {
+        List<JArtifact> output = new List<JArtifact>();
+
+        for (int i = 0; i < input.Count; i++)
+        {
+            JArtifact token = new JArtifact();
+            token.itemName = input[i].itemName;
+            // token.itemIcon = input[i].itemData.iconSprite;
+            token.itemTooltip = input[i].itemData.tooltip;
+            token.itemTier = input[i].tier;
+            token.itemOptions = input[i].options;
+            output.Add(token);
+        }
+
+        return output;
     }
 }
 
 [Serializable]
-public class JItemList
+public class JItemsList
 {
-    public List<Artifact> items = new List<Artifact>();
+    public List<JArtifact> items = new List<JArtifact>();
+}
+
+[Serializable]
+public class JArtifact
+{
+    public string itemName;
+    // public Sprite itemIcon;
+    public string itemTooltip;
+    public int itemTier;
+    public Dictionary<ArtifactKey, float> itemOptions;
 }
