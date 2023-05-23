@@ -49,6 +49,7 @@ public class GrowthLevelManager : MonoBehaviour
 
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
     [HideInInspector] public GameObject[] boss_monsters; // 프리팹 로드
+    [HideInInspector] public GameObject[] ObjectPreFab; //오브젝트 프리팹 로드
 
     [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
     [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
@@ -61,6 +62,7 @@ public class GrowthLevelManager : MonoBehaviour
             instance = this;
             general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
+            ObjectPreFab = Resources.LoadAll<GameObject>("Props");
 
             InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
         }

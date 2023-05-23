@@ -63,6 +63,7 @@ public class RandomMazeGenerator
                     // newMaze.BuildWalls(this);
                     GrowthLevelManager.Instance.curLevelMonsterCount += newMaze.SpawnMonsters();
                     newMaze.SpawnTreasure();
+                    newMaze.SpawnObjects();
                     // newMaze.CheckCollapseWalls();
                 }
                 newMaze.transform.SetParent(parentTransform);

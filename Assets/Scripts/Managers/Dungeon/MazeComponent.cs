@@ -16,6 +16,8 @@ public class MazeComponent : MonoBehaviour
     public List<Transform> treasureSpawnPoints = new List<Transform>();
     public GameObject TreasureBox;
     
+    public List<Transform> ObjectSpawnPoints = new List<Transform>();
+    
     private int[] dy = new int[4]; // randomGenerator dy 카피
     private int[] dx = new int[4]; // randomGenerator dx 카피
 
@@ -47,23 +49,30 @@ public class MazeComponent : MonoBehaviour
 
     public void SpawnTreasure() //보물상자 랜덤 확률로 생성
     {
-        
-            
-            //랜덤 범위 20퍼 확률로 맵에 생성 
-            int num = Random.Range(0, 20);
-            
-            if (num < 5)
+        //랜덤 범위 20퍼 확률로 맵에 생성 
+        int num = Random.Range(0, 20);
+        if (num < 5)
+        {
+            //맵에 위치한 보물상자 스폰 포인트 지점 수를 받아 랜덤 생성
+            for (int i = 0; i < treasureSpawnPoints.Count; i++)
             {
-                
-                //맵에 위치한 보물상자 스폰 포인트 지점 수를 받아 랜덤 생성
-                for (int i = 0; i < treasureSpawnPoints.Count; i++)
-                {
-                    int treasureNum = Random.Range(0, treasureSpawnPoints.Count);
-                    UnityEngine.Debug.Log("보물상자 생성");
-                    Instantiate(TreasureBox,
-                        treasureSpawnPoints[i].transform.position, treasureSpawnPoints[i].transform.rotation);
-                }
+                int treasureNum = Random.Range(0, treasureSpawnPoints.Count);
+                UnityEngine.Debug.Log("보물상자 생성");
+                Instantiate(TreasureBox, treasureSpawnPoints[i].transform.position, treasureSpawnPoints[i].transform.rotation);
             }
+        }
+    }
+
+    public void SpawnObjects()
+    {
+        for (int i = 0; i < treasureSpawnPoints.Count; i++)
+        {
+            int objectRandom = Random.Range(0, GrowthLevelManager.Instance.ObjectPreFab.Length-1);
+            UnityEngine.Debug.Log("보물상자 생성");
+            Instantiate(GrowthLevelManager.Instance.ObjectPreFab[objectRandom], 
+                ObjectSpawnPoints[i].transform.position, 
+                ObjectSpawnPoints[i].transform.rotation);
+        }
     }
     
     // private RandomMazeGenerator generator; // dy, dx를 가져오기 위한 변수
