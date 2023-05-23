@@ -341,6 +341,7 @@ namespace Monsters
     {
         Skeleton_Warrior,
         Rush_Spider,
-        Boss1_Nightmare
+        Boss1_Nightmare,
+        Skeleton_Mage
     }
 }

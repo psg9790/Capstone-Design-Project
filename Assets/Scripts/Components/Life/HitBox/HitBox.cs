@@ -128,7 +128,7 @@ public class HitBox : MonoBehaviour
                 {
                     if (ReferenceEquals(homingTarget, null))
                     {
-                        Collider[] cols = Physics.OverlapSphere(transform.position, 10f,
+                        Collider[] cols = Physics.OverlapSphere(transform.position, 3f,
                             1 << LayerMask.NameToLayer("Monster"));
                         if (cols.Length > 0)
                         {
