@@ -134,11 +134,13 @@ public class GrowthLevelManager : MonoBehaviour
         }
     }
 
+    private Monsters.Monster boss;
     private void SpawnBoss()
     {
         int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
         Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
             .GetComponent<Monsters.Monster>();
+        boss = newBoss;
         newBoss.Init(bossRoom_spawnPoint.position, 4f);
         newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
         if (bossTrackingCoroutine != null)
@@ -149,10 +151,24 @@ public class GrowthLevelManager : MonoBehaviour
         bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
     }
 
+    private void RemoveBoss()
+    {
+        if (bossTrackingCoroutine != null)
+        {
+            StopCoroutine(bossTrackingCoroutine);
+        }
+
+        if (boss != null)
+        {
+            boss.heart.ForceDead();
+        }
+    }
+
 
     private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
     {
-        maxLevel = ItemGenerator.Instance.maxLevel;
+        // maxLevel = ItemGenerator.Instance.maxLevel;
+        maxLevel = 9999;
         // level 0
         worldLevel = 0;
 
@@ -183,6 +199,7 @@ public class GrowthLevelManager : MonoBehaviour
     [Button]
     public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
+        RemoveBoss();
         bossPortalGenerated = false;
         worldLevel++;
         if (worldLevel > maxLevel)
