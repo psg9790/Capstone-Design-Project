@@ -7,13 +7,47 @@ namespace Monsters.Skill
 {
     public class SkillSet_Boss2_Crusader : SkillSet
     {
+        private Coroutine lerpBaseAttackCo;
+        private IEnumerator lerpIE()
+        {
+            while (true)
+            {
+                Vector3 dir = Player.Instance.transform.position - transform.position;
+                dir.y = 0;
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), 0.025f);
+                yield return null;
+            }
+        }
+        public void LerpBeforeBaseAttack()
+        {
+            lerpBaseAttackCo = StartCoroutine(lerpIE());
+        }
+
+        public void LerpTerminate()
+        {
+            if (lerpBaseAttackCo != null)
+            {
+                StopCoroutine(lerpBaseAttackCo);
+            }
+        }
         public HitBox baseAttack_hitbox;
-        
         void BaseAttack()
         {
+            LerpTerminate();
             if (baseAttack_hitbox != null)
             {
                 HitBox atk = Instantiate(baseAttack_hitbox);
+                atk.Particle_Play(heart);
+            }
+        }
+
+        public HitBox shieldAttack_hitbox;
+        void ShieldAttack()
+        {
+            LerpTerminate();
+            if (shieldAttack_hitbox != null)
+            {
+                HitBox atk = Instantiate(shieldAttack_hitbox);
                 atk.Particle_Play(heart);
             }
         }
@@ -22,7 +56,17 @@ namespace Monsters.Skill
         public override void DoPossibleEngage()
         {
             SyncAnimationSpeed();
-            monster.animator.SetTrigger("BaseAttack");
+
+            if (UnityEngine.Random.Range(0, 2) == 0)
+            {
+                monster.animator.SetTrigger("BaseAttack");
+            }
+            else
+            {
+                monster.animator.SetTrigger("ShieldAttack");
+            }
+
+            LerpBeforeBaseAttack();
         }
         
         
