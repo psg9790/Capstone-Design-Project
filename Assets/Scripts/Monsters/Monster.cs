@@ -342,6 +342,7 @@ namespace Monsters
         Skeleton_Warrior,
         Rush_Spider,
         Boss1_Nightmare,
-        Skeleton_Mage
+        Skeleton_Mage,
+        Boss2_Crusader
     }
 }

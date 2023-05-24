@@ -35,11 +35,13 @@ namespace Monsters.Skill
         //     // 스킬 취소 없음? 관대한 캔슬
         //     EndEngage();
         // }
+        // 스킬셋에 맞는 몬스터의 고유값을 공유하기 위해서 재정의를 사용했음
         private static List<float> atk_byLevel = new List<float>();
         private static List<float> hp_byLevel = new List<float>();
         private static List<float> def_byLevel = new List<float>();
-        private static List<float> atkspeed_byLevel= new List<float>();
+        private static List<float> atkspeed_byLevel = new List<float>();
         private static List<float> movementspeed_byLevel = new List<float>();
+
         public override void SetMonsterStatByLevel(short level)
         {
             if (atk_byLevel.Count == 0) // 새로운 전역 레벨 변수 추가
@@ -59,14 +61,14 @@ namespace Monsters.Skill
                     movementspeed_byLevel.Add(calcmovespeed += (statGrowthByLevelUp * 0.05f));
                 }
             }
-            else // 기존에 생성된 전역 변수 사용
-            {
-                heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level], 
-                    atkspeed_byLevel[level], movementspeed_byLevel[level]);
-            }
+
+            heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level],
+                atkspeed_byLevel[level], movementspeed_byLevel[level]);
         }
         public override void DoPossibleEngage()
         {
+            SyncAnimationSpeed();
+
             if (skill01_coolDown <= 0) // 스킬1 시전 가능하면 시전
             {
                 skill01_coolDown = SKILL01;

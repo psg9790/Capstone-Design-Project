@@ -61,7 +61,7 @@ namespace Monsters.FOV
                 }
             }
 
-            if (!foundPlayer)
+            if (!foundPlayer && !monster.extendedSight) // 흥분 상태에서는 벽 뒤의 플레이어도 찾기 가능하게
             {
                 monster.player = null;
                 monster.playerInSight = false;
