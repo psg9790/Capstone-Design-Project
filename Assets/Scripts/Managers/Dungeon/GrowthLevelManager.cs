@@ -91,7 +91,7 @@ public class GrowthLevelManager : MonoBehaviour
             }
         }
 
-        // 보스 사망
+        // 보스 사망, next level 포탈 생성
         NextLevelPortal nxtPortal = Instantiate(nextLevelPortal_prefab);
         nxtPortal.transform.position = Player.Instance.transform.position;
         nxtPortal.Activate(true);
@@ -119,19 +119,34 @@ public class GrowthLevelManager : MonoBehaviour
                 bossPortal.Activate(bossRoom_spawnPoint, true);
 
                 // 보스 스폰
-                int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
-                Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
-                    .GetComponent<Monsters.Monster>();
-                newBoss.Init(bossRoom_spawnPoint.position, 4f);
-                newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
-                if (bossTrackingCoroutine != null)
-                {
-                    StopCoroutine(bossTrackingCoroutine);
-                }
-
-                bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
+                // int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+                // Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+                //     .GetComponent<Monsters.Monster>();
+                // newBoss.Init(bossRoom_spawnPoint.position, 4f);
+                // newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+                // if (bossTrackingCoroutine != null)
+                // {
+                //     StopCoroutine(bossTrackingCoroutine);
+                // }
+                //
+                // bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
             }
         }
+    }
+
+    private void SpawnBoss()
+    {
+        int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+        Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+            .GetComponent<Monsters.Monster>();
+        newBoss.Init(bossRoom_spawnPoint.position, 4f);
+        newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+        if (bossTrackingCoroutine != null)
+        {
+            StopCoroutine(bossTrackingCoroutine);
+        }
+
+        bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
     }
 
 
@@ -144,6 +159,8 @@ public class GrowthLevelManager : MonoBehaviour
         if (Player.Instance == null)
             Instantiate(playerPrefab);
 
+        SpawnBoss();
+        
         // 랜덤 던전 선택
         MakeRandomMap();
 
@@ -180,6 +197,8 @@ public class GrowthLevelManager : MonoBehaviour
         curLevelMonsterCount = 0;
         LevelDisplay();
 
+        SpawnBoss();
+        
         MakeRandomMap();
 
         TeleportPlayer(playerSpawnPoint);

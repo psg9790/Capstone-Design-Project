@@ -13,7 +13,7 @@ public class ItemData : ScriptableObject
     public string itemName;
     [Multiline] public string tooltip;
     [EnumToggleButtons] public ItemType itemType;
-    [ShowIf("itemType", ItemType.Weapon)] [NonSerialized] public GameObject weapon_gameObject;
+    [ShowIf("itemType", ItemType.Weapon)] public GameObject weapon_gameObject;
     //
     // [ShowIf("itemType", ItemType.Weapon)] public WeaponType weaponType;
     // [ShowIf("itemType", ItemType.Weapon)] public float weapon_atk;
