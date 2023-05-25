@@ -422,6 +422,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cabb30405e0f704ca88c9c27cc2a7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    itemData: {fileID: 0}
+    id: 0
+    tier: 0
+    itemName: 
+    itemColor: {r: 0, g: 0, b: 0, a: 0}
+  dropEffect: {fileID: 6733245823602203949}
 --- !u!1001 &811511488268260815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -429,6 +436,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 752835993612465264}
     m_Modifications:
+    - target: {fileID: 524572398670386221, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.33333337
+      objectReference: {fileID: 0}
+    - target: {fileID: 524572398670386221, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649048597955103039, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.33333337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649048597955103039, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5510952348061193321, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.33333337
+      objectReference: {fileID: 0}
+    - target: {fileID: 6211125795773073634, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3349503
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834758006639453083, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.33333337
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834758006639453083, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.3333334
+      objectReference: {fileID: 0}
     - target: {fileID: 7986504087968017091, guid: 789222043cce02a40b32d82bea141435,
         type: 3}
       propertyPath: m_Name
@@ -494,8 +541,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8085181462532505539, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: newColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085181462532505539, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: currentColor.b
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085181462532505539, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: currentColor.g
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8085181462532505539, guid: 789222043cce02a40b32d82bea141435,
+        type: 3}
+      propertyPath: currentColor.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 789222043cce02a40b32d82bea141435, type: 3}
+--- !u!198 &6733245823602203949 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6211125795773073634, guid: 789222043cce02a40b32d82bea141435,
+    type: 3}
+  m_PrefabInstance: {fileID: 811511488268260815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7262806167739608761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8037160467862551414, guid: 789222043cce02a40b32d82bea141435,

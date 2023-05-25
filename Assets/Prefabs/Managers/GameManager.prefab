@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6363616369361210291
+--- !u!1 &4737204536597705584
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1231878824354940382}
-  - component: {fileID: 5535767142433377176}
+  - component: {fileID: 4737204536597705598}
+  - component: {fileID: 4737204536597705599}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1231878824354940382
+--- !u!4 &4737204536597705598
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6363616369361210291}
+  m_GameObject: {fileID: 4737204536597705584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6106184, y: 4.5992723, z: 1.6960394}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5535767142433377176
+--- !u!114 &4737204536597705599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6363616369361210291}
+  m_GameObject: {fileID: 4737204536597705584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bbf60599bd0bdb4a8fd9b9f93d7a7de, type: 3}
+  m_Script: {fileID: 11500000, guid: ee0cff1e12eb36e4ebb64469928485f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 20de457003fd6bd46ba0389fc8fc9a37, type: 2}
-  soundComponent_prefab: {fileID: 5259541306276873712, guid: 1ecae4fc270d82242b4d6c84f75ddcb3,
-    type: 3}
+  itemChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  diceFilePath: 
+  itemsFilePath: 

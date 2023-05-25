@@ -182,4 +182,9 @@ public class BeforeRecordDungeonUI : MonoBehaviour
         diceCountText.text = GameManager.Instance.GetCurrentDiceCount().ToString();
         BuildTotalStatString();
     }
+
+    public void CloseWindow()
+    {
+        this.gameObject.SetActive(false);
+    }
 }
