@@ -89,27 +89,35 @@ public class PlayerController : MonoBehaviour
 
     void QClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 0;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath)
+        {
+            skillnum = 0;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void WClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 1;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath)
+        {
+            skillnum = 1;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void EClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 2;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath)
+        {
+            skillnum = 2;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void RClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 3;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath)
+        {
+            skillnum = 3;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     
     // 마우스 우클릭 이동 

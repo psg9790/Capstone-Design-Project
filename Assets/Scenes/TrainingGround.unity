@@ -339,6 +339,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss2_Crusader
       objectReference: {fileID: 0}
+    - target: {fileID: 4492493573097449743, guid: aeca6a6fbe8436642a6f6bf2290b7491,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeca6a6fbe8436642a6f6bf2290b7491, type: 3}
 --- !u!1 &385287102 stripped
@@ -471,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   player: {fileID: 0}
-  offset: {x: -10, y: 15, z: -10}
+  offset: {x: -10, y: 10, z: -10}
   attached: 0
   rotateOnUpdate: 0
   floor_fog_prefab: {fileID: 0}
