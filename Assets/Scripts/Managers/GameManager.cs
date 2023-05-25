@@ -10,6 +10,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor.ShaderGraph.Serialization;
+using UnityEngine.Events;
 
 // 정확한 역할은 정해지지 않았음, 대신 GameManager로써 마스터 설정같은거 다 때려 넣을듯
 // 일단 저장로직 인터페이스, 씬 이동할때 갈아끼울 씬로드매니저
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
         get { return instance; }
     }
 
+    public UnityEvent itemChangedEvent;
+    
     // public GameObject menuSet;
     // public GameObject invenSet;
     //
@@ -65,7 +68,7 @@ public class GameManager : MonoBehaviour
     //     }
     // }
 
-    private string diceFilePath;
+    public string diceFilePath;
 
     public int EndOfGrowthDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
     {
@@ -123,7 +126,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private string itemsFilePath;
+    public string itemsFilePath;
     public void CheckItemsFileExists()
     {
         itemsFilePath = Application.persistentDataPath + "/items.json";
@@ -148,6 +151,11 @@ public class GameManager : MonoBehaviour
     [Button]
     public void RerollItems()
     {
+        // if (ItemGenerator.Instance == null)
+        // {
+        //     UnityEngine.Debug.Log("게임 플레이 중에만 리롤 가능합니다.");
+        //     return;
+        // }
         CheckItemsFileExists();
         
         if (GetCurrentDiceCount() <= 0) // 주사위가 충분하지 않은 경우
@@ -158,14 +166,40 @@ public class GameManager : MonoBehaviour
         
         ModifyDiceCount(-1);
 
-        JItemsList newList = new JItemsList();
+        // JItemsList newList = new JItemsList();
+        string jsonfile = File.ReadAllText(itemsFilePath);
+        JObject token = JObject.Parse(jsonfile);
+        JItemsList newList = JsonConvert.DeserializeObject<JItemsList>(token.ToString());
         newList.items = ConvertArtifactToJArtifact(ItemGenerator.Instance.Generate6ItemsForChallenge());
         string result = JsonConvert.SerializeObject(newList, Formatting.Indented,
             new JsonSerializerSettings() {
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             });
         File.WriteAllText(itemsFilePath, result);
+        itemChangedEvent.Invoke();
+    }
 
+    public void ChangeWeaponItemName(string name)
+    {
+        string jsonfile = File.ReadAllText(itemsFilePath);
+        JObject token = JObject.Parse(jsonfile);
+        JItemsList newList = JsonConvert.DeserializeObject<JItemsList>(token.ToString());
+        newList.weapon.itemName = name;
+        string result = JsonConvert.SerializeObject(newList, Formatting.Indented,
+            new JsonSerializerSettings() {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            });
+        File.WriteAllText(itemsFilePath, result);
+        itemChangedEvent.Invoke();
+    }
+
+    public JItemsList GetJItems()
+    {
+        CheckItemsFileExists();
+        string jsonfile = File.ReadAllText(itemsFilePath);
+        JObject token = JObject.Parse(jsonfile);
+        JItemsList newList = JsonConvert.DeserializeObject<JItemsList>(token.ToString());
+        return newList;
     }
 
     private List<JArtifact> ConvertArtifactToJArtifact(List<Artifact> input)
@@ -177,7 +211,7 @@ public class GameManager : MonoBehaviour
             JArtifact token = new JArtifact();
             token.itemName = input[i].itemName;
             // token.itemIcon = input[i].itemData.iconSprite;
-            token.itemTooltip = input[i].itemData.tooltip;
+            // token.itemTooltip = input[i].itemData.tooltip;
             token.itemTier = input[i].tier;
             token.itemOptions = input[i].options;
             output.Add(token);
@@ -190,7 +224,19 @@ public class GameManager : MonoBehaviour
 [Serializable]
 public class JItemsList
 {
+    public JWeapon weapon = new JWeapon();
     public List<JArtifact> items = new List<JArtifact>();
+}
+
+[Serializable]
+public class JWeapon
+{
+    public string itemName = "검";
+    public float atk = 50f;
+    public float atkspeed = 1f;
+    public float critrate = 5f;
+    public float critdamage = 15f;
+    public int socket = 6;
 }
 
 [Serializable]
@@ -198,7 +244,7 @@ public class JArtifact
 {
     public string itemName;
     // public Sprite itemIcon;
-    public string itemTooltip;
+    // public string itemTooltip;
     public int itemTier;
     public Dictionary<ArtifactKey, float> itemOptions;
 }
