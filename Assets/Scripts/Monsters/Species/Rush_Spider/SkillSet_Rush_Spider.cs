@@ -11,7 +11,7 @@ namespace Monsters.Skill
     {
         private float skill01_coolDown = 0f;
         private float skill01_coolTime = 12f;
-        private float skill01_range = 7f;
+        // private float skill01_range = 7f;
 
         public HitBox skill01_Effect;
         public HitBox baseSkill_Effect;

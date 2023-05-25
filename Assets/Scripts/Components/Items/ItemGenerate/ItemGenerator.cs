@@ -12,17 +12,17 @@ public class ItemGenerator : MonoBehaviour
     private static ItemGenerator instance;
     public static ItemGenerator Instance => instance;
 
-    [BoxGroup("itemGrowthInfos")] private float weapon_ATK_growth = 5f;
-    [BoxGroup("itemGrowthInfos")] private float weapon_ATKSPEED_growth = 0.05f;
-    [BoxGroup("itemGrowthInfos")] private float weapon_SOCKET_growth = 1f;
-    [BoxGroup("itemGrowthInfos")] private float weapon_CRITRATE_growth = 1f;
-    [BoxGroup("itemGrowthInfos")] private float weapon_CRITDAMAGE_growth = 5f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_DEF_growth = 5f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_HP_growth = 40f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_MOVEMENTSPEED_growth = 0.1f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_ATKSPEED_growth = 0.1f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_ATK_growth = 10f;
-    [BoxGroup("itemGrowthInfos")] private float artifact_CRITRATE_growth = 1f;
+    // [BoxGroup("itemGrowthInfos")] private float weapon_ATK_growth = 5f;
+    // [BoxGroup("itemGrowthInfos")] private float weapon_ATKSPEED_growth = 0.05f;
+    // [BoxGroup("itemGrowthInfos")] private float weapon_SOCKET_growth = 1f;
+    // [BoxGroup("itemGrowthInfos")] private float weapon_CRITRATE_growth = 1f;
+    // [BoxGroup("itemGrowthInfos")] private float weapon_CRITDAMAGE_growth = 5f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_DEF_growth = 5f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_HP_growth = 40f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_MOVEMENTSPEED_growth = 0.1f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_ATKSPEED_growth = 0.1f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_ATK_growth = 10f;
+    // [BoxGroup("itemGrowthInfos")] private float artifact_CRITRATE_growth = 1f;
 
     private float[] artifactGrowthData = new float[]
     {

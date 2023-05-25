@@ -202,7 +202,7 @@ public class Heart : MonoBehaviour
             return;
         }
         
-        bool playerStatChanged = false;
+        // bool playerStatChanged = false;
         
         float calcATK = 20;
         float calcDEF = 5;
