@@ -51,12 +51,75 @@ namespace Monsters.Skill
                 atk.Particle_Play(heart);
             }
         }
+
+        private bool canAttack2 = true;
+        private Coroutine Attack2CooldownCo;
+        private float attack2Cooltime = 8f;
+        public HitBox attack2_hitbox;
+        void Attack2()
+        {
+            canAttack2 = false;
+            Attack2CooldownCo = StartCoroutine(Attack2CooldownIE());
+            if (attack2_hitbox != null)
+            {
+                HitBox atk = Instantiate(attack2_hitbox);
+                atk.Particle_Play(heart);
+            }
+        }
+
+        private IEnumerator Attack2CooldownIE()
+        {
+            float elapsed = 0;
+            while (elapsed < attack2Cooltime)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            canAttack2 = true;
+        }
+        
+        private bool canAttack3 = true;
+        private Coroutine Attack3CooldownCo;
+        private float attack3Cooltime = 12f;
+        public HitBox attack3_hitbox;
+        void Attack3()
+        {
+            canAttack3 = false;
+            Attack3CooldownCo = StartCoroutine(Attack3CooldownIE());
+            if (attack3_hitbox != null)
+            {
+                HitBox atk = Instantiate(attack3_hitbox);
+                atk.Particle_Play(heart);
+            }
+        }
+
+        private IEnumerator Attack3CooldownIE()
+        {
+            float elapsed = 0;
+            while (elapsed < attack3Cooltime)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            canAttack3 = true;
+        }
         
         
         public override void DoPossibleEngage()
         {
             SyncAnimationSpeed();
-
+            if (canAttack3)
+            {
+                monster.animator.SetTrigger("Attack3");
+                return;
+            }
+            
+            if (canAttack2)
+            {
+                monster.animator.SetTrigger("Attack2");
+                return;
+            }
+            
             if (UnityEngine.Random.Range(0, 2) == 0)
             {
                 monster.animator.SetTrigger("BaseAttack");
