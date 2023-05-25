@@ -238,7 +238,22 @@ public class ItemGenerator : MonoBehaviour
                     aOptions.Add((ArtifactKey)j, randValue);
                 }
             }
-
+            
+            if (aOptions.Count == 0) // 옵션 최소 1개는 보장
+            {
+                int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
+                float valBound = 0;
+                for (int k = 0; k <= itemLevel; k++)
+                {
+                    valBound += artifactGrowthData[randIdx];
+                }
+                float randVal = UnityEngine.Random.Range(0, valBound);
+                randVal = (float)Math.Round(randVal, 1);
+                valKey = (ArtifactKey)randIdx;
+                valRatio = randVal / valBound;
+                aOptions.Add((ArtifactKey)randIdx, randVal);
+            }
+            
             Artifact newArtifact = new Artifact(
                 artifactDatas[(int)Math.Clamp((int)(itemLevel / 5), 0, artifactDatas.Length - 1)],
                 id_generate++, (short)itemLevel, aOptions);
