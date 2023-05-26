@@ -83,7 +83,7 @@ public class Inventory : MonoBehaviour
                 if (slots[i].itemSlotui.item == null)
                 {
                     slots[i].itemSlotui.item = item;
-                    switch (slots[i].itemSlotui.item.tier)
+                    switch (Math.Clamp((slots[i].itemSlotui.item.tier / 5), 0, grade_image.Length -1))
                     {
                         case 0:
                             slots[i].grade_Back.sprite = grade_image[0]; 

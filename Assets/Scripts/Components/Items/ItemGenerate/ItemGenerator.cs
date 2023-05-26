@@ -27,8 +27,8 @@ public class ItemGenerator : MonoBehaviour
 // https://m.blog.naver.com/bbulle/220158917236
     // [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> wDic;
     // [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> aDic;
-    [ShowInInspector] [ReadOnly] private ItemData[] artifactDatas;
-    [ShowInInspector] [ReadOnly] private ItemData[] weaponDatas;
+    [ShowInInspector] [ReadOnly] public ItemData[] artifactDatas;
+    [ShowInInspector] [ReadOnly] public ItemData[] weaponDatas;
 
     private Transform parent_droppedItem;
     private GameObject droppedItemPrefab; // 드랍 아이템 프리팹

@@ -44,8 +44,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
                 
                 
-                GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
-                Player.Instance.weaponManager.SetWeapon(weapon);
+                // GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
+                Player.Instance.weaponManager.SetWeapon(Inventory.instance.tempItem.itemData.weapon_gameObject);
 
                 for (int i = 0; i < 6; i++)
                 {
