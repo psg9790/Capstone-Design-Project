@@ -75,6 +75,9 @@ public class overlapSphere : MonoBehaviour
         {
             clicked = false;
             ClickItem(ClickNum);
+        }else if (clicked == true && inven.IsEmpty() ==false)
+        {
+            clicked = false;
         }
         
         //F키 입력 시 첫번 째 아이템 정보 옮기기
