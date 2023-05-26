@@ -146,5 +146,6 @@ public class Player : MonoBehaviour
         capsuleCollider.enabled = true;
         heart.RestoreAll_CUR_HP();
     }
+
     
 }

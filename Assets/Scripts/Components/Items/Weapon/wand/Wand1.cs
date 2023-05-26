@@ -36,7 +36,10 @@ public class Wand1 : BaseWeapon
     public override void Skill(int i)
     {
         HitBox hitBox = Instantiate(skill_effect[i]);
-        
+        if (i == 1)
+        {
+            Player.Instance.heart.ATK_SPEED_CHANGE(1);
+        }
         if (hitBox.isBullet)
         {
             Bullet_Play(hitBox);
@@ -50,6 +53,7 @@ public class Wand1 : BaseWeapon
     public override void EndSkill()
     {
         Player.Instance.animator.SetInteger("skillnum",-1);
+        
     }
     
 
