@@ -12,28 +12,21 @@ public class ItemGenerator : MonoBehaviour
     private static ItemGenerator instance;
     public static ItemGenerator Instance => instance;
 
-    // [BoxGroup("itemGrowthInfos")] private float weapon_ATK_growth = 5f;
-    // [BoxGroup("itemGrowthInfos")] private float weapon_ATKSPEED_growth = 0.05f;
-    // [BoxGroup("itemGrowthInfos")] private float weapon_SOCKET_growth = 1f;
-    // [BoxGroup("itemGrowthInfos")] private float weapon_CRITRATE_growth = 1f;
-    // [BoxGroup("itemGrowthInfos")] private float weapon_CRITDAMAGE_growth = 5f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_DEF_growth = 5f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_HP_growth = 40f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_MOVEMENTSPEED_growth = 0.1f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_ATKSPEED_growth = 0.1f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_ATK_growth = 10f;
-    // [BoxGroup("itemGrowthInfos")] private float artifact_CRITRATE_growth = 1f;
+    private float[] weaponGrowthData = new float[]
+    {
+        5f, 0.1f, 1f, 5f, 5f
+    };
 
     private float[] artifactGrowthData = new float[]
     {
-        40f, 5f, 0.1f, 10f, 0.1f,  1f
+        40f, 5f, 0.1f, 10f, 0.1f, 1f
     };
     // hp, def, movementspeed, atk, atkspeed, critrate
 
 
 // https://m.blog.naver.com/bbulle/220158917236
-    [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> wDic;
-    [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> aDic;
+    // [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> wDic;
+    // [ShowInInspector] [ReadOnly] private List<Dictionary<string, object>> aDic;
     [ShowInInspector] [ReadOnly] private ItemData[] artifactDatas;
     [ShowInInspector] [ReadOnly] private ItemData[] weaponDatas;
 
@@ -54,8 +47,8 @@ public class ItemGenerator : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        wDic = CSVReader.Read("ItemData/Randomize/WeaponRadomizeByLevel"); // 무기 랜덤 datasheet 불러옴
-        aDic = CSVReader.Read("ItemData/Randomize/ArtifactRandomizeByLevel"); // 아티팩트 랜덤 datasheet 불러옴
+        // wDic = CSVReader.Read("ItemData/Randomize/WeaponRadomizeByLevel"); // 무기 랜덤 datasheet 불러옴
+        // aDic = CSVReader.Read("ItemData/Randomize/ArtifactRandomizeByLevel"); // 아티팩트 랜덤 datasheet 불러옴
         artifactDatas = Resources.LoadAll<ItemData>("ItemData/Artifact/"); // 아티팩트 티어 리스트를 불러옴
         weaponDatas = Resources.LoadAll<ItemData>("ItemData/Weapon/"); // 무기종류 데이터를 불러옴
         droppedItemPrefab = Resources.Load<GameObject>("ItemData/DroppedItem"); // 드롭아이템 오브젝트 프리팹 로드
@@ -101,7 +94,9 @@ public class ItemGenerator : MonoBehaviour
             float valRatio = 0;
             for (int i = 0; i < System.Enum.GetValues(typeof(WeaponKey)).Length; i++)
             {
-                float valBound = float.Parse(wDic[level][((WeaponKey)i).ToString()].ToString());
+                // float valBound = float.Parse(wDic[level][((WeaponKey)i).ToString()].ToString());
+                float valBound = (level + 1) * (weaponGrowthData[i]);
+
                 float randValue = UnityEngine.Random.Range(0, valBound);
                 if (randValue / valBound > valRatio)
                 {
@@ -111,7 +106,7 @@ public class ItemGenerator : MonoBehaviour
                 wOptions.Add((WeaponKey)i, (float)Math.Round(randValue, 1));
             }
 
-            wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(wOptions[WeaponKey.SOCKET]);
+            wOptions[WeaponKey.SOCKET] = (float)Math.Ceiling(Math.Clamp(wOptions[WeaponKey.SOCKET], 0, 6));
 
             Weapon weapon = new Weapon(wData, id_generate++, (short)level, wOptions);
             weapon.itemName = weapon.itemData.itemName;
@@ -136,7 +131,12 @@ public class ItemGenerator : MonoBehaviour
             {
                 if (UnityEngine.Random.Range(0, 100) < 50)
                 {
-                    float valBound = float.Parse(aDic[level][((ArtifactKey)i).ToString()].ToString());
+                    float valBound = 0;
+                    for (int k = 0; k <= level; k++)
+                    {
+                        valBound += artifactGrowthData[i];
+                    }
+
                     float randValue = UnityEngine.Random.Range(0, valBound);
                     randValue = (float)Math.Round(randValue, 1);
                     if (randValue / valBound > valRatio)
@@ -152,7 +152,7 @@ public class ItemGenerator : MonoBehaviour
             if (aOptions.Count == 0) // 옵션 최소 1개는 보장
             {
                 int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
-                float valBound = float.Parse(aDic[level][((ArtifactKey)randIdx).ToString()].ToString());
+                float valBound = (level + 1) * (artifactGrowthData[randIdx]);
                 float randVal = UnityEngine.Random.Range(0, valBound);
                 randVal = (float)Math.Round(randVal, 1);
                 valKey = (ArtifactKey)randIdx;
@@ -221,11 +221,7 @@ public class ItemGenerator : MonoBehaviour
             {
                 if (UnityEngine.Random.Range(0, 100) < 50)
                 {
-                    float valBound = 0;
-                    for (int k = 0; k <= itemLevel; k++)
-                    {
-                        valBound += artifactGrowthData[j];
-                    }
+                    float valBound = (itemLevel + 1) * (artifactGrowthData[j]);
 
                     float randValue = UnityEngine.Random.Range(0, valBound);
                     randValue = (float)Math.Round(randValue, 2);
@@ -238,22 +234,20 @@ public class ItemGenerator : MonoBehaviour
                     aOptions.Add((ArtifactKey)j, randValue);
                 }
             }
-            
+
             if (aOptions.Count == 0) // 옵션 최소 1개는 보장
             {
                 int randIdx = UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ArtifactKey)).Length);
-                float valBound = 0;
-                for (int k = 0; k <= itemLevel; k++)
-                {
-                    valBound += artifactGrowthData[randIdx];
-                }
+
+                float valBound = (itemLevel + 1) * (artifactGrowthData[randIdx]);
+
                 float randVal = UnityEngine.Random.Range(0, valBound);
                 randVal = (float)Math.Round(randVal, 1);
                 valKey = (ArtifactKey)randIdx;
                 valRatio = randVal / valBound;
                 aOptions.Add((ArtifactKey)randIdx, randVal);
             }
-            
+
             Artifact newArtifact = new Artifact(
                 artifactDatas[(int)Math.Clamp((int)(itemLevel / 5), 0, artifactDatas.Length - 1)],
                 id_generate++, (short)itemLevel, aOptions);
