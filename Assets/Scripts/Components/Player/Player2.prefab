@@ -3291,6 +3291,7 @@ MonoBehaviour:
   isAttack: 0
   isSkill: 0
   isDeath: 0
+  isCC: 0
 --- !u!114 &5661129087745828413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3326,7 +3327,19 @@ MonoBehaviour:
         m_CallState: 2
   OnKnockBack:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2671801443289682286}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: KnockBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   level: 0
   max_hp: 100
   cur_hp: 100
