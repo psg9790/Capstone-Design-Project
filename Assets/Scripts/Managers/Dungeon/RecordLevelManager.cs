@@ -1,13 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class RecordLevelManager : MonoBehaviour
 {
+    private static RecordLevelManager instance;
+    public static RecordLevelManager Instance => instance;
+    
     public GameObject playerPrefab;
     public Transform bossMap;
     public CameraController camController;
+
+    [ReadOnly] public int curLevel = 0;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {

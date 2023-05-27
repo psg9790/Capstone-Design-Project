@@ -68,13 +68,38 @@ public class GameManager : MonoBehaviour
     //     }
     // }
 
-    public string diceFilePath;
+    public void Death_GrowthUI()
+    {
+        GameOverUI go = Instantiate(Resources.Load<GameOverUI>("UI/Canvas_GameOver"));
+        go.Display_GrowthDungeonResult();
+    }
 
+    public void Death_RecordUI()
+    {
+        GameOverUI go = Instantiate(Resources.Load<GameOverUI>("UI/Canvas_GameOver"));
+        go.Display_RecordDungeonResult();
+    }
+    
+
+    [HideInInspector] public string diceFilePath;
+
+    [Button]
     public int EndOfGrowthDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
     {
         CheckDiceFileExists();
-        ModifyDiceCount(worldLevel + 1);
-        return GetCurrentDiceCount();
+        int diceEarn = (int)(worldLevel * 1.5f);
+        ModifyDiceCount(diceEarn);
+        ModifyMaxLevel(worldLevel);
+        return diceEarn;
+    }
+    
+    [Button]
+    public bool EndOfRecordDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
+    {
+        CheckDiceFileExists();
+        bool ret = GetCurrentRecord() < worldLevel;
+        ModifyRecord(worldLevel);
+        return ret;
     }
 
     [Button]
@@ -91,6 +116,40 @@ public class GameManager : MonoBehaviour
                 int curCount = int.Parse(diceJson["diceCount"].ToString());
                 curCount += amount;
                 diceJson["diceCount"] = curCount;
+            }
+        }
+        File.WriteAllText(diceFilePath, diceJson.ToString());
+    }
+
+    void ModifyMaxLevel(int level)
+    {
+        CheckDiceFileExists();
+        JObject diceJson;
+        using (StreamReader file = File.OpenText(diceFilePath))
+        {
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                diceJson = (JObject)JToken.ReadFrom(reader);
+
+                int curLevel = int.Parse(diceJson["maxLevel"].ToString());
+                diceJson["maxLevel"] = Math.Max(curLevel, level);
+            }
+        }
+        File.WriteAllText(diceFilePath, diceJson.ToString());
+    }
+    
+    void ModifyRecord(int level)
+    {
+        CheckDiceFileExists();
+        JObject diceJson;
+        using (StreamReader file = File.OpenText(diceFilePath))
+        {
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                diceJson = (JObject)JToken.ReadFrom(reader);
+
+                int curLevel = int.Parse(diceJson["record"].ToString());
+                diceJson["record"] = Math.Max(curLevel, level);
             }
         }
         File.WriteAllText(diceFilePath, diceJson.ToString());
@@ -113,6 +172,42 @@ public class GameManager : MonoBehaviour
 
         return ret;
     }
+    
+    [Button]
+    public int GetCurrentMaxLevel() // 현재 주사위를 몇개 보유중인지 확인
+    {
+        CheckDiceFileExists();
+        int ret = 0;
+        using (StreamReader file = File.OpenText(diceFilePath))
+        {
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                JObject diceJson = (JObject)JToken.ReadFrom(reader);
+
+                ret = int.Parse(diceJson["maxLevel"].ToString());
+            }
+        }
+
+        return ret;
+    }
+    
+    [Button]
+    public int GetCurrentRecord() // 현재 주사위를 몇개 보유중인지 확인
+    {
+        CheckDiceFileExists();
+        int ret = 0;
+        using (StreamReader file = File.OpenText(diceFilePath))
+        {
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                JObject diceJson = (JObject)JToken.ReadFrom(reader);
+
+                ret = int.Parse(diceJson["record"].ToString());
+            }
+        }
+
+        return ret;
+    }
 
     private void CheckDiceFileExists() // 주사위 저장 파일이 존재하는지 확인
     {
@@ -121,12 +216,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("주사위 파일 존재하지 않음, 생성");
             JObject newDiceFile = new JObject(new JProperty("diceCount", 0));
+            newDiceFile.Add(new JProperty("maxLevel", 0));
+            newDiceFile.Add(new JProperty("record", 0));
             File.WriteAllText(diceFilePath, newDiceFile.ToString());
         }
     }
 
 
-    public string itemsFilePath;
+    [HideInInspector] public string itemsFilePath;
     public void CheckItemsFileExists()
     {
         itemsFilePath = Application.persistentDataPath + "/items.json";
