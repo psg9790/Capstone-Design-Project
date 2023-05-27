@@ -142,6 +142,7 @@ public class RecordLevelManager : MonoBehaviour
         }
         
         Player.Instance.heart.PlayerItemEquip();
+        GameManager.Instance.RemoveItemsJson();
     }
 
     void WeaponEquip(Weapon newWeapon)

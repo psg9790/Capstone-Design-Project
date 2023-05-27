@@ -40,6 +40,8 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            CheckDiceFileExists();
+            CheckItemsFileExists();
         }
         else
         {
@@ -297,6 +299,11 @@ public class GameManager : MonoBehaviour
         JObject token = JObject.Parse(jsonfile);
         JItemsList newList = JsonConvert.DeserializeObject<JItemsList>(token.ToString());
         return newList;
+    }
+
+    public void RemoveItemsJson()
+    {
+        File.Delete(itemsFilePath);
     }
 
     private List<JArtifact> ConvertArtifactToJArtifact(List<Artifact> input)

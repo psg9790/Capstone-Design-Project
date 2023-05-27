@@ -17,16 +17,25 @@ public class GameOverUI : MonoBehaviour
     [BoxGroup("Growth")] public TMP_Text curWorldLevel_text;
     [BoxGroup("Growth")] public TMP_Text diceEarned_text;
     [BoxGroup("Growth")] public TMP_Text maxLevel_text;
+    [BoxGroup("Growth")] public CanvasGroup newMaxLevelCG;
+
     public void Display_GrowthDungeonResult()
     {
+        int before = GameManager.Instance.GetCurrentMaxLevel();
         curWorldLevel_text.text = GrowthLevelManager.Instance.worldLevel.ToString();
         diceEarned_text.text = GameManager.Instance.EndOfGrowthDungeon(GrowthLevelManager.Instance.worldLevel).ToString();
-        maxLevel_text.text = GameManager.Instance.GetCurrentMaxLevel().ToString();
+        int after = GameManager.Instance.GetCurrentMaxLevel();
+        maxLevel_text.text = after.ToString();
+        bool isHighScore = before < after;
         Sequence seq = DOTween.Sequence();
         seq.Append(backCG.DOFade(1,2.5f).From(0))
             .Append(gameOverTextCG.DOFade(1, 1f).From(0))
             .Append(growthResultCG.DOFade(1, 1f).From(0))
             .Append(returnToButtonCG.DOFade(1, 1f).From(0));
+        if (isHighScore)
+        {
+            seq.Join(newMaxLevelCG.DOFade(1, 1f).From(0));
+        }
     }
 
     [BoxGroup("Record")] public CanvasGroup recordResultCG;
