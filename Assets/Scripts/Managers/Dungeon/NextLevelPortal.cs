@@ -17,17 +17,24 @@ public class NextLevelPortal : MonoBehaviour
     {
         activated = true;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (!activated)
             return;
-        
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GrowthLevelManager.Instance.NextLevel();
+            if (GrowthLevelManager.Instance != null)
+            {
+                GrowthLevelManager.Instance.NextLevel();
+            }
+            else if (RecordLevelManager.Instance != null)
+            {
+                RecordLevelManager.Instance.NextLevel();
+            }
             
-            if(destroyOnTrigger)
+            if (destroyOnTrigger)
                 Destroy(this.gameObject);
         }
     }

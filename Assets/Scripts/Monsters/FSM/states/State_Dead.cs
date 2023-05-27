@@ -18,7 +18,8 @@ namespace Monsters.FSM
             monster.afterDeadElapsed = 0f;
             Debug.Log("enter die state");
             // 아이템 생성
-            ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL);
+            if(ReferenceEquals(RecordLevelManager.Instance, null))
+                ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL);
             DOVirtual.DelayedCall(2f, () => Exit(monster));
         }
 

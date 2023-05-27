@@ -231,11 +231,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("아이템 파일 존재하지 않음, 생성");
             JItemsList newList = new JItemsList();
-            for (int i = 0; i < 6; i++)
-            {
-                newList.items.Add(null);
-            }
-            // newList.items = ConvertArtifactToJArtifact(ItemGenerator.Instance.Generate6ItemsForChallenge());
+            // for (int i = 0; i < 6; i++)
+            // {
+            //     newList.items.Add(null);
+            // }
+            newList.items = ConvertArtifactToJArtifact(ItemGenerator.Instance.Generate6ItemsForChallenge());
 
             string result = JsonConvert.SerializeObject(newList, Formatting.Indented,
                 new JsonSerializerSettings() {

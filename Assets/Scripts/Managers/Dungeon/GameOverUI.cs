@@ -36,8 +36,8 @@ public class GameOverUI : MonoBehaviour
     public void Display_RecordDungeonResult()
     {
         curLevel_text.text = RecordLevelManager.Instance.curLevel.ToString();
-        record_text.text = GameManager.Instance.GetCurrentRecord().ToString();
         bool isHighScore = GameManager.Instance.EndOfRecordDungeon(RecordLevelManager.Instance.curLevel);
+        record_text.text = GameManager.Instance.GetCurrentRecord().ToString();
         Sequence seq = DOTween.Sequence();
         seq.Append(backCG.DOFade(1,2.5f).From(0))
             .Append(gameOverTextCG.DOFade(1, 1f).From(0))
@@ -45,7 +45,7 @@ public class GameOverUI : MonoBehaviour
             .Append(returnToButtonCG.DOFade(1, 1f).From(0));
         if (isHighScore)
         {
-            seq.Append(newRecordCG.DOFade(1, 1f).From(0));
+            seq.Join(newRecordCG.DOFade(1, 1f).From(0));
         }
     }
 

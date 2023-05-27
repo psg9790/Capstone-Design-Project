@@ -20,6 +20,11 @@ public class BeforeRecordDungeonUI : MonoBehaviour
         GameManager.Instance.itemChangedEvent.AddListener(RefreshItemUI);
     }
 
+    private void OnEnable()
+    {
+        WeaponUI_Init();
+        RefreshItemUI();
+    }
 
     private void OnDestroy()
     {

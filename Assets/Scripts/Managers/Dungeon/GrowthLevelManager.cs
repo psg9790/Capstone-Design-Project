@@ -168,7 +168,7 @@ public class GrowthLevelManager : MonoBehaviour
     private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
     {
         // maxLevel = ItemGenerator.Instance.maxLevel;
-        maxLevel = 9999;
+        maxLevel = 999;
         // level 0
         worldLevel = 0;
 
