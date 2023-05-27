@@ -13,29 +13,23 @@ public class overlapSphere : MonoBehaviour
 {
     public float radius = 2.0f;
 
-    public List<GameObject> dataList = new List<GameObject>();
+    public List<GameObject> dataList = new List<GameObject>(); //스캔한 오브젝트 중 아이템만 수집
+    public RectTransform content;   // UI  
+    public GameObject Incontents;   // UI 중 리스트
+    public Inventory inven; //인벤토리
+    public int ClickNum;    // 클릭된 리스트의 번호
+    public bool clicked;    //클릭 확인
+    public GameObject commu_bar;   //UI on off 
+    public Item GetItem;    //클릭한 아이템 저장
+
     
-    public RectTransform content;
-    public GameObject Incontents;
-    private GameObject ClearContents;
-    private int MAX = 28;
-    public Inventory inven;
-    public int ClickNum;
-    public bool clicked;
-    public GameObject commu_bar;
-
-    public Item GetItem;
-
     private void Start()
     {
-        dataList.Add(commu_bar);
-        dataList.Clear();
         commu_bar = GameObject.Find("commu_bar"); 
         content= GameObject.Find("Content").GetComponent<RectTransform>();
         inven = Inventory.instance;
         clicked = false;
         ClickNum = 100;
-        
     }
 
     private void Update()
@@ -89,6 +83,7 @@ public class overlapSphere : MonoBehaviour
 
     }
 
+    //클릭한 아이템 저장
     void ClickItem(int num)
     {
         GetItem = dataList[num].GetComponent<DroppedItem>().item;
@@ -97,6 +92,7 @@ public class overlapSphere : MonoBehaviour
         
     }
 
+    // 아이템 갯수에 맞춰 content 켜짐 
     void ClearContent(int count)
     {
         for(int i= count;i<10;i++)
@@ -109,13 +105,12 @@ public class overlapSphere : MonoBehaviour
         }
     }
     
+    //클릭시 이벤트
     public void ClickEvent(int val)
     {
 
         clicked = true;
         ClickNum = val;
-        UnityEngine.Debug.Log(ClickNum + "캐릭터에 인...직...");
-        
     }
     
     

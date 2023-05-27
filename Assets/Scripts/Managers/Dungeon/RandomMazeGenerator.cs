@@ -17,7 +17,7 @@ public class RandomMazeGenerator
     private MazeComponent[] mazePrefabs; // 랜덤 미로 생성에 사용할 리소스들
 
     public List<MazeComponent> mazeComponents = new List<MazeComponent>(); // 생성된 미로 블럭들의 컴포넌트들
-
+    
     public RandomMazeGenerator(Transform parent, Vector3 pos, int blockSize, int roomCount)
     {
         parentTransform = parent;

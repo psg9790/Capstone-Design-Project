@@ -72,6 +72,9 @@ public class MazeComponent : MonoBehaviour
 
     public void SpawnObjects()
     {
+        //필요시 스폰포인트 랜덤
+        int ranSpawn = Random.Range(0, ObjectSpawnPoints.Count);
+        
         if (ObjectSpawnPoints.Count != 0)
         {
             for (int i = 0; i < ObjectSpawnPoints.Count; i++)

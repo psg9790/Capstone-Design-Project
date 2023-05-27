@@ -53,7 +53,8 @@ public class GrowthLevelManager : MonoBehaviour
 
     [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
     [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
-
+    public GameObject DirectionalLight;
+    private Light light;
 
     private void Awake()
     {
@@ -139,6 +140,8 @@ public class GrowthLevelManager : MonoBehaviour
 
     private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
     {
+         light = DirectionalLight.GetComponent<Light>();
+
         maxLevel = ItemGenerator.Instance.maxLevel;
         // level 0
         worldLevel = 0;
@@ -206,6 +209,7 @@ public class GrowthLevelManager : MonoBehaviour
         curWorldMapType = UnityEngine.Random.Range(0, 10);
         if (curWorldMapType < 2) // 던전 1
         {
+            DirectionalLight.SetActive(false);
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
 
@@ -227,6 +231,13 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else if (curWorldMapType < 4) // 던전 3
         {
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
+
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
 
@@ -248,8 +259,16 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else // 미로 랜덤 생성
         {
+            
             dungeon1_parent.SetActive(false);
             dungeon3_parent.SetActive(false);
+            
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
 
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
                 mazeIndent, maxMazeBlockCount);
