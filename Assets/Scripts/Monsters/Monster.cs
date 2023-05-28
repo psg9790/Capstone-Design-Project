@@ -343,6 +343,7 @@ namespace Monsters
         Rush_Spider,
         Boss1_Nightmare,
         Skeleton_Mage,
-        Boss2_Crusader
+        Boss2_Crusader,
+        Skeleton_DirectMage
     }
 }
