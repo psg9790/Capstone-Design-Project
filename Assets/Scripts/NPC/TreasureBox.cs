@@ -20,6 +20,7 @@ public class TreasureBox : MonoBehaviour
         Lid =transform.GetChild(1).gameObject;
         dropPostion = transform.GetChild(3).gameObject;
         generator = ItemGenerator.Instance;
+        openEffect.Stop();
     }
     
     void Update()
@@ -58,5 +59,7 @@ public class TreasureBox : MonoBehaviour
 
         int random = Random.Range(2, 5);
         for(int i =0; i< random; i++)  generator.GenerateItem(dropPostion.transform, 1);
+        yield return new WaitForSeconds(2.0f);
+        openEffect.Stop();
     }
 }
