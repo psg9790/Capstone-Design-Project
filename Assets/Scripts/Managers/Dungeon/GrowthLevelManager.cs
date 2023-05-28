@@ -256,7 +256,8 @@ public class GrowthLevelManager : MonoBehaviour
                 DirectionalLight.SetActive(true);
             }
             
-            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
+            light.color = Color.white;
+            
 
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
