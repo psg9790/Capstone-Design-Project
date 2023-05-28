@@ -54,7 +54,7 @@ public class MapCam : MonoBehaviour
         {
             if (Player.Instance != null)
             {
-                transform.position = Player.Instance.transform.position + Vector3.up * 500f;
+                transform.position = Player.Instance.transform.position + Vector3.up * 50f;
             }
             yield return null;
             float delta = InputManager.Instance.GetAction(InputKey.MouseWheel).ReadValue<float>();
