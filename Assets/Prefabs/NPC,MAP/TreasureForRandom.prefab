@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7125520290456489219}
   - component: {fileID: 6510396632490248013}
+  - component: {fileID: 8735419530168664744}
   m_Layer: 0
   m_Name: TreasureForRandom
   m_TagString: Untagged
@@ -51,8 +52,21 @@ MonoBehaviour:
   isEnable: 0
   rotSpeed: 100
   Lid: {fileID: 0}
-  openEffect: {fileID: 0}
+  openEffect: {fileID: 6421938025892759094}
   generator: {fileID: 0}
+--- !u!65 &8735419530168664744
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137484699763440941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.039238, y: 2.1265488, z: 3.315918}
+  m_Center: {x: 0.08853531, y: 1.1235161, z: -0.38812256}
 --- !u!1 &1104337861769870970
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +469,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43d1d06cf70fcb2488255051aaae40a5, type: 3}
+--- !u!198 &6421938025892759094 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7910603292438892066, guid: 43d1d06cf70fcb2488255051aaae40a5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3807605830676793364}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7562061723781471199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6640137938462102475, guid: 43d1d06cf70fcb2488255051aaae40a5,

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class TreasureBox : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class TreasureBox : MonoBehaviour
             openEffect.Play();
             int random = Random.Range(2, 7);
             StartCoroutine(dropItems());
-            Lid.transform.Rotate(new Vector3(90 ,0,0));
+            //Lid.transform.Rotate(new Vector3(90 ,0,0));
+            Lid.transform.DORotate(new Vector3(90, 0, 0), 1.5f);
             isActived = true;
         }
     }
