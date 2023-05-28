@@ -78,7 +78,8 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         int targetLayer = (int)Mathf.Log(targetMask, 2);
         if (hitBox.isBullet) // bullet일 시 분기
         {
-            Vector3 dir = other.transform.position - transform.position;
+            Vector3 dir = other.transform.position - heart.transform.position;
+            dir.y = 0;
 
             if (other.gameObject.layer == targetLayer)
             {

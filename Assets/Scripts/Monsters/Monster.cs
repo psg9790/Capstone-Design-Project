@@ -304,7 +304,7 @@ namespace Monsters
         {
             knockback_power = power;
             knockback_dir = dir;
-            transform.DOLookAt(dir, 0.3f);
+            // transform.DOLookAt(dir, 0.3f);
             fsm.ChangeState(EMonsterState.KnockBack);
         }
 

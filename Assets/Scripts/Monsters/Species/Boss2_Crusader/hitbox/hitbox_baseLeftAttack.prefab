@@ -50,7 +50,7 @@ MonoBehaviour:
   targetCount: 0
   refreshAutomatically: 0
   refreshInterval: 0.25
-  damageRatio: 1
+  damageRatio: 0.6
   ccType: 2
   ccPower: 1
 --- !u!65 &731160122358479468
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 4329694569500527729}
   - component: {fileID: 4329694569500527730}
   m_Layer: 15
-  m_Name: hitbox_baseAttack
+  m_Name: hitbox_baseLeftAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
