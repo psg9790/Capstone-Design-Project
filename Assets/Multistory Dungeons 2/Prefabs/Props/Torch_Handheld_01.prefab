@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 428218}
   - component: {fileID: 3387176}
   - component: {fileID: 2329800}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torch_Handheld_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6389776829245260352}
   - component: {fileID: 3090409700958170707}
   - component: {fileID: 2344540382443252072}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,6 +281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Torch_Fire_FX_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534264524, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6338325277554032106, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}

@@ -6,20 +6,15 @@ using Random = UnityEngine.Random;
 
 public class TreasureBox : MonoBehaviour
 {
-    public bool isEnable;
-    public float rotSpeed =100;
+    public bool isEnable;  //보물상자 영역에 플레이어가 있는지 확인
+    public float rotSpeed =100; //열리는 속도
+    private bool isActived=false; //보물상자가 오픈되었었는지 확인
+    public GameObject Lid ; //보물상자 뚜껑부분
+    public ParticleSystem openEffect; //보물상자 이펙트
+    private GameObject dropPostion;//드랍 위치
+    public ItemGenerator generator; //아이템 생성 
     
-    private bool isActived=false;
-    public GameObject Lid ;
-    public ParticleSystem openEffect;
 
-    public GameObject itemPrefeb;
-    private GameObject dropPostion;
-    private int random;
-
-    public ItemGenerator generator;
-    
-    // Start is called before the first frame update
     void Start()
     {
         Lid =transform.GetChild(1).gameObject;
@@ -32,7 +27,7 @@ public class TreasureBox : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && isEnable && isActived!=true)
         {            
             openEffect.Play();
-            random = Random.Range(2, 7);
+            int random = Random.Range(2, 7);
             StartCoroutine(dropItems());
             Lid.transform.Rotate(new Vector3(90 ,0,0));
             isActived = true;
@@ -43,7 +38,6 @@ public class TreasureBox : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            Debug.Log("enter");
             isEnable = true;
         }
     }
@@ -54,34 +48,15 @@ public class TreasureBox : MonoBehaviour
         {
             isEnable = false;
         }
-        /*
-        if (isActived!=true)
-        {
-            //Lid.transform.Rotate(-90,0,0);
-            isActived = false;
-            //Lid.transform.GetChild(0).gameObject.SetActive(false);
-        }*/
     }
 
-    
+    //보물상자 오픈시 랜덤 갯수의 아이템 드랍
     IEnumerator dropItems()
     {
        
         yield return  new WaitForSeconds(0.2f);
 
-        int random = Random.Range(2, 100);
-        Debug.Log("drop item: "+random);
-        //drop();
-        generator.GenerateItem(dropPostion.transform, 1);
+        int random = Random.Range(2, 5);
+        for(int i =0; i< random; i++)  generator.GenerateItem(dropPostion.transform, 1);
     }
-
-    private void drop()
-    {
-        var itemGo = Instantiate<GameObject>(this.itemPrefeb);
-        Vector3 vec3 = dropPostion.transform.position;
-        vec3 += new Vector3(0.0f, 0.0f, 0.0f);
-        itemGo.transform.position = vec3;
-        
-    }
-    
 }

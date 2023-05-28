@@ -49,10 +49,12 @@ public class GrowthLevelManager : MonoBehaviour
 
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
     [HideInInspector] public GameObject[] boss_monsters; // 프리팹 로드
+    [HideInInspector] public GameObject[] ObjectPreFab; //오브젝트 프리팹 로드
 
     [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
     [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
-
+    public GameObject DirectionalLight;
+    private Light light;
 
     private void Awake()
     {
@@ -62,6 +64,8 @@ public class GrowthLevelManager : MonoBehaviour
             general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
             worldLevel = 0;
+            ObjectPreFab = Resources.LoadAll<GameObject>("Props");
+            light = DirectionalLight.GetComponent<Light>();
 
             if (Player.Instance == null)
                 Instantiate(playerPrefab);
@@ -151,6 +155,7 @@ public class GrowthLevelManager : MonoBehaviour
             StopCoroutine(bossTrackingCoroutine);
         }
 
+
         bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
     }
 
@@ -224,6 +229,7 @@ public class GrowthLevelManager : MonoBehaviour
         curWorldMapType = UnityEngine.Random.Range(0, 10);
         if (curWorldMapType < 2) // 던전 1
         {
+            DirectionalLight.SetActive(false);
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
 
@@ -245,6 +251,13 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else if (curWorldMapType < 4) // 던전 3
         {
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
+
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
 
@@ -266,8 +279,16 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else // 미로 랜덤 생성
         {
+            
             dungeon1_parent.SetActive(false);
             dungeon3_parent.SetActive(false);
+            
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
 
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
                 mazeIndent, maxMazeBlockCount);
