@@ -15,7 +15,7 @@ namespace CharacterController
             Controller.isDeath = true;
             Debug.Log("YOU DIE");
             Player.Instance.animator.SetBool("Death", true);
-            Player.Instance.animator.SetTrigger("onDeath");
+            Player.Instance.animator.SetTrigger("Death");
         }
 
         public override void OnUpdateState()
@@ -31,6 +31,7 @@ namespace CharacterController
         public override void OnExitState()
         {
             Player.Instance.animator.SetBool("Death", false);
+            Player.Instance.animator.SetTrigger("re");
             Controller.isDeath = false;
         }
     }

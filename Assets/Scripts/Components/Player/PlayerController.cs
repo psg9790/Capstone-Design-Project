@@ -211,10 +211,11 @@ public class PlayerController : MonoBehaviour
             CCcoroutine = StartCoroutine(KnockBackCo(n, v));
         }
     }
-    private IEnumerator KnockBackCo(float n,Vector3 v) // 대쉬 쿨타임 계산 코루틴
+    private IEnumerator KnockBackCo(float n,Vector3 v)
     {
         float currentTime = 0f;
         v = Player.Instance.transform.position - v;
+        n = 0.7f;
         while (true)
         {
            
@@ -225,22 +226,21 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             Vector3 dashVelocity = Vector3.zero;
             Vector3 pp = Player.Instance.transform.position;
-            Vector3 nextpos = pp + v + Vector3.up; // 플레이어 바로 앞 살짝 위
+            Vector3 nextpos = pp + v + Vector3.up;
             Ray ray = new Ray(nextpos,Vector3.down);
             Debug.DrawRay(nextpos, Vector3.down, Color.red, 5f);
-            // 다음 예상 위치에서 바닥까지 레이져를 쏴서 다음 위치 벡터 찾기 
+            
             int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
             if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
             {
-                // 만약 플레이어 앞에 Wall 이면 이동x
-                Debug.DrawRay(pp,v, Color.red,1f);//플레이어 앞에 레이져 발사
+                
+                Debug.DrawRay(pp,v, Color.red,1f);
                 if (Physics.Raycast(pp, v, 1f, 1 << LayerMask.NameToLayer("WALL")))
                 {
                     // Debug.Log("cant dash");
                     break;
                 }
-                //새로 찍은 이동할 방향벡터로 플레이어 이동시키기
-                Vector3 dashDirection = (hit.point - pp)*2;
+                Vector3 dashDirection = hit.point - pp;
                 
                 Player.Instance.transform.position += dashDirection * Time.deltaTime;
             }
