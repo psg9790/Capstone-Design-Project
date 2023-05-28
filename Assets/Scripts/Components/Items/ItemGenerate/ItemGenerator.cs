@@ -208,10 +208,10 @@ public class ItemGenerator : MonoBehaviour
     public List<Artifact> Generate6ItemsForChallenge()
     {
         List<Artifact> result = new List<Artifact>();
-
+        int excludeMaxLevel = GameManager.Instance.GetCurrentMaxLevel() + 1;
         for (int i = 0; i < 6; i++) // 총 6개 아이템 반환
         {
-            int itemLevel = UnityEngine.Random.Range(0, 21); // 아이템 레벨 설정
+            int itemLevel = UnityEngine.Random.Range(0, excludeMaxLevel); // 아이템 레벨 설정
             Dictionary<ArtifactKey, float> aOptions = new Dictionary<ArtifactKey, float>();
             ArtifactKey valKey = ArtifactKey.HP;
             float valRatio = 0;

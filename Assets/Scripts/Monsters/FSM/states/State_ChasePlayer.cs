@@ -11,10 +11,10 @@ namespace Monsters.FSM
             base.Enter(monster);
             monster.state = EMonsterState.ChasePlayer;
             monster.animator.SetBool("Run", true);
-            if (monster.sound.ContainsKey(EMonsterState.ChasePlayer))
-            {
-                // 음성 재생
-            }
+            // if (monster.sound.ContainsKey(EMonsterState.ChasePlayer))
+            // {
+            //     // 음성 재생
+            // }
         }
 
         public override void Execute(Monster monster)

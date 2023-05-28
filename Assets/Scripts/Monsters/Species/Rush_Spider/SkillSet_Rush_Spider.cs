@@ -94,13 +94,25 @@ namespace Monsters.Skill
                 def_byLevel.Add(calcdef = heart.DEF);
                 atkspeed_byLevel.Add(calcatkspeed = heart.ATK_SPEED);
                 movementspeed_byLevel.Add(calcmovespeed = heart.MOVEMENT_SPEED);
-                for (int i = 0; i < GrowthLevelManager.Instance.maxLevel; i++)
+                // for (int i = 0; i < GrowthLevelManager.Instance.maxLevel; i++)
+                // {
+                //     atk_byLevel.Add(calcatk *= statGrowthByLevelUp);
+                //     hp_byLevel.Add(calchp *= statGrowthByLevelUp);
+                //     def_byLevel.Add(calcdef *= statGrowthByLevelUp);
+                //     atkspeed_byLevel.Add(calcatkspeed += (statGrowthByLevelUp * 0.05f));
+                //     movementspeed_byLevel.Add(calcmovespeed += (statGrowthByLevelUp * 0.05f));
+                // }
+            }
+
+            if (atk_byLevel.Count <= level)
+            {
+                for (int i = atk_byLevel.Count - 1; i < level; i++)
                 {
-                    atk_byLevel.Add(calcatk *= statGrowthByLevelUp);
-                    hp_byLevel.Add(calchp *= statGrowthByLevelUp);
-                    def_byLevel.Add(calcdef *= statGrowthByLevelUp);
-                    atkspeed_byLevel.Add(calcatkspeed += (statGrowthByLevelUp * 0.05f));
-                    movementspeed_byLevel.Add(calcmovespeed += (statGrowthByLevelUp * 0.05f));
+                    atk_byLevel.Add(atk_byLevel[i] *= statGrowthByLevelUp);
+                    hp_byLevel.Add(hp_byLevel[i] *= statGrowthByLevelUp);
+                    def_byLevel.Add(def_byLevel[i] *= statGrowthByLevelUp);
+                    atkspeed_byLevel.Add(atkspeed_byLevel[i] += (statGrowthByLevelUp * 0.05f));
+                    movementspeed_byLevel.Add(movementspeed_byLevel[i] += (statGrowthByLevelUp * 0.05f));
                 }
             }
 

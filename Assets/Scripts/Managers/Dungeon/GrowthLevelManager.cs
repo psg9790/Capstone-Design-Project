@@ -21,7 +21,7 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject playerPrefab; // 플레이어 없으면 생성용
     private Vector3 playerSpawnPoint; // 코드 내부에서 새로운 스폰포인트 지정용
 
-    public int maxLevel; // 마지막 레벨
+    // public int maxLevel; // 마지막 레벨
     [ReadOnly] public int worldLevel; // 월드 레벨 (난이도), 처음엔 0
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
 
@@ -61,8 +61,11 @@ public class GrowthLevelManager : MonoBehaviour
             instance = this;
             general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
+            worldLevel = 0;
 
-            InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
+            if (Player.Instance == null)
+                Instantiate(playerPrefab);
+            NextLevel();
         }
         else
         {
@@ -165,25 +168,29 @@ public class GrowthLevelManager : MonoBehaviour
     }
 
 
-    private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
+    [Button]
+    public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
     {
-        // maxLevel = ItemGenerator.Instance.maxLevel;
-        maxLevel = 9999;
-        // level 0
-        worldLevel = 0;
+        RemoveBoss();
+        bossPortalGenerated = false;
+        worldLevel++;
+        // if (worldLevel > maxLevel)
+        // {
+        //     // 성장형 던전 클리어
+        //     // UI 표시 및 획득한 리롤 토큰 저장
+        //     Debug.Log("성장형 던전 클리어");
+        //     return;
+        // }
 
-        if (Player.Instance == null)
-            Instantiate(playerPrefab);
+        ItemGenerator.Instance.RemoveAllItems();
+        curLevelMonsterCount = 0;
+        LevelDisplay();
 
         SpawnBoss();
         
-        // 랜덤 던전 선택
         MakeRandomMap();
 
-        // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
-
-        LevelDisplay();
     }
 
     private void UpdateNavMesh() // 네브메시 업데이트
@@ -196,30 +203,7 @@ public class GrowthLevelManager : MonoBehaviour
         Invoke("UpdateNavMesh", sec);
     }
 
-    [Button]
-    public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
-    {
-        RemoveBoss();
-        bossPortalGenerated = false;
-        worldLevel++;
-        if (worldLevel > maxLevel)
-        {
-            // 성장형 던전 클리어
-            // UI 표시 및 획득한 리롤 토큰 저장
-            Debug.Log("성장형 던전 클리어");
-            return;
-        }
-
-        ItemGenerator.Instance.RemoveAllItems();
-        curLevelMonsterCount = 0;
-        LevelDisplay();
-
-        SpawnBoss();
-        
-        MakeRandomMap();
-
-        TeleportPlayer(playerSpawnPoint);
-    }
+    
 
     [Button]
     private void MakeRandomMap() // 랜덤으로 던전1 및 미로던전으로 진입

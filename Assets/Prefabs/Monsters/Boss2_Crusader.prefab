@@ -2072,18 +2072,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4543308153726459844}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnHit_Event
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnStiff:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4543308153726459844}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnStiff_Event
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4543308153726459844}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnDeath_Event
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnKnockBack:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4543308153726459844}
+        m_TargetAssemblyTypeName: Monsters.Monster, Assembly-CSharp
+        m_MethodName: OnKnockback_Event
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   level: 0
-  max_hp: 300
+  max_hp: 1000
   cur_hp: 300
   atk: 25
   def: 10
@@ -2116,6 +2164,10 @@ MonoBehaviour:
   baseAttack_hitbox: {fileID: 4329694569500527730, guid: 9127d9374055d004d9712be797a6d6a9,
     type: 3}
   shieldAttack_hitbox: {fileID: 7343076850848579735, guid: a61b6cc0400bb604498f95b965534ebf,
+    type: 3}
+  attack2_hitbox: {fileID: 6219579540608929039, guid: 2998e87373f12664987586d2906489af,
+    type: 3}
+  attack3_hitbox: {fileID: 308158766718115497, guid: 201457f559c11cb4291b0d4dd50603cf,
     type: 3}
 --- !u!114 &4543308153726459844
 MonoBehaviour:
@@ -2176,7 +2228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 10
-  viewAngle: 180
+  viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 2048

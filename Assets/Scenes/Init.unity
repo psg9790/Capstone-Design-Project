@@ -688,7 +688,7 @@ PrefabInstance:
     - target: {fileID: 582623901973855322, guid: 9b31355932a08144a96d40d3499603bf,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 582623902355965912, guid: 9b31355932a08144a96d40d3499603bf,
         type: 3}
@@ -823,6 +823,11 @@ PrefabInstance:
     - target: {fileID: 582623903384283750, guid: 9b31355932a08144a96d40d3499603bf,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 582623903384283750, guid: 9b31355932a08144a96d40d3499603bf,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 582623903612405332, guid: 9b31355932a08144a96d40d3499603bf,
@@ -1291,6 +1296,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737204536597705599, guid: ffeb326080111d844b3b3543607f34e5,
+        type: 3}
+      propertyPath: diceFilePath
+      value: C:/Users/PSG/AppData/LocalLow/DKstudio/Ntimes/dice.json
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffeb326080111d844b3b3543607f34e5, type: 3}

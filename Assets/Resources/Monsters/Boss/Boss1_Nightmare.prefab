@@ -289,7 +289,7 @@ MonoBehaviour:
   max_hp: 1000
   cur_hp: 1000
   atk: 30
-  def: 20
+  def: 25
   movement_speed: 6
   atk_speed: 1
   skill_cooldown: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 40
-  viewAngle: 180
+  viewAngle: 360
   targetMask:
     serializedVersion: 2
     m_Bits: 2048
