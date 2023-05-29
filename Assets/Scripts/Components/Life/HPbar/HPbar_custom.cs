@@ -51,7 +51,8 @@ public class HPbar_custom : MonoBehaviour
     {
         if (RED_VALUE < heart.CUR_HP)
         {
-            RED_VALUE += Time.deltaTime * GAGE_SPEED * 3f;
+            // RED_VALUE += Time.deltaTime * GAGE_SPEED * 3f;
+            RED_VALUE = Mathf.Lerp(RED_VALUE, heart.CUR_HP, 0.2f);
         }
         if (RED_VALUE > heart.CUR_HP)
         {
@@ -63,7 +64,8 @@ public class HPbar_custom : MonoBehaviour
     {
         if (YELLOW_VALUE > RED_VALUE)
         {
-            YELLOW_VALUE -= Time.deltaTime * GAGE_SPEED;
+            // YELLOW_VALUE -= Time.deltaTime * GAGE_SPEED;
+            YELLOW_VALUE = Mathf.Lerp(YELLOW_VALUE, RED_VALUE, 0.1f);
         }
         if (YELLOW_VALUE < RED_VALUE)
         {

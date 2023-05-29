@@ -187,7 +187,7 @@ namespace Monsters.Skill
                 boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
                 if (boss_hpbar != null)
                 {
-                    boss_hpbar.bossNameText.text = "고대드래곤";
+                    boss_hpbar.bossNameText.text = "암흑기사";
                     boss_hpbar.Activate(heart);
                     boss_hpbar.gameObject.SetActive(true);
                 }
