@@ -8,13 +8,14 @@ public class ArtifactSlot : ItemSlot
 {
     private Item artiItem;
     public Item temp_arti;
+
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             DragSlot.instance.dragSlot = this;
             artiItem = DragSlot.instance.dragSlot.itemSlotui.item;
-            if (artiItem!=null && Inventory.instance.count!=28)
+            if (artiItem!=null && Inventory.instance.count<28)
             {
                 Color color = Inventory.instance.artifactUIs[number].itemSlot.image.color;
                 color.a = 0;
@@ -24,12 +25,11 @@ public class ArtifactSlot : ItemSlot
                 DragSlot.instance.dragSlot.itemSlotui.item= null;    
 
             }
-            else
+            else if((artiItem!=null) && (Inventory.instance.count==28))
             {
                 Inventory.instance.popUp.text="슬롯이 가득 차 있어 아티팩트를 해제할 수 없습니다";
                 Inventory.instance.popUp.gameObject.SetActive(true);
-                Invoke("taketime", 1.0f);
-                Inventory.instance.popUp.gameObject.SetActive(false);
+                Invoke("popupHide", 1.0f);
             }
         }
         DragSlot.instance.dragSlot =null;
@@ -80,13 +80,19 @@ public class ArtifactSlot : ItemSlot
             {
                 if (Inventory.instance.artifactUIs[number].isInstallation==true)
                 {
-                    Inventory.instance.AddItem(itemSlotui.item);
+                    extra_item = itemSlotui.item;
                 }
-
+                
                 Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
                 Inventory.instance.artifactUIs[number].itemSlot.itemSlotui.item =  DragSlot.instance.dragSlot.itemSlotui.item;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+                if (Inventory.instance.artifactUIs[number].isInstallation==true)
+                {
+                    Inventory.instance.AddItem(extra_item);
+                }
                 Inventory.instance.artifactUIs[number].isInstallation = true;
+                
+                
 
             } else if (DragSlot.instance.beginSlot == 2)
             {
@@ -111,8 +117,8 @@ public class ArtifactSlot : ItemSlot
         DragSlot.instance.dragSlot =null;
     }
     
-    public void taketime()
+    public void popupHide()
     {
-        Debug.Log("a");
+        Inventory.instance.popUp.gameObject.SetActive(false);
     }
 }
