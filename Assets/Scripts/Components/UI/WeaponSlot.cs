@@ -31,8 +31,7 @@ public class WeaponSlot : ItemSlot
             {
                 Inventory.instance.popUp.text="슬롯이 가득 차 있어 무기를 해제할 수 없습니다";
                 Inventory.instance.popUp.gameObject.SetActive(true);
-                Invoke("taketime", 1.0f);
-                Inventory.instance.popUp.gameObject.SetActive(false);;
+                Invoke("popupHide", 1.0f);
             }
         }
     }
@@ -80,23 +79,28 @@ public class WeaponSlot : ItemSlot
     {
         if (DragSlot.instance.dragSlot.itemSlotui.item.itemData.itemType==ItemType.Weapon)
         { 
-            weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;
-            if (Inventory.instance.isInstallation == true)
-            {
-                Inventory.instance.AddItem(Inventory.instance.tempItem); // 현재 ㅊ
-            }
-            else
-            {
-                Inventory.instance.backImage.gameObject.SetActive(false); // back 이미지 없앰.
-                Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true); // 무기 이미지 없앰.
-                Inventory.instance.isInstallation = true;
-            }
+            weapon_item = DragSlot.instance.dragSlot.itemSlotui.item as Weapon;             // 아이템 슬롯에서 드래그한 것.
+            extra_item = Inventory.instance.tempItem;
+            
             grade_Back.gameObject.SetActive(true);
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
-        
+            
+            if (Inventory.instance.isInstallation == true)  // 무기 장착이 되어 있다면 
+            {
+                
+                Inventory.instance.AddItem(extra_item); // 현재 ㅊ
+            }
+            else
+            {
+                Inventory.instance.backImage.gameObject.SetActive(false); 
+                Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true); 
+                Inventory.instance.isInstallation = true;
+            }
+            
+            
             GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
             Player.Instance.weaponManager.SetWeapon(weapon);
 
@@ -117,8 +121,8 @@ public class WeaponSlot : ItemSlot
         }
     }
     
-    public void taketime()
+    public void popupHide()
     {
-        Debug.Log("a");
+        Inventory.instance.popUp.gameObject.SetActive(false);
     }
 }
