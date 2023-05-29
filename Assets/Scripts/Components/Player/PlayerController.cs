@@ -199,6 +199,7 @@ public class PlayerController : MonoBehaviour
     
     public void KnockBack(float n,Vector3 v)
     {
+        Debug.Log("KnockBack");
         if (isCC)
         {
             StopCoroutine(CCcoroutine);
@@ -215,11 +216,11 @@ public class PlayerController : MonoBehaviour
     {
         float currentTime = 0f;
         v = Player.Instance.transform.position - v;
-        n = 0.7f;
+        
         while (true)
         {
            
-            if (currentTime >= n)
+            if (currentTime >= 1)
             {
                 break;
             }
