@@ -695,6 +695,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Settings
       objectReference: {fileID: 0}
+    - target: {fileID: 582623902355965912, guid: 9b31355932a08144a96d40d3499603bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 582623902355965914, guid: 9b31355932a08144a96d40d3499603bf,
         type: 3}
       propertyPath: m_MatchWidthOrHeight

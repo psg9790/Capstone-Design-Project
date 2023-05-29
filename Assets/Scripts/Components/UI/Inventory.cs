@@ -30,6 +30,8 @@ public class Inventory : MonoBehaviour
 
     public int count;
     public TMP_Text popUp;
+
+    public GameMain gameMain;
     
     private void OnValidate()
     {
@@ -47,8 +49,9 @@ public class Inventory : MonoBehaviour
             artifactNumbering();
 
             tempItem = null;
-            grade_image = new Sprite[6]; 
+            // grade_image = new Sprite[6]; 
             this.gameObject.SetActive(false);
+            gameMain = transform.parent.GetComponentInChildren<GameMain>();
         }
         else
         {
@@ -83,10 +86,11 @@ public class Inventory : MonoBehaviour
                 if (slots[i].itemSlotui.item == null)
                 {
                     slots[i].itemSlotui.item = item;
-                    switch (Math.Clamp((slots[i].itemSlotui.item.tier / 5), 0, grade_image.Length -1))
+                    switch (Math.Clamp((int)(slots[i].itemSlotui.item.tier / 5), 0, grade_image.Length - 1))
                     {
                         case 0:
                             slots[i].grade_Back.sprite = grade_image[0];
+                            // UnityEngine.Debug.Log(grade_image[0].name);
                             break;
                         case 1:
                             slots[i].grade_Back.sprite = grade_image[1];

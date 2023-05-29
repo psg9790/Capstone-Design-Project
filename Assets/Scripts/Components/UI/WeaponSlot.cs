@@ -83,7 +83,10 @@ public class WeaponSlot : ItemSlot
             extra_item = Inventory.instance.tempItem;
             
             grade_Back.gameObject.SetActive(true);
+            grade_Back.sprite = DragSlot.instance.dragSlot.grade_Back.sprite;
+            
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
+            itemSlotui.item = Inventory.instance.tempItem;
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);

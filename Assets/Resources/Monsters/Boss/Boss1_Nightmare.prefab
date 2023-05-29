@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3983007681004974178}
   - component: {fileID: 3983007681004974179}
   - component: {fileID: 3983007681004974176}
+  - component: {fileID: 7692078377957305875}
   m_Layer: 10
   m_Name: Boss1_Nightmare
   m_TagString: Untagged
@@ -380,8 +381,8 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3983007680995532749}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 3
+  m_AgentTypeID: -334000983
+  m_Radius: 4
   m_Speed: 6
   m_Acceleration: 999
   avoidancePriority: 40
@@ -390,7 +391,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 3
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -422,8 +423,21 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!135 &7692078377957305875
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3983007680995532749}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3983007680995535387
 GameObject:
   m_ObjectHideFlags: 0

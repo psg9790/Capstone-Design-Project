@@ -2010,6 +2010,7 @@ GameObject:
   - component: {fileID: 4543308153726459842}
   - component: {fileID: 4543308153726459841}
   - component: {fileID: 4543308153726459840}
+  - component: {fileID: 6535763437913439204}
   m_Layer: 10
   m_Name: Boss2_Crusader
   m_TagString: Untagged
@@ -2135,7 +2136,7 @@ MonoBehaviour:
   cur_hp: 1000
   atk: 20
   def: 50
-  movement_speed: 1
+  movement_speed: 3
   atk_speed: 2
   skill_cooldown: 0
   criticalRate: 0
@@ -2245,9 +2246,9 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4492493573097449743}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.5
-  m_Speed: 4
+  m_Speed: 3
   m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 999
@@ -2287,8 +2288,21 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!135 &6535763437913439204
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4492493573097449743}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4492493817902150993
 GameObject:
   m_ObjectHideFlags: 0
