@@ -98,7 +98,7 @@ namespace Monsters.Skill
         public override void DoPossibleEngage()
         {
             SyncAnimationSpeed();
-            
+
             if (monster.playerDist >= 8)
             {
                 if (hornAttack_cooldown <= 0)
@@ -130,7 +130,6 @@ namespace Monsters.Skill
 
         public override void SetMonsterStatByLevel(short level)
         {
-            
             if (atk_byLevel.Count == 0) // 새로운 전역 레벨 변수 추가
             {
                 float calcatk, calchp, calcdef, calcatkspeed, calcmovespeed;
@@ -160,9 +159,31 @@ namespace Monsters.Skill
                     movementspeed_byLevel.Add(movementspeed_byLevel[i] += (statGrowthByLevelUp * 0.05f));
                 }
             }
-            
+
             heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level],
                 atkspeed_byLevel[level], movementspeed_byLevel[level]);
+        }
+
+        private GameObject boss_hpbarGO;
+
+        private void OnTriggerEnter(Collider other) // 보스 hp바
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                boss_hpbarGO = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject;
+                if (boss_hpbarGO != null)
+                {
+                    HPbar_custom boss_hpbar = boss_hpbarGO.GetComponent<HPbar_custom>();
+                    boss_hpbar.bossNameText.text = "고대드래곤";
+                    boss_hpbar.Activate(heart);
+                    boss_hpbarGO.SetActive(true);
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            boss_hpbarGO.SetActive(false);
         }
     }
 }
