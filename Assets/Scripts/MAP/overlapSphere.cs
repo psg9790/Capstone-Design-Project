@@ -43,18 +43,20 @@ public class overlapSphere : MonoBehaviour
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
-            if (col.CompareTag("Item") )
+            if (col.CompareTag("Item") &&count <=45)
             {
                 if (commu_bar.activeSelf == false)
                 {
                     commu_bar.SetActive(true);
                 }
                 dataList.Add(col.gameObject);
-                Incontents = content.GetChild(count).gameObject;
-                Incontents.SetActive(true);
-                TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
-                name.text = col.GetComponent<DroppedItem>().item.itemName;
-                count++;
+                
+                    Incontents = content.GetChild(count).gameObject;
+                    Incontents.SetActive(true);
+                    TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
+                    name.text = col.GetComponent<DroppedItem>().item.itemName;
+                    count++;
+                
             }
             
         }
@@ -95,7 +97,7 @@ public class overlapSphere : MonoBehaviour
     // 아이템 갯수에 맞춰 content 켜짐 
     void ClearContent(int count)
     {
-        for(int i= count;i<10;i++)
+        for(int i= count;i<=45;i++)
         {
             if (content.GetChild(i).gameObject.activeSelf)
             {
