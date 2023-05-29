@@ -18,7 +18,7 @@ public class HPbar_custom : MonoBehaviour
     [SerializeField] private Slider red;
     [SerializeField] private Slider yellow;
     
-    [ShowInInspector][ReadOnly] private Heart heart;
+    [ShowInInspector][ReadOnly] public Heart heart;
     private float RED_VALUE;
     private float YELLOW_VALUE;
 

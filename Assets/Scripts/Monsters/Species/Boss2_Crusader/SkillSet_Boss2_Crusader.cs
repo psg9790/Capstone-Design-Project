@@ -178,25 +178,26 @@ namespace Monsters.Skill
                 atkspeed_byLevel[level], movementspeed_byLevel[level]);
         }
         
-        private GameObject boss_hpbarGO;
+        private HPbar_custom boss_hpbar;
+
         private void OnTriggerEnter(Collider other) // 보스 hp바
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                boss_hpbarGO = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject;
-                if (boss_hpbarGO != null)
+                boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
+                if (boss_hpbar != null)
                 {
-                    HPbar_custom boss_hpbar = boss_hpbarGO.GetComponent<HPbar_custom>();
-                    boss_hpbar.bossNameText.text = "암흑기사";
+                    boss_hpbar.bossNameText.text = "고대드래곤";
                     boss_hpbar.Activate(heart);
-                    boss_hpbarGO.SetActive(true);
+                    boss_hpbar.gameObject.SetActive(true);
                 }
             }
         }
 
         private void OnDestroy()
         {
-            boss_hpbarGO.SetActive(false);
+            if(boss_hpbar.heart == heart)
+                boss_hpbar.gameObject.SetActive(false);
         }
     }
 }
