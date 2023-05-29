@@ -44,8 +44,9 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);           
                     Inventory.instance.isInstallation = true;
                 }
-                
+
                 Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(true);
+                Inventory.instance.weaponSlot.grade_Back.sprite = grade_Back.sprite;
                 Inventory.instance.weaponSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
                 Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
@@ -247,12 +248,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // 마우스가 슬롯에 들어갈 때 발동.
     public void OnPointerEnter(PointerEventData eventData)
     {
+        UnityEngine.Debug.Log(tooltip);
         if (itemSlotui.item != null && tooltip==false)
         {
             _SlotToolTip.ShowToolTip(itemSlotui.item,transform.position);
             tooltip = true;
+            
         }
         buttonScale.localScale = defaultScale * 1.2f;
+        
     }
     
     // 슬롯에서 빠져나갈 때 발동. 
@@ -261,7 +265,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _SlotToolTip.HideToolTip();
         tooltip = false;
         buttonScale.localScale = defaultScale;
-        Debug.Log("pointerlog");
     }
     
     public void popupHide()

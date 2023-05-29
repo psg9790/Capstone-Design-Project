@@ -33,6 +33,7 @@ public class HudUI : MonoBehaviour
         color = hpBackImage.color;
         color.a= (float)0.9;
         hpBackImage.color = color;
+        maxHp = Player.Instance.heart.MAX_HP;
         curHp = Player.Instance.heart.CUR_HP;
         
         this.uiRoll.Init();
