@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -175,6 +176,28 @@ namespace Monsters.Skill
 
             heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level],
                 atkspeed_byLevel[level], movementspeed_byLevel[level]);
+        }
+        
+        private HPbar_custom boss_hpbar;
+
+        private void OnTriggerEnter(Collider other) // 보스 hp바
+        {
+            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
+                if (boss_hpbar != null)
+                {
+                    boss_hpbar.bossNameText.text = "암흑기사";
+                    boss_hpbar.Activate(heart);
+                    boss_hpbar.gameObject.SetActive(true);
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if(boss_hpbar.heart == heart)
+                boss_hpbar.gameObject.SetActive(false);
         }
     }
 }

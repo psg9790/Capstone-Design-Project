@@ -30,6 +30,8 @@ public class Inventory : MonoBehaviour
 
     public int count;
     public TMP_Text popUp;
+
+    public GameMain gameMain;
     
     private void OnValidate()
     {
@@ -49,6 +51,7 @@ public class Inventory : MonoBehaviour
             tempItem = null;
             // grade_image = new Sprite[6]; 
             this.gameObject.SetActive(false);
+            gameMain = transform.parent.GetComponentInChildren<GameMain>();
         }
         else
         {

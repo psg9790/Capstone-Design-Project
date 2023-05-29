@@ -47,7 +47,8 @@ public class RecordLevelManager : MonoBehaviour
     {
         curLevel++;
         LevelDisplay();
-        
+        Inventory.instance.gameMain.hudUI.portionBtn.RestorePotion();
+
         // 보스몹 스폰
         int randIdx = UnityEngine.Random.Range(0, bossPrefabs.Length);
         boss = Instantiate(bossPrefabs[randIdx]);

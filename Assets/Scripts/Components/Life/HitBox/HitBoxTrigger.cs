@@ -80,6 +80,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         {
             Vector3 dir = other.transform.position - heart.transform.position;
             dir.y = 0;
+            dir = dir.normalized;
 
             if (other.gameObject.layer == targetLayer)
             {
