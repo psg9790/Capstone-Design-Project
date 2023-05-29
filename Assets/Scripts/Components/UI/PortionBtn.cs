@@ -90,5 +90,6 @@ public class PortionBtn : MonoBehaviour
     public void RestorePotion()
     {
         PotionNum = Math.Max(PotionNum, maxPotionCount);
+        txtPortionNum.text = PotionNum.ToString();
     }
 }

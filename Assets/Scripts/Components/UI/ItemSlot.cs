@@ -44,9 +44,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);           
                     Inventory.instance.isInstallation = true;
                 }
-
+               
+                
                 Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(true);
                 Inventory.instance.weaponSlot.grade_Back.sprite = grade_Back.sprite;
+                Inventory.instance.weaponSlot.itemSlotui.item = itemSlotui.item;
                 Inventory.instance.weaponSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
                 Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
@@ -151,12 +153,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
                     Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);
                     Inventory.instance.tempItem = itemSlotui.item;
-                    
+                    Inventory.instance.weaponSlot.itemSlotui.item = itemSlotui.item;
                     Inventory.instance.backImage.gameObject.SetActive(true);
                     Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, this);
-                    UnityEngine.Debug.Log("sugaaka");
+                    
                     Inventory.instance.AddItem(extra_item);                    
-                    UnityEngine.Debug.Log("austd");
+
                     
                     GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
                     Player.Instance.weaponManager.SetWeapon(weapon);
@@ -173,6 +175,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     {
                         Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(false);
                     }
+
+                    Inventory.instance.weaponSlot.itemSlotui.item = null;
                 }   
             }
             else if (itemSlotui.item==null)
@@ -248,12 +252,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // 마우스가 슬롯에 들어갈 때 발동.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        UnityEngine.Debug.Log(tooltip);
         if (itemSlotui.item != null && tooltip==false)
         {
             _SlotToolTip.ShowToolTip(itemSlotui.item,transform.position);
             tooltip = true;
-            
+            UnityEngine.Debug.Log("enter the");
+        }
+
+        if (itemSlotui.item == null)
+        {
+            UnityEngine.Debug.Log("not enter the");
         }
         buttonScale.localScale = defaultScale * 1.2f;
         
