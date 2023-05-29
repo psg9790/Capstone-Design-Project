@@ -179,6 +179,8 @@ public class GrowthLevelManager : MonoBehaviour
         RemoveBoss();
         bossPortalGenerated = false;
         worldLevel++;
+        Inventory.instance.gameMain.hudUI.portionBtn.RestorePotion();
+        
         // if (worldLevel > maxLevel)
         // {
         //     // 성장형 던전 클리어

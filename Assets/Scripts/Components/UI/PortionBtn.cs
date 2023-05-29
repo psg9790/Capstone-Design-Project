@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +15,10 @@ public class PortionBtn : MonoBehaviour
     public TMP_Text txtPortionNum;
     public TMP_Text txtMessage;
     [SerializeField] public int PotionNum ;
+    private int maxPotionCount = 3;
     public float hp;
     void Start()
     {
-        
-
         PotionNum =3;
         txtPortionNum.text = PotionNum.ToString();
         this.txtPortionNum.gameObject.SetActive(true);
@@ -85,5 +85,10 @@ public class PortionBtn : MonoBehaviour
             
         //시간 재기(Update)  
         this.StartCoroutine(this.WaitForCooltime());
+    }
+
+    public void RestorePotion()
+    {
+        PotionNum = Math.Max(PotionNum, maxPotionCount);
     }
 }
