@@ -8,14 +8,25 @@ namespace CharacterController
     {
         public DeathState(PlayerController controller) : base(controller)
         {
-            
         }
+
         public override void OnEnterState()
         {
             Controller.isDeath = true;
             Debug.Log("YOU DIE");
             Player.Instance.animator.SetBool("Death", true);
-            Player.Instance.animator.SetTrigger("onDeath");
+            Player.Instance.animator.SetTrigger("Death");
+
+            if (GrowthLevelManager.Instance != null) // 성장형 던전 사망
+            {
+                // GameManager.Instance.EndOfGrowthDungeon(GrowthLevelManager.Instance.worldLevel); // 주사위 + 최대 층수 저장
+                GameManager.Instance.Death_GrowthUI();
+            }
+            else if (RecordLevelManager.Instance != null)
+            {
+                GameManager.Instance.Death_RecordUI();
+            }
+            
         }
 
         public override void OnUpdateState()
@@ -31,6 +42,7 @@ namespace CharacterController
         public override void OnExitState()
         {
             Player.Instance.animator.SetBool("Death", false);
+            Player.Instance.animator.SetTrigger("re");
             Controller.isDeath = false;
         }
     }

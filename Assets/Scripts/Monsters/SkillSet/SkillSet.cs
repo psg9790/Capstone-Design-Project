@@ -32,6 +32,11 @@ namespace Monsters.Skill
             EndEngage();
         } // cc기나 캔슬에 의해 현재 공격중인 오브젝트를 모두 초기화하고 꺼줄 필요가 있음
 
+        protected void SyncAnimationSpeed()
+        {
+            monster.animator.SetFloat("AttackSpeed", heart.ATK_SPEED);
+        }
+        
         public abstract void SetMonsterStatByLevel(short level);
         
         public abstract void DoPossibleEngage();

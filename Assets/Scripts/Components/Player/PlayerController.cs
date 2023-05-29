@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // private bool SpaceClick = false;
 
     private Coroutine dashCoolTimeCoroutine;
+    private Coroutine CCcoroutine;
     
     // 스킬 입력 키
     public int skillnum = -1;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool isAttack = false;
     public bool isSkill = false;
     public bool isDeath = false;
+    public bool isCC = false;
     
     private bool isDashCollTime = false;
 
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             Player.Instance.animator.SetTrigger("attack");
         }
-        if (!isDashing && !isAttack && !isSkill && !isDeath)
+        if (!isDashing && !isAttack && !isSkill && !isDeath && !isCC)
         {
             player.stateMachine.ChangeState(StateName.attack);
         }
@@ -89,27 +91,35 @@ public class PlayerController : MonoBehaviour
 
     void QClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 0;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath && !isCC)
+        {
+            skillnum = 0;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void WClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 1;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath && !isCC)
+        {
+            skillnum = 1;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void EClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 2;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath && !isCC)
+        {
+            skillnum = 2;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     void RClickPerformed(InputAction.CallbackContext context)
     {
-        if(isSkill && !isDeath) return;
-        skillnum = 3;
-        player.stateMachine.ChangeState(StateName.skill);
+        if(!isSkill && !isDeath && !isCC)
+        {
+            skillnum = 3;
+            player.stateMachine.ChangeState(StateName.skill);
+        }
     }
     
     // 마우스 우클릭 이동 
@@ -120,7 +130,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         // 이동하면 안되는 조건문 추가
-        if (!isDashing && !isSkill && !isDeath)
+        if (!isDashing && !isSkill && !isDeath && !isCC)
         {
             player.stateMachine.ChangeState(StateName.move);
             
@@ -130,7 +140,7 @@ public class PlayerController : MonoBehaviour
     // 스페이스바 대쉬
     void SpaceClickPerformed(InputAction.CallbackContext context)
     {
-        if (!isDashing && !isDashCollTime && !isDeath)
+        if (!isDashing && !isDashCollTime && !isDeath && !isCC)
         {
             isDashing = true;
             isDashCollTime = true;
@@ -186,5 +196,60 @@ public class PlayerController : MonoBehaviour
             
         }
     }
+    
+    public void KnockBack(float n,Vector3 v)
+    {
+        Debug.Log("KnockBack");
+        if (isCC)
+        {
+            StopCoroutine(CCcoroutine);
+            CCcoroutine = StartCoroutine(KnockBackCo(n, v));
+        }
+        else
+        {
+            isCC = true;
+            Player.Instance.nav.enabled = false;
+            CCcoroutine = StartCoroutine(KnockBackCo(n, v));
+        }
+    }
+    private IEnumerator KnockBackCo(float n,Vector3 v)
+    {
+        float currentTime = 0f;
+        v = Player.Instance.transform.position - v;
+        
+        while (true)
+        {
+           
+            if (currentTime >= 1)
+            {
+                break;
+            }
+            RaycastHit hit;
+            Vector3 dashVelocity = Vector3.zero;
+            Vector3 pp = Player.Instance.transform.position;
+            Vector3 nextpos = pp + v + Vector3.up;
+            Ray ray = new Ray(nextpos,Vector3.down);
+            Debug.DrawRay(nextpos, Vector3.down, Color.red, 5f);
+            
+            int mask = (1 << LayerMask.NameToLayer("Walkable")) | (1 << LayerMask.NameToLayer("Click"));
+            if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+            {
+                
+                Debug.DrawRay(pp,v, Color.red,1f);
+                if (Physics.Raycast(pp, v, 1f, 1 << LayerMask.NameToLayer("WALL")))
+                {
+                    // Debug.Log("cant dash");
+                    break;
+                }
+                Vector3 dashDirection = hit.point - pp;
+                
+                Player.Instance.transform.position += dashDirection * Time.deltaTime;
+            }
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
 
+        isCC = false;
+        Player.Instance.nav.enabled = true;
+    }
 }

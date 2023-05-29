@@ -1249,15 +1249,15 @@ MonoBehaviour:
   max_hp: 100
   cur_hp: 100
   atk: 10
-  def: 1
+  def: 6
   movement_speed: 4
   atk_speed: 1
   skill_cooldown: 0
   criticalRate: 0
-  criticalDamage: 2
+  criticalDamage: 200
   immune: 0
-  cc_stiff_immune: 1
-  cc_knockback_immune: 1
+  cc_stiff_immune: 0
+  cc_knockback_immune: 0
   useMonsterHpBar: 1
   hpbar: {fileID: 0}
   upper_pos: {fileID: 6456757991986609491}

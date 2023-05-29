@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     // Dash
     [Header("dash")] [SerializeField] public float dashDistance = 10f; // 대쉬 거리
     [SerializeField] public float dashDuration = 0.5f; // 대쉬 시간
-    [SerializeField] public float dashCooltime = 1f; // 대쉬 쿨다운
+    [SerializeField] public float dashCooltime = 5f; // 대쉬 쿨다운
 
 
     private void Awake()
@@ -146,5 +146,6 @@ public class Player : MonoBehaviour
         capsuleCollider.enabled = true;
         heart.RestoreAll_CUR_HP();
     }
+
     
 }

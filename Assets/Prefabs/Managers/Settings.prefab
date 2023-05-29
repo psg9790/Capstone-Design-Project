@@ -225,7 +225,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 582623903384283750}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.81333333
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 582623902253688718}
   - component: {fileID: 582623902253688719}
   - component: {fileID: 582623902253688716}
+  - component: {fileID: 2329958644891625970}
   m_Layer: 5
   m_Name: Button_accept
   m_TagString: Untagged
@@ -804,6 +805,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2329958644891625970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582623902253688714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa39d8bd5018a4448cb0dd5dad2b3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonScale: {fileID: 582623902253688717}
 --- !u!1 &582623902261669647
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +955,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &582623902355965914
 MonoBehaviour:
@@ -2149,6 +2163,7 @@ GameObject:
   - component: {fileID: 582623903444423053}
   - component: {fileID: 582623903444423050}
   - component: {fileID: 582623903444423051}
+  - component: {fileID: 4524905227823835220}
   m_Layer: 5
   m_Name: Button_cancel
   m_TagString: Untagged
@@ -2271,6 +2286,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4524905227823835220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582623903444423049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa39d8bd5018a4448cb0dd5dad2b3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonScale: {fileID: 582623903444423048}
 --- !u!1 &582623903530371818
 GameObject:
   m_ObjectHideFlags: 0

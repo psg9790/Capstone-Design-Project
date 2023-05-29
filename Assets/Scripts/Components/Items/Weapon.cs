@@ -22,14 +22,13 @@ public class Weapon : Item
 
     // 공격력: 14% (+2%)
     // 공격속도: 1.4 (-0.2)
-    // 치명타 확률:
     // 치명타 피해:
     public override List<string> Options_ToString()
     {
         List<string> ret = new List<string>();
 
         StringBuilder sb = new StringBuilder();
-        sb.Append("공격력: ");
+        sb.Append("공격력 +");
         sb.Append(options[WeaponKey.ATK].ToString());
         sb.Append("%");
         sb.Append(" ");
@@ -46,7 +45,7 @@ public class Weapon : Item
         ret.Add(sb.ToString());
 
         sb.Clear();
-        sb.Append("공격속도: ");
+        sb.Append("공격속도 +");
         sb.Append(options[WeaponKey.ATKSPEED].ToString());
         sb.Append(" ");
         if (Inventory.instance.tempItem != null)
@@ -62,8 +61,9 @@ public class Weapon : Item
         ret.Add(sb.ToString());
 
         sb.Clear();
-        sb.Append("치명타 확률: ");
+        sb.Append("치명타 확률 +");
         sb.Append(options[WeaponKey.CRIT_RATE].ToString());
+        sb.Append("%");
         sb.Append(" ");
         if (Inventory.instance.tempItem != null)
         {
@@ -78,8 +78,9 @@ public class Weapon : Item
         ret.Add(sb.ToString());
         
         sb.Clear();
-        sb.Append("치명타 피해: ");
+        sb.Append("치명타 피해 +");
         sb.Append(options[WeaponKey.CRIT_DAMAGE].ToString());
+        sb.Append("%");
         sb.Append(" ");
         if (Inventory.instance.tempItem != null)
         {
@@ -90,6 +91,22 @@ public class Weapon : Item
         {
             sb.Append(CompareAndGetColoredString(0,
                 options[WeaponKey.CRIT_DAMAGE]));
+        }
+        ret.Add(sb.ToString());
+        
+        sb.Clear();
+        sb.Append("소켓 +");
+        sb.Append(options[WeaponKey.SOCKET].ToString());
+        sb.Append(" ");
+        if (Inventory.instance.tempItem != null)
+        {
+            sb.Append(CompareAndGetColoredString((Inventory.instance.tempItem as Weapon).options[WeaponKey.SOCKET],
+                options[WeaponKey.SOCKET]));
+        }
+        else
+        {
+            sb.Append(CompareAndGetColoredString(0,
+                options[WeaponKey.SOCKET]));
         }
         ret.Add(sb.ToString());
         
@@ -114,7 +131,9 @@ public class Weapon : Item
         sb.Append(hex);
         sb.Append(">");
         sb.Append("(");
-        
+
+        if (diff > 0)
+            sb.Append("+");
         sb.Append(diff.ToString());
         
         sb.Append(")");
