@@ -327,6 +327,34 @@ public class GrowthLevelManager : MonoBehaviour
         Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
     }
 
+    [Button]
+    public void KangHo_TeleportPlayer() // 플레이어 위치 이동 (에이전트 on/off)
+    {
+        if (Player.Instance == null)
+        {
+            UnityEngine.Debug.LogWarning("플레이어 없음");
+            return;
+        }
+        // 보스 스폰
+        GameObject kangho = GameObject.Find("kangho");
+        kangho.GetComponent<NavMeshSurface>().BuildNavMesh();
+                int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+                Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], kangho.transform)
+                    .GetComponent<Monsters.Monster>();
+                newBoss.Init(new Vector3(-1000, 1000, -1000), 4f);
+                newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+                if (bossTrackingCoroutine != null)
+                {
+                    StopCoroutine(bossTrackingCoroutine);
+                }
+
+        Player.Instance.nav.enabled = false;
+        Player.Instance.transform.position = new Vector3(-1010, 1000, -1010);
+        Player.Instance.nav.enabled = true;
+
+        Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
+    }
+
     private void LevelDisplay()
     {
         levelTMP.text = "Level " + worldLevel;
