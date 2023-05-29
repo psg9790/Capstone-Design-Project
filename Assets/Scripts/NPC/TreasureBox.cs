@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using DG.Tweening;
+using DG.Tweening; //dotween을 통해 rotate 자연스럽게 변경
 
 public class TreasureBox : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class TreasureBox : MonoBehaviour
     public ItemGenerator generator; //아이템 생성 
     
 
-    void Start()
+    void Start() //보물상자 뚜껑, drop위치, 제너레이터, 이펙트 init
     {
         Lid =transform.GetChild(1).gameObject;
         dropPostion = transform.GetChild(3).gameObject;
@@ -24,19 +24,17 @@ public class TreasureBox : MonoBehaviour
         openEffect.Stop();
     }
     
-    void Update()
+    void Update()//f키를 누를 시 이펙트 시작, 드랍 아이템 생성,뚜껑 위치 전환, 상자 열림 확인
     {
         if (Input.GetKeyDown(KeyCode.F) && isEnable && isActived!=true)
         {            
             openEffect.Play();
-            int random = Random.Range(2, 7);
             StartCoroutine(dropItems());
-            //Lid.transform.Rotate(new Vector3(90 ,0,0));
-            Lid.transform.DORotate(new Vector3(90, 0, 0), 1.5f);
             isActived = true;
         }
+        
     }
-
+    
     private void OnTriggerEnter(Collider col)
     {
         if (col.CompareTag("Player"))
@@ -53,15 +51,18 @@ public class TreasureBox : MonoBehaviour
         }
     }
 
-    //보물상자 오픈시 랜덤 갯수의 아이템 드랍
+    //보물상자 오픈시 랜덤 갯수의 아이템 드랍, 이펙트 3.5초 후 종료
     IEnumerator dropItems()
     {
-       
-        yield return  new WaitForSeconds(0.2f);
+        //float yVal = transform.rotation.y*-1f;
+        //Lid.transform.DORotate(new Vector3(90, 0, 0), 1.5f);
+        
+        Lid.transform.Rotate(new Vector3(90 ,0,0));
+        yield return  new WaitForSeconds(1.5f);
 
         int random = Random.Range(2, 5);
         for(int i =0; i< random; i++)  generator.GenerateItem(dropPostion.transform, 1);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         openEffect.Stop();
     }
 }
