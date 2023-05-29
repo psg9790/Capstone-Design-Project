@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3848829892615546888}
   - component: {fileID: 3848829892618882970}
   - component: {fileID: 3848829892617841786}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torch_Handheld_01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 7909664887157564146}
   - component: {fileID: 2272801975631335137}
   - component: {fileID: 1576454944432654810}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,6 +283,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch_Fire_FX_01 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534264524, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6338325277554032106, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -377,6 +382,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Torch_Fire_FX_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338325277534264524, guid: af9b294539a3daf4bbbd8852a4fd2632,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6338325277554032106, guid: af9b294539a3daf4bbbd8852a4fd2632,
         type: 3}

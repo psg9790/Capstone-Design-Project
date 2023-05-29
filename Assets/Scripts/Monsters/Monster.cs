@@ -40,8 +40,8 @@ namespace Monsters
         [HideInInspector] public Vector3 spawnPoint; // 몬스터가 스폰된 위치
         [HideInInspector] public float patrolRadius; // 몬스터가 스폰 위치로부터 순찰할 반지름 거리
 
-        [ShowInInspector]
-        public Dictionary<EMonsterState, AudioClip> sound = new Dictionary<EMonsterState, AudioClip>(); // 사운드 아카이브
+        // [ShowInInspector]
+        // public Dictionary<EMonsterState, AudioClip> sound = new Dictionary<EMonsterState, AudioClip>(); // 사운드 아카이브
 
         // battle
         [BoxGroup("Battle")] public float attackRange = 2.2f; // 몬스터의 공격 사정거리
@@ -304,7 +304,7 @@ namespace Monsters
         {
             knockback_power = power;
             knockback_dir = dir;
-            transform.DOLookAt(dir, 0.3f);
+            // transform.DOLookAt(dir, 0.3f);
             fsm.ChangeState(EMonsterState.KnockBack);
         }
 
@@ -341,6 +341,10 @@ namespace Monsters
     {
         Skeleton_Warrior,
         Rush_Spider,
-        Boss1_Nightmare
+        Boss1_Nightmare,
+        Skeleton_Mage,
+        Boss2_Crusader,
+        Skeleton_DirectMage,
+        Titan_Tanker
     }
 }

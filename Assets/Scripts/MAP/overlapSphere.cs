@@ -13,16 +13,16 @@ public class overlapSphere : MonoBehaviour
 {
     public float radius = 2.0f;
 
-    public List<GameObject> dataList = new List<GameObject>();
+    public List<GameObject> dataList = new List<GameObject>(); //스캔한 오브젝트 중 아이템만 수집
+    public RectTransform content;   // UI  
+    public GameObject Incontents;   // UI 중 리스트
+    public Inventory inven; //인벤토리
+    public int ClickNum;    // 클릭된 리스트의 번호
+    public bool clicked;    //클릭 확인
+    public GameObject commu_bar;   //UI on off 
+    public Item GetItem;    //클릭한 아이템 저장
+
     
-    public RectTransform content;
-    public GameObject Incontents;
-    private GameObject ClearContents;
-    private int MAX = 28;
-    public Inventory inven;
-    public int ClickNum;
-    public bool clicked;
-    public GameObject commu_bar;
     private void Start()
     {
         commu_bar = GameObject.Find("commu_bar"); 
@@ -30,16 +30,16 @@ public class overlapSphere : MonoBehaviour
         inven = Inventory.instance;
         clicked = false;
         ClickNum = 100;
-        
     }
 
     private void Update()
     {
+        dataList.Clear();
         //데이터 초기화하여 List<gameobject> 싹 비운 후 overlapsphere로 리스트 추가
         //radius를 기준으로 구 안에 있는 콜라이덛를 검출함
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
         int count = 0;
-        dataList.Clear();
+        
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
@@ -52,10 +52,8 @@ public class overlapSphere : MonoBehaviour
                 dataList.Add(col.gameObject);
                 Incontents = content.GetChild(count).gameObject;
                 Incontents.SetActive(true);
-                    //col.gameObject.GetComponent<FeildItem>().item.itemName;
                 TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
                 name.text = col.GetComponent<DroppedItem>().item.itemName;
-                
                 count++;
             }
             
@@ -70,31 +68,31 @@ public class overlapSphere : MonoBehaviour
         if ( clicked && inven.IsEmpty() ) 
         {
             clicked = false;
-            UnityEngine.Debug.Log("클릭 인식함..?");
-            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
-            //inven.AddItem(dataList[ClickNum].GetComponent<DroppedItem>().item);
-            UnityEngine.Debug.Log(GetItem.itemName);
-            Inventory.instance.AddItem(GetItem);
-            Destroy(dataList[ClickNum].gameObject);
+            ClickItem(ClickNum);
+        }else if (clicked == true && inven.IsEmpty() ==false)
+        {
             clicked = false;
-            
         }
         
         //F키 입력 시 첫번 째 아이템 정보 옮기기
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
-            Item GetItem = dataList[ClickNum].GetComponent<DroppedItem>().item;
-
-            //inven.AddItem(dataList[0].GetComponent<DroppedItem>().item);
-            UnityEngine.Debug.Log(GetItem.itemName);
-
-            Inventory.instance.AddItem(GetItem);
-            Destroy(dataList[0].gameObject);
-            
+            ClickItem(0);
         }
+        
+
+    }
+
+    //클릭한 아이템 저장
+    void ClickItem(int num)
+    {
+        GetItem = dataList[num].GetComponent<DroppedItem>().item;
+        Inventory.instance.AddItem(GetItem);
+        Destroy(dataList[num].gameObject);
         
     }
 
+    // 아이템 갯수에 맞춰 content 켜짐 
     void ClearContent(int count)
     {
         for(int i= count;i<10;i++)
@@ -107,13 +105,12 @@ public class overlapSphere : MonoBehaviour
         }
     }
     
+    //클릭시 이벤트
     public void ClickEvent(int val)
     {
 
         clicked = true;
         ClickNum = val;
-        UnityEngine.Debug.Log(ClickNum + "캐릭터에 인...직...");
-        
     }
     
     

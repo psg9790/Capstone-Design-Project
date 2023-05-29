@@ -21,7 +21,7 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject playerPrefab; // 플레이어 없으면 생성용
     private Vector3 playerSpawnPoint; // 코드 내부에서 새로운 스폰포인트 지정용
 
-    public int maxLevel; // 마지막 레벨
+    // public int maxLevel; // 마지막 레벨
     [ReadOnly] public int worldLevel; // 월드 레벨 (난이도), 처음엔 0
     [ReadOnly] public int curWorldMapType; // 0 ~ 10까지 확률적으로 맵 생성
 
@@ -49,10 +49,12 @@ public class GrowthLevelManager : MonoBehaviour
 
     [HideInInspector] public GameObject[] general_monsters; // 프리랩 로드
     [HideInInspector] public GameObject[] boss_monsters; // 프리팹 로드
+    [HideInInspector] public GameObject[] ObjectPreFab; //오브젝트 프리팹 로드
 
     [SerializeField] private CanvasGroup levelCG; // 레벨 UI 투명화용
     [SerializeField] private TMP_Text levelTMP; // 레벨 UI 텍스트 수정용
-
+    public GameObject DirectionalLight;
+    private Light light;
 
     private void Awake()
     {
@@ -61,8 +63,13 @@ public class GrowthLevelManager : MonoBehaviour
             instance = this;
             general_monsters = Resources.LoadAll<GameObject>("Monsters/General/");
             boss_monsters = Resources.LoadAll<GameObject>("Monsters/Boss/");
+            worldLevel = 0;
+            ObjectPreFab = Resources.LoadAll<GameObject>("Props");
+            light = DirectionalLight.GetComponent<Light>();
 
-            InitGrowthDungeon(); // 씬 진입시 성장형 던전 초기화
+            if (Player.Instance == null)
+                Instantiate(playerPrefab);
+            NextLevel();
         }
         else
         {
@@ -91,7 +98,7 @@ public class GrowthLevelManager : MonoBehaviour
             }
         }
 
-        // 보스 사망
+        // 보스 사망, next level 포탈 생성
         NextLevelPortal nxtPortal = Instantiate(nextLevelPortal_prefab);
         nxtPortal.transform.position = Player.Instance.transform.position;
         nxtPortal.Activate(true);
@@ -119,38 +126,76 @@ public class GrowthLevelManager : MonoBehaviour
                 bossPortal.Activate(bossRoom_spawnPoint, true);
 
                 // 보스 스폰
-                int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
-                Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
-                    .GetComponent<Monsters.Monster>();
-                newBoss.Init(bossRoom_spawnPoint.position, 4f);
-                newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
-                if (bossTrackingCoroutine != null)
-                {
-                    StopCoroutine(bossTrackingCoroutine);
-                }
-
-                bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
+                // int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+                // Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+                //     .GetComponent<Monsters.Monster>();
+                // newBoss.Init(bossRoom_spawnPoint.position, 4f);
+                // newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+                // if (bossTrackingCoroutine != null)
+                // {
+                //     StopCoroutine(bossTrackingCoroutine);
+                // }
+                //
+                // bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
             }
         }
     }
 
-
-    private void InitGrowthDungeon() // 씬 진입 시 성장형 던전 초기화용
+    private Monsters.Monster boss;
+    private void SpawnBoss()
     {
-        maxLevel = ItemGenerator.Instance.maxLevel;
-        // level 0
-        worldLevel = 0;
+        int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+        Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], bossRoom_spawnPoint)
+            .GetComponent<Monsters.Monster>();
+        boss = newBoss;
+        newBoss.Init(bossRoom_spawnPoint.position, 4f);
+        newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+        if (bossTrackingCoroutine != null)
+        {
+            StopCoroutine(bossTrackingCoroutine);
+        }
 
-        if (Player.Instance == null)
-            Instantiate(playerPrefab);
 
-        // 랜덤 던전 선택
+        bossTrackingCoroutine = StartCoroutine(BossTrackingIE(newBoss));
+    }
+
+    private void RemoveBoss()
+    {
+        if (bossTrackingCoroutine != null)
+        {
+            StopCoroutine(bossTrackingCoroutine);
+        }
+
+        if (boss != null)
+        {
+            boss.heart.ForceDead();
+        }
+    }
+
+
+    [Button]
+    public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
+    {
+        RemoveBoss();
+        bossPortalGenerated = false;
+        worldLevel++;
+        // if (worldLevel > maxLevel)
+        // {
+        //     // 성장형 던전 클리어
+        //     // UI 표시 및 획득한 리롤 토큰 저장
+        //     Debug.Log("성장형 던전 클리어");
+        //     return;
+        // }
+
+        ItemGenerator.Instance.RemoveAllItems();
+        curLevelMonsterCount = 0;
+        LevelDisplay();
+
+        SpawnBoss();
+        
         MakeRandomMap();
 
-        // 플레이어 이동
         TeleportPlayer(playerSpawnPoint);
-
-        LevelDisplay();
     }
 
     private void UpdateNavMesh() // 네브메시 업데이트
@@ -163,27 +208,7 @@ public class GrowthLevelManager : MonoBehaviour
         Invoke("UpdateNavMesh", sec);
     }
 
-    [Button]
-    public void NextLevel() // 해당 레벨 클리어 후 다음 레벨 진입
-    {
-        bossPortalGenerated = false;
-        worldLevel++;
-        if (worldLevel > maxLevel)
-        {
-            // 성장형 던전 클리어
-            // UI 표시 및 획득한 리롤 토큰 저장
-            Debug.Log("성장형 던전 클리어");
-            return;
-        }
-
-        ItemGenerator.Instance.RemoveAllItems();
-        curLevelMonsterCount = 0;
-        LevelDisplay();
-
-        MakeRandomMap();
-
-        TeleportPlayer(playerSpawnPoint);
-    }
+    
 
     [Button]
     private void MakeRandomMap() // 랜덤으로 던전1 및 미로던전으로 진입
@@ -204,6 +229,7 @@ public class GrowthLevelManager : MonoBehaviour
         curWorldMapType = UnityEngine.Random.Range(0, 10);
         if (curWorldMapType < 2) // 던전 1
         {
+            DirectionalLight.SetActive(false);
             dungeon1_parent.SetActive(true);
             playerSpawnPoint = dungeon1_spawnPoint.position;
 
@@ -225,6 +251,14 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else if (curWorldMapType < 4) // 던전 3
         {
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = Color.white;
+            
+
             dungeon3_parent.SetActive(true);
             playerSpawnPoint = dungeon3_spawnPoint.position;
 
@@ -246,8 +280,16 @@ public class GrowthLevelManager : MonoBehaviour
         }
         else // 미로 랜덤 생성
         {
+            
             dungeon1_parent.SetActive(false);
             dungeon3_parent.SetActive(false);
+            
+            if (DirectionalLight.activeSelf==false)
+            {
+                DirectionalLight.SetActive(true);
+            }
+            
+            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
 
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
                 mazeIndent, maxMazeBlockCount);

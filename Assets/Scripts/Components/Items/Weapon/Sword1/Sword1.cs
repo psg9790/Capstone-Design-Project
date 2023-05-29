@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Sword1 : BaseWeapon
 {
-
+    private Coroutine buff;
     public override void Attack(BaseState state,Vector3 looking)
     {
        
@@ -18,6 +18,7 @@ public class Sword1 : BaseWeapon
     {
         
         HitBox hitBox = Instantiate(attack_effect[combo]);
+        
         if (hitBox.isBullet)
         {
             Bullet_Play(hitBox);
@@ -36,7 +37,11 @@ public class Sword1 : BaseWeapon
     public override void Skill(int i)
     {
         HitBox hitBox = Instantiate(skill_effect[i]);
-        
+        if (i == 3)
+        {
+            Player.Instance.heart.ATK_SPEED_CHANGE(1);
+            buff = StartCoroutine(CoolTimeCoroutine());
+        }
         if (hitBox.isBullet)
         {
             Bullet_Play(hitBox);
@@ -52,5 +57,22 @@ public class Sword1 : BaseWeapon
         Player.Instance.animator.SetInteger("skillnum",-1);
     }
     
+    private IEnumerator CoolTimeCoroutine()
+    {
+        float currentTime = 0f;
+        while (true)
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime >= 5)
+            {
+                break;
+            }
+
+            yield return null;
+        }
+        
+        Player.Instance.heart.ATK_SPEED_CHANGE(-1);
+    }
+
 
 }

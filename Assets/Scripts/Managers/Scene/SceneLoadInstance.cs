@@ -73,5 +73,6 @@ public class SceneLoadInstance : MonoBehaviour
 public enum SceneName
 {
     MainTitle,
-    Start_Map
+    Start_Map,
+    RecordDungeon
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class SlotToolTip : MonoBehaviour
     public TMP_Text txt_Itemstat;
     [SerializeField]
     private GameObject tooltip;
+
+    private StringBuilder sb = new StringBuilder();
     public void ShowToolTip(Item item, Vector3 _pos)     //item  나중에 정호가 만든걸로 바꿔야됨.
     {
         go_Base.SetActive(true);
@@ -26,21 +29,26 @@ public class SlotToolTip : MonoBehaviour
         txt_Itemname.text = item.itemName;
         txt_Itemdesc.text = item.itemData.tooltip;
 
-        if ((item.itemData.itemType==ItemType.Weapon)|| (item.itemData.itemType==ItemType.Artifact))
+        // if ((item.itemData.itemType==ItemType.Weapon)|| (item.itemData.itemType==ItemType.Artifact))
         {
-            for (int i = 0; stats[i] != null; i++)
+            sb.Clear();
+            for (int i = 0; i < stats.Count; i++)
             {
-                if (i == 0)
-                {
-                    txt_Itemstat.text = stats[i];
-                    txt_Itemstat.text += "\n";
-                }
-                else
-                {
-                    txt_Itemstat.text += stats[i];
-                    txt_Itemstat.text += "\n";
-                }
+                sb.Append(stats[i]);
+                sb.Append("\n");
+                // if (i == 0)
+                // {
+                //     txt_Itemstat.text = stats[i];
+                //     txt_Itemstat.text += "\n";
+                // }
+                // else
+                // {
+                //     txt_Itemstat.text += stats[i];
+                //     txt_Itemstat.text += "\n";
+                // }
             }
+
+            txt_Itemstat.text = sb.ToString();
         }
         
     }

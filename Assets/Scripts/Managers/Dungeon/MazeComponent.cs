@@ -16,6 +16,8 @@ public class MazeComponent : MonoBehaviour
     public List<Transform> treasureSpawnPoints = new List<Transform>();
     public GameObject TreasureBox;
     
+    public List<Transform> ObjectSpawnPoints = new List<Transform>();
+    
     private int[] dy = new int[4]; // randomGenerator dy 카피
     private int[] dx = new int[4]; // randomGenerator dx 카피
 
@@ -47,23 +49,45 @@ public class MazeComponent : MonoBehaviour
 
     public void SpawnTreasure() //보물상자 랜덤 확률로 생성
     {
-        
-            
+        if (treasureSpawnPoints.Count != 0)
+        {
             //랜덤 범위 20퍼 확률로 맵에 생성 
             int num = Random.Range(0, 20);
-            
             if (num < 5)
             {
-                
                 //맵에 위치한 보물상자 스폰 포인트 지점 수를 받아 랜덤 생성
                 for (int i = 0; i < treasureSpawnPoints.Count; i++)
                 {
                     int treasureNum = Random.Range(0, treasureSpawnPoints.Count);
                     UnityEngine.Debug.Log("보물상자 생성");
-                    Instantiate(TreasureBox,
-                        treasureSpawnPoints[i].transform.position, treasureSpawnPoints[i].transform.rotation);
+                    GameObject treasure = Instantiate(TreasureBox, treasureSpawnPoints[i].transform.position,
+                        treasureSpawnPoints[i].transform.rotation);
+                    treasure.transform.SetParent(this.transform);
+                    //newWall.transform.SetParent(this.transform);
+
                 }
             }
+        }
+    }
+
+    public void SpawnObjects()
+    {
+        //필요시 스폰포인트 랜덤
+        int ranSpawn = Random.Range(0, ObjectSpawnPoints.Count);
+        
+        if (ObjectSpawnPoints.Count != 0)
+        {
+            for (int i = 0; i < ObjectSpawnPoints.Count; i++)
+            {
+                int objectRandom = Random.Range(0, GrowthLevelManager.Instance.ObjectPreFab.Length );
+                UnityEngine.Debug.Log("오브젝트 생성");
+                GameObject Spawnobject= Instantiate(GrowthLevelManager.Instance.ObjectPreFab[objectRandom],
+                    ObjectSpawnPoints[i].transform.position,
+                    ObjectSpawnPoints[i].transform.rotation);
+                Spawnobject.transform.SetParent(this.transform);
+                
+            }
+        }
     }
     
     // private RandomMazeGenerator generator; // dy, dx를 가져오기 위한 변수

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 413102}
   - component: {fileID: 3313102}
   - component: {fileID: 2313102}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Candles_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle_Fire_FX_02
       objectReference: {fileID: 0}
+    - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 452624, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -162,6 +166,10 @@ PrefabInstance:
     - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_Name
       value: Candle_Fire_FX_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 452624, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_RootOrder
@@ -226,6 +234,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle_Fire_FX_02
       objectReference: {fileID: 0}
+    - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 452624, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -289,6 +301,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle_Fire_FX_02
       objectReference: {fileID: 0}
+    - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 452624, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -351,6 +367,10 @@ PrefabInstance:
     - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_Name
       value: Candle_Fire_FX_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 115328, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 452624, guid: 3d0e1c5473aa4ab39e49c88bd3d0b08f, type: 3}
       propertyPath: m_RootOrder
@@ -470,6 +490,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Candle Light 01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640648277975375481, guid: 09de7dec60873a04d948f87c24bc8c42,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09de7dec60873a04d948f87c24bc8c42, type: 3}

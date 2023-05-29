@@ -75,41 +75,42 @@ public class Inventory : MonoBehaviour
     }
 
     public void AddItem(Item item) {
-        if (IsEmpty() && count<28)
+        if (count < 28)
         {
             items.Add(item);
-            for (int i = 0; i<28; i++)
+            for (int i = 0; i < 28; i++)
             {
                 if (slots[i].itemSlotui.item == null)
                 {
                     slots[i].itemSlotui.item = item;
-                    switch (slots[i].itemSlotui.item.tier)
+                    switch (Math.Clamp((slots[i].itemSlotui.item.tier / 5), 0, grade_image.Length -1))
                     {
                         case 0:
-                            slots[i].grade_Back.sprite = grade_image[0]; 
+                            slots[i].grade_Back.sprite = grade_image[0];
                             break;
                         case 1:
-                            slots[i].grade_Back.sprite = grade_image[1]; 
+                            slots[i].grade_Back.sprite = grade_image[1];
                             break;
                         case 2:
-                            slots[i].grade_Back.sprite = grade_image[2]; 
+                            slots[i].grade_Back.sprite = grade_image[2];
                             break;
                         case 3:
-                            slots[i].grade_Back.sprite = grade_image[3] ; 
+                            slots[i].grade_Back.sprite = grade_image[3];
                             break;
                         case 4:
-                            slots[i].grade_Back.sprite = grade_image[4]; 
+                            slots[i].grade_Back.sprite = grade_image[4];
                             break;
                         case 5:
-                            slots[i].grade_Back.sprite = grade_image[5]; 
+                            slots[i].grade_Back.sprite = grade_image[5];
                             break;
                         case 6:
-                            slots[i].grade_Back.sprite = grade_image[6]; 
+                            slots[i].grade_Back.sprite = grade_image[6];
                             break;
                     }
-                    slots[i].grade_Back.gameObject.SetActive(true); 
+
+                    slots[i].grade_Back.gameObject.SetActive(true);
                     count++;
-                    Debug.Log("aaaaaaaaaaa");
+                    UnityEngine.Debug.Log(count);
                     break;
                 }
             }
@@ -118,14 +119,15 @@ public class Inventory : MonoBehaviour
         {
             popUp.text="슬롯이 가득 차 있습니다.";
             popUp.gameObject.SetActive(true);
-            Invoke("taketime", 1.0f);
-            popUp.gameObject.SetActive(false);
+            Invoke("popupHide", 1.0f);
+            UnityEngine.Debug.Log("Debug1: " + slots.Length);
+            UnityEngine.Debug.Log("Debug2: " +count);
         }
     }
 
     public bool IsEmpty()
     {
-        if (count < slots.Length)
+        if (count < 28)
         {
             return true;
         }
@@ -173,9 +175,9 @@ public class Inventory : MonoBehaviour
             Debug.LogError("sideStat 컴포넌트 부착 바람");
         }
     }
-    public void taketime()
+    public void popupHide()
     {
-        Debug.Log("a");
+        popUp.gameObject.SetActive(false);
     }
     
 }

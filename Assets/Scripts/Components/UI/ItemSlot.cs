@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public ItemSlotUI itemSlotui;
+    public ItemSlotUI itemSlotui; 
     public Image image;
     public SlotToolTip _SlotToolTip; 
     public Weapon weapon_item;
@@ -16,7 +16,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int number;
     public Image grade_Back;
     private bool tooltip=false;
-    
+    public Item extra_item=null;
+    public Transform buttonScale;
+    private Vector3 defaultScale;
+
+    void Start()
+    {
+        defaultScale = buttonScale.localScale;
+    }
     public virtual void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -44,8 +51,8 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
                 
                 
-                GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
-                Player.Instance.weaponManager.SetWeapon(weapon);
+                // GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
+                Player.Instance.weaponManager.SetWeapon(Inventory.instance.tempItem.itemData.weapon_gameObject);
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -127,27 +134,69 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 0 )
         {
             ChangeSlot();
-        }else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 1 && Inventory.instance.count<29)
+        }else if (DragSlot.instance.dragSlot.itemSlotui != null && DragSlot.instance.beginSlot == 1)
         {
-            for (int i = 0; i < 6; i++)
-            {
-                Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
-            }
-            
-            Player.Instance.weaponManager.UnRegisterWeapon();
-            Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(false);
-           
-            Inventory.instance.AddItem(Inventory.instance.tempItem);
-            
-            Inventory.instance.tempItem = null;
-            
-            Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(false);
-            Inventory.instance.backImage.gameObject.SetActive(true);
-            Inventory.instance.isInstallation = false;
 
-        } else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2 && Inventory.instance.count<29)
+            if (itemSlotui.item != null && itemSlotui.item.itemData.itemType == ItemType.Weapon)
+            {
+                if (Inventory.instance.count <= 28)
+                {
+                    weapon_item = itemSlotui.item as Weapon;
+
+                    extra_item = Inventory.instance.tempItem;
+                    
+                    Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(true);
+                    Inventory.instance.weaponSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
+                    Inventory.instance.weaponSlot.itemSlotui.image.color = itemSlotui.image.color;
+                    Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);
+                    Inventory.instance.tempItem = itemSlotui.item;
+                    
+                    Inventory.instance.backImage.gameObject.SetActive(true);
+                    Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, this);
+                    UnityEngine.Debug.Log("sugaaka");
+                    Inventory.instance.AddItem(extra_item);                    
+                    UnityEngine.Debug.Log("austd");
+                    
+                    GameObject weapon = Instantiate(Inventory.instance.tempItem.itemData.weapon_gameObject);
+                    Player.Instance.weaponManager.SetWeapon(weapon);
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
+                    }
+                
+                    arti_count = (int)(weapon_item.options[WeaponKey.SOCKET]);
+                
+
+                    for (int i = 0; i <arti_count;i++)
+                    {
+                        Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(false);
+                    }
+                }   
+            }
+            else if (itemSlotui.item==null)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Inventory.instance.artifactUIs[i].lockImage.gameObject.SetActive(true);
+                }
+
+                Player.Instance.weaponManager.UnRegisterWeapon();
+                Inventory.instance.weaponSlot.grade_Back.gameObject.SetActive(false);
+
+                Inventory.instance.AddItem(Inventory.instance.tempItem);
+
+                Inventory.instance.tempItem = null;
+
+                Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(false);
+                Inventory.instance.backImage.gameObject.SetActive(true);
+                Inventory.instance.isInstallation = false;
+            }
+
+
+        } else if (DragSlot.instance.dragSlot != null && DragSlot.instance.beginSlot == 2 && Inventory.instance.count<=28)
         {
-            if (DragSlot.instance.dragSlot.itemSlotui.item!=null)
+            if (DragSlot.instance.dragSlot.itemSlotui.item!=null && itemSlotui.item==null)
             {
                 DragSlot.instance.SetColor(0);
                 Inventory.instance.AddItem(DragSlot.instance.dragSlot.itemSlotui.item);
@@ -156,17 +205,23 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 color.a = 0;
                 Inventory.instance.artifactUIs[DragSlot.instance.dragSlot.number].itemSlot.image.color = color;
                 DragSlot.instance.dragSlot.itemSlotui.item= null;
-
+            } else if (DragSlot.instance.dragSlot.itemSlotui.item != null && itemSlotui.item != null)
+            {
+                extra_item = Inventory.instance.artifactUIs[DragSlot.instance.dragSlot.number].itemSlot.itemSlotui.item;
+                Inventory.instance.artifactUIs[DragSlot.instance.dragSlot.number].itemSlot.itemSlotui.image.sprite = itemSlotui.image.sprite;
+                Inventory.instance.artifactUIs[DragSlot.instance.dragSlot.number].itemSlot.itemSlotui.item = itemSlotui.item;
+                Inventory.instance.removeItem(itemSlotui.item, this);
+                Inventory.instance.AddItem(extra_item);
             }
         }
-        else
+        /*
+        else if (DragSlot.instance.dragSlot != null && Inventory.instance.count==28)
         {
             Inventory.instance.popUp.text="슬롯이 가득 차 있습니다.";
             Inventory.instance.popUp.gameObject.SetActive(true);
-            Invoke("taketime", 1.0f);
-            Inventory.instance.popUp.gameObject.SetActive(false);
+            Invoke("popupHide", 1.0f);
         }
-        
+        */
         DragSlot.instance.dragSlot = null;
     }
 
@@ -197,18 +252,20 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             _SlotToolTip.ShowToolTip(itemSlotui.item,transform.position);
             tooltip = true;
         }
-        
+        buttonScale.localScale = defaultScale * 1.2f;
     }
     
     // 슬롯에서 빠져나갈 때 발동. 
     public void OnPointerExit(PointerEventData eventData)
     {
         _SlotToolTip.HideToolTip();
-            tooltip = false;
+        tooltip = false;
+        buttonScale.localScale = defaultScale;
+        Debug.Log("pointerlog");
     }
     
-    public void taketime()
+    public void popupHide()
     {
-        Debug.Log("a");
+        Inventory.instance.popUp.gameObject.SetActive(false);
     }
 }

@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using Unity.Collections;
-using Unity.Mathematics;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -15,7 +9,7 @@ public class CameraController : MonoBehaviour
 {
     private static CameraController instance;
     public static CameraController Instance => instance;
-    public Camera cam;
+    [ReadOnly] public Camera cam;
     
     [Sirenix.OdinInspector.ReadOnly] public Player player; // 이 카메라가 쫓아다닐 플레이어 정보
     [SerializeField] private Vector3 offset = new Vector3(0, 15, -10); // 플레이어에서 떨어질 벡터

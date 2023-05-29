@@ -13,6 +13,7 @@ namespace Monsters.FSM
             monster.state = EMonsterState.KnockBack;
             monster.nav.enabled = false;
             monster.rigid.isKinematic = false;
+            monster.transform.DOLookAt(-monster.knockback_dir, 0.3f);
             monster.rigid.AddForce(monster.knockback_dir * monster.knockback_power, ForceMode.Impulse);
             monster.whileKnockback = true;
             monster.animator.SetTrigger("Knockback");

@@ -112,6 +112,10 @@ public class Heart : MonoBehaviour
         }
     }
 
+    public void ATK_SPEED_CHANGE(int n)
+    {
+        atk_speed += n;
+    }
     public void Restore_CUR_HP(float amount)
     {
         cur_hp += amount;
@@ -202,7 +206,7 @@ public class Heart : MonoBehaviour
             return;
         }
         
-        bool playerStatChanged = false;
+        // bool playerStatChanged = false;
         
         float calcATK = 20;
         float calcDEF = 5;
@@ -218,8 +222,9 @@ public class Heart : MonoBehaviour
             ATKSPEEDbyArtifact = 0,
             MOVEMENTSPEEDbyArtifact = 0,
             CRITRATEbyArtifact = 0;
-        float ATKbyWeapon = 0, 
-            ATKSPEEDbyWeapon = 0, 
+        float ATKbyWeapon = 0,
+            ATKSPEEDbyWeapon = 0,
+            CRITRATEbyWeapon = 0,
             CRITDAMAGEbyWeapon = 0;
         
 
@@ -303,6 +308,7 @@ public class Heart : MonoBehaviour
         {
             ATKbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK];
             ATKSPEEDbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
+            CRITRATEbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_RATE];
             CRITDAMAGEbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE];
             
             // calcATK = calcATK + calcATK * (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK] * 0.01f;
@@ -315,7 +321,7 @@ public class Heart : MonoBehaviour
         calcHP = (float)Math.Round(calcHP + HPbyArtifact, 2);
         calcATKSPEED = (float)Math.Round(calcATKSPEED + ATKSPEEDbyArtifact + ATKSPEEDbyWeapon, 2);
         calcMOVEMENTSPEED = (float)Math.Round(calcMOVEMENTSPEED + MOVEMENTSPEEDbyArtifact, 2);
-        calcCRITRATE = (float)Math.Round(calcCRITRATE + CRITRATEbyArtifact, 2);
+        calcCRITRATE = (float)Math.Round(calcCRITRATE + CRITRATEbyWeapon + CRITRATEbyArtifact, 2);
         calcCRITDAMAGE = (float)Math.Round(calcCRITDAMAGE + CRITDAMAGEbyWeapon, 2);
 
         // if ((Math.Abs(atk - calcATK) >= 0.1f) ||

@@ -77,5 +77,6 @@ public enum InputKey
     WClick,
     EClick,
     RClick,
-    
+    Tab,
+    MouseWheel
 }
