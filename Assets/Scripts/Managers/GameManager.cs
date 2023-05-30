@@ -33,13 +33,14 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            UUA_CO = StartCoroutine(UUA());
+            
             #if StovePCSDK
                 Save = new StoveSave();
 #else
                 Save = new LocalSave();
             #endif
 
-            // CheckDiceFileExists();
         }
         else
         {
@@ -55,6 +56,23 @@ public class GameManager : MonoBehaviour
         CheckItemsFileExists();
     }
 
+    private void OnDestroy()
+    {
+        if (UUA_CO != null)
+        {
+            StopCoroutine(UUA_CO);
+        }
+    }
+
+    private Coroutine UUA_CO;
+    IEnumerator UUA()
+    {
+        while (true)
+        {
+            Resources.UnloadUnusedAssets();
+            yield return new WaitForSeconds(20f);
+        }
+    }
     public void Death_GrowthUI()
     {
         GameOverUI go = Instantiate(Resources.Load<GameOverUI>("UI/Canvas_GameOver"));

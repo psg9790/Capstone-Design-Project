@@ -56,6 +56,8 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject DirectionalLight;
     private Light light;
 
+    [SerializeField] private CanvasGroup teleportCG;
+
     private void Awake()
     {
         if (instance == null)
@@ -320,10 +322,29 @@ public class GrowthLevelManager : MonoBehaviour
             return;
         }
 
+        Sequence teleport = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                teleportCG.blocksRaycasts = true;
+                Player.Instance.capsuleCollider.enabled = false;
+            })
+            .Append(teleportCG.DOFade(1, 1f))
+            .Append(DOVirtual.DelayedCall(0f, () => MovePlayer(pos)))
+            .AppendInterval(0.5f)
+            .Append(teleportCG.DOFade(0, 0.5f).From(1))
+            .OnComplete(() =>
+            {
+                teleportCG.blocksRaycasts = false;
+                Player.Instance.capsuleCollider.enabled = true;
+            });
+        MovePlayer(pos);
+    }
+
+    private void MovePlayer(Vector3 pos)
+    {
         Player.Instance.nav.enabled = false;
         Player.Instance.transform.position = pos;
         Player.Instance.nav.enabled = true;
-
         Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
     }
 
