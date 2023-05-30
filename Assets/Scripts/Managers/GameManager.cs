@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
             #endif
 
             // CheckDiceFileExists();
-            CheckItemsFileExists();
         }
         else
         {
@@ -49,6 +48,11 @@ public class GameManager : MonoBehaviour
         }
 
         Application.targetFrameRate = 60;
+    }
+
+    private void Start()
+    {
+        CheckItemsFileExists();
     }
 
     public void Death_GrowthUI()

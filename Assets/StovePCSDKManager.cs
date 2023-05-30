@@ -37,7 +37,7 @@ public class StovePCSDKManager : MonoBehaviour
         logSequence = DOTween.Sequence()
             .SetAutoKill(false)
             .OnStart(() => { logCG.alpha = 0; })
-            .Append(logCG.DOFade(1, 0.25f).From(0))
+            .Append(logCG.DOFade(1, 0.5f).From(0))
             .AppendInterval(3f)
             .Append(logCG.DOFade(0, 0.25f))
             .OnComplete(() => { logCG.alpha = 0; });
@@ -205,6 +205,8 @@ public class StovePCSDKManager : MonoBehaviour
 
     public void SetStatMethod(string STAT_ID, int STAT_VALUE)
     {
+        WriteLog("정보 기록중...");
+
         // 입력 파라미터
         // string statId : 스튜디오에서 등록한 스탯 식별자
         // int statValue : 업데이트할 스탯값
