@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Monsters.FSM;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -8,6 +9,12 @@ namespace Monsters.Skill
 {
     public class SkillSet_Boss2_Crusader : SkillSet
     {
+        private void Update()
+        {
+            if(!monster.fsm.CheckCurState(EMonsterState.Dead))
+                OnOverlapSphere();
+        }
+
         private Coroutine lerpBaseAttackCo;
         private IEnumerator lerpIE()
         {
@@ -180,24 +187,33 @@ namespace Monsters.Skill
         
         private HPbar_custom boss_hpbar;
 
-        private void OnTriggerEnter(Collider other) // 보스 hp바
+        private void OnOverlapSphere() // 보스 hp바
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            Collider[] cols = Physics.OverlapSphere(transform.position, 20f, 1 << LayerMask.NameToLayer("Player"));
+            if (boss_hpbar == null)
             {
                 boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
-                if (boss_hpbar != null)
+            }
+            if (cols.Length > 0)
+            {
+                if(!boss_hpbar.isActiveAndEnabled)
                 {
                     boss_hpbar.bossNameText.text = "암흑기사";
                     boss_hpbar.Activate(heart);
                     boss_hpbar.gameObject.SetActive(true);
                 }
             }
+            else
+            {
+                boss_hpbar.gameObject.SetActive(false);
+            }
         }
 
         private void OnDestroy()
         {
-            if(boss_hpbar.heart == heart)
-                boss_hpbar.gameObject.SetActive(false);
+            if(boss_hpbar != null)
+                if(boss_hpbar.heart == heart)
+                    boss_hpbar.gameObject.SetActive(false);
         }
     }
 }

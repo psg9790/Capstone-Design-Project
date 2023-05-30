@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 3983007681004974178}
   - component: {fileID: 3983007681004974179}
   - component: {fileID: 3983007681004974176}
-  - component: {fileID: 7692078377957305875}
   m_Layer: 10
   m_Name: Boss1_Nightmare
   m_TagString: Untagged
@@ -425,19 +424,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!135 &7692078377957305875
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3983007680995532749}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 7
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3983007680995535387
 GameObject:
   m_ObjectHideFlags: 0

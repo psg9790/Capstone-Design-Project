@@ -9,7 +9,6 @@ using UnityEngine.UI;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
-using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine.Events;
 
 // 정확한 역할은 정해지지 않았음, 대신 GameManager로써 마스터 설정같은거 다 때려 넣을듯
@@ -24,6 +23,8 @@ public class GameManager : MonoBehaviour
         get { return instance; }
     }
 
+    public ISave Save;
+    
     public UnityEvent itemChangedEvent;
     
     private void Awake()
@@ -32,7 +33,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            CheckDiceFileExists();
+            #if StovePCSDK
+                Save = new StoveSave();
+#else
+                Save = new LocalSave();
+            #endif
+
+            // CheckDiceFileExists();
             CheckItemsFileExists();
         }
         else
@@ -56,151 +63,69 @@ public class GameManager : MonoBehaviour
         go.Display_RecordDungeonResult();
     }
     
-
-    [HideInInspector] public string diceFilePath;
-
-    [Button]
-    public int EndOfGrowthDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
+    private string coinFilePath = "";
+    private void CheckCoinFileExists()
     {
-        CheckDiceFileExists();
-        int diceEarn = (int)(worldLevel * 1.5f);
-        ModifyDiceCount(diceEarn);
-        ModifyMaxLevel(worldLevel);
-        StovePCSDKManager.Instance.SetGrowthLevel(worldLevel);
-        return diceEarn;
-    }
-    
-    [Button]
-    public bool EndOfRecordDungeon(int worldLevel) // 성장형 던전 종료 시 주사위 획득
-    {
-        CheckDiceFileExists();
-        bool ret = GetCurrentRecord() < worldLevel;
-        ModifyRecord(worldLevel);
-        StovePCSDKManager.Instance.SetRecordLevel(worldLevel);
-        return ret;
+        coinFilePath = Application.persistentDataPath + "/coin.json";
+        if (!File.Exists(coinFilePath))
+        {
+            JObject newCoinFile = new JObject(new JProperty("Count", 0));
+            File.WriteAllText(coinFilePath, newCoinFile.ToString());
+        }
     }
 
-    [Button]
-    public void ModifyDiceCount(int amount) // 주사위 갯수 조정, 저장
+    public int GetCoin()
     {
-        CheckDiceFileExists();
-        JObject diceJson;
-        using (StreamReader file = File.OpenText(diceFilePath))
+        CheckCoinFileExists();
+        int ret = 0;
+        using (StreamReader file = File.OpenText(coinFilePath))
         {
             using (JsonTextReader reader = new JsonTextReader(file))
             {
-                diceJson = (JObject)JToken.ReadFrom(reader);
+                JObject coinJson = (JObject)JToken.ReadFrom(reader);
 
-                int curCount = int.Parse(diceJson["diceCount"].ToString());
+                ret = int.Parse(coinJson["Count"].ToString());
+            }
+        }
+
+        return ret;
+    }
+    public void AddCoin(int amount)
+    {
+        CheckCoinFileExists();
+        JObject coinJson;
+        using (StreamReader file = File.OpenText(coinFilePath))
+        {
+            using (JsonTextReader reader = new JsonTextReader(file))
+            {
+                coinJson = (JObject)JToken.ReadFrom(reader);
+
+                int curCount = int.Parse(coinJson["Count"].ToString());
                 curCount += amount;
-                diceJson["diceCount"] = curCount;
+                coinJson["Count"] = curCount;
             }
         }
-        File.WriteAllText(diceFilePath, diceJson.ToString());
+        File.WriteAllText(coinFilePath, coinJson.ToString());
     }
 
-    void ModifyMaxLevel(int level)
+    public void UseCoin()
     {
-        CheckDiceFileExists();
-        JObject diceJson;
-        using (StreamReader file = File.OpenText(diceFilePath))
+        CheckCoinFileExists();
+        JObject coinJson;
+        using (StreamReader file = File.OpenText(coinFilePath))
         {
             using (JsonTextReader reader = new JsonTextReader(file))
             {
-                diceJson = (JObject)JToken.ReadFrom(reader);
+                coinJson = (JObject)JToken.ReadFrom(reader);
 
-                int curLevel = int.Parse(diceJson["maxLevel"].ToString());
-                diceJson["maxLevel"] = Math.Max(curLevel, level);
+                int curCount = int.Parse(coinJson["Count"].ToString());
+                curCount--;
+                coinJson["Count"] = curCount;
             }
         }
-        File.WriteAllText(diceFilePath, diceJson.ToString());
+        File.WriteAllText(coinFilePath, coinJson.ToString());
     }
     
-    void ModifyRecord(int level)
-    {
-        CheckDiceFileExists();
-        JObject diceJson;
-        using (StreamReader file = File.OpenText(diceFilePath))
-        {
-            using (JsonTextReader reader = new JsonTextReader(file))
-            {
-                diceJson = (JObject)JToken.ReadFrom(reader);
-
-                int curLevel = int.Parse(diceJson["record"].ToString());
-                diceJson["record"] = Math.Max(curLevel, level);
-            }
-        }
-        File.WriteAllText(diceFilePath, diceJson.ToString());
-    }
-
-    [Button]
-    public int GetCurrentDiceCount() // 현재 주사위를 몇개 보유중인지 확인
-    {
-        CheckDiceFileExists();
-        int ret = 0;
-        using (StreamReader file = File.OpenText(diceFilePath))
-        {
-            using (JsonTextReader reader = new JsonTextReader(file))
-            {
-                JObject diceJson = (JObject)JToken.ReadFrom(reader);
-
-                ret = int.Parse(diceJson["diceCount"].ToString());
-            }
-        }
-
-        return ret;
-    }
-    
-    [Button]
-    public int GetCurrentMaxLevel() // 현재 주사위를 몇개 보유중인지 확인
-    {
-        CheckDiceFileExists();
-        int ret = 0;
-        using (StreamReader file = File.OpenText(diceFilePath))
-        {
-            using (JsonTextReader reader = new JsonTextReader(file))
-            {
-                JObject diceJson = (JObject)JToken.ReadFrom(reader);
-
-                ret = int.Parse(diceJson["maxLevel"].ToString());
-            }
-        }
-
-        return ret;
-    }
-    
-    [Button]
-    public int GetCurrentRecord() // 현재 주사위를 몇개 보유중인지 확인
-    {
-        CheckDiceFileExists();
-        int ret = 0;
-        using (StreamReader file = File.OpenText(diceFilePath))
-        {
-            using (JsonTextReader reader = new JsonTextReader(file))
-            {
-                JObject diceJson = (JObject)JToken.ReadFrom(reader);
-
-                ret = int.Parse(diceJson["record"].ToString());
-            }
-        }
-
-        return ret;
-    }
-
-    private void CheckDiceFileExists() // 주사위 저장 파일이 존재하는지 확인
-    {
-        diceFilePath = Application.persistentDataPath + "/dice.json";
-        if (!File.Exists(diceFilePath))
-        {
-            Debug.Log("주사위 파일 존재하지 않음, 생성");
-            JObject newDiceFile = new JObject(new JProperty("diceCount", 0));
-            newDiceFile.Add(new JProperty("maxLevel", 0));
-            newDiceFile.Add(new JProperty("record", 0));
-            File.WriteAllText(diceFilePath, newDiceFile.ToString());
-        }
-    }
-
-
     [HideInInspector] public string itemsFilePath;
     public void CheckItemsFileExists()
     {
@@ -228,13 +153,13 @@ public class GameManager : MonoBehaviour
     {
         CheckItemsFileExists();
         
-        if (GetCurrentDiceCount() <= 0) // 주사위가 충분하지 않은 경우
+        if (GetCoin() <= 0) // 주사위가 충분하지 않은 경우
         {
             UnityEngine.Debug.Log("주사위가 충분하지 않습니다.");
             return;
         }
         
-        ModifyDiceCount(-1);
+        UseCoin();
 
         string jsonfile = File.ReadAllText(itemsFilePath);
         JObject token = JObject.Parse(jsonfile);

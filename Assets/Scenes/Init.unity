@@ -1316,6 +1316,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5681811598399818450, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: useStoveSDK
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5681811598399818451, guid: eb907f909db5a7b49b09dd4512a11b68,
         type: 3}
       propertyPath: m_Name

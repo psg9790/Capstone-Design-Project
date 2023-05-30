@@ -21,21 +21,32 @@ public class GameOverUI : MonoBehaviour
 
     public void Display_GrowthDungeonResult()
     {
-        int before = GameManager.Instance.GetCurrentMaxLevel();
-        curWorldLevel_text.text = GrowthLevelManager.Instance.worldLevel.ToString();
-        diceEarned_text.text = GameManager.Instance.EndOfGrowthDungeon(GrowthLevelManager.Instance.worldLevel).ToString();
-        int after = GameManager.Instance.GetCurrentMaxLevel();
-        maxLevel_text.text = after.ToString();
-        bool isHighScore = before < after;
+        int before = GameManager.Instance.Save.GetGrowthLevel();
+ 
+        GameManager.Instance.Save.SetGrowthLevel(GrowthLevelManager.Instance.worldLevel);
+
         Sequence seq = DOTween.Sequence();
         seq.Append(backCG.DOFade(1,2.5f).From(0))
             .Append(gameOverTextCG.DOFade(1, 1f).From(0))
+            .Join(DOVirtual.DelayedCall(0.1f,()=> SetGrowthText(before)))
             .Append(growthResultCG.DOFade(1, 1f).From(0))
             .Append(returnToButtonCG.DOFade(1, 1f).From(0));
-        if (isHighScore)
-        {
-            seq.Join(newMaxLevelCG.DOFade(1, 1f).From(0));
-        }
+    }
+
+    void SetGrowthText(int before)
+    {
+        curWorldLevel_text.text = GrowthLevelManager.Instance.worldLevel.ToString();
+        
+        int earnedCoin = (int)(GrowthLevelManager.Instance.worldLevel * 1.5f);
+        GameManager.Instance.AddCoin(earnedCoin);
+        diceEarned_text.text = earnedCoin.ToString();
+        
+        int after = GameManager.Instance.Save.GetGrowthLevel();
+        maxLevel_text.text = after.ToString();
+        
+        bool isHighScore = before < after;
+        if(isHighScore)
+            newMaxLevelCG.DOFade(1, 1f).From(0);
     }
 
     [BoxGroup("Record")] public CanvasGroup recordResultCG;
@@ -44,18 +55,27 @@ public class GameOverUI : MonoBehaviour
     [BoxGroup("Record")] public CanvasGroup newRecordCG;
     public void Display_RecordDungeonResult()
     {
-        curLevel_text.text = RecordLevelManager.Instance.curLevel.ToString();
-        bool isHighScore = GameManager.Instance.EndOfRecordDungeon(RecordLevelManager.Instance.curLevel);
-        record_text.text = GameManager.Instance.GetCurrentRecord().ToString();
+        int before = GameManager.Instance.Save.GetRecordLevel();
+        GameManager.Instance.Save.SetRecordLevel(RecordLevelManager.Instance.curLevel);
+        
+       
         Sequence seq = DOTween.Sequence();
         seq.Append(backCG.DOFade(1,2.5f).From(0))
             .Append(gameOverTextCG.DOFade(1, 1f).From(0))
+            .Join(DOVirtual.DelayedCall(0.1f,()=> SetRecordText(before)))
             .Append(recordResultCG.DOFade(1, 1f).From(0))
             .Append(returnToButtonCG.DOFade(1, 1f).From(0));
-        if (isHighScore)
-        {
-            seq.Join(newRecordCG.DOFade(1, 1f).From(0));
-        }
+        
+    }
+
+    void SetRecordText(int before)
+    {
+        curLevel_text.text = RecordLevelManager.Instance.curLevel.ToString();
+        int after = GameManager.Instance.Save.GetRecordLevel();
+        bool isHighScore = before < after;
+        record_text.text = after.ToString();
+        if(isHighScore)
+            newRecordCG.DOFade(1, 1f).From(0);
     }
 
     public void ReturnTo()

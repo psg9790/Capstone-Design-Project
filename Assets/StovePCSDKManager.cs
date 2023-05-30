@@ -16,8 +16,6 @@ public class StovePCSDKManager : MonoBehaviour
     private static StovePCSDKManager instance;
     public static StovePCSDKManager Instance => instance;
 
-    public bool useStoveSDK = false;
-    
     private StovePCCallback callback;
     private Coroutine runCallbackCoroutine;
 
@@ -47,13 +45,13 @@ public class StovePCSDKManager : MonoBehaviour
         
         instance = this;
         DontDestroyOnLoad(transform.gameObject);
-        if (!useStoveSDK)
-        {
+        
+        #if StovePCSDK
+            Initialize();
+        #else
             WriteLog("StoveSDK를 사용하지 않습니다.");
             InitLoading.GoToMainTitle();
-            return;
-        }
-        Initialize();
+        #endif
         
     }
 
@@ -61,31 +59,6 @@ public class StovePCSDKManager : MonoBehaviour
     {
         UnInitialize();
     }
-
-    // private void ButtonLoadConfig_Click() // 게임 정보 불러오기
-    // {
-    //     string configFilePath = Application.streamingAssetsPath + "/Text/StovePCConfig.Unity.txt";
-    //
-    //     if (File.Exists(configFilePath))
-    //     {
-    //         string configText = File.ReadAllText(configFilePath);
-    //         StovePCConfig config = JsonUtility.FromJson<StovePCConfig>(configText);
-    //
-    //         this.Env = config.Env;
-    //         this.AppKey = config.AppKey;
-    //         this.AppSecret = config.AppSecret;
-    //         this.GameId = config.GameId;
-    //         this.LogLevel = config.LogLevel;
-    //         this.LogPath = config.LogPath;
-    //
-    //         WriteLog(configText);
-    //     }
-    //     else
-    //     {
-    //         string msg = String.Format("File not found : {0}", configFilePath);
-    //         WriteLog(msg);
-    //     }
-    // }
 
     public void Initialize() // 초기화
     {
@@ -140,7 +113,7 @@ public class StovePCSDKManager : MonoBehaviour
         if (result == StovePCResult.NoError)
         {
             // 성공 처리
-            UnityEngine.Debug.Log("UnInitialized");
+            UnityEngine.Debug.Log("Stove PC SDK UnInitialized");
         }
     }
 
@@ -165,7 +138,7 @@ public class StovePCSDKManager : MonoBehaviour
         sb.AppendFormat(" - user.Nickname : {0}" + Environment.NewLine, user.Nickname);
         sb.AppendFormat(" - user.GameUserId : {0}", user.GameUserId);
     
-        Debug.Log(sb.ToString());
+        // Debug.Log(sb.ToString());
     }
     #endregion
 
@@ -192,58 +165,6 @@ public class StovePCSDKManager : MonoBehaviour
     }
     #endregion
     
-    // #region OWNERSHIP
-    // [Button]
-    // public void GetOwnershipMethod()
-    // {
-    //     StovePCResult result = StovePC.GetOwnership();
-    //     if (result == StovePCResult.NoError)
-    //     {
-    //         // 성공 처리
-    //     }
-    // }
-    // void OnOwnership(StovePCOwnership[] ownerships)
-    // {
-    //     bool owned = false;
-    //
-    //     foreach(var ownership in ownerships)
-    //     {
-    //         // [LOGIN_USER_MEMBER_NO] StovePCUser 구조체의 MemberNo
-    //         // [OwnershipCode] 1: 소유권 획득, 2: 소유권 해제(구매 취소한 경우)
-    //         if (ownership.MemberNo != LOGIN_USER_MEMBER_NO ||
-    //             ownership.OwnershipCode != 1)
-    //         {
-    //             continue;
-    //         }
-    //
-    //         // [GameCode] 3: BASIC 게임, 5: DLC
-    //         if (ownership.GameId == "YOUR_GAME_ID" &&
-    //             ownership.GameCode == 3)
-    //         {
-    //             owned = true; // 소유권 확인 변수 true로 설정
-    //         }
-    //
-    //         // DLC를 판매하는 게임일 때만 필요
-    //         if (ownership.GameId == "YOUR_DLC_ID" &&
-    //             ownership.GameCode == 5)
-    //         {
-    //             // YOUR_DLC_ID(DLC) 소유권이 있기에 DLC 플레이 허용
-    //         }
-    //     }
-    //  
-    //     if(owned)
-    //     {
-    //         // 소유권 검증이 정상적으로 완료 된 이후 게임진입 로직 작성
-    //         UnityEngine.Debug.Log("owned");
-    //     }
-    //     else
-    //     {
-    //         // 소유권 검증실패 후 게임을 종료하고 에러메세지 표출 로직 작성
-    //         UnityEngine.Debug.Log("not owned");
-    //     }
-    // }
-    // #endregion
-
     #region ERROR
     private void OnError(StovePCError error)
     {
@@ -280,29 +201,6 @@ public class StovePCSDKManager : MonoBehaviour
         }
     }
 
-    public void SetRecordLevel(int STAT_VALUE)
-    {
-        // 입력 파라미터
-        // string statId : 스튜디오에서 등록한 스탯 식별자
-        // int statValue : 업데이트할 스탯값
-        StovePCResult result = StovePC.SetStat("RECORD_LEVEL", STAT_VALUE);
-        if(result == StovePCResult.NoError)
-        {
-            // 성공 처리
-        }
-    }
-    public void SetGrowthLevel(int STAT_VALUE)
-    {
-        // 입력 파라미터
-        // string statId : 스튜디오에서 등록한 스탯 식별자
-        // int statValue : 업데이트할 스탯값
-        StovePCResult result = StovePC.SetStat("GROWTH_LEVEL", STAT_VALUE);
-        if(result == StovePCResult.NoError)
-        {
-            // 성공 처리
-        }
-    }
-
     public void SetStatMethod(string STAT_ID, int STAT_VALUE)
     {
         // 입력 파라미터
@@ -314,9 +212,11 @@ public class StovePCSDKManager : MonoBehaviour
             // 성공 처리
         }
     }
-    
+
+    [HideInInspector] public UnityEvent<StovePCStat> OnStatEvent;
     private void OnStat(StovePCStat stat)
     {
+        OnStatEvent.Invoke(stat);
         // 스탯 정보 출력
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("OnStat");
@@ -328,8 +228,12 @@ public class StovePCSDKManager : MonoBehaviour
  
         Debug.Log(sb.ToString());
     }
+
+    [HideInInspector] public UnityEvent<StovePCStatValue> OnSetStatEvent;
     private void OnSetStat(StovePCStatValue statValue)
     {
+        OnSetStatEvent.Invoke(statValue);
+        
         // 스탯 업데이트 결과 정보 출력
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("OnSetStat");
@@ -341,53 +245,6 @@ public class StovePCSDKManager : MonoBehaviour
     }
     #endregion
 
-    // #region ACHIEVEMENT
-    // private void OnAchievement(StovePCAchievement achievement)
-    // {
-    //     // 단일 업적 정보 출력
-    //     StringBuilder sb = new StringBuilder();
-    //     sb.AppendLine("OnAchievement");
-    //     sb.AppendFormat(" - achievement.AchievementId : {0}" + Environment.NewLine, achievement.AchievementId);
-    //     sb.AppendFormat(" - achievement.Name : {0}" + Environment.NewLine, achievement.Name);
-    //     sb.AppendFormat(" - achievement.Description : {0}" + Environment.NewLine, achievement.Description);
-    //     sb.AppendFormat(" - achievement.DefaultImage : {0}" + Environment.NewLine, achievement.DefaultImage);
-    //     sb.AppendFormat(" - achievement.AchievedImage : {0}" + Environment.NewLine, achievement.AchievedImage);
-    //     sb.AppendFormat(" - achievement.Condition.GoalValue : {0}" + Environment.NewLine, achievement.Condition.GoalValue.ToString());
-    //     sb.AppendFormat(" - achievement.Condition.ValueOperation : {0}" + Environment.NewLine, achievement.Condition.ValueOperation);
-    //     sb.AppendFormat(" - achievement.Condition.Type : {0}" + Environment.NewLine, achievement.Condition.Type);
-    //     sb.AppendFormat(" - achievement.Value : {0}" + Environment.NewLine, achievement.Value.ToString());
-    //     sb.AppendFormat(" - achievement.Status : {0}", achievement.Status);
-    //
-    //     Debug.Log(sb.ToString());
-    // }
-    //
-    // private void OnAllAchievement(StovePCAchievement[] achievements)
-    // {
-    //     // 모든 업적 정보 출력
-    //     StringBuilder sb = new StringBuilder();
-    //     sb.AppendLine("OnAllAchievement");
-    //     sb.AppendFormat(" - achievements.Length : {0}" + Environment.NewLine, achievements.Length);
-    //
-    //     for (int i = 0; i < achievements.Length; i++)
-    //     {
-    //         sb.AppendFormat(" - achievements[{0}].AchievementId : {1}" + Environment.NewLine, i, achievements[i].AchievementId);
-    //         sb.AppendFormat(" - achievements[{0}].Name : {1}" + Environment.NewLine, i, achievements[i].Name);
-    //         sb.AppendFormat(" - achievements[{0}].Description : {1}" + Environment.NewLine, i, achievements[i].Description);
-    //         sb.AppendFormat(" - achievements[{0}].DefaultImage : {1}" + Environment.NewLine, i, achievements[i].DefaultImage);
-    //         sb.AppendFormat(" - achievements[{0}].AchievedImage : {1}" + Environment.NewLine, i, achievements[i].AchievedImage);
-    //         sb.AppendFormat(" - achievements[{0}].Condition.GoalValue : {1}" + Environment.NewLine, i, achievements[i].Condition.GoalValue.ToString());
-    //         sb.AppendFormat(" - achievements[{0}].Condition.ValueOperation : {1}" + Environment.NewLine, i, achievements[i].Condition.ValueOperation);
-    //         sb.AppendFormat(" - achievements[{0}].Condition.Type : {1}" + Environment.NewLine, i, achievements[i].Condition.Type);
-    //         sb.AppendFormat(" - achievements[{0}].Value : {1}" + Environment.NewLine, i, achievements[i].Value.ToString());
-    //         sb.AppendFormat(" - achievements[{0}].Status : {1}", i, achievements[i].Status);
-    //
-    //         if (i < achievements.Length - 1)
-    //             sb.AppendFormat(Environment.NewLine);
-    //     }
-    //
-    //     Debug.Log(sb.ToString());
-    // }
-    // #endregion
 
     #region RANK
     [HideInInspector] public UnityEvent<StovePCRank[], uint> OnRankEvent;
@@ -501,11 +358,15 @@ public class StovePCSDKManager : MonoBehaviour
 
     private void OnInitializationComplete() // 정상적으로 초기 실행이 완료되었을 시 실행될 콜백
     {
-        Debug.Log("PC SDK initialization success");
-        // WriteLog("환영합니다!");
+        Debug.Log("Stove PC SDK initialization success");
         InitLoading.GoToMainTitle();
         OnUserEvent.AddListener(HelloUser);
         GetUserMethod();
+        
+        #if StovePCSDK
+            GameManager.Instance.Save.SetGrowthLevel(0);
+            GameManager.Instance.Save.SetRecordLevel(0);
+        #endif
     }
 
     private void HelloUser(StovePCUser user)
@@ -526,7 +387,6 @@ public class StovePCSDKManager : MonoBehaviour
         while (true)
         {
             StovePC.RunCallback();
-            UnityEngine.Debug.Log("Stove Callback");
             yield return wfs;
         }
     }

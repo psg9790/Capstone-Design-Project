@@ -184,7 +184,8 @@ public class BeforeRecordDungeonUI : MonoBehaviour
             itemDisplays[i].GetChild(2).GetComponent<TMP_Text>().text = sb.ToString();
         }
 
-        diceCountText.text = GameManager.Instance.GetCurrentDiceCount().ToString();
+        diceCountText.text = GameManager.Instance.GetCoin().ToString();
+        // diceCountText.text = GameManager.Instance.GetCurrentDiceCount().ToString();
         BuildTotalStatString();
     }
 
