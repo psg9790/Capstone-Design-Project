@@ -20,6 +20,9 @@ public class StovePCSDKManager : MonoBehaviour
     private Coroutine runCallbackCoroutine;
 
     [HideInInspector] public ulong LOGIN_USER_MEMBER_NO;
+    public string LOGIN_USER_NICKNAME;
+    public string LOGIN_USER_GAME_USER_ID;
+    
     // LoadConfig를 통해 채워지는 설정값
     private string Env = "live";
     private string AppKey = "c31a814c6f01baaaa01765cde53df5cc623b6e7ac42794842fa87ca5a1d33b23";
@@ -133,6 +136,8 @@ public class StovePCSDKManager : MonoBehaviour
     {
         OnUserEvent.Invoke(user);
         LOGIN_USER_MEMBER_NO = user.MemberNo;
+        LOGIN_USER_NICKNAME = user.Nickname;
+            LOGIN_USER_GAME_USER_ID = user.GameUserId;
         // 사용자 정보 출력
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("OnUser");    
@@ -266,34 +271,34 @@ public class StovePCSDKManager : MonoBehaviour
         }
     }
 
-    public void GetGrowthRank()
-    {
-        // 입력 파라미터
-        // string leaderboardId : 스튜디오에서 생성한 리더보드 식별자
-        // uint pageIndex : 조회할 페이지 번호 (1 <= pageIndex)
-        // uint pageSize : 조회할 순위의 개수 (1 <= pageSize <= 50)
-        // bool includeMyRank : 조회결과에 로그인한 사용자의 순위를 포함할지 여부
-        StovePCResult result = StovePC.GetRank("NTIMES_IND_DEMO_01_IND|GROWTH_LEVEL", 
-            1, 10, true);
-        if(result == StovePCResult.NoError)
-        {
-            // 성공 처리
-        }
-    }
-    public void GetRecordRank()
-    {
-        // 입력 파라미터
-        // string leaderboardId : 스튜디오에서 생성한 리더보드 식별자
-        // uint pageIndex : 조회할 페이지 번호 (1 <= pageIndex)
-        // uint pageSize : 조회할 순위의 개수 (1 <= pageSize <= 50)
-        // bool includeMyRank : 조회결과에 로그인한 사용자의 순위를 포함할지 여부
-        StovePCResult result = StovePC.GetRank("NTIMES_IND_DEMO_01_IND|RECORD_LEVEL", 
-            1, 10, true);
-        if(result == StovePCResult.NoError)
-        {
-            // 성공 처리
-        }
-    }
+    // public void GetGrowthRank()
+    // {
+    //     // 입력 파라미터
+    //     // string leaderboardId : 스튜디오에서 생성한 리더보드 식별자
+    //     // uint pageIndex : 조회할 페이지 번호 (1 <= pageIndex)
+    //     // uint pageSize : 조회할 순위의 개수 (1 <= pageSize <= 50)
+    //     // bool includeMyRank : 조회결과에 로그인한 사용자의 순위를 포함할지 여부
+    //     StovePCResult result = StovePC.GetRank("NTIMES_IND_DEMO_01_IND|GROWTH_LEVEL", 
+    //         1, 10, true);
+    //     if(result == StovePCResult.NoError)
+    //     {
+    //         // 성공 처리
+    //     }
+    // }
+    // public void GetRecordRank()
+    // {
+    //     // 입력 파라미터
+    //     // string leaderboardId : 스튜디오에서 생성한 리더보드 식별자
+    //     // uint pageIndex : 조회할 페이지 번호 (1 <= pageIndex)
+    //     // uint pageSize : 조회할 순위의 개수 (1 <= pageSize <= 50)
+    //     // bool includeMyRank : 조회결과에 로그인한 사용자의 순위를 포함할지 여부
+    //     StovePCResult result = StovePC.GetRank("NTIMES_IND_DEMO_01_IND|RECORD_LEVEL", 
+    //         1, 10, true);
+    //     if(result == StovePCResult.NoError)
+    //     {
+    //         // 성공 처리
+    //     }
+    // }
     // 콜백 파라미터
     // uint rankTotalCount : 조회한 리더보드에 집계된 전체 순위 개수
     private void OnRank(StovePCRank[] ranks, uint rankTotalCount)
