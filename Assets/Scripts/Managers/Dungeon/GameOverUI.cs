@@ -22,7 +22,6 @@ public class GameOverUI : MonoBehaviour
     public void Display_GrowthDungeonResult()
     {
         int before = GameManager.Instance.Save.GetGrowthLevel();
- 
         GameManager.Instance.Save.SetGrowthLevel(GrowthLevelManager.Instance.worldLevel);
 
         Sequence seq = DOTween.Sequence();
@@ -56,13 +55,14 @@ public class GameOverUI : MonoBehaviour
     public void Display_RecordDungeonResult()
     {
         int before = GameManager.Instance.Save.GetRecordLevel();
+        Debug.Log(before);
         GameManager.Instance.Save.SetRecordLevel(RecordLevelManager.Instance.curLevel);
         
        
         Sequence seq = DOTween.Sequence();
         seq.Append(backCG.DOFade(1,2.5f).From(0))
             .Append(gameOverTextCG.DOFade(1, 1f).From(0))
-            .Join(DOVirtual.DelayedCall(0.1f,()=> SetRecordText(before)))
+            .Join(DOVirtual.DelayedCall(0.1f,() => SetRecordText(before)))
             .Append(recordResultCG.DOFade(1, 1f).From(0))
             .Append(returnToButtonCG.DOFade(1, 1f).From(0));
         
@@ -72,6 +72,8 @@ public class GameOverUI : MonoBehaviour
     {
         curLevel_text.text = RecordLevelManager.Instance.curLevel.ToString();
         int after = GameManager.Instance.Save.GetRecordLevel();
+        
+        Debug.Log(before.ToString() + " " + after.ToString()); // 2 4
         bool isHighScore = before < after;
         record_text.text = after.ToString();
         if(isHighScore)

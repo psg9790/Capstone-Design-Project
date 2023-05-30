@@ -32,6 +32,7 @@ public class RecordLevelManager : MonoBehaviour
 
     private void Start()
     {
+        Inventory.instance.gameObject.SetActive(true);
         PlayerSpawn();
         EquipLocalWeaponAndArtifacts();
         NextLevel();

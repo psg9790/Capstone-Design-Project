@@ -205,7 +205,7 @@ public class StovePCSDKManager : MonoBehaviour
 
     public void SetStatMethod(string STAT_ID, int STAT_VALUE)
     {
-        WriteLog("정보 기록중...");
+        // WriteLog("정보 기록중...");
 
         // 입력 파라미터
         // string statId : 스튜디오에서 등록한 스탯 식별자
@@ -322,7 +322,7 @@ public class StovePCSDKManager : MonoBehaviour
     
     #region LOG
     
-    private void WriteLog(string log)
+    public void WriteLog(string log)
     {
         // Debug.Log(log + Environment.NewLine);
         log_text.text = log;
@@ -369,8 +369,11 @@ public class StovePCSDKManager : MonoBehaviour
         
         #if StovePCSDK
             GameManager.Instance.Save.SetGrowthLevel(0);
-            GameManager.Instance.Save.SetRecordLevel(0);
-        #endif
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                GameManager.Instance.Save.SetRecordLevel(0);
+            });
+#endif
     }
 
     private void HelloUser(StovePCUser user)
@@ -379,7 +382,9 @@ public class StovePCSDKManager : MonoBehaviour
 
         StringBuilder sb = new StringBuilder();
         sb.Append("환영합니다, ");
+        sb.Append("<color=#FFFF00>");
         sb.Append(user.Nickname);
+        sb.Append("</color>");
         sb.Append("님!\n");
         
         WriteLog(sb.ToString());

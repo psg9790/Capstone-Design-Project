@@ -313,6 +313,7 @@ public class Heart : MonoBehaviour
         criticalDamage = calcCRITDAMAGE;
         
         sb.Clear();
+        sb.Append("<color=#DEDE7A>");
         sb.Append("공격력: ");
         sb.Append(atk.ToString());
         sb.Append("\n");
@@ -335,7 +336,9 @@ public class Heart : MonoBehaviour
         sb.Append("치명타 피해: ");
         sb.Append(criticalDamage.ToString());
         sb.Append("%");
+        sb.Append("</color>");
         sb.Append("\n");
+        
         sb.Append("\n");
         sb.Append("무기");
         sb.Append("\n");
