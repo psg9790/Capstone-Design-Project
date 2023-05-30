@@ -3765,6 +3765,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eab49e9c88b18e4c86d0a8b2ce2ee84, type: 3}
+--- !u!114 &825791449 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5118863008138154445, guid: 0eab49e9c88b18e4c86d0a8b2ce2ee84,
+    type: 3}
+  m_PrefabInstance: {fileID: 825791448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc3e37d81f4fe8044b443ae190423e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &894741534
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8105,6 +8117,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811647553996305137, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 825791449}
+    - target: {fileID: 6811647553996305137, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SwitchScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811647553996305137, guid: fbdb589f1cba8444ba534360b64fd4ca,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Start_Map
       objectReference: {fileID: 0}
     - target: {fileID: 8939428236465407134, guid: fbdb589f1cba8444ba534360b64fd4ca,
         type: 3}

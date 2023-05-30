@@ -5,7 +5,9 @@ using System.IO;
 using Stove.PCSDK.NET;
 using UnityEngine;
 using System.Text;
+using DG.Tweening;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -13,6 +15,8 @@ public class StovePCSDKManager : MonoBehaviour
 {
     private static StovePCSDKManager instance;
     public static StovePCSDKManager Instance => instance;
+
+    public bool useStoveSDK = false;
     
     private StovePCCallback callback;
     private Coroutine runCallbackCoroutine;
@@ -26,11 +30,31 @@ public class StovePCSDKManager : MonoBehaviour
     private StovePCLogLevel LogLevel = StovePCLogLevel.Debug;
     private string LogPath = "";
 
+    [SerializeField] private CanvasGroup logCG;
+    [SerializeField] private TMP_Text log_text;
+    private Sequence logSequence;
+
     private void Awake()
     {
+        logSequence = DOTween.Sequence()
+            .SetAutoKill(false)
+            .OnStart(() => { logCG.alpha = 0; })
+            .Append(logCG.DOFade(1, 0.25f).From(0))
+            .AppendInterval(3f)
+            .Append(logCG.DOFade(0, 0.25f))
+            .OnComplete(() => { logCG.alpha = 0; });
+        logSequence.Complete();
+        
         instance = this;
         DontDestroyOnLoad(transform.gameObject);
+        if (!useStoveSDK)
+        {
+            WriteLog("StoveSDK를 사용하지 않습니다.");
+            InitLoading.GoToMainTitle();
+            return;
+        }
         Initialize();
+        
     }
 
     private void OnDestroy()
@@ -38,33 +62,34 @@ public class StovePCSDKManager : MonoBehaviour
         UnInitialize();
     }
 
-    private void ButtonLoadConfig_Click() // 게임 정보 불러오기
-    {
-        string configFilePath = Application.streamingAssetsPath + "/Text/StovePCConfig.Unity.txt";
-
-        if (File.Exists(configFilePath))
-        {
-            string configText = File.ReadAllText(configFilePath);
-            StovePCConfig config = JsonUtility.FromJson<StovePCConfig>(configText);
-
-            this.Env = config.Env;
-            this.AppKey = config.AppKey;
-            this.AppSecret = config.AppSecret;
-            this.GameId = config.GameId;
-            this.LogLevel = config.LogLevel;
-            this.LogPath = config.LogPath;
-
-            WriteLog(configText);
-        }
-        else
-        {
-            string msg = String.Format("File not found : {0}", configFilePath);
-            WriteLog(msg);
-        }
-    }
+    // private void ButtonLoadConfig_Click() // 게임 정보 불러오기
+    // {
+    //     string configFilePath = Application.streamingAssetsPath + "/Text/StovePCConfig.Unity.txt";
+    //
+    //     if (File.Exists(configFilePath))
+    //     {
+    //         string configText = File.ReadAllText(configFilePath);
+    //         StovePCConfig config = JsonUtility.FromJson<StovePCConfig>(configText);
+    //
+    //         this.Env = config.Env;
+    //         this.AppKey = config.AppKey;
+    //         this.AppSecret = config.AppSecret;
+    //         this.GameId = config.GameId;
+    //         this.LogLevel = config.LogLevel;
+    //         this.LogPath = config.LogPath;
+    //
+    //         WriteLog(configText);
+    //     }
+    //     else
+    //     {
+    //         string msg = String.Format("File not found : {0}", configFilePath);
+    //         WriteLog(msg);
+    //     }
+    // }
 
     public void Initialize() // 초기화
     {
+        WriteLog("Stove 설정 초기화중...");
         StovePCResult sdkResult = StovePCResult.NoError;
 
         StovePCConfig config = new StovePCConfig
@@ -121,7 +146,6 @@ public class StovePCSDKManager : MonoBehaviour
 
     #region USER
     [HideInInspector] public UnityEvent<StovePCUser> OnUserEvent;
-    [Button]
     public void GetUserMethod()
     {
         StovePCResult result = StovePC.GetUser();
@@ -146,8 +170,7 @@ public class StovePCSDKManager : MonoBehaviour
     #endregion
 
     #region TOKEN
-    public UnityEvent<StovePCToken> OnTokenEvent;
-    [Button]
+    [HideInInspector] public UnityEvent<StovePCToken> OnTokenEvent;
     public void GetTokenMethod()
     {
         StovePCResult result = StovePC.GetToken();
@@ -257,7 +280,6 @@ public class StovePCSDKManager : MonoBehaviour
         }
     }
 
-    [Button]
     public void SetRecordLevel(int STAT_VALUE)
     {
         // 입력 파라미터
@@ -269,7 +291,6 @@ public class StovePCSDKManager : MonoBehaviour
             // 성공 처리
         }
     }
-    [Button]
     public void SetGrowthLevel(int STAT_VALUE)
     {
         // 입력 파라미터
@@ -384,7 +405,6 @@ public class StovePCSDKManager : MonoBehaviour
         }
     }
 
-    [Button]
     public void GetGrowthRank()
     {
         // 입력 파라미터
@@ -399,7 +419,6 @@ public class StovePCSDKManager : MonoBehaviour
             // 성공 처리
         }
     }
-    [Button]
     public void GetRecordRank()
     {
         // 입력 파라미터
@@ -441,22 +460,12 @@ public class StovePCSDKManager : MonoBehaviour
     #endregion
     
     #region LOG
-    private void WriteLog(string functionName, StovePCResult result)
-    {
-        if (String.IsNullOrEmpty(functionName))
-            functionName = "Unknown";
-
-        string msg = String.Format("{0} Success", functionName);
-        if (result != StovePCResult.NoError)
-        {
-            msg = String.Format("{0} Fail : {1}", functionName, result.ToString());
-        }
-
-        Debug.Log(msg + Environment.NewLine);
-    }
+    
     private void WriteLog(string log)
     {
-        Debug.Log(log + Environment.NewLine);
+        // Debug.Log(log + Environment.NewLine);
+        log_text.text = log;
+        logSequence.Restart();
     }
     #endregion
     
@@ -477,11 +486,38 @@ public class StovePCSDKManager : MonoBehaviour
         // 그 외 언어 : The required pre-task fails and exits the game.
         // QuitApplication();
         // Application.Quit();
+        WriteLog("필수 사전 작업이 실패하여 게임을 종료합니다.");
+        Invoke("QuitAppication", 5f);
+    }
+
+    private void QuitAppication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
     }
 
     private void OnInitializationComplete() // 정상적으로 초기 실행이 완료되었을 시 실행될 콜백
     {
         Debug.Log("PC SDK initialization success");
+        // WriteLog("환영합니다!");
+        InitLoading.GoToMainTitle();
+        OnUserEvent.AddListener(HelloUser);
+        GetUserMethod();
+    }
+
+    private void HelloUser(StovePCUser user)
+    {
+        OnUserEvent.RemoveListener(HelloUser);
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("환영합니다, ");
+        sb.Append(user.Nickname);
+        sb.Append("님!\n");
+        
+        WriteLog(sb.ToString());
     }
 
     private IEnumerator RunCallback(float intervalSeconds) // 주기적으로 실행할 콜백

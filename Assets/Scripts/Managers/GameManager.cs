@@ -26,14 +26,6 @@ public class GameManager : MonoBehaviour
 
     public UnityEvent itemChangedEvent;
     
-    // public GameObject menuSet;
-    // public GameObject invenSet;
-    //
-    /*
-    [Header("# Player Info")] 
-    public int Hp;
-    public int MaxHp=100;
-    */
     private void Awake()
     {
         if (instance == null)
@@ -51,24 +43,6 @@ public class GameManager : MonoBehaviour
 
         Application.targetFrameRate = 60;
     }
-
-    // void Update()
-    // {
-    //     //Sub Menu
-    //     if (Input.GetButtonDown("Cancel") && (invenSet.activeSelf)==false)
-    //     {
-    //         if (menuSet.activeSelf)
-    //         {
-    //             Time.timeScale = 1;
-    //             menuSet.SetActive(false);
-    //         }
-    //         else
-    //         {
-    //             Time.timeScale = 0;
-    //             menuSet.SetActive(true); 
-    //         }
-    //     }
-    // }
 
     public void Death_GrowthUI()
     {
@@ -92,6 +66,7 @@ public class GameManager : MonoBehaviour
         int diceEarn = (int)(worldLevel * 1.5f);
         ModifyDiceCount(diceEarn);
         ModifyMaxLevel(worldLevel);
+        StovePCSDKManager.Instance.SetGrowthLevel(worldLevel);
         return diceEarn;
     }
     
@@ -101,6 +76,7 @@ public class GameManager : MonoBehaviour
         CheckDiceFileExists();
         bool ret = GetCurrentRecord() < worldLevel;
         ModifyRecord(worldLevel);
+        StovePCSDKManager.Instance.SetRecordLevel(worldLevel);
         return ret;
     }
 
@@ -250,11 +226,6 @@ public class GameManager : MonoBehaviour
     [Button]
     public void RerollItems()
     {
-        // if (ItemGenerator.Instance == null)
-        // {
-        //     UnityEngine.Debug.Log("게임 플레이 중에만 리롤 가능합니다.");
-        //     return;
-        // }
         CheckItemsFileExists();
         
         if (GetCurrentDiceCount() <= 0) // 주사위가 충분하지 않은 경우
@@ -265,7 +236,6 @@ public class GameManager : MonoBehaviour
         
         ModifyDiceCount(-1);
 
-        // JItemsList newList = new JItemsList();
         string jsonfile = File.ReadAllText(itemsFilePath);
         JObject token = JObject.Parse(jsonfile);
         JItemsList newList = JsonConvert.DeserializeObject<JItemsList>(token.ToString());
@@ -314,8 +284,6 @@ public class GameManager : MonoBehaviour
         {
             JArtifact token = new JArtifact();
             token.itemName = input[i].itemName;
-            // token.itemIcon = input[i].itemData.iconSprite;
-            // token.itemTooltip = input[i].itemData.tooltip;
             token.itemTier = input[i].tier;
             token.itemOptions = input[i].options;
             output.Add(token);
@@ -347,8 +315,6 @@ public class JWeapon
 public class JArtifact
 {
     public string itemName;
-    // public Sprite itemIcon;
-    // public string itemTooltip;
     public int itemTier;
     public Dictionary<ArtifactKey, float> itemOptions;
 }

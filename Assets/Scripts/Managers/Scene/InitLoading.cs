@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class InitLoading : MonoBehaviour
 {
+    
     TMP_Text loadingText;
     List<string> list = new List<string>() { "loading.", "loading..", "loading..." };
     void Awake()
@@ -21,11 +23,16 @@ public class InitLoading : MonoBehaviour
         if (loadingText.text.CompareTo(list[(int)elapsed]) != 0)
             loadingText.text = list[(int)elapsed];
 
-        if (GameManager.Instance != null &&
-            InputManager.Instance != null)
-        {
-            FindObjectOfType<SceneLoadInstance>().SwitchScene(SceneName.MainTitle);
-            // GameManager.Instance.sceneLoadManager.SwitchScene(SceneName.MainTitle);
-        }
+        // if (GameManager.Instance != null &&
+        //     InputManager.Instance != null)
+        // {
+        //     FindObjectOfType<SceneLoadInstance>().SwitchScene(SceneName.MainTitle);
+        //     // GameManager.Instance.sceneLoadManager.SwitchScene(SceneName.MainTitle);
+        // }
+    }
+
+    public static void GoToMainTitle()
+    {
+        FindObjectOfType<SceneLoadInstance>().SwitchScene(SceneName.MainTitle);
     }
 }
