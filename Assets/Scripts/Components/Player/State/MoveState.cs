@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace CharacterController
 {
@@ -22,7 +23,12 @@ namespace CharacterController
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
             {
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red, 2f);
-                Player.Instance.nav.SetDestination(hit.point);
+
+                NavMeshPath path = new NavMeshPath();
+                Player.Instance.nav.CalculatePath(hit.point, path);
+                Player.Instance.nav.SetPath(path);
+                
+                // Player.Instance.nav.SetDestination(hit.point);
                 moveto = hit.point;
             }
             Player.Instance.animator.SetBool("speed", true);
