@@ -200,17 +200,52 @@ public class PlayerController : MonoBehaviour
     public void KnockBack(float n,Vector3 v)
     {
         Debug.Log("KnockBack");
-        if (isCC)
-        {
-            StopCoroutine(CCcoroutine);
-            CCcoroutine = StartCoroutine(KnockBackCo(n, v));
-        }
-        else
+        if (!isCC)
         {
             isCC = true;
             Player.Instance.nav.enabled = false;
-            CCcoroutine = StartCoroutine(KnockBackCo(n, v));
+            float cnt = 100 * (int)n;
+            while (cnt > 0)
+            {
+                cnt--;
+                
+                RaycastHit hit;
+                Vector3 dashVelocity = Vector3.zero;
+                Vector3 pp = Player.Instance.transform.position;
+                Vector3 nextpos = pp + v + Vector3.up;
+                Ray ray = new Ray(nextpos,Vector3.down);
+                Debug.DrawRay(nextpos, Vector3.down, Color.red, 5f);
+            
+                if (Physics.Raycast(ray, out hit,Mathf.Infinity, 1 << LayerMask.NameToLayer("Walkable")))
+                {
+                
+                    Debug.DrawRay(pp,v, Color.red,1f);
+                    if (Physics.Raycast(pp, v, 1f, 1 << LayerMask.NameToLayer("WALL")))
+                    {
+                        // Debug.Log("cant dash");
+                        break;
+                    }
+                    Vector3 dashDirection = hit.point - pp;
+                
+                    Player.Instance.transform.position += dashDirection * Time.deltaTime;
+                }
+                
+            }
+
+            isCC = false;
+            Player.Instance.nav.enabled = true;
         }
+        // if (isCC)
+        // {
+        //     StopCoroutine(CCcoroutine);
+        //     CCcoroutine = StartCoroutine(KnockBackCo(n, v));
+        // }
+        // else
+        // {
+        //     isCC = true;
+        //     Player.Instance.nav.enabled = false;
+        //     CCcoroutine = StartCoroutine(KnockBackCo(n, v));
+        // }
     }
     private IEnumerator KnockBackCo(float n,Vector3 v)
     {
