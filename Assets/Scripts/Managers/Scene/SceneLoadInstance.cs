@@ -23,6 +23,7 @@ public class SceneLoadInstance : MonoBehaviour
             {
                 SceneManager.LoadScene(tgt.ToString());
                 Time.timeScale = 1;
+                GameManager.Instance.UpdateCanvasInterval(1f);
                 return;
             }
         }
@@ -38,6 +39,7 @@ public class SceneLoadInstance : MonoBehaviour
             {
                 SceneManager.LoadScene(tgt.ToString());
                 Time.timeScale = 1;
+                GameManager.Instance.UpdateCanvasInterval(1f);
                 return;
             }
         }

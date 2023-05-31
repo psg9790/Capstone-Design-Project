@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using DG.Tweening;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 // 정확한 역할은 정해지지 않았음, 대신 GameManager로써 마스터 설정같은거 다 때려 넣을듯
 // 일단 저장로직 인터페이스, 씬 이동할때 갈아끼울 씬로드매니저
@@ -74,6 +76,29 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(20f);
         }
     }
+
+    public void UpdateCanvasInterval(float time)
+    {
+        DOVirtual.DelayedCall(time, () =>
+        {
+            UpdateCanvas();
+        });
+    }
+
+    private void UpdateCanvas()
+    {
+        CanvasScaler[] scalers = FindObjectsByType<CanvasScaler>(FindObjectsSortMode.None);
+        Debug.Log("scalers: "+scalers.Length);
+        for (int i = 0; i < scalers.Length; i++)
+        {
+            scalers[i].uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            Resolution scale = Screen.currentResolution;
+            scalers[i].referenceResolution = new Vector2(scale.width, scale.height);
+            scalers[i].matchWidthOrHeight = 0.5f;
+        }
+    }
+    
+    
     public void Death_GrowthUI()
     {
         GameOverUI go = Instantiate(Resources.Load<GameOverUI>("UI/Canvas_GameOver"));

@@ -122,6 +122,7 @@ public class SettingsInstance : MonoBehaviour
         QualitySettings.vSyncCount=sync_toggle;
         BgmValue = BgmSlider.value;
         SFXValue = SfxSlider.value;
+        GameManager.Instance.UpdateCanvasInterval(0.5f);
     }
 
     public void CancelChangesButton()
