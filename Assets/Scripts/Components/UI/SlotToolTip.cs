@@ -21,20 +21,61 @@ public class SlotToolTip : MonoBehaviour
 
     public void ShowToolTip(Item item, Vector3 _pos) //item  나중에 정호가 만든걸로 바꿔야됨.
     {
-        
         go_Base.SetActive(true);
-        RectTransform rect = GetComponent<RectTransform>();
-        RectTransform baseRect = go_Base.GetComponent<RectTransform>();
-        
-        Resolution res = Screen.currentResolution;
-        float scaleX = 1920 / res.width, scaleY = 1080 / res.height;
-        Vector2 mousePosition = InputManager.Instance.GetMousePosition();
-        
-        
-        rect.anchoredPosition3D =
-            new Vector3(mousePosition.x * scaleX - 960, mousePosition.y * scaleY - 540, 0);
-        baseRect.anchoredPosition3D = new Vector3(baseRect.sizeDelta.x * 0.5f, ((mousePosition.y > baseRect.sizeDelta.y) ? -baseRect.sizeDelta.y * 0.5f : baseRect.sizeDelta.y * 0.5f), 0);
 
+        RectTransform rect = go_Base.GetComponent<RectTransform>();
+        Vector2 mouse =  InputManager.Instance.GetMousePosition();
+        rect.transform.position = mouse;
+        mouse = new Vector2(mouse.x - Screen.width * 0.5f, mouse.y - Screen.height * 0.5f);
+        if (mouse.y <= 0)
+        {
+            if (mouse.x <= 0)
+            {
+                rect.pivot = new Vector2(0, 0);
+            }
+            else
+            {
+                rect.pivot = new Vector2(1, 0);
+            }
+        }
+        else
+        {
+            if (mouse.x <= 0)
+            {
+                rect.pivot = new Vector2(0, 1);
+            }
+            else
+            {
+                rect.pivot = new Vector2(1, 1);
+            }
+        }
+        // RectTransform parent = GetComponent<RectTransform>();
+        // RectTransform rect = go_Base.GetComponent<RectTransform>();
+        // if (parent.anchoredPosition.x + rect.sizeDelta.x > 960)
+        // {
+        //     rect.pivot = new Vector2(1, 1);
+        // }
+        // else
+        // {
+        //     rect.pivot = new Vector2(0, 1);
+        // }
+        
+        //
+        // RectTransform rect = GetComponent<RectTransform>();
+        // RectTransform baseRect = go_Base.GetComponent<RectTransform>();
+        //
+        // Resolution res = Screen.currentResolution;
+        // Vector2 mousePosition = InputManager.Instance.GetMousePosition();
+        // float scaleX = mousePosition.x / res.width, scaleY = mousePosition.y / res.height;
+        //
+        //
+        // rect.anchoredPosition3D =
+        //     new Vector3(1920 * scaleX - 960, 1080 * scaleY - 540, 0);
+        // baseRect.anchoredPosition3D = new Vector3(baseRect.sizeDelta.x * 0.5f, ((mousePosition.y > baseRect.sizeDelta.y) ? -baseRect.sizeDelta.y * 0.5f : baseRect.sizeDelta.y * 0.5f), 0);
+        //
+        //
+        
+        
         List<string> stats = item.Options_ToString();
 
         txt_Itemname.text = item.itemName;
