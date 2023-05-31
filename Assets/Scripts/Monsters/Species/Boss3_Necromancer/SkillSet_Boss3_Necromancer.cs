@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Monsters.FSM;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -146,9 +147,9 @@ namespace Monsters.Skill
         private float throwCooldown = 0f;
         private float throwCooltime = 10f;
         private float raserCooldown = 0f;
-        private float raserCooltime = 20f;
+        private float raserCooltime = 30f;
         private float spawnCooldown = 0f;
-        private float spawnCooltime = 30f;
+        private float spawnCooltime = 50f;
 
         public override void DoPossibleEngage()
         {
@@ -190,6 +191,8 @@ namespace Monsters.Skill
             throwCooldown -= Time.deltaTime;
             spreadCooldown -= Time.deltaTime;
             spawnCooldown -= Time.deltaTime;
+            if(!monster.fsm.CheckCurState(EMonsterState.Dead))
+                OnOverlapSphere();
         }
 
         // 스킬셋에 맞는 몬스터의 고유값을 공유하기 위해서 재정의를 사용했음

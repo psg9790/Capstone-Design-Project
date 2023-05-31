@@ -86253,6 +86253,20 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: LerpBeforeBaseAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.1
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.56666666
+    functionName: LerpTerminate
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6
     functionName: SpreadAttack
     data: 
