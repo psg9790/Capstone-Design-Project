@@ -349,6 +349,7 @@ namespace Monsters
         Boss2_Crusader,
         Skeleton_DirectMage,
         Titan_Tanker,
-        Skeleton_Mage_Healer
+        Skeleton_Mage_Healer,
+        Boss3_Necromancer
     }
 }

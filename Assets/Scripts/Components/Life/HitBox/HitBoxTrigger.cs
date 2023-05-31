@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using UnityEditor.Rendering;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -74,7 +75,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
         // other.gameObject.layer는 레이어 인덱스 (ex. 7)
         // targetMask는 인덱스로 시프트까지 계산된 값 (ex. 128)
 
-        
+
         int targetLayer = (int)Mathf.Log(targetMask, 2);
         if (hitBox.isBullet) // bullet일 시 분기
         {
@@ -106,18 +107,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             }
             else if (other.gameObject.layer != hitBox.heartLayer) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
             {
-                // UnityEngine.Debug.Log(LayerMask.LayerToName(other.gameObject.layer));
-                // UnityEngine.Debug.Log(other.gameObject.name);
-                // if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
-                //         1 << other.gameObject.layer))
-                // {
-                //     dir.y = 0;
-                //     hitBox.BulletHit(hit.point, dir);
-                // }
-                // else
-                {
-                    hitBox.BulletHit(transform.position, Vector3.zero);
-                }
+                hitBox.BulletHit(transform.position, Vector3.zero);
                 Destroy(hitBox.gameObject);
             }
 
@@ -136,7 +126,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     dir.y = 0;
                     _heart.Take_Damage(damage, dir.normalized);
                     hitBox.SlashHit();
-                    
+
 
                     if (hitHash.Count >= targetCount)
                     {
