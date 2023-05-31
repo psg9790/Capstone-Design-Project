@@ -53,14 +53,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   elapsed: 0
-  duration: 3
+  duration: 5
   targetCount: 5
   parent_particle: {fileID: 8041726205563455025}
   slashSound: {fileID: 0}
   slashSoundTime: 0
   slashHitSound: {fileID: 0}
   isBullet: 1
-  bulletSpeed: 10
+  bulletSpeed: 2
   bulletFlashEffect: {fileID: 198447726614856880, guid: 204cbd858ac2d0d4480983869d028cfa,
     type: 3}
   bulletFlashSound: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
@@ -19737,10 +19737,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 0
-  duration: 10
+  duration: 5
   targetCount: 0
   refreshAutomatically: 1
   refreshInterval: 0.25
-  damageRatio: 1
-  ccType: 1
+  damageRatio: 1.5
+  ccType: 3
   ccPower: 0

@@ -98,20 +98,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPositionData: {fileID: 11400000, guid: 3238c3dc78eba774cbbb372b3f6ba8a5, type: 2}
+  shootpos: {fileID: 5010712044099638044}
+  weaponAnimator: {fileID: 9100000, guid: 0bcf19848b4e49643967aa3500dec2ae, type: 2}
   attack_effect:
   - {fileID: 9194591403454043446, guid: 1feebc071ea4f0d418e2f0ab61c202f3, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   skill_effect:
   - {fileID: 6150470737697167925, guid: a09f4a3f24db2504dad29f42c9d4b2d4, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  weaponAnimator: {fileID: 9100000, guid: 0bcf19848b4e49643967aa3500dec2ae, type: 2}
-  shootpos: {fileID: 5010712044099638044}
-  _name: 
-  attackDamamge: 0
-  attackSpeed: 0
-  attackRange: 0
+  - {fileID: 9194591403454043446, guid: 1feebc071ea4f0d418e2f0ab61c202f3, type: 3}
+  - {fileID: 5128281942323206486, guid: 707f48b1a530e2448954908c2f5a8761, type: 3}
+  QCoolTime: 3
+  WCoolTime: 1
+  ECoolTime: 10
+  RCoolTime: 5
 --- !u!1 &9040570177078544748
 GameObject:
   m_ObjectHideFlags: 0
