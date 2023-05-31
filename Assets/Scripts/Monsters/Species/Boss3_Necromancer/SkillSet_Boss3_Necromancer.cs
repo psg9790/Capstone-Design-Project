@@ -13,6 +13,10 @@ namespace Monsters.Skill
 
         private void Start()
         {
+            if (siblingTransform == null)
+            {
+                siblingTransform = new GameObject("sibling").transform;
+            }
             heart.OnDeath.AddListener(GenerateHighItem);
             heart.OnDeath.AddListener(RemoveSiblings);
         }
@@ -89,10 +93,7 @@ namespace Monsters.Skill
 
         void SpawnMonsters()
         {
-            if (siblingTransform == null)
-            {
-                siblingTransform = new GameObject("sibling").transform;
-            }
+            
 
             HitBox spawn = Instantiate(spawnVFX);
             spawn.Particle_Play(heart);
@@ -122,9 +123,9 @@ namespace Monsters.Skill
             int rndGeneralMonster = UnityEngine.Random.Range(0, general_monsters.Length);
             Monsters.Monster newMonster =
                 Instantiate(general_monsters[rndGeneralMonster]).GetComponent<Monsters.Monster>();
+            newMonster.transform.SetParent(siblingTransform);
             newMonster.transform.rotation = Quaternion.LookRotation(transform.forward);
             newMonster.Init(pos, 8f);
-            newMonster.transform.SetParent(siblingTransform);
             newMonster.heart.SetMonsterStatByLevel((short)heart.LEVEL);
             newMonster.fov.viewRadius = monster.fov.viewRadius;
         }
