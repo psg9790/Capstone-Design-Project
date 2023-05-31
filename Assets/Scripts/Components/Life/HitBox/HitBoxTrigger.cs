@@ -108,13 +108,13 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             {
                 // UnityEngine.Debug.Log(LayerMask.LayerToName(other.gameObject.layer));
                 // UnityEngine.Debug.Log(other.gameObject.name);
-                if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
-                        1 << other.gameObject.layer))
-                {
-                    dir.y = 0;
-                    hitBox.BulletHit(hit.point, dir);
-                }
-                else
+                // if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity,
+                //         1 << other.gameObject.layer))
+                // {
+                //     dir.y = 0;
+                //     hitBox.BulletHit(hit.point, dir);
+                // }
+                // else
                 {
                     hitBox.BulletHit(transform.position, Vector3.zero);
                 }
