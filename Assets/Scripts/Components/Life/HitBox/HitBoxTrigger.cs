@@ -29,6 +29,8 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
 
     private HitBox hitBox; // bullet 플래그 확인용 저장
 
+    public bool bullet_ignoreWall = false; // 총알이 벽 무시
+
     public void Init(Heart heart, LayerMask targetMask, int targetCount, HitBox hitBox) // 초기 설정
     {
         this.heart = heart;
@@ -109,7 +111,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     //     Destroy(hitBox.gameObject);
                 }
             }
-            else if (other.gameObject.layer != hitBox.heartLayer) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
+            else if (!bullet_ignoreWall && (other.gameObject.layer != hitBox.heartLayer)) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
             {
                 hitBox.BulletHit(transform.position, Vector3.zero);
                 Destroy(hitBox.gameObject);
