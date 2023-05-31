@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37fc032bbb5944409a6f7deac7c2f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statGrowthByLevelUp: 1.2
+  statGrowthByLevelUp: 1.1
   bulletPos: {fileID: 726272838667951330}
   baseAttack: {fileID: 656422059064697357, guid: e297bce5d7d84774a85a55a6aafe68a2,
     type: 3}
@@ -286,14 +286,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   level: 0
-  max_hp: 1000
-  cur_hp: 1000
-  atk: 30
-  def: 25
+  max_hp: 500
+  cur_hp: 500
+  atk: 20
+  def: 10
   movement_speed: 6
   atk_speed: 1
   skill_cooldown: 0
-  criticalRate: 5
+  criticalRate: 0
   criticalDamage: 200
   immune: 0
   cc_stiff_immune: 1

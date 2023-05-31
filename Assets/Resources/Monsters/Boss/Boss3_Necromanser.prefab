@@ -6797,7 +6797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6288807b5f8da3043b586b90e737a7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statGrowthByLevelUp: 1.3
+  statGrowthByLevelUp: 1.4
   rightTransform: {fileID: 1299604961616892328}
   baseAttackVFX: {fileID: 8654789276062258938, guid: 03bcb0bff414e934da6bd4bab27cfa61,
     type: 3}
@@ -6884,13 +6884,13 @@ MonoBehaviour:
   level: 0
   max_hp: 1000
   cur_hp: 1000
-  atk: 20
-  def: 10
-  movement_speed: 4
+  atk: 25
+  def: 5
+  movement_speed: 5
   atk_speed: 1
   skill_cooldown: 0
   criticalRate: 0
-  criticalDamage: 2
+  criticalDamage: 200
   immune: 0
   cc_stiff_immune: 1
   cc_knockback_immune: 1
