@@ -115,6 +115,10 @@ public class Heart : MonoBehaviour
     {
         atk_speed += n;
     }
+    public void criticalRate_CHANGE(int n)
+    {
+        criticalRate += n;
+    }
     public void Restore_CUR_HP(float amount)
     {
         cur_hp += amount;
