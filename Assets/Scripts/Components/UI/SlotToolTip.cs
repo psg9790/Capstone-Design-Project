@@ -21,6 +21,7 @@ public class SlotToolTip : MonoBehaviour
 
     public void ShowToolTip(Item item, Vector3 _pos) //item  나중에 정호가 만든걸로 바꿔야됨.
     {
+        
         go_Base.SetActive(true);
         RectTransform rect = GetComponent<RectTransform>();
         RectTransform baseRect = go_Base.GetComponent<RectTransform>();
