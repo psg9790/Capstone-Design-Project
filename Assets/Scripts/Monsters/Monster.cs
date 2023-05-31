@@ -289,8 +289,8 @@ namespace Monsters
             // fsm.ChangeState(EMonsterState.Idle);
             // transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
             // transform.DOLookAt(-dir, 0.3f);
-            if(Vector3.Dot(transform.forward, -dir) < 0)
-                transform.rotation = Quaternion.LookRotation(-dir);
+            // if(Vector3.Dot(transform.forward, -dir) < 0)
+            //     transform.rotation = Quaternion.LookRotation(-dir);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
@@ -349,6 +349,7 @@ namespace Monsters
         Boss2_Crusader,
         Skeleton_DirectMage,
         Titan_Tanker,
-        Skeleton_Mage_Healer
+        Skeleton_Mage_Healer,
+        Boss3_Necromancer
     }
 }

@@ -2164,6 +2164,7 @@ MonoBehaviour:
   - {fileID: 5400769774923502835, guid: 01ba1b0fcb41b314b9fa4b02259cf962, type: 3}
   - {fileID: 8882476824223547669, guid: 9e4df8275d6bbf44a8b01390e6426061, type: 3}
   - {fileID: 8111521087548828821, guid: 61f10a65a83d34f4687480e0482420ef, type: 3}
+  - {fileID: 1392261694341054497, guid: 066fdfdcd8a2a314c80a03a90952e449, type: 3}
   camLockDescription: {fileID: 1791857412}
   monsterSpawn_Dropdown: {fileID: 1706021846}
   tooltip: {fileID: 1739530068}
@@ -2764,6 +2765,8 @@ GameObject:
   - component: {fileID: 1775045024}
   - component: {fileID: 1775045023}
   - component: {fileID: 1775045027}
+  - component: {fileID: 1775045028}
+  - component: {fileID: 1775045029}
   m_Layer: 3
   m_Name: Land
   m_TagString: Untagged
@@ -2780,7 +2783,7 @@ MeshCollider:
   m_GameObject: {fileID: 1775045022}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -2879,6 +2882,48 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 1e1ffd177ae4a8847912622ac338a58f, type: 2}
+--- !u!114 &1775045028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775045022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -334000983
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 1.1666666
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 23800000, guid: 16e2d96bee57a7b49a01680171839292, type: 2}
+--- !u!65 &1775045029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775045022}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 10}
+  m_Center: {x: 0, y: -0.5001, z: 0}
 --- !u!1 &1791857410
 GameObject:
   m_ObjectHideFlags: 0

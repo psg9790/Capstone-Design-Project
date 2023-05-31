@@ -9,6 +9,17 @@ namespace Monsters.Skill
 {
     public class SkillSet_Boss2_Crusader : SkillSet
     {
+        private void Start()
+        {
+            heart.OnDeath.AddListener(GenerateHighItem);
+        }
+
+        void GenerateHighItem()
+        {
+            if(RecordLevelManager.Instance == null)
+                ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL + 2);
+        }
+
         private void Update()
         {
             if(!monster.fsm.CheckCurState(EMonsterState.Dead))

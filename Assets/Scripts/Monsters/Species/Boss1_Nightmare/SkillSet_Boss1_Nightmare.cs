@@ -20,6 +20,17 @@ namespace Monsters.Skill
         private float hornAttack_cooldown = 0f;
         public HitBox hornAttack;
 
+        private void Start()
+        {
+            heart.OnDeath.AddListener(GenerateHighItem);
+        }
+
+        void GenerateHighItem()
+        {
+            if(RecordLevelManager.Instance == null)
+                ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL + 2);
+        }
+        
         private void Update()
         {
             if (hornAttack_cooldown <= 0)

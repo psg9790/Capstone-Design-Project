@@ -12,12 +12,13 @@ namespace Monsters.Skill
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, 1 << LayerMask.NameToLayer("Monster"));
             for (int i = 0; i < cols.Length; i++)
             {
-                if (TryGetComponent<Heart>(out Heart target))
+                if (cols[i].TryGetComponent<Heart>(out Heart target))
                 {
-                    heart.Restore_CUR_HP(heart.ATK);
-                    HitBox healVFX = Instantiate(healEffect);
-                    healVFX.transform.position = target.transform.position;
-                    healVFX.Particle_Play(heart);
+                    target.Restore_CUR_HP(heart.ATK);
+                    HitBox healVFX = Instantiate(healEffect, target.transform);
+                    // healVFX.transform.position = target.transform.position;
+                    healVFX.Particle_Play(target);
+                    // Debug.Log(target.gameObject.name);
                 }
             }
         }
