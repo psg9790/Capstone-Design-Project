@@ -460,7 +460,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 1315905720052458845}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -1616,6 +1616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105181ceffae09e409c9c551f95e4e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   imgCoolTime: {fileID: 3960772550786788969}
   txtCoolTime: {fileID: 5297762831920417218}
 --- !u!114 &8143360631783968100
@@ -7413,6 +7414,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bff433fa88a92eb4dbdab16572cf91ab, type: 3}
   - {fileID: 21300000, guid: f51787da7231e434c9f318683e9d5011, type: 3}
   - {fileID: 21300000, guid: f51787da7231e434c9f318683e9d5011, type: 3}
+  uiSkillBtn:
+  - {fileID: 3039118495899949801}
+  - {fileID: 3039118495763252324}
+  - {fileID: 3039118496025518478}
+  - {fileID: 3039118496438458966}
   slotParent: {fileID: 1465905869107212947}
   slots:
   - {fileID: 763278047681266414}
@@ -11817,7 +11823,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 3870155498784637316}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -13006,6 +13012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105181ceffae09e409c9c551f95e4e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   imgCoolTime: {fileID: 865001557031549140}
   txtCoolTime: {fileID: 5116727536324821157}
 --- !u!114 &7320975099879167134
@@ -13241,8 +13248,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: -35}
-  m_SizeDelta: {x: 157.93, y: 50}
+  m_AnchoredPosition: {x: 2, y: -22}
+  m_SizeDelta: {x: 157.93, y: 58.7198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7752051775260622957
 CanvasRenderer:
@@ -13336,7 +13343,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -66.475586, y: 0, z: -49.85669, w: -151.23187}
+  m_margin: {x: -125.33411, y: 0, z: -121.7948, w: -151.23187}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -14852,7 +14859,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 500}
+  m_SizeDelta: {x: 600, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2983905037748938719
 CanvasRenderer:
@@ -15238,7 +15245,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 8207232657950424733}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -16272,7 +16279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 83}
+  m_AnchoredPosition: {x: 3, y: 83.00006}
   m_SizeDelta: {x: 315.85, y: 82.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2124673122373268469
@@ -16338,8 +16345,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -16863,7 +16870,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 6557800034874350165}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -16974,7 +16981,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 3196631243225443472}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -17495,8 +17502,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -17555,7 +17562,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6848917502085037192}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18659,7 +18666,7 @@ MonoBehaviour:
   _SlotToolTip: {fileID: 3039118496366289663}
   arti_count: 0
   number: 0
-  grade_Back: {fileID: 0}
+  grade_Back: {fileID: 9045674426704314302}
   extra_item:
     itemData: {fileID: 0}
     id: 0
@@ -23069,6 +23076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105181ceffae09e409c9c551f95e4e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   imgCoolTime: {fileID: 4760337076927226681}
   txtCoolTime: {fileID: 5807317336298110225}
 --- !u!114 &592623206304327067
@@ -23244,6 +23252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105181ceffae09e409c9c551f95e4e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   imgCoolTime: {fileID: 2037959513071332492}
   txtCoolTime: {fileID: 3814027379615188004}
 --- !u!114 &5786819595915072117

@@ -19,6 +19,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Item extra_item=null;
     public Transform buttonScale;
     private Vector3 defaultScale;
+    
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 {
                     Inventory.instance.AddItem(Inventory.instance.tempItem);                    
                     Inventory.instance.tempItem = itemSlotui.item;
+                    Inventory.instance.setSkillcool();
                 }
                 else if(Inventory.instance.isInstallation==false)
                 {
@@ -43,6 +45,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                      // back 이미지 없앰.
                     Inventory.instance.weaponSlot.itemSlotui.image.gameObject.SetActive(true);           
                     Inventory.instance.isInstallation = true;
+                    Inventory.instance.setSkillcool();
                 }
                
                 
@@ -232,13 +235,21 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void ChangeSlot()
     {
-        Item tempItem = itemSlotui.item;                                // 현재 장착하고 있는 아이템
+        Item tempItem = itemSlotui.item;
+        Sprite tempImage = grade_Back.sprite;
+        
+        itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item; // 바뀔 아이템
+        
         grade_Back.gameObject.SetActive(true);
-        itemSlotui.item= DragSlot.instance.dragSlot.itemSlotui.item;    // 바뀔 아이템
+        grade_Back.sprite = DragSlot.instance.dragSlot.grade_Back.sprite;
         
         if (tempItem != null)
         {
             DragSlot.instance.dragSlot.itemSlotui.item = tempItem;
+            grade_Back.sprite = DragSlot.instance.dragSlot.grade_Back.sprite;
+            DragSlot.instance.dragSlot.grade_Back.sprite=grade_Back.sprite;
+            DragSlot.instance.dragSlot.grade_Back.gameObject.SetActive(true);
+            
         }
         else
         {
@@ -246,6 +257,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             DragSlot.instance.dragSlot.itemSlotui.item = null;
             DragSlot.instance.dragSlot.itemSlotui.image.sprite=null;
             DragSlot.instance.dragSlot.itemSlotui.gameObject.SetActive(false);
+            DragSlot.instance.dragSlot.grade_Back.sprite = null;
         }
     }
 
