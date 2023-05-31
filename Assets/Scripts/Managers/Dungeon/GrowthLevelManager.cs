@@ -260,7 +260,7 @@ public class GrowthLevelManager : MonoBehaviour
                 DirectionalLight.SetActive(true);
             }
             
-            light.color = Color.white;
+            light.color = new Color(0.8f, 0.8f, 0.8f, 1.0f);
             
 
             dungeon3_parent.SetActive(true);
@@ -292,8 +292,11 @@ public class GrowthLevelManager : MonoBehaviour
             {
                 DirectionalLight.SetActive(true);
             }
-            
-            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
+
+            Color newColor = new Color(UnityEngine.Random.Range(0.4f, 1), UnityEngine.Random.Range(0.4f, 1),
+                UnityEngine.Random.Range(0.4f, 1), 1);
+            light.color = newColor;
+            // light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
 
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
                 mazeIndent, maxMazeBlockCount);
