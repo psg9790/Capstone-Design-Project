@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         CheckItemsFileExists();
     }
 
+
     private void OnDestroy()
     {
         if (UUA_CO != null)

@@ -60,11 +60,21 @@ public class ArtifactSlot : ItemSlot
     
     public override void OnEndDrag(PointerEventData eventData)
     {
+        UnityEngine.Debug.Log("Q12");
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             ItemGenerator.Instance.PlayerDropItem(DragSlot.instance.dragSlot.itemSlotui.item);
-            Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            UnityEngine.Debug.Log("Q1");
+            DragSlot.instance.dragSlot.grade_Back.gameObject.SetActive(false);
+            UnityEngine.Debug.Log("W2");
+            DragSlot.instance.dragSlot.itemSlotui.item = null;
+            UnityEngine.Debug.Log("E3");
+            DragSlot.instance.dragSlot.itemSlotui.image.sprite= null;
+            UnityEngine.Debug.Log("R4");
+            DragSlot.instance.dragSlot.itemSlotui.gameObject.SetActive(false);
+            UnityEngine.Debug.Log("T5");
             Inventory.instance.artifactUIs[number].isInstallation = false;
+            UnityEngine.Debug.Log("Y6");
         }
         
         DragSlot.instance.SetColor(0);

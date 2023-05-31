@@ -74,7 +74,11 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     {
         // other.gameObject.layer는 레이어 인덱스 (ex. 7)
         // targetMask는 인덱스로 시프트까지 계산된 값 (ex. 128)
-
+        if (heart == null)
+        {
+            hitBox.BulletHit(transform.position, Vector3.zero);
+            return;
+        }
 
         int targetLayer = (int)Mathf.Log(targetMask, 2);
         if (hitBox.isBullet) // bullet일 시 분기

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UISkillBtn : MonoBehaviour
 {
     private bool isDelay = false;
-    private int coolTime=5;
+    public float coolTime;
     public Image imgCoolTime;
     public TMP_Text txtCoolTime;
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class UISkillBtn : MonoBehaviour
     public void skill_cool()
     {
         if (this.isDelay) return;
-
+        
         this.isDelay = true;
         //cooltime 이미지의 fillAmount = 0
         this.imgCoolTime.fillAmount = 0;

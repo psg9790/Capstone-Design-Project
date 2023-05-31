@@ -87,6 +87,7 @@ public class WeaponSlot : ItemSlot
             grade_Back.sprite = DragSlot.instance.dragSlot.grade_Back.sprite;
             
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
+            Inventory.instance.setSkillcool();
             itemSlotui.item = DragSlot.instance.dragSlot.itemSlotui.item;
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
