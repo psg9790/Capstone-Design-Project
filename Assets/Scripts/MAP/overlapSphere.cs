@@ -21,7 +21,8 @@ public class overlapSphere : MonoBehaviour
     public bool clicked;    //클릭 확인
     public GameObject commu_bar;   //UI on off 
     public Item GetItem;    //클릭한 아이템 저장
-
+    private bool isPopup=false;
+    
     
     private void Start()
     {
@@ -80,6 +81,13 @@ public class overlapSphere : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
             ClickItem(0);
+        } else if ((Input.GetKeyDown(KeyCode.F) && !(inven.IsEmpty()) && isPopup == false))
+        {
+            isPopup = true;
+            
+            Inventory.instance.popUp.text="슬롯이 가득 차 있습니다.";
+            Inventory.instance.popUp.gameObject.SetActive(true);
+            Invoke("popupHide", 1.0f);
         }
         
 
@@ -115,6 +123,11 @@ public class overlapSphere : MonoBehaviour
         ClickNum = val;
     }
     
+    public void popupHide()
+    {
+        Inventory.instance.popUp.gameObject.SetActive(false);
+        isPopup = false;
+    }
     
 }
 
