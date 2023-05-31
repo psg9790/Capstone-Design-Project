@@ -1,6 +1,7 @@
 // 몬스터 최상위 클래스
 // 앞으로 구현할 세부 몬스터들은 이 클래스를 상속받아서 구현하게 될 것
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -287,7 +288,9 @@ namespace Monsters
 
             // fsm.ChangeState(EMonsterState.Idle);
             // transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
-            transform.DOLookAt(dir, 0.3f);
+            // transform.DOLookAt(-dir, 0.3f);
+            if(Vector3.Dot(transform.forward, -dir) < 0)
+                transform.rotation = Quaternion.LookRotation(-dir);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 

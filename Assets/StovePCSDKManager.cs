@@ -105,8 +105,10 @@ public class StovePCSDKManager : MonoBehaviour
         {
             // 초기화 실패로 게임 종료
             UnityEngine.Debug.Log(sdkResult.ToString());
-            BeginQuitAppDueToError();
-            WriteLog("Stove 설정 초기화 실패로\n 잠시 후 게임을 종료합니다...");
+            // BeginQuitAppDueToError();
+            // WriteLog("Stove 설정 초기화 실패로\n 잠시 후 게임을 종료합니다...");
+            WriteLog("Stove 설정 초기화 실패로\n리더보드 기능을 사용하실 수 없습니다.");
+            InitLoading.GoToMainTitle();
         }
     }
 

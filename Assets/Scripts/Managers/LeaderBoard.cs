@@ -20,6 +20,8 @@ public class LeaderBoard : MonoBehaviour
 
     public RankComponent playerProfile;
 
+    public GameObject cannotUseLeaderboard;
+
     private void Start()
     {
         gameObject.SetActive(false);
@@ -59,6 +61,7 @@ public class LeaderBoard : MonoBehaviour
 
     public void RankingListener(StovePCRank[] ranks, uint rankTotalCount)
     {
+        cannotUseLeaderboard.SetActive(false);
         RankComponent[] components = content.GetComponentsInChildren<RankComponent>();
         for (int i = 0; i < components.Length; i++)
         {

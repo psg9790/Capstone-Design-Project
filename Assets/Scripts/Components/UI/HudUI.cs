@@ -71,7 +71,7 @@ public class HudUI : MonoBehaviour
                 }
             }
         }
-        if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
+        // if (curHp != Player.Instance.heart.CUR_HP)             //curHp != Player.Instance.heart.CUR_HP;
         {
             hp_Activity();
             
@@ -131,8 +131,8 @@ public class HudUI : MonoBehaviour
             curHp = hp;
         }
 
-        hpBar.value = (float)curHp / (float)maxHp;
-        hpImage.fillAmount = hpBar.value;
+        // hpBar.value = (float)curHp / (float)Player.Instance.heart.MAX_HP;
+        hpImage.fillAmount = (float)curHp / (float)Player.Instance.heart.MAX_HP;
     }
     
     private void hp_back_Activity()
@@ -146,8 +146,8 @@ public class HudUI : MonoBehaviour
         {
             afterCurhp  =  curHp;
         }
-        hpBackBar.value = (float)curHp / (float)maxHp;
-        hpBackImage.fillAmount = hpBar.value;
+        // hpBackBar.value = (float)afterCurhp / (float)Player.Instance.heart.MAX_HP;
+        hpBackImage.fillAmount = (float)afterCurhp / (float)Player.Instance.heart.MAX_HP;
     }
     
 }

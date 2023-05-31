@@ -15,8 +15,8 @@ namespace Monsters.Skill
                 if (TryGetComponent<Heart>(out Heart target))
                 {
                     heart.Restore_CUR_HP(heart.ATK);
-                    HitBox healVFX = Instantiate(healEffect, target.transform);
-                    // healVFX.transform.position = target.transform.position;
+                    HitBox healVFX = Instantiate(healEffect);
+                    healVFX.transform.position = target.transform.position;
                     healVFX.Particle_Play(heart);
                 }
             }
