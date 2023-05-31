@@ -287,7 +287,7 @@ namespace Monsters
 
             // fsm.ChangeState(EMonsterState.Idle);
             // transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
-            // transform.DOLookAt(dir, 0.3f);
+            transform.DOLookAt(dir, 0.3f);
             hitColorCo = StartCoroutine(hitColoring(duration));
         }
 
