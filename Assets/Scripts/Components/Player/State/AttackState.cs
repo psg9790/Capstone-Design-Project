@@ -57,7 +57,7 @@ namespace CharacterController
         
         public override void OnExitState()
         {
-            Debug.Log("end atk");
+            // Debug.Log("end atk");
             Controller.isAttack = false;
             Player.Instance.animator.ResetTrigger("attack");
         }

@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateCanvasInterval(float time)
     {
+        return;
         DOVirtual.DelayedCall(time, () =>
         {
             UpdateCanvas();
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
     private void UpdateCanvas()
     {
         CanvasScaler[] scalers = FindObjectsByType<CanvasScaler>(FindObjectsSortMode.None);
-        Debug.Log("scalers: "+scalers.Length);
+        // Debug.Log("scalers: "+scalers.Length);
         for (int i = 0; i < scalers.Length; i++)
         {
             scalers[i].uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
