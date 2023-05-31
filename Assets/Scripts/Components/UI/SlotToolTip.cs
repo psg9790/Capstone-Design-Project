@@ -27,10 +27,13 @@ public class SlotToolTip : MonoBehaviour
         RectTransform baseRect = go_Base.GetComponent<RectTransform>();
         
         Resolution res = Screen.currentResolution;
+        float scaleX = 1920 / res.width, scaleY = 1080 / res.height;
         Vector2 mousePosition = InputManager.Instance.GetMousePosition();
+        
+        
         rect.anchoredPosition3D =
-            new Vector3(mousePosition.x - res.width * 0.5f, mousePosition.y - res.height * 0.5f, 0);
-        baseRect.anchoredPosition3D = new Vector3(300, ((mousePosition.y > 500) ? -250 : 250), 0);
+            new Vector3(mousePosition.x * scaleX - 960, mousePosition.y * scaleY - 540, 0);
+        baseRect.anchoredPosition3D = new Vector3(baseRect.sizeDelta.x * 0.5f, ((mousePosition.y > baseRect.sizeDelta.y) ? -baseRect.sizeDelta.y * 0.5f : baseRect.sizeDelta.y * 0.5f), 0);
 
         List<string> stats = item.Options_ToString();
 
