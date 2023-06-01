@@ -32,6 +32,7 @@ public class RecordLevelManager : MonoBehaviour
 
     private void Start()
     {
+        Inventory.instance.gameObject.SetActive(true);
         PlayerSpawn();
         EquipLocalWeaponAndArtifacts();
         NextLevel();
@@ -47,7 +48,28 @@ public class RecordLevelManager : MonoBehaviour
     {
         curLevel++;
         LevelDisplay();
-        
+        Inventory.instance.gameMain.hudUI.portionBtn.RestorePotion();
+
+        StartCoroutine(BossSpawnCountdownIE());
+    }
+
+    [SerializeField] private TMP_Text countDown_text;
+    IEnumerator BossSpawnCountdownIE()
+    {
+        yield return new WaitForSeconds(2.5f);
+        countDown_text.text = "4";
+        countDown_text.DOFade(0, 1).From(1);
+        yield return new WaitForSeconds(1f);
+        countDown_text.text = "3";
+        countDown_text.DOFade(0, 1).From(1);
+        yield return new WaitForSeconds(1f);
+        countDown_text.text = "2";
+        countDown_text.DOFade(0, 1).From(1);
+        yield return new WaitForSeconds(1f);
+        countDown_text.text = "1";
+        countDown_text.DOFade(0, 1).From(1);
+        yield return new WaitForSeconds(1f);
+
         // 보스몹 스폰
         int randIdx = UnityEngine.Random.Range(0, bossPrefabs.Length);
         boss = Instantiate(bossPrefabs[randIdx]);
@@ -60,6 +82,9 @@ public class RecordLevelManager : MonoBehaviour
 
         bossTrackingCoroutine = StartCoroutine(BossTrackingIE(boss));
     }
+    
+    
+    
     private Coroutine bossTrackingCoroutine;
 
     private IEnumerator BossTrackingIE(Monsters.Monster monster)

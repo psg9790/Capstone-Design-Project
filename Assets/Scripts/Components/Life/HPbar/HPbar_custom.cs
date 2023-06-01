@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Monsters;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,22 +18,25 @@ public class HPbar_custom : MonoBehaviour
     [SerializeField] private Slider red;
     [SerializeField] private Slider yellow;
     
-    [ShowInInspector][ReadOnly] private Heart heart;
+    [ShowInInspector][ReadOnly] public Heart heart;
     private float RED_VALUE;
     private float YELLOW_VALUE;
 
+    public bool isBoss = false;
+    [ShowIf("isBoss")] public TMP_Text bossNameText;
+
     private void Awake()
     {
-        
-
         cam = Camera.main;
         rect = GetComponent<RectTransform>();
-        HPbarManager.Instance.Add(this);
+        if(!isBoss)
+            HPbarManager.Instance.Add(this);
     }
 
     private void Update()
     {
-        Positioning();
+        if(!isBoss)
+            Positioning();
         Red_Activity();
         Yellow_Activity();
         Visualize();
@@ -47,7 +51,8 @@ public class HPbar_custom : MonoBehaviour
     {
         if (RED_VALUE < heart.CUR_HP)
         {
-            RED_VALUE += Time.deltaTime * GAGE_SPEED * 3f;
+            // RED_VALUE += Time.deltaTime * GAGE_SPEED * 3f;
+            RED_VALUE = Mathf.Lerp(RED_VALUE, heart.CUR_HP, 0.2f);
         }
         if (RED_VALUE > heart.CUR_HP)
         {
@@ -59,7 +64,8 @@ public class HPbar_custom : MonoBehaviour
     {
         if (YELLOW_VALUE > RED_VALUE)
         {
-            YELLOW_VALUE -= Time.deltaTime * GAGE_SPEED;
+            // YELLOW_VALUE -= Time.deltaTime * GAGE_SPEED;
+            YELLOW_VALUE = Mathf.Lerp(YELLOW_VALUE, RED_VALUE, 0.1f);
         }
         if (YELLOW_VALUE < RED_VALUE)
         {

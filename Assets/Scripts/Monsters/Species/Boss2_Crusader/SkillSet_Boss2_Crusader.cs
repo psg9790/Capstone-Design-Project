@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Monsters.FSM;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -7,6 +9,23 @@ namespace Monsters.Skill
 {
     public class SkillSet_Boss2_Crusader : SkillSet
     {
+        private void Start()
+        {
+            heart.OnDeath.AddListener(GenerateHighItem);
+        }
+
+        void GenerateHighItem()
+        {
+            if(RecordLevelManager.Instance == null)
+                ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL + 2);
+        }
+
+        private void Update()
+        {
+            if(!monster.fsm.CheckCurState(EMonsterState.Dead))
+                OnOverlapSphere();
+        }
+
         private Coroutine lerpBaseAttackCo;
         private IEnumerator lerpIE()
         {
@@ -175,6 +194,37 @@ namespace Monsters.Skill
 
             heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level],
                 atkspeed_byLevel[level], movementspeed_byLevel[level]);
+        }
+        
+        private HPbar_custom boss_hpbar;
+
+        private void OnOverlapSphere() // 보스 hp바
+        {
+            Collider[] cols = Physics.OverlapSphere(transform.position, 20f, 1 << LayerMask.NameToLayer("Player"));
+            if (boss_hpbar == null)
+            {
+                boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
+            }
+            if (cols.Length > 0)
+            {
+                if(!boss_hpbar.isActiveAndEnabled)
+                {
+                    boss_hpbar.bossNameText.text = "암흑기사";
+                    boss_hpbar.Activate(heart);
+                    boss_hpbar.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                boss_hpbar.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if(boss_hpbar != null)
+                if(boss_hpbar.heart == heart)
+                    boss_hpbar.gameObject.SetActive(false);
         }
     }
 }

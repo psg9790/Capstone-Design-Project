@@ -21,7 +21,8 @@ public class overlapSphere : MonoBehaviour
     public bool clicked;    //클릭 확인
     public GameObject commu_bar;   //UI on off 
     public Item GetItem;    //클릭한 아이템 저장
-
+    private bool isPopup=false;
+    
     
     private void Start()
     {
@@ -43,18 +44,20 @@ public class overlapSphere : MonoBehaviour
         foreach (Collider col in colliders)
         {
             //콜라이더의 테그를 인식하여 이에 맞는 표현 보이기
-            if (col.CompareTag("Item") )
+            if (col.CompareTag("Item") &&count <=45)
             {
                 if (commu_bar.activeSelf == false)
                 {
                     commu_bar.SetActive(true);
                 }
                 dataList.Add(col.gameObject);
-                Incontents = content.GetChild(count).gameObject;
-                Incontents.SetActive(true);
-                TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
-                name.text = col.GetComponent<DroppedItem>().item.itemName;
-                count++;
+                
+                    Incontents = content.GetChild(count).gameObject;
+                    Incontents.SetActive(true);
+                    TMP_Text name = content.GetChild(count).GetComponentInChildren<TMP_Text>();
+                    name.text = col.GetComponent<DroppedItem>().item.itemName;
+                    count++;
+                
             }
             
         }
@@ -78,6 +81,13 @@ public class overlapSphere : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && dataList.Count != 0 && inven.IsEmpty()) 
         {
             ClickItem(0);
+        } else if ((Input.GetKeyDown(KeyCode.F) && !(inven.IsEmpty()) && isPopup == false))
+        {
+            isPopup = true;
+            
+            Inventory.instance.popUp.text="슬롯이 가득 차 있습니다.";
+            Inventory.instance.popUp.gameObject.SetActive(true);
+            Invoke("popupHide", 1.0f);
         }
         
 
@@ -95,7 +105,7 @@ public class overlapSphere : MonoBehaviour
     // 아이템 갯수에 맞춰 content 켜짐 
     void ClearContent(int count)
     {
-        for(int i= count;i<10;i++)
+        for(int i= count;i<=45;i++)
         {
             if (content.GetChild(i).gameObject.activeSelf)
             {
@@ -113,6 +123,11 @@ public class overlapSphere : MonoBehaviour
         ClickNum = val;
     }
     
+    public void popupHide()
+    {
+        Inventory.instance.popUp.gameObject.SetActive(false);
+        isPopup = false;
+    }
     
 }
 

@@ -56,6 +56,8 @@ public class GrowthLevelManager : MonoBehaviour
     public GameObject DirectionalLight;
     private Light light;
 
+    [SerializeField] private CanvasGroup teleportCG;
+
     private void Awake()
     {
         if (instance == null)
@@ -179,6 +181,8 @@ public class GrowthLevelManager : MonoBehaviour
         RemoveBoss();
         bossPortalGenerated = false;
         worldLevel++;
+        Inventory.instance.gameMain.hudUI.portionBtn.RestorePotion();
+        
         // if (worldLevel > maxLevel)
         // {
         //     // 성장형 던전 클리어
@@ -256,7 +260,7 @@ public class GrowthLevelManager : MonoBehaviour
                 DirectionalLight.SetActive(true);
             }
             
-            light.color = Color.white;
+            light.color = new Color(0.8f, 0.8f, 0.8f, 1.0f);
             
 
             dungeon3_parent.SetActive(true);
@@ -288,8 +292,11 @@ public class GrowthLevelManager : MonoBehaviour
             {
                 DirectionalLight.SetActive(true);
             }
-            
-            light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
+
+            Color newColor = new Color(UnityEngine.Random.Range(0.4f, 1), UnityEngine.Random.Range(0.4f, 1),
+                UnityEngine.Random.Range(0.4f, 1), 1);
+            light.color = newColor;
+            // light.color = new Color32(System.Convert.ToByte( UnityEngine.Random.Range(0, 255) ), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), System.Convert.ToByte(UnityEngine.Random.Range(0, 255)), 255);
 
             randomMazeGenerator = new RandomMazeGenerator(maze_parent.transform, maze_parent.transform.position,
                 mazeIndent, maxMazeBlockCount);
@@ -318,8 +325,55 @@ public class GrowthLevelManager : MonoBehaviour
             return;
         }
 
+        Sequence teleport = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                teleportCG.blocksRaycasts = true;
+                Player.Instance.capsuleCollider.enabled = false;
+            })
+            .Append(teleportCG.DOFade(1, 1f))
+            .Append(DOVirtual.DelayedCall(0f, () => MovePlayer(pos)))
+            .AppendInterval(0.5f)
+            .Append(teleportCG.DOFade(0, 0.5f).From(1))
+            .OnComplete(() =>
+            {
+                teleportCG.blocksRaycasts = false;
+                Player.Instance.capsuleCollider.enabled = true;
+            });
+        MovePlayer(pos);
+    }
+
+    private void MovePlayer(Vector3 pos)
+    {
         Player.Instance.nav.enabled = false;
         Player.Instance.transform.position = pos;
+        Player.Instance.nav.enabled = true;
+        Camera.main.GetComponent<CameraController>().Attach(Player.Instance);
+    }
+
+    [Button]
+    public void KangHo_TeleportPlayer() // 플레이어 위치 이동 (에이전트 on/off)
+    {
+        if (Player.Instance == null)
+        {
+            UnityEngine.Debug.LogWarning("플레이어 없음");
+            return;
+        }
+        // 보스 스폰
+        GameObject kangho = GameObject.Find("kangho");
+        kangho.GetComponent<NavMeshSurface>().BuildNavMesh();
+                int randIdx = UnityEngine.Random.Range(0, boss_monsters.Length);
+                Monsters.Monster newBoss = Instantiate(boss_monsters[randIdx], kangho.transform)
+                    .GetComponent<Monsters.Monster>();
+                newBoss.Init(new Vector3(-1000, 1000, -1000), 4f);
+                newBoss.heart.SetMonsterStatByLevel((short)worldLevel);
+                if (bossTrackingCoroutine != null)
+                {
+                    StopCoroutine(bossTrackingCoroutine);
+                }
+
+        Player.Instance.nav.enabled = false;
+        Player.Instance.transform.position = new Vector3(-1010, 1000, -1010);
         Player.Instance.nav.enabled = true;
 
         Camera.main.GetComponent<CameraController>().Attach(Player.Instance);

@@ -53,14 +53,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   elapsed: 0
-  duration: 3
-  targetCount: 5
+  duration: 5
+  targetCount: 10
   parent_particle: {fileID: 8041726205563455025}
   slashSound: {fileID: 0}
   slashSoundTime: 0
   slashHitSound: {fileID: 0}
   isBullet: 1
-  bulletSpeed: 10
+  bulletSpeed: 2
   bulletFlashEffect: {fileID: 198447726614856880, guid: 204cbd858ac2d0d4480983869d028cfa,
     type: 3}
   bulletFlashSound: {fileID: 8300000, guid: 4310474905e266640852f43bd609a1a4, type: 3}
@@ -9804,7 +9804,7 @@ Transform:
   m_GameObject: {fileID: 7880730415730903235}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7878963849341804679}
@@ -19654,8 +19654,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8667530989287422610}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.67, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.04, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7085984693121629322}
@@ -19737,10 +19737,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startTime: 0
-  duration: 10
+  duration: 5
   targetCount: 0
   refreshAutomatically: 1
   refreshInterval: 0.25
   damageRatio: 1
-  ccType: 1
+  ccType: 3
   ccPower: 0
+  bullet_ignoreWall: 1

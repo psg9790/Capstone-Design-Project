@@ -11,7 +11,7 @@ public class InvenBtn : MonoBehaviour
     void Start()
     { 
         this.btn = this.GetComponent<Button>();
-        Debug.Log("start");
+        // Debug.Log("start");
         this.btn.onClick.AddListener(() =>
         {
             if (invenSet.activeSelf==true)
