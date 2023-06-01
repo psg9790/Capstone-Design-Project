@@ -29,7 +29,7 @@ public class HitBox : MonoBehaviour
     [HideIf("isBullet")] public AudioClip slashSound;
     [HideIf("isBullet")] public float slashSoundTime;
     [HideIf("isBullet")] public AudioClip slashHitSound;
-    private AudioSource slashAudioSource;
+    // private AudioSource slashAudioSource;
     
     private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>(); // trigger들을 실행 시작 순서대로 정렬할 우선순위큐
     private HitBoxTrigger[] hitBoxTriggers; // 오브젝트 하위에 있는 HitBoxTrigger들
@@ -71,16 +71,17 @@ public class HitBox : MonoBehaviour
         ChangeLayersRecursively(this.transform, "Effect");
         if (!isBullet)
         {
-            slashAudioSource = transform.AddComponent<AudioSource>();
-            slashAudioSource.loop = false;
-            slashAudioSource.time = 0;
-            slashAudioSource.playOnAwake = false;
-            AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-            if (effectMixer.Length != 0)
-                slashAudioSource.outputAudioMixerGroup = effectMixer[0];
-            slashAudioSource.spatialBlend = 1;
-            slashAudioSource.rolloffMode = AudioRolloffMode.Linear;
-            slashAudioSource.maxDistance = 30f;
+            
+            // slashAudioSource = transform.AddComponent<AudioSource>();
+            // slashAudioSource.loop = false;
+            // slashAudioSource.time = 0;
+            // slashAudioSource.playOnAwake = false;
+            // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+            // if (effectMixer.Length != 0)
+            //     slashAudioSource.outputAudioMixerGroup = effectMixer[0];
+            // slashAudioSource.spatialBlend = 1;
+            // slashAudioSource.rolloffMode = AudioRolloffMode.Linear;
+            // slashAudioSource.maxDistance = 30f;
         }
     }
 
@@ -163,18 +164,19 @@ public class HitBox : MonoBehaviour
 
             if (bulletFlashSound != null)
             {
-                AudioSource audioSource = bf.transform.AddComponent<AudioSource>();
-                audioSource.clip = bulletFlashSound;
-                audioSource.loop = false;
-                audioSource.time = 0;
-                audioSource.playOnAwake = false;
-                AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-                if (effectMixer.Length != 0)
-                    audioSource.outputAudioMixerGroup = effectMixer[0];
-                audioSource.spatialBlend = 1;
-                audioSource.rolloffMode = AudioRolloffMode.Linear;
-                audioSource.maxDistance = 30f;
-                audioSource.Play();
+                SoundManager.instance.PlaySoundComponent(bulletFlashSound, firePoint);
+                // AudioSource audioSource = bf.transform.AddComponent<AudioSource>();
+                // audioSource.clip = bulletFlashSound;
+                // audioSource.loop = false;
+                // audioSource.time = 0;
+                // audioSource.playOnAwake = false;
+                // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+                // if (effectMixer.Length != 0)
+                //     audioSource.outputAudioMixerGroup = effectMixer[0];
+                // audioSource.spatialBlend = 1;
+                // audioSource.rolloffMode = AudioRolloffMode.Linear;
+                // audioSource.maxDistance = 30f;
+                // audioSource.Play();
             }
 
             bf.transform.position = firePoint;
@@ -191,24 +193,26 @@ public class HitBox : MonoBehaviour
         {
             // -dir 사용
             ParticleSystem bh = Instantiate(bulletHitEffect);
+            bh.transform.position = hitPoint;
 
             var main = bh.main; // destroy on stop
             main.stopAction = ParticleSystemStopAction.Destroy;
 
             if (bulletHitSound != null)
             {
-                AudioSource audioSource = bh.transform.AddComponent<AudioSource>();
-                audioSource.clip = bulletHitSound;
-                audioSource.loop = false;
-                audioSource.time = 0;
-                audioSource.playOnAwake = false;
-                AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-                if (effectMixer.Length != 0)
-                    audioSource.outputAudioMixerGroup = effectMixer[0];
-                audioSource.spatialBlend = 1;
-                audioSource.rolloffMode = AudioRolloffMode.Linear;
-                audioSource.maxDistance = 30f;
-                audioSource.Play();
+                SoundManager.instance.PlaySoundComponent(bulletHitSound, hitPoint);
+                // AudioSource audioSource = bh.transform.AddComponent<AudioSource>();
+                // audioSource.clip = bulletHitSound;
+                // audioSource.loop = false;
+                // audioSource.time = 0;
+                // audioSource.playOnAwake = false;
+                // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
+                // if (effectMixer.Length != 0)
+                //     audioSource.outputAudioMixerGroup = effectMixer[0];
+                // audioSource.spatialBlend = 1;
+                // audioSource.rolloffMode = AudioRolloffMode.Linear;
+                // audioSource.maxDistance = 30f;
+                // audioSource.Play();
             }
 
             bh.transform.position = hitPoint;
@@ -223,7 +227,8 @@ public class HitBox : MonoBehaviour
     {
         if (slashHitSound == null)
             return;
-        slashAudioSource.PlayOneShot(slashHitSound);
+        SoundManager.instance.PlaySoundComponent(slashHitSound, transform.position);
+        // slashAudioSource.PlayOneShot(slashHitSound);
     }
 
 

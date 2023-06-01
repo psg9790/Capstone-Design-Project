@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Gun1
   m_EditorClassIdentifier: 
   iconSprite: {fileID: 21300000, guid: fb2acd264db5e24428dbf84cf8f0f467, type: 3}
-  skillSprites: []
+  skillSprites:
+  - {fileID: 0}
   itemName: "\uCD1D"
-  tooltip: "\uC774\uAC83\uC774 \uBA38\uAE00\uC758 \uC9C0\uD321\uC774\uB2E4"
+  tooltip: .
   itemType: 0
   weapon_gameObject: {fileID: 8359160531845497347, guid: 6dcce4bdda9f6f648ba1e80061313ee2,
     type: 3}

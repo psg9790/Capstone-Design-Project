@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37fc032bbb5944409a6f7deac7c2f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statGrowthByLevelUp: 1.2
+  statGrowthByLevelUp: 1.1
   bulletPos: {fileID: 726272838667951330}
   baseAttack: {fileID: 656422059064697357, guid: e297bce5d7d84774a85a55a6aafe68a2,
     type: 3}
@@ -286,14 +286,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   level: 0
-  max_hp: 1000
-  cur_hp: 1000
-  atk: 30
-  def: 25
+  max_hp: 500
+  cur_hp: 500
+  atk: 20
+  def: 10
   movement_speed: 6
   atk_speed: 1
   skill_cooldown: 0
-  criticalRate: 5
+  criticalRate: 0
   criticalDamage: 200
   immune: 0
   cc_stiff_immune: 1
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed2fc1f67d99240a5dc368f1c89e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 40
+  viewRadius: 300
   viewAngle: 360
   targetMask:
     serializedVersion: 2
@@ -380,17 +380,17 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3983007680995532749}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 3
+  m_AgentTypeID: -334000983
+  m_Radius: 4
   m_Speed: 6
   m_Acceleration: 999
-  avoidancePriority: 40
+  avoidancePriority: 49
   m_AngularSpeed: 999
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 3
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -422,7 +422,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &3983007680995535387
 GameObject:

@@ -171,7 +171,7 @@ MonoBehaviour:
   max_hp: 250
   cur_hp: 250
   atk: 5
-  def: 30
+  def: 15
   movement_speed: 3
   atk_speed: 1
   skill_cooldown: 0
@@ -319,7 +319,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &8882476824230982274
 GameObject:

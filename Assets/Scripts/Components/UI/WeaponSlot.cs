@@ -26,6 +26,7 @@ public class WeaponSlot : ItemSlot
                 Inventory.instance.weaponSlot.itemSlotui.gameObject.SetActive(false);
                 Inventory.instance.backImage.gameObject.SetActive(true);
                 Inventory.instance.isInstallation = false;
+                itemSlotui.item = null;
             }
             else if(Inventory.instance.isInstallation==true && Inventory.instance.count==28)
             {
@@ -83,10 +84,15 @@ public class WeaponSlot : ItemSlot
             extra_item = Inventory.instance.tempItem;
             
             grade_Back.gameObject.SetActive(true);
+            grade_Back.sprite = DragSlot.instance.dragSlot.grade_Back.sprite;
+            
             Inventory.instance.tempItem = DragSlot.instance.dragSlot.itemSlotui.item;
+            Inventory.instance.setSkillcool();
+            itemSlotui.item = DragSlot.instance.dragSlot.itemSlotui.item;
             Inventory.instance.weaponSlot.itemSlotui.image.sprite = DragSlot.instance.dragSlot.itemSlotui.image.sprite;
             Inventory.instance.weaponSlot.itemSlotui.image.color = DragSlot.instance.dragSlot.itemSlotui.image.color;
             Inventory.instance.removeItem(DragSlot.instance.dragSlot.itemSlotui.item, DragSlot.instance.dragSlot);
+            
             
             if (Inventory.instance.isInstallation == true)  // 무기 장착이 되어 있다면 
             {

@@ -20,6 +20,17 @@ namespace Monsters.Skill
         private float hornAttack_cooldown = 0f;
         public HitBox hornAttack;
 
+        private void Start()
+        {
+            heart.OnDeath.AddListener(GenerateHighItem);
+        }
+
+        void GenerateHighItem()
+        {
+            if(RecordLevelManager.Instance == null)
+                ItemGenerator.Instance.GenerateItem(monster.transform, monster.heart.LEVEL + 2);
+        }
+        
         private void Update()
         {
             if (hornAttack_cooldown <= 0)
@@ -32,6 +43,8 @@ namespace Monsters.Skill
                     }
                 }
             }
+            if(!monster.fsm.CheckCurState(EMonsterState.Dead))
+                OnOverlapSphere();
         }
 
 
@@ -98,7 +111,7 @@ namespace Monsters.Skill
         public override void DoPossibleEngage()
         {
             SyncAnimationSpeed();
-            
+
             if (monster.playerDist >= 8)
             {
                 if (hornAttack_cooldown <= 0)
@@ -130,7 +143,6 @@ namespace Monsters.Skill
 
         public override void SetMonsterStatByLevel(short level)
         {
-            
             if (atk_byLevel.Count == 0) // 새로운 전역 레벨 변수 추가
             {
                 float calcatk, calchp, calcdef, calcatkspeed, calcmovespeed;
@@ -160,9 +172,40 @@ namespace Monsters.Skill
                     movementspeed_byLevel.Add(movementspeed_byLevel[i] += (statGrowthByLevelUp * 0.05f));
                 }
             }
-            
+
             heart.SetStat(atk_byLevel[level], hp_byLevel[level], def_byLevel[level],
                 atkspeed_byLevel[level], movementspeed_byLevel[level]);
+        }
+
+        private HPbar_custom boss_hpbar;
+
+        private void OnOverlapSphere() // 보스 hp바
+        {
+            Collider[] cols = Physics.OverlapSphere(transform.position, 20f, 1 << LayerMask.NameToLayer("Player"));
+            if (boss_hpbar == null)
+            {
+                boss_hpbar = GameObject.Find("Canvas").transform.Find("boss_hpbar").gameObject.GetComponent<HPbar_custom>();
+            }
+            if (cols.Length > 0)
+            {
+                if(!boss_hpbar.isActiveAndEnabled)
+                {
+                    boss_hpbar.bossNameText.text = "고대드래곤";
+                    boss_hpbar.Activate(heart);
+                    boss_hpbar.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                boss_hpbar.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if(boss_hpbar != null)
+                if(boss_hpbar.heart == heart)
+                    boss_hpbar.gameObject.SetActive(false);
         }
     }
 }

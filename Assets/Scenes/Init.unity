@@ -378,12 +378,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -694,6 +694,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 582623902355965912, guid: 9b31355932a08144a96d40d3499603bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 582623902355965914, guid: 9b31355932a08144a96d40d3499603bf,
         type: 3}
@@ -1081,8 +1086,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4286242526
+  m_fontColor: {r: 0.87058824, g: 0.87058824, b: 0.47843137, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1304,6 +1309,80 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffeb326080111d844b3b3543607f34e5, type: 3}
+--- !u!1001 &5681811599250114773
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5681811598399818450, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: useStoveSDK
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818451, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_Name
+      value: StovePCSDKManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.000061
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.063605
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.0000515
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5681811598399818461, guid: eb907f909db5a7b49b09dd4512a11b68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb907f909db5a7b49b09dd4512a11b68, type: 3}
 --- !u!1001 &6047915432142361837
 PrefabInstance:
   m_ObjectHideFlags: 0

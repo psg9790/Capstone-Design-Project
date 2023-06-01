@@ -2131,17 +2131,17 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   level: 0
-  max_hp: 1000
-  cur_hp: 1000
-  atk: 20
-  def: 50
-  movement_speed: 1
+  max_hp: 500
+  cur_hp: 500
+  atk: 15
+  def: 25
+  movement_speed: 4
   atk_speed: 2
   skill_cooldown: 0
   criticalRate: 0
-  criticalDamage: 2
+  criticalDamage: 200
   immune: 0
-  cc_stiff_immune: 0
+  cc_stiff_immune: 1
   cc_knockback_immune: 1
   useMonsterHpBar: 0
   hpbar: {fileID: 0}
@@ -2183,7 +2183,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterType: 4
   bodyCollider: {fileID: 4543308153726459841}
-  renders: []
+  renders:
+  - {fileID: 4591847017378053989}
+  - {fileID: 4591238500233562809}
+  - {fileID: 4590905019815467901}
+  - {fileID: 4591795865155019327}
+  - {fileID: 4590897445528786929}
+  - {fileID: 4590934493982520977}
+  - {fileID: 4591245371519124341}
+  - {fileID: 4591729669040319087}
+  - {fileID: 4590400883513309405}
+  - {fileID: 4591075372544263123}
+  - {fileID: 4591379596706207007}
+  - {fileID: 4591369276448964989}
+  - {fileID: 4591329062398770407}
+  - {fileID: 4591702191983568569}
+  - {fileID: 4590401577429386321}
+  - {fileID: 4591051085692512115}
+  - {fileID: 4591020509918928923}
+  - {fileID: 4591371961975370347}
+  - {fileID: 4591329808263090311}
   heart: {fileID: 0}
   nav: {fileID: 0}
   animator: {fileID: 0}
@@ -2227,7 +2246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ed2fc1f67d99240a5dc368f1c89e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
+  viewRadius: 300
   viewAngle: 360
   targetMask:
     serializedVersion: 2
@@ -2245,11 +2264,11 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4492493573097449743}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.5
-  m_Speed: 4
+  m_Speed: 3
   m_Acceleration: 999
-  avoidancePriority: 50
+  avoidancePriority: 49
   m_AngularSpeed: 999
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -2287,7 +2306,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &4492493817902150993
 GameObject:

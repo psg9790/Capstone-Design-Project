@@ -7,7 +7,6 @@ using System.Text;
 using Monsters.Skill;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine.AI;
@@ -53,7 +52,7 @@ public class Heart : MonoBehaviour
 
     [FoldoutGroup("Attributes")] [SerializeField]
     private float criticalDamage = 2f; // *1, *1.1, *1.5...
-    
+
     [FoldoutGroup("Attributes")] [SerializeField]
     public bool immune; // 데미지, cc 모두 면역
 
@@ -63,7 +62,7 @@ public class Heart : MonoBehaviour
     [FoldoutGroup("Attributes")] [SerializeField]
     public bool cc_knockback_immune; // 넉백 면역
 
-    
+
     public short LEVEL => level;
     public float MAX_HP => max_hp;
     public float CUR_HP => cur_hp;
@@ -76,7 +75,7 @@ public class Heart : MonoBehaviour
     public float CRITICAL_DAMAGE => criticalDamage;
 
     public bool useMonsterHpBar = true; // 잡몹용 hpbar ui를 사용할거면 true
-    [ShowIf("useMonsterHpBar")][ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
+    [ShowIf("useMonsterHpBar")] [ReadOnly] public HPbar_custom hpbar; // hpbar 오브젝트
     [Required] public Transform upper_pos; // 이 몬스터의 hpbar가 달려야 할 위치 (3D->2D)
     public bool useDamageFont = true; // 데미지 폰트 사용여부 (인스펙터에서 수정)
     [ShowIf("useDamageFont", true)] public Vector3 damageFont_randomRange = new Vector3(-50, 50, 100); // -x, +x, +y
@@ -88,11 +87,13 @@ public class Heart : MonoBehaviour
             GameObject cvs = new GameObject("HpbarManager + canvas"); // Hpbar 매니저가 없으면 생성함
             cvs.AddComponent<HPbarManager>().Init();
         }
+
         if (DamageFontManager.Instance == null) // 데미지 폰트 띄우는 매니저 생성
         {
             GameObject dmg = new GameObject("DamageFontManager + canvas"); // DamageFont 매니저가 없으면 생성함
             dmg.AddComponent<DamageFontManager>().Init();
         }
+
         if (useMonsterHpBar) // 일반 몬스터인 경우 hpbar UI 생성, 생성과 함께 pool이 존재하지 않으면 생성해서 소속됨
         {
             // hpbar = Instantiate(Resources.Load("UI/hpbar")).GetComponent<HPbar_custom>();
@@ -116,6 +117,12 @@ public class Heart : MonoBehaviour
     {
         atk_speed += n;
     }
+
+    public void criticalRate_CHANGE(int n)
+    {
+        criticalRate += n;
+    }
+
     public void Restore_CUR_HP(float amount)
     {
         cur_hp += amount;
@@ -153,7 +160,7 @@ public class Heart : MonoBehaviour
 
         return dmg;
     }
-    
+
     [FoldoutGroup("Functions")]
     [Button]
     public void Take_Damage(Damage dmg, Vector3 dir) // 데미지 피해 입음
@@ -164,26 +171,26 @@ public class Heart : MonoBehaviour
         float damage = dmg.damage;
         damage *= 250 / (250 + DEF); // 플레이어 방어력 최대 35*6=210 (경감률=250/(250+210)=45.6xx%)
         damage = (int)(damage * Random.Range(0.75f, 1f));
-        
-        // cur_hp -= damage;
+
         cur_hp = Mathf.Clamp(cur_hp - damage, 0, MAX_HP);
-        
-        OnHit.Invoke(0.5f, -dir);
+
+        OnHit.Invoke(0.5f, dir);
         if (useDamageFont)
         {
-            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, damage, dmg.isCritical, damageFont_randomRange);
+            DamageFontManager.Instance.GenerateDamageFont(transform.position + Vector3.up * 0.5f, damage,
+                dmg.isCritical, damageFont_randomRange);
         }
 
         if (!cc_stiff_immune && // 경직 저항있으면 무시
             dmg.ccType == CC_type.Stiff)
         {
-            OnStiff.Invoke(-dir);
+            OnStiff.Invoke(dir);
         }
 
         if (!cc_knockback_immune && // 넉백 저항있으면 무시
             dmg.ccType == CC_type.Knockback)
         {
-            OnKnockBack.Invoke(dmg.ccPower, -dir);
+            OnKnockBack.Invoke(dmg.ccPower, dir);
         }
 
         if (cur_hp <= 0)
@@ -194,20 +201,19 @@ public class Heart : MonoBehaviour
 
 
     private StringBuilder sb = new StringBuilder();
+
     [Button]
     public void PlayerItemEquip()
     {
         if (gameObject.layer != LayerMask.NameToLayer("Player"))
             return;
-        
+
         if (Inventory.instance == null)
         {
             Debug.LogError("Inventory 인스턴스가 없습니다");
             return;
         }
-        
-        // bool playerStatChanged = false;
-        
+
         float calcATK = 20;
         float calcDEF = 5;
         float calcHP = 100;
@@ -226,7 +232,7 @@ public class Heart : MonoBehaviour
             ATKSPEEDbyWeapon = 0,
             CRITRATEbyWeapon = 0,
             CRITDAMAGEbyWeapon = 0;
-        
+
 
         if (Inventory.instance.tempItem == null)
         {
@@ -239,69 +245,56 @@ public class Heart : MonoBehaviour
             Player.Instance.nav.speed = movement_speed;
             criticalRate = calcCRITRATE;
             criticalDamage = calcCRITDAMAGE;
-            // sb.Clear();
-            // sb.Append("공격력: ");
-            // sb.Append(atk.ToString());
-            // sb.Append("\n");
-            // sb.Append("방어력: ");
-            // sb.Append(def.ToString());
-            // sb.Append("\n");
-            // sb.Append("체력: ");
-            // sb.Append(max_hp.ToString());
-            // sb.Append("\n");
-            // sb.Append("공격속도: ");
-            // sb.Append(atk_speed.ToString());
-            // sb.Append("\n");
-            // sb.Append("이동속도: ");
-            // sb.Append(movement_speed.ToString());
-            // sb.Append("\n");
-            // sb.Append("치명타 확률: ");
-            // sb.Append(criticalRate.ToString());
-            // sb.Append("%");
-            // sb.Append("\n");
-            // sb.Append("치명타 피해: ");
-            // sb.Append(criticalDamage.ToString());
-            // sb.Append("%");
-            // sb.Append("\n");
-            // Inventory.instance.SetSideStatDisplayText(sb.ToString());
-            // return;
         }
-        
+
         for (int i = 0; i < Inventory.instance.artifactUIs.Length; i++)
         {
-            if (Inventory.instance.artifactUIs[i].isInstallation)
-            {
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATK))
+            if (!Inventory.instance.artifactUIs[i].lockImage.isActiveAndEnabled)
+                if (Inventory.instance.artifactUIs[i].isInstallation)
                 {
-                    ATKbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.ATK];
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.ATK))
+                    {
+                        ATKbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.ATK];
+                    }
+
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.DEF))
+                    {
+                        DEFbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.DEF];
+                    }
+
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.HP))
+                    {
+                        HPbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.HP];
+                    }
+
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.ATKSPEED))
+                    {
+                        ATKSPEEDbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.ATKSPEED];
+                    }
+
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.MOVEMENTSPEED))
+                    {
+                        MOVEMENTSPEEDbyArtifact +=
+                            (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.MOVEMENTSPEED];
+                    }
+
+                    if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(
+                            ArtifactKey.CRIT_RATE))
+                    {
+                        CRITRATEbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
+                            .options[ArtifactKey.CRIT_RATE];
+                    }
                 }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.DEF))
-                {
-                    DEFbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.DEF];
-                }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.HP))
-                {
-                    HPbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.HP];
-                }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.ATKSPEED))
-                {
-                    ATKSPEEDbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.ATKSPEED];
-                }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.MOVEMENTSPEED))
-                {
-                    MOVEMENTSPEEDbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.MOVEMENTSPEED];
-                }
-                if ((Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact).options.ContainsKey(ArtifactKey.CRIT_RATE))
-                {
-                    CRITRATEbyArtifact += (Inventory.instance.artifactUIs[i].itemSlot.itemSlotui.item as Artifact)
-                        .options[ArtifactKey.CRIT_RATE];
-                }
-            }
         }
 
         if (Inventory.instance.tempItem != null)
@@ -310,10 +303,6 @@ public class Heart : MonoBehaviour
             ATKSPEEDbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
             CRITRATEbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_RATE];
             CRITDAMAGEbyWeapon = (Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE];
-            
-            // calcATK = calcATK + calcATK * (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATK] * 0.01f;
-            // calcATKSPEED += (Inventory.instance.tempItem as Weapon).options[WeaponKey.ATKSPEED];
-            // calcCRITDAMAGE += ((Inventory.instance.tempItem as Weapon).options[WeaponKey.CRIT_DAMAGE] * 0.01f);
         }
 
         calcATK = (float)Math.Round((calcATK + ATKbyArtifact) * (1 + ATKbyWeapon * 0.01f), 2);
@@ -324,45 +313,30 @@ public class Heart : MonoBehaviour
         calcCRITRATE = (float)Math.Round(calcCRITRATE + CRITRATEbyWeapon + CRITRATEbyArtifact, 2);
         calcCRITDAMAGE = (float)Math.Round(calcCRITDAMAGE + CRITDAMAGEbyWeapon, 2);
 
-        // if ((Math.Abs(atk - calcATK) >= 0.1f) ||
-        //     (Math.Abs(def - calcDEF) >= 0.1f) ||
-        //     (Math.Abs(max_hp - calcHP) >= 0.1f) ||
-        //     (Math.Abs(atk_speed - calcATKSPEED) >= 0.1f) ||
-        //     (Math.Abs(movement_speed - calcMOVEMENTSPEED) >= 0.1f) ||
-        //     (Math.Abs(criticalRate - calcCRITRATE) >= 0.1f) ||
-        //     (Math.Abs(criticalDamage - calcCRITDAMAGE) >= 0.1f))
-        // {
-        //     playerStatChanged = true;
-        // }
-        //
-        // if (!playerStatChanged)
-        // {
-        //     return;
-        // }
-        
         // 공격력 계산 : (기본 공격력 + 아티팩트 공격력) * 무기 공격력 %
         atk = calcATK;
-        
+
         // 방어력 계산 : (기본 방어력 + 아티팩트 방어력)
         def = calcDEF;
-        
+
         // 체력 계산 : (기본 체력 + 아티팩트 체력)
         max_hp = calcHP;
-        
+
         // 공격속도 계산 : (기본 공격속도 + 아티팩트 공격속도)
         atk_speed = calcATKSPEED;
-        
+
         // 이동속도 계산 : (기본 이동속도 + 아티팩트 이동속도) 최대이속 23
         movement_speed = calcMOVEMENTSPEED;
         Player.Instance.nav.speed = movement_speed;
 
         // 치명확률 계산
         criticalRate = calcCRITRATE;
-        
+
         // 치명데미지 계산
         criticalDamage = calcCRITDAMAGE;
-        
+
         sb.Clear();
+        sb.Append("<color=#DEDE7A>");
         sb.Append("공격력: ");
         sb.Append(atk.ToString());
         sb.Append("\n");
@@ -385,7 +359,9 @@ public class Heart : MonoBehaviour
         sb.Append("치명타 피해: ");
         sb.Append(criticalDamage.ToString());
         sb.Append("%");
+        sb.Append("</color>");
         sb.Append("\n");
+
         sb.Append("\n");
         sb.Append("무기");
         sb.Append("\n");
@@ -423,7 +399,6 @@ public class Heart : MonoBehaviour
         sb.Append("%");
         sb.Append("\n");
         Inventory.instance.SetSideStatDisplayText(sb.ToString());
-
     }
 
     public void SetMonsterStatByLevel(short level) // 이거 쓸것 (매개변수 월드레벨)
@@ -442,18 +417,4 @@ public class Heart : MonoBehaviour
         this.movement_speed = movespeed;
         GetComponent<NavMeshAgent>().speed = movement_speed;
     }
-
-
-    // [FoldoutGroup("Functions")]
-    // [Button]
-    // public void Take_Damage_DOT(Damage _damage, Vector3 dir, float _tik, float _time)
-    // {
-    //     // 초 처리 
-    //
-    //     if (cur_hp <= 0)
-    //     {
-    //         Debug.Log("dead");
-    //         OnDeath.Invoke();
-    //     }
-    // }
 }
