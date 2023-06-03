@@ -2525,3 +2525,365 @@ error_message:
 2023-06-01 07:27:36.244 DEBUG [8608]      -  Send remote log success.
 2023-06-01 07:27:36.462 DEBUG [8608]     -StoveLog rest: response is 200
 2023-06-01 07:27:36.462 DEBUG [8608]      -  Send remote log success.
+2023-06-01 07:34:33.131 INFO  [22392] file Appender.(level: DEBUG)
+2023-06-01 07:34:33.131 INFO  [22392] Log file path: C:\Users\User\Desktop\Capstone-Design-Project\StovePCSDK.log
+2023-06-01 07:34:33.131 INFO  [22392] ---------------------------------------------
+2023-06-01 07:34:33.131 INFO  [22392] StovePCSDK(ver:2.5.0)
+2023-06-01 07:34:33.131 INFO  [22392] ---------------------------------------------
+2023-06-01 07:34:33.131 DEBUG [22392]     osPlatform : 64bit
+2023-06-01 07:34:33.131 DEBUG [22392]     osVersion : Windows 10(10.0), 10.0.19045, 64bit
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -projectpath
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -useHub
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -hubIPC
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -cloudEnvironment
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : production
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -licensingIpc
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : LicenseClient-User
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -hubSessionId
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : -accessToken
+2023-06-01 07:34:33.131 DEBUG [22392] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:34:33.131 DEBUG [22392]     init tasks
+2023-06-01 07:34:33.132 DEBUG [22392]     transactionId : 5441892e-832c-4a21-aaad-09970557bab6
+2023-06-01 07:34:33.132 DEBUG [22392]     HKEY_CURRENT_USER : FFFFFFFF80000001
+2023-06-01 07:34:33.132 DEBUG [22392]     subkey : SOFTWARE\SGUP
+2023-06-01 07:34:33.132 DEBUG [22392]     RegOpenKeyEx : 0
+2023-06-01 07:34:33.132 DEBUG [22392]     RegQueryValueEx : 0, size : 82
+2023-06-01 07:34:33.132 DEBUG [22392]     RegQueryValueEx : 0
+2023-06-01 07:34:33.132 DEBUG [22392]     callerDetail : b6f4ab639e79cb0e45116cb72a9dfb1642e633c0
+2023-06-01 07:34:33.134 INFO  [22392] protocol data from ipc
+2023-06-01 07:34:33.134 INFO  [22392]     Init sgup success
+2023-06-01 07:34:33.134 DEBUG [7836]     Get Server Config(url: https://api.onstove.com/ssg/default/clients/pcsdk/2.0.0/PCSDKConfig/)
+2023-06-01 07:34:33.134 DEBUG [22392] --> Elapsed times(until main return): 3ms
+2023-06-01 07:34:33.309 INFO  [23920]     Get constants has succeed.
+2023-06-01 07:34:33.310 INFO  [7836]     Log SetEnable is true
+2023-06-01 07:34:33.310 DEBUG [7836]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.init.try_async"},"client_time":"2023-06-01 07:34:33","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:33.310 DEBUG [7836]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:33.310 INFO  [7836] --> SGUPAPI_GetAuthToken
+2023-06-01 07:34:33.310 INFO  [7836]      current process id: 4216
+2023-06-01 07:34:33.310 DEBUG [7836]      game id : NTIMES_IND_DEMO_01_IND
+2023-06-01 07:34:33.327 DEBUG [34004]     -StoveLog rest: response is 200
+2023-06-01 07:34:33.327 DEBUG [34004]      -  Send remote log success.
+2023-06-01 07:34:34.538 INFO  [22392] <-- OnGetAccessToken
+2023-06-01 07:34:34.538 DEBUG [22392]     <TokenInfo>
+errorCode: 0
+access : eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVfdGltZSI6MTY4NTU5NDA3MTk4NCwibWVtYmVyX25vIjoxNjE2NTQ5MzksImFwcGxpY2F0aW9uX25vIjoxMDAzMDg0fQ.ENwNlNlytb8BRY63AWw1HbeXDiFPrPZh7Ny5yv_TkV2m32ePqmmso_GNXdJO7gXvPMQ8bspcG0LPGMdUBln7rGRGpi57oxigZC4KL5KK8zK9oYqiGis1WI6DtSNLtzVWO8lUJwwYhYvJVZ5u-NIVVlBu5GEGU34hu5bDCiMX5ZimeoRxQxaRsHgkldoYeX0CPxVQE8gwu_8E-jKQAqPM5SoOulCv2HNyLg_lD6pe2jOWExbkRdHB_Tne-gQC0ys1VX2Xenb3VE_9E6Al08KpUNl4vXnVjKFBpAU1fQdnE4Q
+refresh: ENwNlNlytb8BRY63AWw1HbeXDiFPrPZh7Ny5yv_TkV2m32ePqmmso_GNXdJO7gXvPMQ8bspcG0LPGMdUBln7rC-ErPL71_rCyZb2VMKaVjzwxnom1bUi2nKjVfg6yoKh4HwIg5bFACbY4LZga_Ln1qq2LSwuKGC_lCMgObhEov2_19WRehlReFRc3Ie53jW8M-OykdR8zd5C4J2RQC98-5CvSk2UZm9G4hgxTuPNSISISiPxaDT1NSuYduri_AovjgQ1mdO5U_igqC09plU02g
+expire: 21600
+canSkipOwnership: false
+2023-06-01 07:34:34.538 INFO  [22392]     received origin token from launcher
+2023-06-01 07:34:34.538 DEBUG [22392]     <Dlc's>
+2023-06-01 07:34:34.538 DEBUG [22392]     token timer duration : 5h 50m 0s
+2023-06-01 07:34:34.538 DEBUG [7836]     URL: https://api.onstove.com/member/v1.0
+2023-06-01 07:34:34.604 DEBUG [20284]     -member rest: response is 200
+2023-06-01 07:34:34.604 INFO  [20284]     - parseGetMember
+2023-06-01 07:34:34.604 DEBUG [20284]     <InternalMember>
+member_no : 161654939
+nickname : 바나나통
+2023-06-01 07:34:34.604 DEBUG [20284]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onmember"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.604 DEBUG [20284]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.604 DEBUG [20284]     <InternalUserInfo>
+memberNo : 161654939
+nickname : 바나나통
+2023-06-01 07:34:34.604 DEBUG [7836] --> Elapsed times(until onInit callback push): 1469ms
+2023-06-01 07:34:34.604 DEBUG [7836]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.oninitcomplete"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.604 DEBUG [7836]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -projectpath
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -useHub
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -hubIPC
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -cloudEnvironment
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : production
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -licensingIpc
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : LicenseClient-User
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -hubSessionId
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -accessToken
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:34:34.604 DEBUG [7836]     [Playtime] need to report : false
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -projectpath
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -useHub
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -hubIPC
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -cloudEnvironment
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : production
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -licensingIpc
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : LicenseClient-User
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -hubSessionId
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : -accessToken
+2023-06-01 07:34:34.604 DEBUG [7836] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:34:34.604 DEBUG [7836]     [ConcurrentUser] need to report : false
+2023-06-01 07:34:34.614 DEBUG [3444]     -StoveLog rest: response is 200
+2023-06-01 07:34:34.614 DEBUG [3444]      -  Send remote log success.
+2023-06-01 07:34:34.615 DEBUG [34004]     -StoveLog rest: response is 200
+2023-06-01 07:34:34.615 DEBUG [34004]      -  Send remote log success.
+2023-06-01 07:34:34.997 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.getuser.try"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.997 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.997 INFO  [22392] --> StovePC_GetUser
+2023-06-01 07:34:34.997 INFO  [22392] --> GetUser
+2023-06-01 07:34:34.997 DEBUG [22392]     <UserInfo>
+memberno: 161654939
+nickName: 바나나통
+guid: 
+2023-06-01 07:34:34.997 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onuser"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.997 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.997 DEBUG [22392]     Userinfo callback has pushed in queue.
+2023-06-01 07:34:34.997 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.getuser.success"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.997 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.998 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.try"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.998 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:34.998 INFO  [22392] --> StovePC_SetStat
+2023-06-01 07:34:34.998 DEBUG [22392]     URL: https://api.onstove.com/stats/v2.0/service/NTIMES_IND_DEMO_01_IND/member/161654939/GROWTH_LEVEL
+2023-06-01 07:34:34.998 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.success"},"client_time":"2023-06-01 07:34:34","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:34.998 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:35.008 DEBUG [6388]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.008 DEBUG [3444]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.008 DEBUG [6388]      -  Send remote log success.
+2023-06-01 07:34:35.008 DEBUG [3444]      -  Send remote log success.
+2023-06-01 07:34:35.008 DEBUG [3444]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.008 DEBUG [3444]      -  Send remote log success.
+2023-06-01 07:34:35.008 DEBUG [1360]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.008 DEBUG [1360]      -  Send remote log success.
+2023-06-01 07:34:35.009 DEBUG [34004]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.009 DEBUG [34004]      -  Send remote log success.
+2023-06-01 07:34:35.090 DEBUG [1360]     -stats rest: response is 200
+2023-06-01 07:34:35.090 INFO  [1360]     - parseSetStat
+2023-06-01 07:34:35.090 DEBUG [1360]     <StovePCStatValue>
+current_value: 8
+updated: 0
+error_message: 
+2023-06-01 07:34:35.090 DEBUG [1360]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onsetstat"},"client_time":"2023-06-01 07:34:35","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:35.090 DEBUG [1360]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:35.091 DEBUG [1360]     SetStat callback push queue
+2023-06-01 07:34:35.100 DEBUG [20284]     -StoveLog rest: response is 200
+2023-06-01 07:34:35.100 DEBUG [20284]      -  Send remote log success.
+2023-06-01 07:34:36.748 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.try"},"client_time":"2023-06-01 07:34:36","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:36.748 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:36.748 INFO  [22392] --> StovePC_SetStat
+2023-06-01 07:34:36.748 DEBUG [22392]     URL: https://api.onstove.com/stats/v2.0/service/NTIMES_IND_DEMO_01_IND/member/161654939/RECORD_LEVEL
+2023-06-01 07:34:36.748 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.success"},"client_time":"2023-06-01 07:34:36","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:36.748 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:36.759 DEBUG [6460]     -StoveLog rest: response is 200
+2023-06-01 07:34:36.759 DEBUG [19464]     -StoveLog rest: response is 200
+2023-06-01 07:34:36.759 DEBUG [19464]      -  Send remote log success.
+2023-06-01 07:34:36.759 DEBUG [6460]      -  Send remote log success.
+2023-06-01 07:34:36.835 DEBUG [20284]     -stats rest: response is 200
+2023-06-01 07:34:36.835 INFO  [20284]     - parseSetStat
+2023-06-01 07:34:36.835 DEBUG [20284]     <StovePCStatValue>
+current_value: 11
+updated: 0
+error_message: 
+2023-06-01 07:34:36.835 DEBUG [20284]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onsetstat"},"client_time":"2023-06-01 07:34:36","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:34:36.835 DEBUG [20284]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:34:36.836 DEBUG [20284]     SetStat callback push queue
+2023-06-01 07:34:36.848 DEBUG [6460]     -StoveLog rest: response is 200
+2023-06-01 07:34:36.848 DEBUG [6460]      -  Send remote log success.
+2023-06-01 07:35:05.135 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.uninit.try"},"client_time":"2023-06-01 07:35:05","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:35:05.135 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:35:05.135 INFO  [22392] --> StovePC_UnInit
+2023-06-01 07:35:05.136 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.uninit.success"},"client_time":"2023-06-01 07:35:05","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:35:05.136 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:35:05.150 DEBUG [19464]     -StoveLog rest: response is 200
+2023-06-01 07:35:05.150 DEBUG [19464]      -  Send remote log success.
+2023-06-01 07:35:05.151 DEBUG [1360]     -StoveLog rest: response is 200
+2023-06-01 07:35:05.151 DEBUG [1360]      -  Send remote log success.
+2023-06-01 07:43:41.025 INFO  [22392] file Appender.(level: DEBUG)
+2023-06-01 07:43:41.025 INFO  [22392] Log file path: C:\Users\User\Desktop\Capstone-Design-Project\StovePCSDK.log
+2023-06-01 07:43:41.025 INFO  [22392] ---------------------------------------------
+2023-06-01 07:43:41.025 INFO  [22392] StovePCSDK(ver:2.5.0)
+2023-06-01 07:43:41.025 INFO  [22392] ---------------------------------------------
+2023-06-01 07:43:41.025 DEBUG [22392]     osPlatform : 64bit
+2023-06-01 07:43:41.025 DEBUG [22392]     osVersion : Windows 10(10.0), 10.0.19045, 64bit
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -projectpath
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -useHub
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -hubIPC
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -cloudEnvironment
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : production
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -licensingIpc
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : LicenseClient-User
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -hubSessionId
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : -accessToken
+2023-06-01 07:43:41.025 DEBUG [22392] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:43:41.025 DEBUG [22392]     init tasks
+2023-06-01 07:43:41.025 DEBUG [22392]     transactionId : 462f9178-a844-4c49-b8b3-37d6cdb56755
+2023-06-01 07:43:41.025 DEBUG [22392]     HKEY_CURRENT_USER : FFFFFFFF80000001
+2023-06-01 07:43:41.025 DEBUG [22392]     subkey : SOFTWARE\SGUP
+2023-06-01 07:43:41.025 DEBUG [22392]     RegOpenKeyEx : 0
+2023-06-01 07:43:41.025 DEBUG [22392]     RegQueryValueEx : 0, size : 82
+2023-06-01 07:43:41.025 DEBUG [22392]     RegQueryValueEx : 0
+2023-06-01 07:43:41.025 DEBUG [22392]     callerDetail : b6f4ab639e79cb0e45116cb72a9dfb1642e633c0
+2023-06-01 07:43:41.025 INFO  [22392] protocol data from ipc
+2023-06-01 07:43:41.025 INFO  [22392]     Init sgup success
+2023-06-01 07:43:41.025 DEBUG [22392] --> Elapsed times(until main return): 0ms
+2023-06-01 07:43:41.025 DEBUG [30776]     Get Server Config(url: https://api.onstove.com/ssg/default/clients/pcsdk/2.0.0/PCSDKConfig/)
+2023-06-01 07:43:41.190 INFO  [8272]     Get constants has succeed.
+2023-06-01 07:43:41.191 INFO  [30776]     Log SetEnable is true
+2023-06-01 07:43:41.191 DEBUG [30776]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.init.try_async"},"client_time":"2023-06-01 07:43:41","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:41.191 DEBUG [30776]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:41.191 INFO  [30776] --> SGUPAPI_GetAuthToken
+2023-06-01 07:43:41.191 INFO  [30776]      current process id: 4216
+2023-06-01 07:43:41.191 DEBUG [30776]      game id : NTIMES_IND_DEMO_01_IND
+2023-06-01 07:43:41.206 DEBUG [11132]     -StoveLog rest: response is 200
+2023-06-01 07:43:41.206 DEBUG [11132]      -  Send remote log success.
+2023-06-01 07:43:42.562 INFO  [22392] <-- OnGetAccessToken
+2023-06-01 07:43:42.562 DEBUG [22392]     <TokenInfo>
+errorCode: 0
+access : eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVfdGltZSI6MTY4NTU5NDYxOTYyNSwibWVtYmVyX25vIjoxNjE2NTQ5MzksImFwcGxpY2F0aW9uX25vIjoxMDAzMDg0fQ.ENwNlNlytb8BRY63AWw1HUmJ4A8-p9ORutmzmosR2SaqZqoNSlToDWuXAX0GfojGRiJTjpxqQ9fD-mLB9OOwyQSiw3AZfCivnt8D_q5OmkRtOjD_fr-UCscG6G4kqCd-TYdaKSBYoE9owqr-lGZQOlZ0JURP9lfqt1fYVUinfzzB32PrDc6_LlQiKu4vxqM7xHWglx0GKiKDnAuZPIVRzXJuliTU_qB63wjVY3k0I3MEYtJ4etjhFcQ7xDXPhJ594lbRRsV6Tn0NCFRWT89FNTefbPYf1spbt0Qok5QUYCE
+refresh: ENwNlNlytb8BRY63AWw1HUmJ4A8-p9ORutmzmosR2SaqZqoNSlToDWuXAX0GfojGRiJTjpxqQ9fD-mLB9OOwySiQ4rgJxuSFfDYE-kaYis6d2K_7lRi51TEQCGU_xFOSxmx4sq1WhAVSv9Xino3aEf1Ew3_EPt0eHoXbsD_s7iS_BAfWetWrQn8-kzTkXyYBPfEk7uYSS2FWGSlkR5rbS9t7hoN3SzGBYvv3-m3Nc-NefMQZhCwqOu-uafNxw_VpsichAesQKTDCIfHlftAPfA
+expire: 21599
+canSkipOwnership: false
+2023-06-01 07:43:42.562 INFO  [22392]     received origin token from launcher
+2023-06-01 07:43:42.562 DEBUG [22392]     <Dlc's>
+2023-06-01 07:43:42.563 DEBUG [22392]     token timer duration : 5h 49m 59s
+2023-06-01 07:43:42.563 DEBUG [30776]     URL: https://api.onstove.com/member/v1.0
+2023-06-01 07:43:42.618 DEBUG [22140]     -member rest: response is 200
+2023-06-01 07:43:42.618 INFO  [22140]     - parseGetMember
+2023-06-01 07:43:42.618 DEBUG [22140]     <InternalMember>
+member_no : 161654939
+nickname : 바나나통
+2023-06-01 07:43:42.618 DEBUG [22140]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onmember"},"client_time":"2023-06-01 07:43:42","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:42.618 DEBUG [22140]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:42.618 DEBUG [22140]     <InternalUserInfo>
+memberNo : 161654939
+nickname : 바나나통
+2023-06-01 07:43:42.618 DEBUG [30776] --> Elapsed times(until onInit callback push): 1592ms
+2023-06-01 07:43:42.618 DEBUG [30776]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.oninitcomplete"},"client_time":"2023-06-01 07:43:42","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:42.618 DEBUG [30776]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -projectpath
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -useHub
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -hubIPC
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -cloudEnvironment
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : production
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -licensingIpc
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : LicenseClient-User
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -hubSessionId
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -accessToken
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:43:42.618 DEBUG [30776]     [Playtime] need to report : false
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : C:\Program Files\Unity\Hub\Editor\2021.3.20f1\Editor\Unity.exe
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -projectpath
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : C:\Users\User\Desktop\Capstone-Design-Project
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -useHub
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -hubIPC
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -cloudEnvironment
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : production
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -licensingIpc
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : LicenseClient-User
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -hubSessionId
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : a53497c6-5e7a-4261-a2e1-95dfd4b3aad2
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : -accessToken
+2023-06-01 07:43:42.618 DEBUG [30776] commandline : P9FP_O7cNuBVQ7IirXoW42lUVWrfDaM9DLJD9BzAyDA00df
+2023-06-01 07:43:42.618 DEBUG [30776]     [ConcurrentUser] need to report : false
+2023-06-01 07:43:42.631 DEBUG [22140]     -StoveLog rest: response is 200
+2023-06-01 07:43:42.631 DEBUG [22140]      -  Send remote log success.
+2023-06-01 07:43:42.632 DEBUG [11172]     -StoveLog rest: response is 200
+2023-06-01 07:43:42.632 DEBUG [11172]      -  Send remote log success.
+2023-06-01 07:43:43.029 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.getuser.try"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.029 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.029 INFO  [22392] --> StovePC_GetUser
+2023-06-01 07:43:43.029 INFO  [22392] --> GetUser
+2023-06-01 07:43:43.029 DEBUG [22392]     <UserInfo>
+memberno: 161654939
+nickName: 바나나통
+guid: 
+2023-06-01 07:43:43.029 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onuser"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.029 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.029 DEBUG [22392]     Userinfo callback has pushed in queue.
+2023-06-01 07:43:43.029 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.getuser.success"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.029 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.030 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.try"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.030 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.030 INFO  [22392] --> StovePC_SetStat
+2023-06-01 07:43:43.030 DEBUG [22392]     URL: https://api.onstove.com/stats/v2.0/service/NTIMES_IND_DEMO_01_IND/member/161654939/GROWTH_LEVEL
+2023-06-01 07:43:43.030 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.success"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.030 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.041 DEBUG [15732]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.041 DEBUG [15732]      -  Send remote log success.
+2023-06-01 07:43:43.042 DEBUG [17244]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.042 DEBUG [17244]      -  Send remote log success.
+2023-06-01 07:43:43.042 DEBUG [17244]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.042 DEBUG [17244]      -  Send remote log success.
+2023-06-01 07:43:43.119 DEBUG [17244]     -stats rest: response is 200
+2023-06-01 07:43:43.119 INFO  [17244]     - parseSetStat
+2023-06-01 07:43:43.119 DEBUG [17244]     <StovePCStatValue>
+current_value: 8
+updated: 0
+error_message: 
+2023-06-01 07:43:43.119 DEBUG [17244]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onsetstat"},"client_time":"2023-06-01 07:43:43","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:43.119 DEBUG [17244]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:43.119 DEBUG [17244]     SetStat callback push queue
+2023-06-01 07:43:43.133 DEBUG [17244]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.133 DEBUG [17244]      -  Send remote log success.
+2023-06-01 07:43:43.353 DEBUG [15732]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.353 DEBUG [15732]      -  Send remote log success.
+2023-06-01 07:43:43.353 DEBUG [13160]     -StoveLog rest: response is 200
+2023-06-01 07:43:43.353 DEBUG [13160]      -  Send remote log success.
+2023-06-01 07:43:44.923 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.try"},"client_time":"2023-06-01 07:43:44","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:44.923 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:44.923 INFO  [22392] --> StovePC_SetStat
+2023-06-01 07:43:44.923 DEBUG [22392]     URL: https://api.onstove.com/stats/v2.0/service/NTIMES_IND_DEMO_01_IND/member/161654939/RECORD_LEVEL
+2023-06-01 07:43:44.924 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.setstat.success"},"client_time":"2023-06-01 07:43:44","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:44.924 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:44.936 DEBUG [28168]     -StoveLog rest: response is 200
+2023-06-01 07:43:44.937 DEBUG [28168]      -  Send remote log success.
+2023-06-01 07:43:45.015 DEBUG [17244]     -stats rest: response is 200
+2023-06-01 07:43:45.015 INFO  [17244]     - parseSetStat
+2023-06-01 07:43:45.015 DEBUG [17244]     <StovePCStatValue>
+current_value: 11
+updated: 0
+error_message: 
+2023-06-01 07:43:45.015 DEBUG [17244]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.onsetstat"},"client_time":"2023-06-01 07:43:45","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:43:45.015 DEBUG [17244]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:43:45.015 DEBUG [17244]     SetStat callback push queue
+2023-06-01 07:43:45.027 DEBUG [17244]     -StoveLog rest: response is 200
+2023-06-01 07:43:45.027 DEBUG [17244]      -  Send remote log success.
+2023-06-01 07:43:45.240 DEBUG [11172]     -StoveLog rest: response is 200
+2023-06-01 07:43:45.240 DEBUG [11172]      -  Send remote log success.
+2023-06-01 07:44:12.214 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.uninit.try"},"client_time":"2023-06-01 07:44:12","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:44:12.214 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:44:12.214 INFO  [22392] --> StovePC_UnInit
+2023-06-01 07:44:12.215 DEBUG [22392]     log data:
+ {"action_info":{"action_param":{},"action_type":"pcsdk.uninit.success"},"client_time":"2023-06-01 07:44:12","custom_action_info":null,"device_os":"Windows 10(10.0), 10.0.19045, 64bit","environment":"live","game_id":"NTIMES_IND_DEMO_01_IND","guid":"","log_source_type":"pc_sdk","member_no":"161654939","protocol_type":"ipc","sdk_version":"2.5.0"}
+2023-06-01 07:44:12.215 DEBUG [22392]     RemoteLog url: http://logs.81plug.com/std_stove
+2023-06-01 07:44:12.230 DEBUG [17244]     -StoveLog rest: response is 200
+2023-06-01 07:44:12.230 DEBUG [17244]      -  Send remote log success.
+2023-06-01 07:44:12.231 DEBUG [28168]     -StoveLog rest: response is 200
+2023-06-01 07:44:12.231 DEBUG [28168]      -  Send remote log success.
