@@ -29,7 +29,6 @@ public class HitBox : MonoBehaviour
     [HideIf("isBullet")] public AudioClip slashSound;
     [HideIf("isBullet")] public float slashSoundTime;
     [HideIf("isBullet")] public AudioClip slashHitSound;
-    // private AudioSource slashAudioSource;
     
     private PriorityQueue<HitBoxTrigger> pq = new PriorityQueue<HitBoxTrigger>(); // trigger들을 실행 시작 순서대로 정렬할 우선순위큐
     private HitBoxTrigger[] hitBoxTriggers; // 오브젝트 하위에 있는 HitBoxTrigger들
@@ -41,8 +40,6 @@ public class HitBox : MonoBehaviour
 
     [InfoBox("bulletDirection: 방향을 수정하고 싶으면 이펙트 생성 후, Particle_Play 함수 호출 직전에 코드로 \"bulletDirection\"변수를 " +
              "원하는 방향으로 초기화 해줄 것 (초기화 하지 않으면 기본은 정면)")]
-    // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletSpawnPoint = Vector3.zero;
-    // [ShowIf("isBullet")] [ReadOnly] public Vector3 bulletDirection = Vector3.zero; // bullet의 방향
     [ShowIf("isBullet")]
     public ParticleSystem bulletFlashEffect;
 
@@ -69,20 +66,6 @@ public class HitBox : MonoBehaviour
     void Init()
     {
         ChangeLayersRecursively(this.transform, "Effect");
-        if (!isBullet)
-        {
-            
-            // slashAudioSource = transform.AddComponent<AudioSource>();
-            // slashAudioSource.loop = false;
-            // slashAudioSource.time = 0;
-            // slashAudioSource.playOnAwake = false;
-            // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-            // if (effectMixer.Length != 0)
-            //     slashAudioSource.outputAudioMixerGroup = effectMixer[0];
-            // slashAudioSource.spatialBlend = 1;
-            // slashAudioSource.rolloffMode = AudioRolloffMode.Linear;
-            // slashAudioSource.maxDistance = 30f;
-        }
     }
 
     IEnumerator ParticlePlayIE()
@@ -99,7 +82,6 @@ public class HitBox : MonoBehaviour
             if (!slashSoundPlayed && slashSoundTime <= elapsed && slashSound != null)
             {
                 slashSoundPlayed = true;
-                // slashAudioSource.PlayOneShot(slashSound);
                 SoundManager.instance.PlaySoundComponent(slashSound, transform.position);
             }
             yield return null;
@@ -165,18 +147,6 @@ public class HitBox : MonoBehaviour
             if (bulletFlashSound != null)
             {
                 SoundManager.instance.PlaySoundComponent(bulletFlashSound, firePoint);
-                // AudioSource audioSource = bf.transform.AddComponent<AudioSource>();
-                // audioSource.clip = bulletFlashSound;
-                // audioSource.loop = false;
-                // audioSource.time = 0;
-                // audioSource.playOnAwake = false;
-                // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-                // if (effectMixer.Length != 0)
-                //     audioSource.outputAudioMixerGroup = effectMixer[0];
-                // audioSource.spatialBlend = 1;
-                // audioSource.rolloffMode = AudioRolloffMode.Linear;
-                // audioSource.maxDistance = 30f;
-                // audioSource.Play();
             }
 
             bf.transform.position = firePoint;
@@ -186,7 +156,6 @@ public class HitBox : MonoBehaviour
 
     public void BulletHit(Vector3 hitPoint, Vector3 dir) // bullet 충돌시 실행, 쓰지 마세요
     {
-        // StopCoroutine(bulletPlayCoroutine);
         hitCount++;
         // hit 이펙트 생성
         if (bulletHitEffect != null)
@@ -201,18 +170,6 @@ public class HitBox : MonoBehaviour
             if (bulletHitSound != null)
             {
                 SoundManager.instance.PlaySoundComponent(bulletHitSound, hitPoint);
-                // AudioSource audioSource = bh.transform.AddComponent<AudioSource>();
-                // audioSource.clip = bulletHitSound;
-                // audioSource.loop = false;
-                // audioSource.time = 0;
-                // audioSource.playOnAwake = false;
-                // AudioMixerGroup[] effectMixer = SoundManager.instance.audioMixer.FindMatchingGroups("SFX");
-                // if (effectMixer.Length != 0)
-                //     audioSource.outputAudioMixerGroup = effectMixer[0];
-                // audioSource.spatialBlend = 1;
-                // audioSource.rolloffMode = AudioRolloffMode.Linear;
-                // audioSource.maxDistance = 30f;
-                // audioSource.Play();
             }
 
             bh.transform.position = hitPoint;
@@ -228,13 +185,11 @@ public class HitBox : MonoBehaviour
         if (slashHitSound == null)
             return;
         SoundManager.instance.PlaySoundComponent(slashHitSound, transform.position);
-        // slashAudioSource.PlayOneShot(slashHitSound);
     }
 
 
     public void BulletParticle_Play(Heart heart, Vector3 pos, Vector3 dir) // bullet 판정 재생
     {
-        // ChangeLayersRecursively(this.transform, "Effect");
         Init();
         heartLayer = heart.gameObject.layer;
 
@@ -254,7 +209,6 @@ public class HitBox : MonoBehaviour
 
     public void Particle_Play(Heart heart) // 일반 판정 재생
     {
-        // ChangeLayersRecursively(this.transform, "Effect");
         Init();
         heartLayer = heart.gameObject.layer;
 

@@ -34,10 +34,10 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     public void Init(Heart heart, LayerMask targetMask, int targetCount, HitBox hitBox) // 초기 설정
     {
         this.heart = heart;
-        this.targetMask = targetMask;
-        this.targetCount = targetCount;
-        this.hitBox = hitBox;
-        if (TryGetComponent<Rigidbody>(out Rigidbody rigid))
+        this.targetMask = targetMask; // 타겟 레이어
+        this.targetCount = targetCount; // 타수
+        this.hitBox = hitBox; // 상위 컴포넌트
+        if (TryGetComponent<Rigidbody>(out Rigidbody rigid)) // rigidbody 없을 경우 추가
         {
             rigid.useGravity = false;
             rigid.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -53,10 +53,10 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
     public void Activate() // 실행
     {
         elapsed = 0;
-        damage = heart.Generate_Damage(damageRatio, ccType, ccPower);
+        damage = heart.Generate_Damage(damageRatio, ccType, ccPower); // 하트 스탯으로부터 데미지 생성
         gameObject.SetActive(true);
 
-        if (refreshAutomatically)
+        if (refreshAutomatically) // 한번 타격했던 상대를 다시 타격하고 싶을 때 해시 초기화
         {
             RefreshHashOnTime();
         }
@@ -82,7 +82,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
             return;
         }
 
-        int targetLayer = (int)Mathf.Log(targetMask, 2);
+        int targetLayer = (int)Mathf.Log(targetMask, 2); // 레이어 계산
         if (hitBox.isBullet) // bullet일 시 분기
         {
             Vector3 dir = other.transform.position - heart.transform.position;
@@ -96,7 +96,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     if (hitHash.Contains(_heart.transform.gameObject.name))
                         return;
                     hitHash.Add(_heart.transform.gameObject.name);
-                    _heart.Take_Damage(damage, dir.normalized);
+                    _heart.Take_Damage(damage, dir.normalized); // 데미지 주기
                     if (Physics.Raycast(transform.position, dir, out RaycastHit hit, Mathf.Infinity, 1 << targetLayer))
                     {
                         dir.y = 0;
@@ -106,9 +106,6 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     {
                         hitBox.BulletHit(transform.position, Vector3.zero);
                     }
-
-                    // if (hitHash.Count >= targetCount) // 혀용 타수 초과시 파괴
-                    //     Destroy(hitBox.gameObject);
                 }
             }
             else if (!bullet_ignoreWall && (other.gameObject.layer != hitBox.heartLayer)) // 일반 오브젝트 (ex.벽) 부딪히면 파괴
@@ -134,7 +131,7 @@ public class HitBoxTrigger : MonoBehaviour, IComparable<HitBoxTrigger>
                     hitBox.SlashHit();
 
 
-                    if (hitHash.Count >= targetCount)
+                    if (hitHash.Count >= targetCount) // 일정 타수 이상시 종료
                     {
                         Deactivate();
                     }
